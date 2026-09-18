@@ -22,6 +22,15 @@ export default function StatCard({
 }) {
   const toneClass = tone ? `stat-value--${tone}` : ''
 
+  const iconBg =
+    tone === 'alert'
+      ? 'bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400'
+      : tone === 'warn'
+      ? 'bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400'
+      : tone === 'ok'
+      ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400'
+      : 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400'
+
   /* If an onClick is given, render a real <button> so it is keyboard
      accessible; otherwise a plain <div>. */
   const Wrapper = onClick ? 'button' : 'div'
@@ -30,22 +39,26 @@ export default function StatCard({
     <Wrapper
       type={onClick ? 'button' : undefined}
       onClick={onClick}
-      className={`card-tight ${onClick ? 'card-interactive' : ''} text-left w-full`}
+      className={`card-tight ${onClick ? 'card-interactive' : ''} text-left w-full flex flex-col justify-between`}
     >
-      <div className="flex items-start justify-between gap-3">
-        <span className="eyebrow">{label}</span>
-        {Icon && (
-          <Icon
-            size={16}
-            strokeWidth={1.75}
-            className={pulse ? 'pulse text-[var(--red)]' : 'text-[var(--ice-dim)]'}
-          />
-        )}
+      <div>
+        <div className="flex items-center justify-between gap-2">
+          <span className="eyebrow">{label}</span>
+          {Icon && (
+            <div className={`h-8 w-8 rounded-xl flex items-center justify-center shrink-0 ${iconBg} shadow-2xs`}>
+              <Icon
+                size={16}
+                strokeWidth={2}
+                className={pulse ? 'pulse' : ''}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className={`stat-value mt-2 ${toneClass}`}>{value}</div>
       </div>
 
-      <div className={`stat-value ${toneClass}`}>{value}</div>
-
-      {hint && <div className="text-[11px] text-low mt-1 leading-snug">{hint}</div>}
+      {hint && <div className="text-[11.5px] text-low mt-2 leading-snug">{hint}</div>}
     </Wrapper>
   )
 }

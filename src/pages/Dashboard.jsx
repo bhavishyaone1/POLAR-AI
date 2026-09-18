@@ -178,14 +178,17 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           PREDICTIVE MISSION CONTINUITY HERO (CORE USP)
           ============================================================ */}
-      <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-card)] p-6 sm:p-7 shadow-sm space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] pb-4">
+      <div className="rounded-2xl bg-gradient-to-r from-[#1E1B4B] via-[#312E81] to-[#4338CA] p-6 sm:p-8 shadow-lg space-y-6 text-white relative overflow-hidden">
+        {/* Subtle decorative glow in top right matching reference image */}
+        <div className="absolute right-0 top-0 -mr-16 -mt-16 h-64 w-64 rounded-full bg-indigo-400/10 blur-3xl pointer-events-none" />
+
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/15 pb-4 relative z-10">
           <div className="flex items-center gap-2.5">
-            <span className="rounded-full bg-cyan-950/60 border border-cyan-500/30 px-3 py-1 text-xs font-mono font-medium text-cyan-300 flex items-center gap-1.5">
-              <Sparkles size={13} className="text-cyan-400" />
+            <span className="rounded-full bg-white/15 border border-white/20 px-3.5 py-1 text-xs font-mono font-semibold text-white flex items-center gap-1.5 backdrop-blur-sm">
+              <Sparkles size={13} className="text-cyan-300" />
               MISSION CONTINUITY INTELLIGENCE
             </span>
-            <span className="text-xs text-slate-400 font-mono hidden sm:inline">
+            <span className="text-xs text-indigo-200/80 font-mono hidden sm:inline">
               Continuous Autonomous Forecasting
             </span>
           </div>
@@ -193,14 +196,14 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           <div className="flex items-center gap-2.5">
             <button
               onClick={() => onStartGuidedDemo ? onStartGuidedDemo() : goTo('impact')}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 px-3.5 py-1.5 text-xs font-mono font-semibold text-amber-300 transition hover:bg-amber-500/20"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-white text-indigo-950 font-bold px-4 py-2 text-xs font-mono transition hover:bg-slate-100 shadow-sm"
             >
-              <Play size={13} className="fill-amber-300" />
+              <Play size={13} className="fill-indigo-950" />
               Guided Demo: Fuel Gap Walkthrough
             </button>
             <button
               onClick={() => goTo('landing')}
-              className="rounded-lg border border-[var(--line)] bg-[var(--surface-raised)]/60 px-3.5 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-[var(--surface-raised)] hover:text-white"
+              className="rounded-xl border border-white/25 bg-white/10 px-3.5 py-2 text-xs font-medium text-white transition hover:bg-white/20 backdrop-blur-sm"
             >
               System Comparison (PPT)
             </button>
@@ -208,50 +211,50 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         </div>
 
         {/* USP Quote Strip */}
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs py-0.5">
-          <p className="italic text-[var(--ink-mid)] font-medium">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs py-0.5 relative z-10">
+          <p className="italic text-indigo-100 font-medium">
             "{SYSTEM_USP.tagline}"
           </p>
-          <span className="font-mono text-[11px] text-cyan-400/90">
+          <span className="font-mono text-[11px] text-cyan-300">
             {SYSTEM_USP.philosophy}
           </span>
         </div>
 
         {/* Score & Resource Runway Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 pt-1">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 pt-1 relative z-10">
           {/* Continuity Score Gauge (4 cols) */}
-          <div className="md:col-span-4 rounded-xl border border-[var(--line)] bg-[var(--surface-raised)]/35 p-5 flex flex-col justify-between">
+          <div className="md:col-span-4 rounded-xl border border-white/15 bg-white/10 p-5 backdrop-blur-md flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
+                <span className="text-xs font-mono uppercase tracking-wider text-indigo-200">
                   Mission Continuity Score
                 </span>
-                <span className="rounded-full bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-[10px] font-mono font-medium text-amber-300">
+                <span className="rounded-full bg-amber-400/20 border border-amber-300/40 px-2.5 py-0.5 text-[10px] font-mono font-bold text-amber-300">
                   {continuityMetrics?.statusText ?? 'ATTENTION REQUIRED'}
                 </span>
               </div>
               <div className="flex items-baseline gap-2 mt-3">
-                <span className="text-4xl font-extrabold text-amber-400">
+                <span className="text-4xl font-extrabold text-amber-300">
                   {continuityMetrics?.score ?? 68}%
                 </span>
-                <span className="text-xs text-slate-400 font-mono">Weighted Health Index</span>
+                <span className="text-xs text-indigo-200 font-mono">Weighted Health Index</span>
               </div>
-              <p className="text-xs text-[var(--ink-mid)] mt-3 leading-relaxed">
+              <p className="text-xs text-indigo-100 mt-3 leading-relaxed">
                 Logistics & fuel resupply deficits reduce station buffer below safety margins. Immediate mitigation recommended.
               </p>
             </div>
 
-            <div className="mt-5 pt-3.5 border-t border-[var(--line)] flex items-center justify-between">
+            <div className="mt-5 pt-3.5 border-t border-white/15 flex items-center justify-between">
               <button
                 onClick={() => setShowWhyScore(!showWhyScore)}
-                className="inline-flex items-center gap-1 text-xs font-mono text-cyan-400 hover:text-cyan-300 font-semibold"
+                className="inline-flex items-center gap-1 text-xs font-mono text-cyan-300 hover:text-white font-semibold"
               >
                 {showWhyScore ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 Why is my score 68%?
               </button>
               <button
                 onClick={() => goTo('simulator')}
-                className="text-xs text-slate-400 hover:text-white font-mono flex items-center gap-1"
+                className="text-xs text-indigo-200 hover:text-white font-mono flex items-center gap-1"
               >
                 Simulator <ArrowRight size={12} />
               </button>
@@ -259,93 +262,93 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           </div>
 
           {/* Resource Depletion Forecast Runway (5 cols) */}
-          <div className="md:col-span-5 rounded-xl border border-[var(--line)] bg-[var(--surface-raised)]/35 p-5 flex flex-col justify-between">
-            <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">
-              <span className="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                <Hourglass size={13} className="text-cyan-400" />
+          <div className="md:col-span-5 rounded-xl border border-white/15 bg-white/10 p-5 backdrop-blur-md flex flex-col justify-between">
+            <div className="flex items-center justify-between border-b border-white/15 pb-3">
+              <span className="text-xs font-mono uppercase tracking-wider text-indigo-200 flex items-center gap-1.5">
+                <Hourglass size={13} className="text-cyan-300" />
                 Resource Runway Forecast
               </span>
-              <span className="text-[10px] font-mono text-rose-400 font-semibold">1 Critical Window Breach</span>
+              <span className="text-[10px] font-mono text-rose-300 font-semibold bg-rose-500/20 border border-rose-400/30 px-2 py-0.5 rounded">1 Critical Window Breach</span>
             </div>
 
             <div className="space-y-3.5 py-3 text-xs">
               {/* Fuel */}
               <div className="space-y-1.5">
                 <div className="flex justify-between font-mono">
-                  <span className="text-slate-300 flex items-center gap-1.5 font-semibold">
+                  <span className="text-white flex items-center gap-1.5 font-semibold">
                     <Flame size={12} className="text-rose-400" />
                     Diesel Fuel (Maitri)
                   </span>
-                  <span className="text-rose-400 font-bold">12.0 Days Available</span>
+                  <span className="text-rose-300 font-bold">12.0 Days Available</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                  <div className="h-full bg-rose-500 rounded-full w-[40%]" />
+                <div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden">
+                  <div className="h-full bg-rose-400 rounded-full w-[40%]" />
                 </div>
-                <span className="text-[10px] text-slate-400 block">
-                  Cargo C-101 ETA: 17 days · <strong className="text-rose-400">Shortage Gap: 5.0 days</strong>
+                <span className="text-[10px] text-indigo-200 block">
+                  Cargo C-101 ETA: 17 days · <strong className="text-rose-300 font-bold">Shortage Gap: 5.0 days</strong>
                 </span>
               </div>
 
               {/* Food */}
               <div className="space-y-1.5">
                 <div className="flex justify-between font-mono">
-                  <span className="text-slate-300 flex items-center gap-1.5 font-semibold">
-                    <Package size={12} className="text-emerald-400" />
+                  <span className="text-white flex items-center gap-1.5 font-semibold">
+                    <Package size={12} className="text-emerald-300" />
                     Ration Packs (Food)
                   </span>
-                  <span className="text-emerald-400 font-bold">24.0 Days Available</span>
+                  <span className="text-emerald-300 font-bold">24.0 Days Available</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                  <div className="h-full bg-emerald-500 rounded-full w-[75%]" />
+                <div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden">
+                  <div className="h-full bg-emerald-400 rounded-full w-[75%]" />
                 </div>
               </div>
 
               {/* Medical */}
               <div className="space-y-1.5">
                 <div className="flex justify-between font-mono">
-                  <span className="text-slate-300 flex items-center gap-1.5 font-semibold">
-                    <ShieldAlert size={12} className="text-sky-400" />
+                  <span className="text-white flex items-center gap-1.5 font-semibold">
+                    <ShieldAlert size={12} className="text-cyan-300" />
                     Medical & Trauma Kits
                   </span>
-                  <span className="text-sky-400 font-bold">40.0 Days Available</span>
+                  <span className="text-cyan-300 font-bold">40.0 Days Available</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                  <div className="h-full bg-sky-500 rounded-full w-[88%]" />
+                <div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden">
+                  <div className="h-full bg-cyan-400 rounded-full w-[88%]" />
                 </div>
               </div>
             </div>
 
-            <div className="pt-3 border-t border-[var(--line)] flex items-center justify-between text-[11px] text-slate-400 font-mono">
-              <span>Last Safe Resupply Date: <strong className="text-[var(--ink-hi)]">Sep 26, 2026</strong></span>
-              <button onClick={() => goTo('inventory')} className="text-cyan-400 hover:underline">
+            <div className="pt-3 border-t border-white/15 flex items-center justify-between text-[11px] text-indigo-200 font-mono">
+              <span>Last Safe Resupply Date: <strong className="text-white">Sep 26, 2026</strong></span>
+              <button onClick={() => goTo('inventory')} className="text-cyan-300 hover:underline">
                 View All Runway
               </button>
             </div>
           </div>
 
           {/* Operational Risk Alert (3 cols) */}
-          <div className="md:col-span-3 rounded-xl border border-rose-500/30 bg-rose-950/20 p-5 flex flex-col justify-between">
+          <div className="md:col-span-3 rounded-xl border border-rose-400/40 bg-rose-950/40 p-5 backdrop-blur-md flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase text-rose-400">
+              <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase text-rose-300">
                 <AlertTriangle size={14} className="animate-pulse" />
                 Active Risk Flagged
               </div>
               <h4 className="font-bold text-white text-sm mt-2">RSK-001: Fuel Window Breach</h4>
-              <p className="text-xs text-rose-200/80 mt-2 leading-relaxed">
+              <p className="text-xs text-rose-200/90 mt-2 leading-relaxed">
                 12 days of fuel remaining vs 17-day cargo arrival creates an unhedged 5-day deficit gap.
               </p>
             </div>
 
-            <div className="mt-5 pt-3.5 border-t border-rose-500/20 flex flex-col gap-2.5">
+            <div className="mt-5 pt-3.5 border-t border-rose-400/30 flex flex-col gap-2.5">
               <button
                 onClick={() => goTo('impact')}
-                className="w-full rounded-lg bg-rose-600 hover:bg-rose-500 py-2 text-xs font-bold text-white transition shadow-sm"
+                className="w-full rounded-xl bg-rose-500 hover:bg-rose-600 py-2 text-xs font-bold text-white transition shadow-sm"
               >
                 Trace Impact Graph →
               </button>
               <button
                 onClick={() => goTo('copilot')}
-                className="w-full text-center text-[11px] font-mono text-cyan-300 hover:underline"
+                className="w-full text-center text-[11px] font-mono text-cyan-200 hover:underline"
               >
                 View AI Mitigation Plan
               </button>

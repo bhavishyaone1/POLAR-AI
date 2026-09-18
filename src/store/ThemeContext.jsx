@@ -19,23 +19,23 @@ function systemPreference() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-/** Read stored preference, defaulting to 'cyan' (Arctic Cyan Dark). */
+/** Read stored preference, defaulting to 'light' (Clean White). */
 function storedOrSystem() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored === 'cyan' || stored === 'black' || stored === 'light') return stored
+    if (stored === 'light' || stored === 'cyan' || stored === 'black') return stored
     if (stored === 'dark') return 'cyan'
   } catch {
     /* localStorage may throw in private browsing on some browsers. */
   }
-  return 'cyan'
+  return 'light'
 }
 
 const ThemeContext = createContext({
-  theme: 'cyan',
+  theme: 'light',
   setTheme: () => {},
   toggleTheme: () => {},
-  isDark: true,
+  isDark: false,
 })
 
 export function ThemeProvider({ children }) {

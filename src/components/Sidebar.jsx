@@ -144,24 +144,24 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
             Sits above the honesty footer because signing out is the last
             thing anybody looks for. */}
         {user && (
-          <div className="border-t px-5 py-4" style={{ borderColor: 'var(--line)' }}>
-            <div className="flex items-start gap-2">
+          <div className="border-t p-3" style={{ borderColor: 'var(--line)' }}>
+            <div className="flex items-center gap-3 rounded-xl p-2 transition hover:bg-[var(--surface-raised)]">
+              <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-indigo-600 to-sky-400 text-white flex items-center justify-center font-bold text-xs shadow-sm shrink-0">
+                {user.name ? user.name.slice(0, 2).toUpperCase() : 'PO'}
+              </div>
               <div className="min-w-0 flex-1">
-                <div className="eyebrow">Signed in</div>
-                <div className="mt-1 truncate text-[12.5px] font-semibold text-hi" title={user.name}>
+                <div className="truncate text-xs font-bold text-hi" title={user.name}>
                   {user.name}
                 </div>
-                {role && (
-                  <div className="mt-1.5">
-                    <Badge label={role.label} tone={role.tone} />
-                  </div>
-                )}
+                <div className="truncate text-[11px] text-low">
+                  {role?.label || 'Mission Operator'}
+                </div>
               </div>
 
               <button
                 type="button"
                 onClick={signOut}
-                className="mt-0.5 shrink-0 text-low hover:text-hi"
+                className="p-1.5 rounded-lg text-low hover:text-hi hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition shrink-0"
                 title="Sign out"
                 aria-label="Sign out"
               >

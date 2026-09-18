@@ -101,12 +101,12 @@ export default function TopBar({
       <button
         type="button"
         onClick={onOpenSearch}
-        className="hidden md:flex items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--surface-raised)]/70 px-2.5 py-1 text-xs text-mid hover:border-cyan-400 hover:text-hi transition"
+        className="hidden md:flex items-center gap-2.5 rounded-full border border-[var(--line)] bg-[var(--surface-raised)]/70 px-4 py-1.5 text-xs text-mid hover:border-indigo-400 hover:bg-white dark:hover:bg-slate-800 hover:text-hi hover:shadow-xs transition w-56 lg:w-72"
         title="Quick search across polar records (Ctrl+K)"
       >
-        <Search size={13} className="text-cyan-400" />
-        <span className="font-sans">Search...</span>
-        <kbd className="rounded border border-slate-700 bg-slate-900/80 px-1.5 py-0.5 text-[10px] font-mono text-slate-400">
+        <Search size={14} className="text-indigo-500 shrink-0" />
+        <span className="font-sans flex-1 text-left text-low">Search...</span>
+        <kbd className="rounded border border-[var(--line)] bg-[var(--surface-card)] px-1.5 py-0.5 text-[10px] font-mono text-low">
           Ctrl K
         </kbd>
       </button>

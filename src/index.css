@@ -33,56 +33,64 @@
             JetBrains Mono - data: IDs, timestamps, coordinates, quantities
 */
 :root {
-  /* Surfaces, lightest to mid-tones */
-  --surface-base: #F8FAFB;
+  /* Surfaces, lightest to mid-tones — crisp clean white aesthetic */
+  --surface-base: #F8FAFC;
   --surface-card: #FFFFFF;
   --surface-raised: #F1F5F9;
   --surface-sunken: #E2E8F0;
   --surface-hover: #F8FAFC;
-  --surface-active: #EFF6FF;
+  --surface-active: #EEF2FF;
 
   /* Keep legacy names mapped for any remaining references */
-  --navy-950: #F8FAFB;
+  --navy-950: #F8FAFC;
   --navy-900: #FFFFFF;
   --navy-850: #F1F5F9;
   --navy-800: #E2E8F0;
   --navy-700: #CBD5E1;
   --navy-600: #94A3B8;
-  --line: #E2E8F0;
-  --line-soft: #F1F5F9;
+  --line: #EEF2F6;
+  --line-soft: #F8FAFC;
 
   /* Accent + signal colours */
-  --ice: #0EA5E9;
-  --ice-dim: #7DD3FC;
+  --ice: #4F46E5;
+  --ice-dim: #818CF8;
+  --ice-vivid: #4338CA;
+  --cyan: #06B6D4;
   --orange: #F97316;
   --amber: #F59E0B;
-  --green: #22C55E;
+  --green: #10B981;
   --red: #EF4444;
   --blue: #3B82F6;
   --violet: #8B5CF6;
 
   /* Text, highest to lowest emphasis */
   --ink-hi: #0F172A;
-  --ink-mid: #64748B;
+  --ink-mid: #475569;
   --ink-low: #94A3B8;
 
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --radius: 12px;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.1);
+  --radius: 16px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  --shadow-lg: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+
+  --chart-grid: #F1F5F9;
+  --chart-label: #64748B;
+  --chart-note: #64748B;
+  --chart-tick: #94A3B8;
+  --chart-cursor: rgba(79, 70, 229, 0.08);
 
   /* Compatibility aliases for provenance & research components */
-  --primary: #0EA5E9;
+  --primary: #4F46E5;
   --cyan: #06B6D4;
-  --border: #E2E8F0;
+  --border: #EEF2F6;
   --surface: #FFFFFF;
   --text: #0F172A;
   --text-hi: #0F172A;
-  --text-muted: #64748B;
+  --text-muted: #475569;
 }
 
 /* ---------- 2. CYAN THEME (ARCTIC CYAN DARK) ----------
@@ -299,7 +307,7 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 24px 28px;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
     min-width: 0;
   }
@@ -705,17 +713,17 @@
   .nav-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 9px 12px;
+    gap: 12px;
+    width: calc(100% - 20px);
+    margin: 3px 10px;
+    padding: 10px 14px;
     border: 0;
-    border-radius: var(--radius);
-    margin: 2px 8px;
-    width: calc(100% - 16px);
+    border-radius: 12px;
     background: transparent;
     color: var(--ink-mid);
     font-family: var(--font-body);
     font-size: 13px;
+    font-weight: 500;
     text-align: left;
     transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
   }
@@ -727,6 +735,9 @@
     background: var(--surface-active);
     color: var(--ice);
     font-weight: 600;
+  }
+  [data-theme="cyan"] .nav-item--active,
+  [data-theme="dark"] .nav-item--active {
     box-shadow: inset 0 0 0 1px rgba(6, 182, 212, 0.3);
   }
 
