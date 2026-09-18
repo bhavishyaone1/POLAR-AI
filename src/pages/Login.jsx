@@ -381,6 +381,43 @@ export default function Login() {
               </button>
             </form>
 
+            {/* Quick Demo 1-Click Access */}
+            <div className="mt-4 pt-3 border-t border-cyan-500/20">
+              <div className="mb-2 text-[10.5px] font-mono font-semibold uppercase tracking-wider text-cyan-300/70 text-center">
+                Instant 1-Click Demo Login
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => signIn({ userId: 'commander', password: 'expedition@cmd' })}
+                  className="rounded border border-amber-500/40 bg-amber-950/40 px-2.5 py-1.5 text-[11px] font-mono font-semibold text-amber-300 hover:bg-amber-900/60 transition text-left truncate"
+                >
+                  ⭐ Commander
+                </button>
+                <button
+                  type="button"
+                  onClick={() => signIn({ userId: 'admin', password: 'polar@2025' })}
+                  className="rounded border border-cyan-500/40 bg-cyan-950/40 px-2.5 py-1.5 text-[11px] font-mono font-semibold text-cyan-300 hover:bg-cyan-900/60 transition text-left truncate"
+                >
+                  🛡️ Admin
+                </button>
+                <button
+                  type="button"
+                  onClick={() => signIn({ userId: 'logistics', password: 'cargo@supply' })}
+                  className="rounded border border-teal-500/40 bg-teal-950/40 px-2.5 py-1.5 text-[11px] font-mono font-semibold text-teal-300 hover:bg-teal-900/60 transition text-left truncate"
+                >
+                  📦 Logistics
+                </button>
+                <button
+                  type="button"
+                  onClick={() => signIn({ userId: 'scientist', password: 'ice#sample' })}
+                  className="rounded border border-blue-500/40 bg-blue-950/40 px-2.5 py-1.5 text-[11px] font-mono font-semibold text-blue-300 hover:bg-blue-900/60 transition text-left truncate"
+                >
+                  🔬 Scientist
+                </button>
+              </div>
+            </div>
+
             {/* Bottom Security Footnote */}
             <div className="mt-4 flex items-start gap-2 border-t border-cyan-500/15 pt-3 text-[10px] leading-relaxed text-white/50">
               <Lock size={12} className="mt-0.5 shrink-0 text-cyan-400/60" />
