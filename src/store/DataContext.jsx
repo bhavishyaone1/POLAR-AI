@@ -82,6 +82,11 @@ import * as cargoDb from '../services/cargoService'
 import * as inventoryDb from '../services/inventoryService'
 import * as emergencyDb from '../services/emergencyService'
 
+import { evaluateMissionContinuity } from '../services/continuityEngine'
+import { runWhatIfSimulation } from '../services/simulationEngine'
+import { traceImpactCascade } from '../services/dependencyGraph'
+import { triageEmergencyOffline } from '../services/offlineEmergencyService'
+
 /* The context object itself. Components never touch this directly —
    they call the useData() hook at the bottom of this file. */
 const DataContext = createContext(null)
@@ -101,6 +106,12 @@ export const SESSION_STORAGE_KEYS = {
   INVENTORY: 'polar.session.inventory',
   EMERGENCIES: 'polar.session.emergencies',
   ACTIVITY_LOG: 'polar.session.activityLog',
+  ASSETS: 'polar.session.assets',
+  MAINTENANCE: 'polar.session.maintenance',
+  MISSIONS: 'polar.session.missions',
+  RISKS: 'polar.session.risks',
+  RECOMMENDATIONS: 'polar.session.recommendations',
+  AUDIT_LOGS: 'polar.session.auditLogs',
 }
 
 function loadSessionArray(key, fallback) {
@@ -161,6 +172,24 @@ export function DataProvider({ children }) {
   const [activityLog, setActivityLog] = useState(() =>
     loadSessionArray(SESSION_STORAGE_KEYS.ACTIVITY_LOG, demoData.activityLog)
   )
+  const [assets, setAssets] = useState(() =>
+    loadSessionArray(SESSION_STORAGE_KEYS.ASSETS, demoData.assets || [])
+  )
+  const [maintenance, setMaintenance] = useState(() =>
+    loadSessionArray(SESSION_STORAGE_KEYS.MAINTENANCE, demoData.maintenance || [])
+  )
+  const [missions, setMissions] = useState(() =>
+    loadSessionArray(SESSION_STORAGE_KEYS.MISSIONS, demoData.missions || [])
+  )
+  const [risks, setRisks] = useState(() =>
+    loadSessionArray(SESSION_STORAGE_KEYS.RISKS, demoData.risks || [])
+  )
+  const [recommendations, setRecommendations] = useState(() =>
+    loadSessionArray(SESSION_STORAGE_KEYS.RECOMMENDATIONS, demoData.recommendations || [])
+  )
+  const [auditLogs, setAuditLogs] = useState(() =>
+    loadSessionArray(SESSION_STORAGE_KEYS.AUDIT_LOGS, demoData.auditLogs || [])
+  )
 
   /* Synchronize each table to sessionStorage whenever it changes */
   useEffect(() => {
@@ -190,6 +219,30 @@ export function DataProvider({ children }) {
   useEffect(() => {
     saveSessionArray(SESSION_STORAGE_KEYS.ACTIVITY_LOG, activityLog)
   }, [activityLog])
+
+  useEffect(() => {
+    saveSessionArray(SESSION_STORAGE_KEYS.ASSETS, assets)
+  }, [assets])
+
+  useEffect(() => {
+    saveSessionArray(SESSION_STORAGE_KEYS.MAINTENANCE, maintenance)
+  }, [maintenance])
+
+  useEffect(() => {
+    saveSessionArray(SESSION_STORAGE_KEYS.MISSIONS, missions)
+  }, [missions])
+
+  useEffect(() => {
+    saveSessionArray(SESSION_STORAGE_KEYS.RISKS, risks)
+  }, [risks])
+
+  useEffect(() => {
+    saveSessionArray(SESSION_STORAGE_KEYS.RECOMMENDATIONS, recommendations)
+  }, [recommendations])
+
+  useEffect(() => {
+    saveSessionArray(SESSION_STORAGE_KEYS.AUDIT_LOGS, auditLogs)
+  }, [auditLogs])
 
   /* Auto-register any expedition destinations that are not yet in locations */
   useEffect(() => {
@@ -968,6 +1021,93 @@ export function DataProvider({ children }) {
     }
   }, [expeditions, personnel, cargo, inventory, emergencies])
 
+  /* ============================================================
+     6.5 INTELLIGENCE ACTIONS & CONTINUITY METRICS
+     ============================================================ */
+  const updateAsset = useCallback((id, patch) => {
+    setAssets((prev) => prev.map((a) => (a.id === id ? { ...a, ...patch } : a)))
+  }, [])
+
+  const updateMaintenance = useCallback((id, patch) => {
+    setMaintenance((prev) => prev.map((m) => (m.id === id ? { ...m, ...patch } : m)))
+  }, [])
+
+  const updateMission = useCallback((id, patch) => {
+    setMissions((prev) => prev.map((m) => (m.id === id ? { ...m, ...patch } : m)))
+  }, [])
+
+  const updateRisk = useCallback((id, patch) => {
+    setRisks((prev) => prev.map((r) => (r.id === id ? { ...r, ...patch } : r)))
+  }, [])
+
+  const recordAuditEntry = useCallback((action, details, user = 'Operations Officer') => {
+    const newEntry = {
+      id: `AUD-${Date.now().toString().slice(-4)}`,
+      timestamp: new Date().toISOString(),
+      user,
+      action,
+      details,
+      hash: Math.random().toString(36).substring(2, 10),
+    }
+    setAuditLogs((prev) => [newEntry, ...prev])
+    return newEntry
+  }, [])
+
+  const approveRecommendation = useCallback((id, officerName = 'Operations Officer') => {
+    setRecommendations((prev) =>
+      prev.map((rec) => {
+        if (rec.id !== id) return rec
+        return {
+          ...rec,
+          status: 'APPROVED',
+          review_officer: officerName,
+          reviewed_at: new Date().toISOString(),
+        }
+      })
+    )
+    recordAuditEntry('RECOMMENDATION_APPROVED', `Officer ${officerName} approved recommendation ${id}`, officerName)
+  }, [recordAuditEntry])
+
+  const rejectRecommendation = useCallback((id, officerName = 'Operations Officer') => {
+    setRecommendations((prev) =>
+      prev.map((rec) => {
+        if (rec.id !== id) return rec
+        return {
+          ...rec,
+          status: 'REJECTED',
+          review_officer: officerName,
+          reviewed_at: new Date().toISOString(),
+        }
+      })
+    )
+    recordAuditEntry('RECOMMENDATION_REJECTED', `Officer ${officerName} rejected recommendation ${id}`, officerName)
+  }, [recordAuditEntry])
+
+  const continuityMetrics = useMemo(() => {
+    return evaluateMissionContinuity({
+      inventory,
+      cargo,
+      assets,
+      personnel,
+      emergencies,
+    })
+  }, [inventory, cargo, assets, personnel, emergencies])
+
+  const runSimulation = useCallback((params) => {
+    return runWhatIfSimulation({
+      baselineState: { inventory, cargo, assets, personnel, emergencies, missions },
+      params,
+    })
+  }, [inventory, cargo, assets, personnel, emergencies, missions])
+
+  const traceImpact = useCallback((nodeId) => {
+    return traceImpactCascade(nodeId)
+  }, [])
+
+  const triageEmergency = useCallback((incident) => {
+    return triageEmergencyOffline({ incident, personnel, assets, inventory })
+  }, [personnel, assets, inventory])
+
   /* ---------- 7. HAND EVERYTHING TO THE APP ---------- */
   const value = useMemo(
     () => ({
@@ -979,6 +1119,12 @@ export function DataProvider({ children }) {
       inventory,
       emergencies,
       activityLog,
+      assets,
+      maintenance,
+      missions,
+      risks,
+      recommendations,
+      auditLogs,
 
       /* status of the data itself */
       loading,
@@ -996,6 +1142,7 @@ export function DataProvider({ children }) {
 
       /* calculated numbers */
       stats,
+      continuityMetrics,
 
       /* lookups */
       getExpedition,
@@ -1020,6 +1167,18 @@ export function DataProvider({ children }) {
       reportEmergency,
       updateEmergency,
       logActivity,
+
+      /* intelligence actions */
+      updateAsset,
+      updateMaintenance,
+      updateMission,
+      updateRisk,
+      recordAuditEntry,
+      approveRecommendation,
+      rejectRecommendation,
+      runSimulation,
+      traceImpact,
+      triageEmergency,
     }),
     [
       locations,
@@ -1029,6 +1188,12 @@ export function DataProvider({ children }) {
       inventory,
       emergencies,
       activityLog,
+      assets,
+      maintenance,
+      missions,
+      risks,
+      recommendations,
+      auditLogs,
       loading,
       error,
       source,
@@ -1036,6 +1201,7 @@ export function DataProvider({ children }) {
       dismissDbNotice,
       reload,
       stats,
+      continuityMetrics,
       getExpedition,
       getLocation,
       getPerson,
@@ -1056,6 +1222,16 @@ export function DataProvider({ children }) {
       reportEmergency,
       updateEmergency,
       logActivity,
+      updateAsset,
+      updateMaintenance,
+      updateMission,
+      updateRisk,
+      recordAuditEntry,
+      approveRecommendation,
+      rejectRecommendation,
+      runSimulation,
+      traceImpact,
+      triageEmergency,
     ]
   )
 

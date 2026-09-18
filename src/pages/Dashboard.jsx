@@ -12,8 +12,34 @@
  * another page to refresh — they all read the same single source.
  */
 
-import { useState } from 'react'
-import { AlertTriangle, Boxes, Compass, Package, Radio, Siren, Users, X } from 'lucide-react'
+import {
+  Activity,
+  AlertOctagon,
+  AlertTriangle,
+  ArrowRight,
+  Boxes,
+  ChevronDown,
+  ChevronUp,
+  Compass,
+  Cpu,
+  Flame,
+  Gauge,
+  GitFork,
+  HelpCircle,
+  Hourglass,
+  Package,
+  Play,
+  Radio,
+  ShieldAlert,
+  Siren,
+  Sliders,
+  Sparkles,
+  Users,
+  X,
+  Zap,
+} from 'lucide-react'
+import { SYSTEM_USP } from '../data/polarIntelligenceData'
+import { calculateResupplyMetrics } from '../services/continuityEngine'
 
 import Badge from '../components/Badge'
 import DataTable from '../components/DataTable'
@@ -46,12 +72,25 @@ const ACTIVITY_TONE = {
   WEATHER: 'muted',
 }
 
-export default function Dashboard({ goTo }) {
-  const { stats, expeditions, cargo, inventory, emergencies, personnel, activityLog, loading, error } =
-    useData()
+export default function Dashboard({ goTo, onStartGuidedDemo }) {
+  const {
+    stats,
+    expeditions,
+    cargo,
+    inventory,
+    emergencies,
+    personnel,
+    activityLog,
+    continuityMetrics,
+    risks,
+    assets,
+    loading,
+    error,
+  } = useData()
 
   const [selectedExpedition, setSelectedExpedition] = useState('ALL')
   const [alertDismissed, setAlertDismissed] = useState(false)
+  const [showWhyScore, setShowWhyScore] = useState(false)
 
   const activeExpeditions = expeditions.filter((e) => e.status === 'ACTIVE')
 
@@ -134,6 +173,222 @@ export default function Dashboard({ goTo }) {
           </div>
         </div>
       )}
+
+      {/* ============================================================
+          PREDICTIVE MISSION CONTINUITY HERO (CORE USP)
+          ============================================================ */}
+      <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-[#09152b] via-[#070e1e] to-[#040810] p-5 shadow-xl space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-cyan-950 border border-cyan-400 px-2.5 py-0.5 text-xs font-mono font-bold text-cyan-300 flex items-center gap-1.5">
+              <Sparkles size={13} className="text-cyan-400 animate-pulse" />
+              MISSION CONTINUITY INTELLIGENCE
+            </span>
+            <span className="text-xs text-slate-400 font-mono hidden sm:inline">
+              Continuous Autonomous Forecasting
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => onStartGuidedDemo ? onStartGuidedDemo() : goTo('impact')}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500/20 border border-amber-500/40 px-3 py-1.5 text-xs font-mono font-bold text-amber-300 transition hover:bg-amber-500/30"
+            >
+              <Play size={13} className="fill-amber-300" />
+              Guided Demo: Fuel Gap Walkthrough
+            </button>
+            <button
+              onClick={() => goTo('landing')}
+              className="rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white"
+            >
+              System Comparison (PPT)
+            </button>
+          </div>
+        </div>
+
+        {/* USP Quote Strip */}
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+          <p className="italic text-slate-200">
+            "{SYSTEM_USP.tagline}"
+          </p>
+          <span className="font-mono text-[11px] text-cyan-300/80">
+            {SYSTEM_USP.philosophy}
+          </span>
+        </div>
+
+        {/* Score & Resource Runway Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 pt-1">
+          {/* Continuity Score Gauge (4 cols) */}
+          <div className="md:col-span-4 rounded-xl border border-slate-800 bg-[#08101e] p-4 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
+                  Mission Continuity Score
+                </span>
+                <span className="rounded bg-amber-950/80 border border-amber-500/40 px-2 py-0.5 text-[10px] font-mono text-amber-300">
+                  {continuityMetrics?.statusText ?? 'ATTENTION REQUIRED'}
+                </span>
+              </div>
+              <div className="flex items-baseline gap-2 mt-2">
+                <span className="text-4xl font-extrabold text-amber-400">
+                  {continuityMetrics?.score ?? 68}%
+                </span>
+                <span className="text-xs text-slate-400 font-mono">Weighted Health Index</span>
+              </div>
+              <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+                Logistics & fuel resupply deficits reduce station buffer below safety margins. Immediate mitigation recommended.
+              </p>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
+              <button
+                onClick={() => setShowWhyScore(!showWhyScore)}
+                className="inline-flex items-center gap-1 text-xs font-mono text-cyan-400 hover:text-cyan-300 font-semibold"
+              >
+                {showWhyScore ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                Why is my score 68%?
+              </button>
+              <button
+                onClick={() => goTo('simulator')}
+                className="text-xs text-slate-400 hover:text-white font-mono flex items-center gap-1"
+              >
+                Simulator <ArrowRight size={12} />
+              </button>
+            </div>
+          </div>
+
+          {/* Resource Depletion Forecast Runway (5 cols) */}
+          <div className="md:col-span-5 rounded-xl border border-slate-800 bg-[#08101e] p-4 flex flex-col justify-between">
+            <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
+              <span className="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <Hourglass size={13} className="text-cyan-400" />
+                Resource Runway Forecast
+              </span>
+              <span className="text-[10px] font-mono text-rose-400 font-semibold">1 Critical Window Breach</span>
+            </div>
+
+            <div className="space-y-2.5 py-2 text-xs">
+              {/* Fuel */}
+              <div className="space-y-1">
+                <div className="flex justify-between font-mono">
+                  <span className="text-slate-300 flex items-center gap-1 font-semibold">
+                    <Flame size={12} className="text-rose-400" />
+                    Diesel Fuel (Maitri)
+                  </span>
+                  <span className="text-rose-400 font-bold">12.0 Days Available</span>
+                </div>
+                <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-full bg-rose-500 rounded-full w-[40%]" />
+                </div>
+                <span className="text-[10px] text-slate-400 block">
+                  Cargo C-101 ETA: 17 days · <strong className="text-rose-400">Shortage Gap: 5.0 days</strong>
+                </span>
+              </div>
+
+              {/* Food */}
+              <div className="space-y-1">
+                <div className="flex justify-between font-mono">
+                  <span className="text-slate-300 flex items-center gap-1 font-semibold">
+                    <Package size={12} className="text-emerald-400" />
+                    Ration Packs (Food)
+                  </span>
+                  <span className="text-emerald-400 font-bold">24.0 Days Available</span>
+                </div>
+                <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-full bg-emerald-500 rounded-full w-[75%]" />
+                </div>
+              </div>
+
+              {/* Medical */}
+              <div className="space-y-1">
+                <div className="flex justify-between font-mono">
+                  <span className="text-slate-300 flex items-center gap-1 font-semibold">
+                    <ShieldAlert size={12} className="text-sky-400" />
+                    Medical & Trauma Kits
+                  </span>
+                  <span className="text-sky-400 font-bold">40.0 Days Available</span>
+                </div>
+                <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-full bg-sky-500 rounded-full w-[88%]" />
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+              <span>Last Safe Resupply Date: <strong>Sep 26, 2026</strong></span>
+              <button onClick={() => goTo('inventory')} className="text-cyan-400 hover:underline">
+                View All Runway
+              </button>
+            </div>
+          </div>
+
+          {/* Operational Risk Alert (3 cols) */}
+          <div className="md:col-span-3 rounded-xl border border-rose-500/40 bg-rose-950/20 p-4 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase text-rose-400">
+                <AlertTriangle size={14} className="animate-pulse" />
+                Active Risk Flagged
+              </div>
+              <h4 className="font-bold text-white text-sm mt-1">RSK-001: Fuel Window Breach</h4>
+              <p className="text-xs text-rose-200/90 mt-1 leading-relaxed">
+                12 days of fuel remaining vs 17-day cargo arrival creates an unhedged 5-day deficit gap.
+              </p>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-rose-500/20 flex flex-col gap-2">
+              <button
+                onClick={() => goTo('impact')}
+                className="w-full rounded bg-rose-600 hover:bg-rose-500 py-1.5 text-xs font-bold text-white transition shadow-sm"
+              >
+                Trace Impact Graph →
+              </button>
+              <button
+                onClick={() => goTo('copilot')}
+                className="w-full text-center text-[11px] font-mono text-cyan-300 hover:underline"
+              >
+                View AI Mitigation Plan
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Expandable "Why is my score this way?" Drawer */}
+        {showWhyScore && (
+          <div className="rounded-xl border border-slate-800 bg-[#060c18] p-4 space-y-3 animate-fade-in">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+              <h4 className="text-xs font-mono uppercase font-bold text-cyan-400">
+                Transparent Continuity Contributors Breakdown (0–100 Weighted Formulation)
+              </h4>
+              <button onClick={() => setShowWhyScore(false)} className="text-slate-400 hover:text-white text-xs">
+                Close
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              {continuityMetrics?.contributors?.map((c) => (
+                <div
+                  key={c.id}
+                  className="rounded-lg border border-slate-800 bg-slate-900/60 p-3 flex items-start justify-between gap-3"
+                >
+                  <div>
+                    <span className="font-semibold text-white block">{c.label}</span>
+                    <span className="text-slate-400 text-[11px] mt-0.5 block">{c.evidence}</span>
+                  </div>
+                  <span
+                    className={`font-mono font-bold px-2 py-0.5 rounded text-xs shrink-0 ${
+                      c.delta < 0
+                        ? 'bg-rose-950 text-rose-300 border border-rose-500/30'
+                        : 'bg-emerald-950 text-emerald-300 border border-emerald-500/30'
+                    }`}
+                  >
+                    {c.delta > 0 ? `+${c.delta}` : c.delta} pts
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* ============================================================
           EXPEDITION SELECTOR BAR

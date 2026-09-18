@@ -7,15 +7,36 @@
  * itself the moment anything anywhere changes.
  */
 
-import { useEffect, useState } from 'react'
-import { AlertTriangle, HelpCircle, Menu, Moon, ShieldAlert, Sun, Volume2, VolumeX } from 'lucide-react'
+import {
+  AlertTriangle,
+  HelpCircle,
+  Menu,
+  Moon,
+  Play,
+  Search,
+  ShieldAlert,
+  Sparkles,
+  Sun,
+  Volume2,
+  VolumeX,
+  Wifi,
+} from 'lucide-react'
 import { formatUtcClock } from '../lib/format'
 import { useData } from '../store/DataContext'
 import { useTheme } from '../store/ThemeContext'
 import { getAudioEnabled, setAudioEnabled } from '../services/audioAlert'
 
-export default function TopBar({ title, blurb, onMenuClick, onAlertClick, onSosClick, onHelpClick }) {
-  const { stats } = useData()
+export default function TopBar({
+  title,
+  blurb,
+  onMenuClick,
+  onAlertClick,
+  onSosClick,
+  onHelpClick,
+  onOpenSearch,
+  onStartGuidedDemo,
+}) {
+  const { stats, continuityMetrics } = useData()
   const { theme, toggleTheme } = useTheme()
   const [soundOn, setSoundOn] = useState(getAudioEnabled)
 
@@ -42,9 +63,7 @@ export default function TopBar({ title, blurb, onMenuClick, onAlertClick, onSosC
   ]
   const [tz, setTz] = useState('Asia/Kolkata')
 
-  /* A clock that actually ticks. setInterval updates it once a second and
-     the cleanup function stops it when the component goes away — leaving
-     that out is one of the classic React memory leaks. */
+  /* A clock that actually ticks. */
   const [clock, setClock] = useState(() => formatUtcClock(new Date(), tz))
   useEffect(() => {
     const timer = setInterval(() => setClock(formatUtcClock(new Date(), tz)), 1000)
@@ -67,9 +86,42 @@ export default function TopBar({ title, blurb, onMenuClick, onAlertClick, onSosC
       </button>
 
       <div className="min-w-0 flex-1">
-        <h1 className="page-title truncate">{title}</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="page-title truncate">{title}</h1>
+          <span className="hidden xl:inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 px-2 py-0.5 text-[10px] font-mono text-emerald-400">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+            100% OFFLINE SAFE
+          </span>
+        </div>
         {blurb && <p className="page-blurb hidden truncate sm:block">{blurb}</p>}
       </div>
+
+      {/* Global Command Palette / Search Trigger */}
+      <button
+        type="button"
+        onClick={onOpenSearch}
+        className="hidden md:flex items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--surface-raised)]/70 px-2.5 py-1 text-xs text-mid hover:border-cyan-400 hover:text-hi transition"
+        title="Quick search across polar records (Ctrl+K)"
+      >
+        <Search size={13} className="text-cyan-400" />
+        <span className="font-sans">Search...</span>
+        <kbd className="rounded border border-slate-700 bg-slate-900/80 px-1.5 py-0.5 text-[10px] font-mono text-slate-400">
+          Ctrl K
+        </kbd>
+      </button>
+
+      {/* Quick Guided Demo Walkthrough */}
+      {onStartGuidedDemo && (
+        <button
+          type="button"
+          onClick={onStartGuidedDemo}
+          className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-amber-500/40 bg-amber-500/10 px-2.5 py-1 text-xs font-mono font-bold text-amber-300 transition hover:bg-amber-500/20 active:scale-95"
+          title="Start 1-minute guided presentation walkthrough for judges"
+        >
+          <Play size={12} className="fill-amber-300" />
+          <span>Demo Tour</span>
+        </button>
+      )}
 
       {/* Alert pill. Only appears when there is genuinely something open. */}
       {stats.criticalAlerts > 0 && (

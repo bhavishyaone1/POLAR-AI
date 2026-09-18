@@ -36,16 +36,25 @@ import { playAcknowledgeChirp } from './services/audioAlert'
 import { saveMessage } from './services/emergencyStorage'
 
 import Login from './pages/Login'
+import LandingPage from './pages/LandingPage'
 import Dashboard from './pages/Dashboard'
 import Expeditions from './pages/Expeditions'
 import Personnel from './pages/Personnel'
+import Assets from './pages/Assets'
+import ImpactAnalysis from './pages/ImpactAnalysis'
+import MissionSimulator from './pages/MissionSimulator'
+import Risks from './pages/Risks'
 import Cargo from './pages/Cargo'
 import Inventory from './pages/Inventory'
 import MapView from './pages/MapView'
 import Weather from './pages/Weather'
 import Emergency from './pages/Emergency'
 import AiCopilot from './pages/AiCopilot'
+import Reports from './pages/Reports'
+import AuditLog from './pages/AuditLog'
 import ResearchSources from './pages/ResearchSources'
+import CommandPalette from './components/CommandPalette'
+import GuidedDemoTour from './components/GuidedDemoTour'
 import { AIChatbot, createProjectDataAdapter } from './polar-ai-assistant/src/index.js'
 
 function getInitialView() {
@@ -116,6 +125,8 @@ export default function App() {
   const [sosModalOpen, setSosModalOpen] = useState(false)
   const [focusedIncidentId, setFocusedIncidentId] = useState(null)
   const [readonlyDismissed, setReadonlyDismissed] = useState(false)
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
+  const [guidedDemoOpen, setGuidedDemoOpen] = useState(false)
 
   /* Browser History & Back/Forward integration:
      Allows native browser Back (<-) and Forward (->) buttons to move
@@ -234,12 +245,22 @@ export default function App() {
      goTo so it can link elsewhere in the console. */
   function renderPage() {
     switch (view) {
+      case 'landing':
+        return <LandingPage goTo={goTo} onStartGuidedDemo={() => setGuidedDemoOpen(true)} />
       case 'dashboard':
-        return <Dashboard goTo={goTo} />
+        return <Dashboard goTo={goTo} onStartGuidedDemo={() => setGuidedDemoOpen(true)} />
       case 'expeditions':
         return <Expeditions goTo={goTo} />
       case 'personnel':
         return <Personnel goTo={goTo} />
+      case 'assets':
+        return <Assets goTo={goTo} />
+      case 'impact':
+        return <ImpactAnalysis goTo={goTo} />
+      case 'simulator':
+        return <MissionSimulator goTo={goTo} />
+      case 'risks':
+        return <Risks goTo={goTo} />
       case 'cargo':
         return <Cargo goTo={goTo} />
       case 'inventory':
@@ -249,13 +270,24 @@ export default function App() {
       case 'weather':
         return <Weather goTo={goTo} />
       case 'emergency':
-        return <Emergency goTo={goTo} focusedIncidentId={focusedIncidentId} onClearFocus={() => setFocusedIncidentId(null)} onOpenSos={() => setSosModalOpen(true)} />
+        return (
+          <Emergency
+            goTo={goTo}
+            focusedIncidentId={focusedIncidentId}
+            onClearFocus={() => setFocusedIncidentId(null)}
+            onOpenSos={() => setSosModalOpen(true)}
+          />
+        )
       case 'copilot':
         return <AiCopilot goTo={goTo} />
+      case 'reports':
+        return <Reports goTo={goTo} />
+      case 'audit':
+        return <AuditLog goTo={goTo} />
       case 'sources':
         return <ResearchSources goTo={goTo} />
       default:
-        return <Dashboard goTo={goTo} />
+        return <Dashboard goTo={goTo} onStartGuidedDemo={() => setGuidedDemoOpen(true)} />
     }
   }
 
@@ -280,6 +312,8 @@ export default function App() {
             onAlertClick={() => goTo('emergency')}
             onSosClick={() => setSosModalOpen(true)}
             onHelpClick={() => goTo('sources')}
+            onOpenSearch={() => setCommandPaletteOpen(true)}
+            onStartGuidedDemo={() => setGuidedDemoOpen(true)}
           />
 
           {/* Global Real-Time Emergency Banner */}
@@ -392,6 +426,21 @@ export default function App() {
         onSubmitSos={handleSosSubmit}
         operatorName={user?.name}
         operatorRole={user?.role}
+      />
+
+      {/* Global Command Palette Modal (Ctrl+K) */}
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        goTo={goTo}
+      />
+
+      {/* Interactive Guided Demo Tour */}
+      <GuidedDemoTour
+        isOpen={guidedDemoOpen}
+        onClose={() => setGuidedDemoOpen(false)}
+        goTo={goTo}
+        currentView={view}
       />
 
       {/* Global Floating AI Assistant — powered by portable Polar AI Assistant */}

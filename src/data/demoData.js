@@ -754,10 +754,31 @@ export const cargo = [
   },
 ]
 
+import {
+  initialAssets,
+  initialMaintenance,
+  initialMissions,
+  initialRisks,
+  initialRecommendations,
+  initialAuditLogs,
+  SYSTEM_USP,
+} from './polarIntelligenceData.js'
+
+export {
+  initialAssets,
+  initialMaintenance,
+  initialMissions,
+  initialRisks,
+  initialRecommendations,
+  initialAuditLogs,
+  SYSTEM_USP,
+}
+
 /* ============================================================
    INVENTORY — 14 items. Stock status is CALCULATED, never stored.
    5 of these are deliberately at or below their minimum so the
    low-stock warning is visible during a demo.
+   Enhanced with predictive daily consumption and safety buffers.
    ============================================================ */
 export const inventory = [
   {
@@ -766,10 +787,14 @@ export const inventory = [
     category: 'Food',
     quantity: 120,
     minimum_quantity: 100,
+    critical_threshold: 60,
+    daily_burn_rate: 5.0,
+    safety_buffer_days: 7,
     unit: 'packs',
     location: 'Maitri Station',
     condition: 'GOOD',
     updated_at: hoursAgo(3),
+    resupply_cargo_id: 'C-104',
   },
   {
     id: 'I-002',
@@ -777,10 +802,14 @@ export const inventory = [
     category: 'Medical',
     quantity: 18,
     minimum_quantity: 25,
+    critical_threshold: 12,
+    daily_burn_rate: 0.45,
+    safety_buffer_days: 10,
     unit: 'kits',
     location: 'Maitri Station',
     condition: 'GOOD',
     updated_at: hoursAgo(2),
+    resupply_cargo_id: 'C-102',
   },
   {
     id: 'I-003',
@@ -788,10 +817,14 @@ export const inventory = [
     category: 'Fuel',
     quantity: 14200,
     minimum_quantity: 6000,
+    critical_threshold: 4500,
+    daily_burn_rate: 1180, // Exactly 12.03 days remaining!
+    safety_buffer_days: 4,
     unit: 'litres',
     location: 'Maitri Station',
     condition: 'GOOD',
     updated_at: hoursAgo(6),
+    resupply_cargo_id: 'C-101', // C-101 arriving in 17 days => 5 days deficit window
   },
   {
     id: 'I-004',
@@ -799,6 +832,9 @@ export const inventory = [
     category: 'Medical',
     quantity: 4,
     minimum_quantity: 8,
+    critical_threshold: 3,
+    daily_burn_rate: 0.2,
+    safety_buffer_days: 5,
     unit: 'kits',
     location: 'Schirmacher Field Camp',
     condition: 'GOOD',
@@ -1059,6 +1095,14 @@ export const demoData = {
   inventory,
   emergencies,
   activityLog,
+  assets: initialAssets,
+  maintenance: initialMaintenance,
+  missions: initialMissions,
+  risks: initialRisks,
+  recommendations: initialRecommendations,
+  auditLogs: initialAuditLogs,
+  usp: SYSTEM_USP,
 }
 
 export default demoData
+
