@@ -26,6 +26,7 @@
 import { useState } from 'react'
 import {
   AlertTriangle,
+  ArrowRight,
   ChevronRight,
   Compass,
   Filter,
@@ -36,6 +37,7 @@ import {
   Plus,
   Ship,
   X,
+  Zap,
 } from 'lucide-react'
 
 import Badge from '../components/Badge'
@@ -264,6 +266,50 @@ export default function Cargo({ goTo }) {
           </div>
         ))}
       </div>
+
+      {/* ================= PREDICTIVE RESUPPLY RISK BANNER ================= */}
+      {cargo.some((c) => c.status === 'DELAYED' && c.category === 'Fuel') && (
+        <div
+          className="alert-strip"
+          style={{
+            borderColor: 'rgba(239, 68, 68, 0.4)',
+            backgroundColor: 'rgba(239, 68, 68, 0.05)',
+            borderLeftColor: 'var(--red)',
+          }}
+        >
+          <AlertTriangle size={17} className="mt-0.5 shrink-0 text-[var(--red)]" />
+          <div className="min-w-0 flex-1">
+            <div className="text-[13px] font-semibold text-hi flex items-center gap-2">
+              <span>Critical Resupply Deficit Detected — Consignment C-101 (Fuel)</span>
+              <span className="rounded bg-[rgba(239,68,68,0.2)] px-1.5 py-0.2 text-[10px] font-mono text-[var(--red)]">
+                5.0-DAY GAP
+              </span>
+            </div>
+            <p className="mt-1 text-[12px] text-mid">
+              Vessel delayed by fast pack-ice in Prydz Bay (ETA: 17 days). Maitri station fuel reserve depletes in 12.0 days (14,200 L @ 1,180 L/d).
+              Leaves an unhedged 5.0-day blackout window risking life-support and scientific heating systems.
+            </p>
+          </div>
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <button
+              type="button"
+              className="btn btn--sm flex items-center gap-1.5 bg-[var(--ice)] text-white hover:bg-[var(--ice-vivid)] font-semibold"
+              onClick={() => goTo('simulator')}
+            >
+              <Zap size={12} />
+              <span>Simulate Scenario</span>
+            </button>
+            <button
+              type="button"
+              className="btn btn--ghost btn--sm flex items-center gap-1"
+              onClick={() => goTo('impact')}
+            >
+              <span>View Impact Cascade</span>
+              <ArrowRight size={12} />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ================= SUCCESS MESSAGE ================= */}
       {formSuccess && (

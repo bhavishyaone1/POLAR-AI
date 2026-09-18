@@ -45,14 +45,18 @@ import {
   Clock,
   Compass,
   Filter,
+  HeartPulse,
   MapPin,
   Plus,
   Radio,
   ShieldAlert,
+  ShieldCheck,
   Siren,
+  Truck,
   User,
   Users,
   X,
+  Zap,
 } from 'lucide-react'
 
 import Badge from '../components/Badge'
@@ -203,6 +207,8 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
     getExpedition,
     getLocation,
     getPerson,
+    triageEmergency,
+    recordAuditEntry,
   } = useData()
 
   /* WHAT THIS ROLE MAY DO HERE — and note which half is NOT gated.
@@ -296,6 +302,43 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
   const setFilter = (key, value) => setFilters((prev) => ({ ...prev, [key]: value }))
 
   const selected = emergencies.find((e) => e.id === selectedId) || null
+
+  /* ---------- 100% OFFLINE SPATIAL TRIAGE DOSSIER ----------
+     Computed purely in-browser via great-circle trigonometry. Identifies closest
+     personnel, nearest operational fleet snowcat, and tactical stores. */
+  const triageDossier = useMemo(() => {
+    if (!selected) return null
+    return triageEmergency(selected)
+  }, [selected, triageEmergency])
+
+  const handleApplyTriagePlan = () => {
+    if (!selected || !triageDossier?.tacticalPlan) return
+    const plan = triageDossier.tacticalPlan
+    const teamString = `${plan.assignedLeader} & ${plan.dispatchVehicle}`
+    const noteString = `AUTONOMOUS DISPATCH ORDER: Vehicle ${plan.dispatchVehicle} (ETA ~${plan.vehicleEtaMinutes}m). Escort: ${plan.medicalEscort}. Comms: ${plan.communicationsProtocol}. Required gear: ${plan.recommendedSupplies.join(', ')}.`
+
+    updateEmergency(selected.id, {
+      assigned_team: teamString,
+      response_note: noteString,
+    })
+
+    if (!selected.acknowledged_at) {
+      updateEmergency(selected.id, { acknowledged_at: new Date().toISOString(), status: 'RESPONDING' })
+    }
+
+    recordAuditEntry({
+      action: 'AUTONOMOUS_TRIAGE_DISPATCH',
+      category: 'EMERGENCY',
+      entity_type: 'EMERGENCY',
+      entity_id: selected.id,
+      officer_name: user?.name || 'Duty Commander',
+      officer_role: user?.role || 'Operations Lead',
+      details: `Executed offline spatial triage plan for ${selected.id}. Dispatched ${plan.dispatchVehicle} under ${plan.assignedLeader}.`,
+      status: 'EXECUTED',
+    })
+
+    setFormSuccess(`Autonomous triage dispatch ordered: ${plan.dispatchVehicle} responding with ${plan.assignedLeader}.`)
+  }
 
   /* ---------- RESPONSE READINESS (connection 5) ----------
      Two questions, answered from the personnel and inventory records
@@ -1203,6 +1246,128 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                 )
               })()}
             </div>
+
+            {/* ---------- 100% OFFLINE AUTONOMOUS SPATIAL TRIAGE INTELLIGENCE ---------- */}
+            {triageDossier && selected.status !== 'RESOLVED' && (
+              <div
+                className="mt-4 rounded-lg border p-3.5 space-y-3"
+                style={{
+                  backgroundColor: 'rgba(56, 189, 248, 0.04)',
+                  borderColor: 'rgba(56, 189, 248, 0.3)',
+                }}
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <ShieldAlert size={15} className="text-[var(--ice)]" />
+                    <span className="font-display text-[12px] font-bold uppercase tracking-wider text-hi">
+                      Autonomous Spatial Triage & Rescue Protocol
+                    </span>
+                    <span className="rounded bg-[var(--surface-sunken)] px-1.5 py-0.5 text-[10px] font-mono text-[var(--ice)] border border-[var(--ice-soft)]">
+                      100% OFFLINE COMPUTED
+                    </span>
+                  </div>
+                  {canRespond && (
+                    <button
+                      type="button"
+                      className="btn btn--sm flex items-center gap-1.5 bg-[var(--ice)] text-white hover:bg-[var(--ice-vivid)] font-semibold shadow"
+                      onClick={handleApplyTriagePlan}
+                    >
+                      <Zap size={13} />
+                      <span>Execute Autonomous Dispatch</span>
+                    </button>
+                  )}
+                </div>
+
+                {/* Dispatch Plan Highlights */}
+                <div className="grid gap-2.5 text-xs sm:grid-cols-2 lg:grid-cols-4 pt-1">
+                  <div className="rounded bg-[var(--surface-raised)] p-2.5 border border-[var(--line-soft)]">
+                    <div className="text-[10px] font-mono uppercase text-low flex items-center gap-1">
+                      <Truck size={11} className="text-[var(--ice)]" />
+                      <span>Recommended Vehicle</span>
+                    </div>
+                    <div className="mt-1 font-semibold text-hi truncate">
+                      {triageDossier.tacticalPlan.dispatchVehicle}
+                    </div>
+                    <div className="mt-0.5 text-[11px] font-mono text-[var(--green)]">
+                      ETA ~{triageDossier.tacticalPlan.vehicleEtaMinutes} mins
+                    </div>
+                  </div>
+
+                  <div className="rounded bg-[var(--surface-raised)] p-2.5 border border-[var(--line-soft)]">
+                    <div className="text-[10px] font-mono uppercase text-low flex items-center gap-1">
+                      <HeartPulse size={11} className="text-[var(--red)]" />
+                      <span>Medical Escort</span>
+                    </div>
+                    <div className="mt-1 font-semibold text-hi truncate">
+                      {triageDossier.tacticalPlan.medicalEscort}
+                    </div>
+                    <div className="mt-0.5 text-[11px] text-mid truncate">
+                      Lead: {triageDossier.tacticalPlan.assignedLeader}
+                    </div>
+                  </div>
+
+                  <div className="rounded bg-[var(--surface-raised)] p-2.5 border border-[var(--line-soft)]">
+                    <div className="text-[10px] font-mono uppercase text-low flex items-center gap-1">
+                      <Radio size={11} className="text-[var(--amber)]" />
+                      <span>Tactical Radio Channel</span>
+                    </div>
+                    <div className="mt-1 font-semibold text-hi truncate">
+                      CODAN HF Ch 4
+                    </div>
+                    <div className="mt-0.5 text-[11px] font-mono text-mid">
+                      Freq: 8,291 kHz
+                    </div>
+                  </div>
+
+                  <div className="rounded bg-[var(--surface-raised)] p-2.5 border border-[var(--line-soft)]">
+                    <div className="text-[10px] font-mono uppercase text-low flex items-center gap-1">
+                      <Boxes size={11} className="text-[var(--ice)]" />
+                      <span>Required Stores</span>
+                    </div>
+                    <div className="mt-1 font-semibold text-hi truncate" title={triageDossier.tacticalPlan.recommendedSupplies.join(', ')}>
+                      {triageDossier.tacticalPlan.recommendedSupplies[0]}
+                    </div>
+                    <div className="mt-0.5 text-[11px] text-low truncate">
+                      +{triageDossier.tacticalPlan.recommendedSupplies.length - 1} more items
+                    </div>
+                  </div>
+                </div>
+
+                {/* Nearest responders list */}
+                <div className="border-t border-[var(--line-soft)] pt-2.5">
+                  <div className="text-[11px] font-mono text-low uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                    <span>Nearest Responders (Haversine Spatial Proximity)</span>
+                    <span className="text-[10px] font-normal">Walking @ 3.5 km/h · Snowmobile @ 25 km/h</span>
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                    {triageDossier.nearbyPersonnel.slice(0, 3).map((p) => (
+                      <div
+                        key={p.id}
+                        className="flex items-center justify-between rounded p-2 text-xs border border-[var(--line-soft)] bg-[var(--surface-sunken)]"
+                      >
+                        <div className="min-w-0">
+                          <div className="font-semibold text-hi truncate flex items-center gap-1.5">
+                            <span>{p.name}</span>
+                            {p.isQualifiedMedic && (
+                              <span className="rounded bg-[rgba(239,68,68,0.15)] px-1 py-0.2 text-[9px] font-bold text-[var(--red)] border border-[rgba(239,68,68,0.3)]">
+                                MEDIC
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-[10.5px] text-low truncate">
+                            {p.role} · Blood {p.blood_group || '—'}
+                          </div>
+                        </div>
+                        <div className="text-right shrink-0 font-mono">
+                          <div className="text-[11.5px] font-bold text-[var(--ice)]">{p.distanceKm} km</div>
+                          <div className="text-[10px] text-mid">~{p.estFootMinutes}m foot</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* ---------- Team + running log ----------
                 Typing writes straight into the shared store on every

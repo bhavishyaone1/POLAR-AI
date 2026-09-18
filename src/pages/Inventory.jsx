@@ -28,7 +28,22 @@
  */
 
 import { useState } from 'react'
-import { Boxes, Filter, Minus, Package, PackageCheck, Plus, RotateCcw, X } from 'lucide-react'
+import {
+  AlertTriangle,
+  ArrowRight,
+  Boxes,
+  Filter,
+  Flame,
+  Minus,
+  Package,
+  PackageCheck,
+  Plus,
+  RotateCcw,
+  ShieldAlert,
+  TrendingDown,
+  X,
+  Zap,
+} from 'lucide-react'
 
 import Badge from '../components/Badge'
 import DataTable from '../components/DataTable'
@@ -37,6 +52,7 @@ import Panel from '../components/Panel'
 import StateBlock from '../components/StateBlock'
 import { useData } from '../store/DataContext'
 import { useAuth } from '../store/AuthContext'
+import { calculateResupplyMetrics } from '../services/continuityEngine'
 import { clampPercent, formatNumber, timeAgo } from '../lib/format'
 import {
   CONDITION,
@@ -92,6 +108,8 @@ function stockPercent(item) {
 export default function Inventory({ goTo }) {
   const {
     inventory,
+    cargo,
+    continuityMetrics,
     stats,
     loading,
     error,
@@ -110,6 +128,15 @@ export default function Inventory({ goTo }) {
   const [form, setForm] = useState(EMPTY_FORM)
   const [formError, setFormError] = useState(null)
   const [formSuccess, setFormSuccess] = useState(null)
+
+  /* Predictive consumption and runway calculations for critical consumables */
+  const consumableMetrics = inventory
+    .filter((i) => (Number(i.daily_burn_rate) || 0) > 0)
+    .map((item) => {
+      const metrics = calculateResupplyMetrics(item, cargo)
+      return { item, ...metrics }
+    })
+    .sort((a, b) => a.daysRemaining - b.daysRemaining)
 
   /* Categories and locations are READ FROM THE DATA. Add an item in a new
      category and it appears in these dropdowns on its own. */
@@ -337,6 +364,122 @@ export default function Inventory({ goTo }) {
           </div>
         </div>
       )}
+
+      {/* ================= PREDICTIVE RUNWAY & CONSUMPTION ================= */}
+      <Panel
+        eyebrow="POLAR-AI Predictive Intelligence"
+        title="Predictive Consumption & Resource Runway"
+        subtitle="Dynamic burn rate tracking, calculated depletion horizons, and unhedged resupply gaps"
+        action={
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="btn btn--sm btn--ghost flex items-center gap-1.5"
+              onClick={() => goTo('simulator')}
+            >
+              <Zap size={12} className="text-[var(--ice)]" />
+              <span>What-If Simulator</span>
+            </button>
+            <button
+              type="button"
+              className="btn btn--sm btn--ghost flex items-center gap-1.5"
+              onClick={() => goTo('impact')}
+            >
+              <ArrowRight size={12} className="text-[var(--ice)]" />
+              <span>Impact Cascade</span>
+            </button>
+          </div>
+        }
+      >
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          {consumableMetrics.map(({ item, daysRemaining, etaDays, resupplyGapDays, isAtRisk, linkedCargo }) => {
+            const isDeficit = resupplyGapDays > 0
+            return (
+              <div
+                key={item.id}
+                className="rounded border p-3.5 flex flex-col justify-between transition"
+                style={{
+                  backgroundColor: isDeficit ? 'rgba(239, 68, 68, 0.05)' : 'var(--surface-raised)',
+                  borderColor: isDeficit ? 'rgba(239, 68, 68, 0.4)' : 'var(--line)',
+                }}
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-1.5">
+                    <span className="text-[10.5px] font-mono uppercase tracking-wider text-low">
+                      {item.location?.split(' ')[0] || 'Station'} · {item.category}
+                    </span>
+                    <span
+                      className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
+                        isDeficit
+                          ? 'bg-[rgba(239,68,68,0.15)] text-[var(--red)] border border-[rgba(239,68,68,0.3)]'
+                          : daysRemaining <= 15
+                          ? 'bg-[rgba(245,158,11,0.15)] text-[var(--amber)] border border-[rgba(245,158,11,0.3)]'
+                          : 'bg-[rgba(79,201,138,0.15)] text-[var(--green)] border border-[rgba(79,201,138,0.3)]'
+                      }`}
+                    >
+                      {isDeficit && <span className="h-1.5 w-1.5 rounded-full bg-[var(--red)] animate-ping" />}
+                      {isDeficit ? 'Deficit Shortfall' : daysRemaining <= 15 ? 'Buffer Warning' : 'Stable'}
+                    </span>
+                  </div>
+
+                  <div className="text-[13.5px] font-semibold text-hi truncate" title={item.item_name}>
+                    {item.item_name}
+                  </div>
+
+                  <div className="mt-3 flex items-baseline justify-between">
+                    <div>
+                      <div className="text-[20px] font-mono font-bold leading-none text-hi">
+                        {daysRemaining} <span className="text-xs font-normal text-mid">days</span>
+                      </div>
+                      <div className="text-[11px] text-low mt-0.5">
+                        Stock: {formatNumber(item.quantity)} {item.unit}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-[12px] font-mono text-mid flex items-center gap-1 justify-end">
+                        <Flame size={12} className="text-[var(--orange)]" />
+                        <span>{formatNumber(item.daily_burn_rate)}</span>
+                      </div>
+                      <div className="text-[10px] text-low">{item.unit}/day burn</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-2.5 h-1.5 w-full bg-[var(--surface-sunken)] rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{
+                        width: `${Math.min(100, (daysRemaining / 30) * 100)}%`,
+                        backgroundColor: isDeficit ? 'var(--red)' : daysRemaining <= 15 ? 'var(--amber)' : 'var(--green)',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-3 pt-2.5 border-t border-[var(--line-soft)] text-[11px]">
+                  {isDeficit ? (
+                    <div className="text-[var(--red)] font-medium flex items-start gap-1.5">
+                      <AlertTriangle size={13} className="shrink-0 mt-0.5" />
+                      <span>
+                        Resupply gap: <strong>-{resupplyGapDays}d deficit</strong> before {linkedCargo?.id || 'resupply'} arrives (ETA {etaDays}d).
+                      </span>
+                    </div>
+                  ) : linkedCargo ? (
+                    <div className="text-mid flex items-center justify-between">
+                      <span className="text-low">Resupply: {linkedCargo.id}</span>
+                      <span className="font-mono text-hi">ETA {etaDays}d</span>
+                    </div>
+                  ) : (
+                    <div className="text-low flex items-center justify-between">
+                      <span>Safety buffer</span>
+                      <span className="font-mono text-mid">{item.safety_buffer_days || 3}d reserved</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </Panel>
 
       {/* ================= SUCCESS MESSAGE ================= */}
       {formSuccess && (
@@ -657,6 +800,43 @@ export default function Inventory({ goTo }) {
                     >
                       <span style={{ width: `${stockPercent(r)}%` }} />
                     </div>
+                  </div>
+                )
+              },
+            },
+            {
+              header: 'Burn & Runway',
+              width: '160px',
+              cell: (r) => {
+                const burn = Number(r.daily_burn_rate) || 0
+                if (burn <= 0) {
+                  return <span className="text-[11px] text-low">Durable holding</span>
+                }
+                const metrics = calculateResupplyMetrics(r, cargo)
+                const isDeficit = metrics.resupplyGapDays > 0
+                return (
+                  <div>
+                    <div className="flex items-center justify-between gap-1 text-[11.5px]">
+                      <span className="mono text-low font-medium">
+                        {formatNumber(burn)} {r.unit}/d
+                      </span>
+                      <span
+                        className={`mono font-semibold ${
+                          isDeficit
+                            ? 'text-[var(--red)]'
+                            : metrics.daysRemaining <= (Number(r.safety_buffer_days) || 3)
+                            ? 'text-[var(--orange)]'
+                            : 'text-[var(--green)]'
+                        }`}
+                      >
+                        {metrics.daysRemaining}d runway
+                      </span>
+                    </div>
+                    {isDeficit && (
+                      <div className="mt-0.5 text-[10px] font-semibold text-[var(--red)] flex items-center gap-1">
+                        <span>Shortfall: -{metrics.resupplyGapDays}d gap</span>
+                      </div>
+                    )}
                   </div>
                 )
               },

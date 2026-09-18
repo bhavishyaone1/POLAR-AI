@@ -124,18 +124,14 @@ export const KNOWLEDGE_BASE = {
 };
 
 export const SUGGESTED_PROMPTS = [
-  { emoji: '🌡️', text: 'Current weather at Maitri Station', query: 'What is the current weather and operational safety window at Maitri Station?' },
-  { emoji: '✈️', text: 'Twin Otter flight safety at Bharati', query: 'Is it safe to fly Twin Otter at Bharati right now under current weather conditions?' },
+  { emoji: '🔮', text: 'Why is Mission Continuity Score 68%?', query: 'Why is our Mission Continuity Score at 68% and what factors contributed to it?' },
+  { emoji: '🛢️', text: 'Predict Maitri fuel depletion & resupply gap', query: 'How much fuel is left at Maitri Station and when will it deplete before resupply?' },
+  { emoji: '⚡', text: 'What if Cargo C-101 is delayed 5 days?', query: 'What happens if Cargo C-101 is delayed by 5 days in the What-If simulation?' },
+  { emoji: '⚙️', text: 'Which assets have high failure risk?', query: 'Which machinery and generator assets currently exhibit high failure risk?' },
+  { emoji: '💡', text: 'What is our core USP vs traditional systems?', query: 'What is the core USP of POLAR-AI compared to traditional logistics systems?' },
   { emoji: '🚨', text: 'Whiteout Blizzard Condition 1 Protocol', query: 'What is the Whiteout / Blizzard Condition 1 Emergency Protocol (SOP-BLZ-01)?' },
   { emoji: '📦', text: 'Which inventory items are critically low?', query: 'Which inventory items are critically low across all polar stations?' },
   { emoji: '👥', text: 'Show active personnel at Maitri', query: 'Show me all active personnel stationed at Maitri.' },
-  { emoji: '🔥', text: 'Station fire suppression protocol', query: 'What is the station habitat fire suppression and evacuation protocol?' },
-  { emoji: '❄️', text: 'Frostbite and hypothermia treatment stages', query: 'What are the treatment stages for severe frostbite and hypothermia?' },
-  { emoji: '🚛', text: 'Overland traverse safety checklist', query: 'What is the safety checklist and convoy protocol for overland traverses?' },
-  { emoji: '⚡', text: 'Generator failure emergency response', query: 'What is the emergency protocol if station generators fail?' },
-  { emoji: '📊', text: 'Mission status summary', query: 'Give me a complete operational status summary of the Polar Command Center.' },
-  { emoji: '🏔️', text: 'Indian Antarctic stations authoritative specs', query: 'Tell me authoritative specs about Maitri, Bharati, and Himadri research stations.' },
-  { emoji: '🛡️', text: 'COMNAP operational safety limits', query: 'What are the COMNAP and NCPOR polar operational safety limits?' }
 ];
 
 /**
@@ -214,6 +210,113 @@ export function buildOperationalContext(data) {
  */
 export function processQuery(query, contextData) {
   const q = query.toLowerCase().trim();
+
+  // PREDICTIVE 1: MISSION CONTINUITY SCORE & EXPLANATION
+  if (q.includes('continuity') || q.includes('score') || q.includes('68') || q.includes('why is my score') || q.includes('health index')) {
+    return `### 🔮 Predictive Mission Continuity Analysis (Score: 68% · ATTENTION REQUIRED)
+
+**Why is your score 68%? (0–100 Weighted Mathematical Breakdown):**
+
+1. **🔴 Fuel Resupply Gap at Maitri (-12 pts):**
+   - Current stock: **14,200 L** Diesel Fuel
+   - Daily burn: **1,180 L/day** → **12.0 days** remaining
+   - Inbound Cargo C-101 ETA: **17 days**
+   - Required Safety Buffer: **4 days**
+   - **Net Shortage Deficit:** **5.0 days (approx. 5,900 L)**
+
+2. **🔴 Secondary Generator G-02 Service Overdue (-8 pts):**
+   - Operating hours (4,120 hrs) exceed 4,000-hr overhaul limit by 8 days.
+   - Replacement gaskets delayed on Cargo C-105 at Novo Runway.
+
+3. **🟠 Cargo Consignment C-105 Grounded (-7 pts):**
+   - Novo Runway crosswinds sustained at 68 km/h (exceeding 45 km/h rotary-wing limit).
+
+4. **🟢 High Crew Availability (+5 pts):**
+   - 78% of registered personnel on active duty and medically cleared.
+
+5. **🟢 Microgrid Primary CAT 3512 Stable (+4 pts):**
+   - Generator G-01 operating within normal thermal and vibration parameters.
+
+**AI Decision Recommendation (REC-001):**
+Authorize **Level-1 Circuit Load Shedding** (saves 360 L/day, extending runway by +4.8 days) while alerting DROMLAN Twin-Otter crew for an emergency 16-drum aerial shuttle.
+
+[Open What-If Simulator -> simulator] · [Inspect Dependency Graph -> impact]`;
+  }
+
+  // PREDICTIVE 2: FUEL RUNWAY & SHORTAGE GAP FORECAST
+  if (q.includes('fuel') || q.includes('deplet') || q.includes('runway') || q.includes('resupply gap') || q.includes('c-101')) {
+    return `### 🛢️ Fuel Depletion Forecast & Resupply Window Analysis
+
+**Maitri Station Bulk Fuel Reserves:**
+- **Current Tank Volume:** 14,200 Litres (Arctic Kerosene-Diluted D-A)
+- **Current Station Burn Rate:** 1,180 L/day (Power Generation: 720 L/d + Hydronic Heating: 460 L/d)
+- **Calculated Runway:** **12.03 Days** (Depletion Date: **Sep 30, 2026**)
+- **Safety Buffer Threshold:** 4.0 Days (Buffer Date: **Sep 26, 2026**)
+
+**Inbound Resupply Logistics (C-101):**
+- **Cargo:** 48 Drums Arctic Diesel (9,600 kg)
+- **Current Location:** Novo Runway (Grounded by gale crosswinds)
+- **Projected ETA:** **17 Days**
+- **Critical Window Gap:** **5.0 Days Deficit**
+
+> **AI Prediction:** At current consumption, Maitri Station microgrid will face power curtailment 5 days prior to C-101 arrival unless consumption is reduced or emergency reserves are tapped.
+
+[Open What-If Simulator -> simulator] · [View Inventory Runway -> inventory]`;
+  }
+
+  // PREDICTIVE 3: WHAT-IF SIMULATION & DOWNSTREAM CASCADE
+  if (q.includes('simulate') || q.includes('what if') || q.includes('cascade') || q.includes('delayed 5 days')) {
+    return `### ⚡ What-If Simulation: +5 Days Resupply Delay Cascade
+
+**Simulation Scenario:** Cargo C-101 delayed by an additional +5 days (Total ETA: 22 days).
+
+**Downstream Failure Propagation:**
+1. **Root Event:** Novo Runway weather delay extends to 22 days.
+2. **Resource Impact:** Maitri fuel shortage gap expands from **5.0 days to 10.0 days**.
+3. **Continuity Index:** Plunges from **68% down to 51% (CRITICAL CONTINUITY COMPROMISE)**.
+4. **Asset Vulnerability:** Primary Generator G-01 forced to shed 45% load; secondary G-02 cannot assist due to overdue overhaul.
+5. **Mission Suspension:** **MIS-001 (Deep Ice-Core Paleoclimate Sampling)** is forcefully suspended to preserve habitat life support heating.
+
+**Grounded AI Mitigation:**
+- Option A: Re-assign PistenBully 300 snowcat for overland sledge hauling from Novo (bypasses air grounding).
+- Option B: Activate Dakshin Gangotri ice-buried emergency fuel cache.
+
+[Run Simulation In Sandbox -> simulator] · [View Dependency Graph -> impact]`;
+  }
+
+  // PREDICTIVE 4: CORE USP & SYSTEM COMPARISON
+  if (q.includes('usp') || q.includes('predictive') || q.includes('traditional') || q.includes('comparison') || q.includes('pitch')) {
+    return `### 🎯 POLAR-AI Core USP & Comparative Architecture
+
+> **"We are not just digitizing polar logistics. We are making the system predictive."**  
+> *PLAN → TRACK → MONITOR → PREDICT → SIMULATE → RECOMMEND → HUMAN APPROVAL → RESPOND → REPORT*
+
+| Traditional System | POLAR-AI (Our System) |
+|---|---|
+| Stores information | **Understands operational information** |
+| Manual monitoring | **Continuous automated monitoring** |
+| Reports shortage | **Predicts shortage & Last Safe Resupply Date** |
+| Shows cargo delay | **Predicts downstream cascading impact** |
+| Manual planning | **AI-assisted resilient planning** |
+| Emergency alert | **Autonomous emergency response assistance (100% offline)** |
+| Static dashboard | **Decision-support command dashboard** |
+| Past data | **Past + current data for forward prediction** |
+
+[Open PPT Presentation Deck -> reports] · [Launch Guided Demo -> dashboard]`;
+  }
+
+  // PREDICTIVE 5: MACHINERY ASSETS & FAILURE RISKS
+  if (q.includes('asset') || q.includes('machinery') || q.includes('snowcat') || q.includes('generator') || q.includes('failure risk')) {
+    return `### ⚙️ Machinery Asset Health & Failure Risk Telemetry
+
+**Fleet Status (16 Monitored Units):**
+- **AST-GEN-01 (CAT 3512 450 kW):** 8,240 / 8,500 hrs (**Medium Risk** — within 3% of service ceiling).
+- **AST-GEN-02 (Cummins 250 kW):** 4,120 / 4,000 hrs (**High Risk — Overdue by 8 days**; awaiting C-105 spares).
+- **AST-VEH-01 (PistenBully 300):** 1,840 / 2,500 hrs (**Low Risk** — ready for overland fuel hauling).
+- **AST-HEAT-01 (Maitri Hydronic Loop):** Operational, but 100% dependent on generator waste heat.
+
+[Inspect Asset Fleet -> assets] · [View Risk Matrix -> risks]`;
+  }
 
   // 1. BLIZZARD / WHITEOUT / WEATHER EMERGENCY
   if (q.includes('whiteout') || q.includes('blizzard') || q.includes('condition 1') || q.includes('storm')) {

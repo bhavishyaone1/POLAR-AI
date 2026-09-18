@@ -268,6 +268,10 @@ function parseInline(text, goTo) {
 export default function AiCopilot({ goTo }) {
   const dataContextValue = useData();
   const stats = dataContextValue?.stats || {};
+  const recommendations = dataContextValue?.recommendations || [];
+  const approveRecommendation = dataContextValue?.approveRecommendation;
+  const rejectRecommendation = dataContextValue?.rejectRecommendation;
+  const continuityMetrics = dataContextValue?.continuityMetrics;
 
   const [messages, setMessages] = useState([
     {
@@ -283,6 +287,7 @@ export default function AiCopilot({ goTo }) {
   const [loading, setLoading] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [showRecommendationsDrawer, setShowRecommendationsDrawer] = useState(true);
   const [showKey, setShowKey] = useState(false);
 
   const messagesEndRef = useRef(null);
@@ -505,6 +510,123 @@ export default function AiCopilot({ goTo }) {
           );
         })}
       </div>
+
+      {/* HUMAN-IN-THE-LOOP AI DECISION GATE */}
+      {recommendations && recommendations.length > 0 && (
+        <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-r from-[#09152b] via-[#070e1e] to-[#040810] p-4 shadow-lg shrink-0 space-y-3">
+          <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+            <div className="flex items-center gap-2">
+              <span className="rounded-full bg-cyan-950 border border-cyan-400 px-2.5 py-0.5 text-xs font-mono font-bold text-cyan-300 flex items-center gap-1.5">
+                <Sparkles size={13} className="text-cyan-400 animate-pulse" />
+                HUMAN-IN-THE-LOOP AI DECISION GATE
+              </span>
+              <span className="text-[11px] font-mono text-slate-400 hidden sm:inline">
+                Officers review & authorize AI mitigations
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowRecommendationsDrawer(!showRecommendationsDrawer)}
+              className="text-xs font-mono text-cyan-400 hover:text-cyan-300"
+            >
+              {showRecommendationsDrawer ? 'Minimize' : 'Expand Recommendations'}
+            </button>
+          </div>
+
+          {showRecommendationsDrawer && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              {recommendations.map((rec) => {
+                const isApproved = rec.status === 'APPROVED';
+                const isRejected = rec.status === 'REJECTED';
+
+                return (
+                  <div
+                    key={rec.id}
+                    className={`rounded-xl border p-3.5 space-y-2.5 text-xs transition ${
+                      isApproved
+                        ? 'border-emerald-500/40 bg-emerald-950/20'
+                        : isRejected
+                        ? 'border-slate-800 bg-slate-900/40 opacity-75'
+                        : 'border-cyan-500/30 bg-slate-900/80 shadow-md'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-[10px] font-bold text-cyan-400">{rec.id}</span>
+                          <span className="font-mono text-[10px] text-amber-300 bg-amber-950/80 px-1.5 py-0.2 rounded border border-amber-500/30">
+                            Confidence: {rec.confidence_score}%
+                          </span>
+                        </div>
+                        <h4 className="font-bold text-white text-sm mt-1">{rec.title}</h4>
+                      </div>
+
+                      <span
+                        className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded ${
+                          isApproved
+                            ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/50'
+                            : isRejected
+                            ? 'bg-slate-800 text-slate-400 border border-slate-700'
+                            : 'bg-amber-950 text-amber-300 border border-amber-500/50'
+                        }`}
+                      >
+                        {rec.status}
+                      </span>
+                    </div>
+
+                    <p className="text-slate-300 text-xs leading-relaxed">
+                      {rec.problem}
+                    </p>
+
+                    <div className="rounded-lg bg-slate-950/60 p-2 border border-slate-800 text-[11px] text-cyan-200">
+                      <strong>Recommended Action:</strong> {rec.recommended_action}
+                    </div>
+
+                    {isApproved ? (
+                      <div className="flex items-center justify-between pt-1 text-[11px] font-mono text-emerald-400">
+                        <span>✓ Authorized by {rec.review_officer || 'Operations Officer'}</span>
+                        <button onClick={() => goTo && goTo('audit')} className="underline hover:text-white">
+                          View Audit Entry →
+                        </button>
+                      </div>
+                    ) : isRejected ? (
+                      <span className="text-[11px] font-mono text-slate-500 block pt-1">
+                        ✕ Recommendation dismissed
+                      </span>
+                    ) : (
+                      <div className="flex items-center gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (approveRecommendation) {
+                              approveRecommendation(rec.id, 'Operations Officer');
+                            }
+                          }}
+                          className="flex-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 py-1.5 text-xs font-bold text-white transition shadow-sm"
+                        >
+                          Authorize Action (Approve)
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (rejectRecommendation) {
+                              rejectRecommendation(rec.id, 'Operations Officer');
+                            }
+                          }}
+                          className="rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs text-slate-400 hover:text-white transition"
+                        >
+                          Reject
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* MAIN CHAT CONSOLE */}
       <Panel className="flex-1 flex flex-col overflow-hidden min-h-[320px]" noPad>

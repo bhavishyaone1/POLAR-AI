@@ -1104,9 +1104,17 @@ export function DataProvider({ children }) {
     return traceImpactCascade(nodeId)
   }, [])
 
-  const triageEmergency = useCallback((incident) => {
-    return triageEmergencyOffline({ incident, personnel, assets, inventory })
-  }, [personnel, assets, inventory])
+  const triageEmergency = useCallback(
+    (incidentOrId) => {
+      const inc =
+        typeof incidentOrId === 'object' && incidentOrId !== null
+          ? incidentOrId
+          : emergencies.find((e) => e.id === incidentOrId)
+      if (!inc) return null
+      return triageEmergencyOffline({ incident: inc, personnel, assets, inventory })
+    },
+    [emergencies, personnel, assets, inventory]
+  )
 
   /* ---------- 7. HAND EVERYTHING TO THE APP ---------- */
   const value = useMemo(
