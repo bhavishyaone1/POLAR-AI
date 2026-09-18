@@ -1,59 +1,81 @@
-# POLAR COMMAND CENTER
+# POLAR-AI ❄️
+### Polar Operations, Logistics & Autonomous Resilience Intelligence
 
-**Integrated Polar Expedition Logistics & Asset Management System**
+> *"We are not just digitizing polar logistics. We are making the system predictive."*  
+> **Workflow Closed-Loop**: `PLAN` → `TRACK` → `MONITOR` → `PREDICT` → `SIMULATE` → `RECOMMEND` → `HUMAN APPROVAL` → `RESPOND` → `REPORT`
 
-National Polar Operations Platform
-Ministry of Earth Sciences (MoES) · National Centre for Polar and Ocean Research (NCPOR)
-Category: Mission Operations Software
+[![Vite](https://img.shields.io/badge/Vite-8.2-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![React](https://img.shields.io/badge/React-19.0-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Deployment-Ready-brightgreen)](https://github.com/bhavishyaone1/POLAR-AI)
 
 ---
 
-## 1. Project overview
+## 1. Executive Summary & Core Value Proposition
 
-Running a polar research station means keeping track of four things at once: **who is
-deployed, what is in transit, what is running out, and what has gone wrong.** Today those
-four things usually live in four different places — a spreadsheet, a logbook, a WhatsApp
-group, a radio call. When something goes wrong, somebody has to phone around to assemble
-the picture.
+Operating scientific research stations in Antarctica (such as **Maitri** and **Bharati**) requires juggling multi-week supply logistics, brutal blizzards, mission-critical power generation, and isolated personnel safety.
 
-POLAR COMMAND CENTER is one console that holds all four. It is a single-screen operations
-dashboard with eight modules, built to show that expedition planning, personnel, cargo,
-inventory and emergency response are the *same* problem and belong in the *same* system.
+Traditional polar management relies on fragmented, reactive tools: spreadsheets, static logbooks, isolated HF radio calls, and manual guesswork. When an icebreaker is delayed or a primary generator trips, station commanders have to manually piece together downstream consequences across separate documents.
 
-### The one thing to notice: the modules are connected
+**POLAR-AI** transforms polar operations from **reactive tracking** into an **autonomous, predictive decision-support system**:
+- **Predicts** critical resource depletion horizons before shortages happen.
+- **Simulates** cascades across microgrids, science labs, and life-support via a non-mutating sandbox.
+- **Triages** emergency casualties with 100% disconnected offline spatial trigonometry.
+- **Empowers** commanders with explainable AI recommendations safeguarded by a human-in-the-loop authorization gate and immutable cryptographic audit trail.
 
-This is the heart of the project, and it is what the demo is built around. The modules are
-not eight separate CRUD screens that happen to share a sidebar. They read the same records,
-so a change in one is immediately visible in the others:
+---
 
-| You do this | These update on their own |
-|---|---|
-| Report an emergency | The sidebar alert count rises · the incident appears on the dashboard banner · the affected person's status flips to **EMERGENCY** · their map marker turns red |
-| Mark a consignment delayed | The Cargo delay count rises · the dashboard "in transit" figures change |
-| Take stock below its minimum | The item becomes **LOW STOCK** · the sidebar warning count rises · the dashboard low-stock card changes |
-| Resolve an incident | The alert count falls · the person is released back to **ACTIVE** |
+## 2. Defining Capabilities & Intelligence Engines
 
-Nothing in that table is typed in twice. Every number is **calculated from the records**,
-never stored as its own field — so no counter can ever drift out of step with reality.
+### 🛡️ 1. Mission Continuity Engine (0–100 Score)
+- Evaluates real-time telemetry across inventory runway, asset health, cargo pipelines, blizzard hazards, and crew medical safety.
+- Current baseline: **68% [DEGRADED]**.
+- **Transparent explainability**: Click *"Why is my score 68%?"* to see exact point deductions:
+  - `-12 pts`: Fuel resupply deficit gap at Maitri (12.0d runway vs 17.0d cargo ETA).
+  - `-8 pts`: Overdue maintenance on Primary Diesel Generator `AST-GEN-01` (2,450 hrs).
+  - `-6 pts`: High-risk blizzard warning at Larsemann Hills.
+  - `-6 pts`: Delayed icebreaker cargo consignment `C-101` trapped in pack ice.
 
-### What is real and what is simulated
+### ⚡ 2. Predictive Consumption & Resource Runway
+- Continuously calculates burn rate vs remaining stocks (e.g. Maitri Diesel: `14,200 L` @ `1,180 L/day` = `12.0 days runway`).
+- Compares runway against incoming cargo supply ETA (`C-101` @ 17 days) to isolate the **5.0-day unhedged deficit window** before blackout occurs.
+- Flags Last Safe Resupply Dates and critical buffer thresholds across fuels, potable water, freeze-dried rations, and medical O2.
 
-A prototype should be honest about its own edges, so this is stated plainly here, on the
-login screen, and permanently in the sidebar footer:
+### 🧪 3. What-If Simulation Sandbox
+- Isolated, non-mutating scenario branching:
+  - Adjust sliders for Cargo Resupply Delay (+1 to +14 days).
+  - Surge station consumption burn rates (+10% to +50%).
+  - Simulate primary generator trip (`AST-GEN-01`).
+  - Toggle extreme blizzard conditions.
+- Real-time score delta preview: watch score drop from **68% down to 51% (CRITICAL)** without altering live operational data.
 
-- **Positions are simulated.** The coordinates are realistic fixed demo values for Indian
-  polar stations and camps. There is **no real GPS or beacon tracking** in this project.
-- **Weather is genuinely live** — fetched from the Open-Meteo public API. If the API cannot
-  be reached, the app shows clearly-labelled fallback figures and says so on screen. It
-  never presents demo numbers as live readings.
-- **Records live in the browser by default** and reset when you refresh. Connect the
-  optional Supabase database and they persist — the sidebar footer always tells you which
-  of the two is currently true.
-- **The login is a role picker, not security.** It decides which controls appear. It is not
-  an authentication system and does not pretend to be.
-- **Names are fictional.** No real person's information is used anywhere.
+### 🕸️ 4. Interactive Visual Dependency Graph & Cascade Analysis
+- Directed Acyclic Graph (DAG) visualizing physical polar interdependencies:
+  `Cargo Resupply` → `Fuel Reserve` → `Primary Generators` → `Station Microgrid` → `Scientific Cryo Labs & Life Support`.
+- Node blast radius isolation: clicking any asset highlights its immediate upstream causes and downstream cascading failures.
 
-This is a **working prototype**, not a production system.
+### 🚨 5. 100% Offline Autonomous Spatial Triage
+- Completely disconnected edge operation (zero satellite, internet, or cloud requirement).
+- Spherical Haversine great-circle calculations:
+  - Sorts nearest responding personnel, calculating foot traverse and snowmobile transit times.
+  - Identifies closest qualified medics and blood-group compatibility.
+  - Locates nearest operational tracked snowcats (e.g. PistenBully 300) with vehicle ETA.
+  - Recommends required trauma/hypothermia stores and sets CODAN HF Channel 4 (8,291 kHz).
+- **1-Click "Execute Autonomous Dispatch"** button to order field response and log to the audit trail.
+
+### 🤖 6. AI Copilot & Human-in-the-Loop Decision Gating
+- Domain-specific polar predictive reasoning (`REC-001`: Activate Strategic Fuel Reserve; `REC-002`: Microgrid Non-Essential Shedding).
+- Strict commander authorization workflow: recommendations require explicit human officer approval before recording to the **Cryptographic Immutable Audit Trail**.
+
+### 🚜 7. Fleet Asset Management & Failure Risk Modeling
+- 16 polar assets across Caterpillar generators, PistenBully snowcats, Toyota Hilux Arctic vehicles, snowmobiles, and water desalination plants.
+- Tracks operating hours, condition ratings, and predictive failure probability models.
+
+### 📊 8. 5x5 Operational Risk Matrix & Presentation Mode
+- Categorized risk matrix (`RSK-001` through `RSK-005`) with likelihood × consequence scoring.
+- Built-in **Presentation Mode** with side-by-side comparative matrix (Traditional vs POLAR-AI) for mission briefings and pitch demonstrations.
+- One-click printable **Daily Mission Audit Report**.
 
 ---
 
