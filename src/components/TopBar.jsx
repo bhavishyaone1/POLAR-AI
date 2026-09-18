@@ -73,7 +73,7 @@ export default function TopBar({
 
   return (
     <header
-      className="flex items-center gap-2.5 border-b bg-[var(--surface-card)]/95 px-3.5 py-2 backdrop-blur-md sm:gap-3 sm:px-5"
+      className="flex items-center gap-3 border-b bg-[var(--surface-card)]/95 px-5 py-3 backdrop-blur-md sm:gap-4 sm:px-8"
       style={{ borderColor: 'var(--line)' }}
     >
       {/* Hamburger — only shown on small screens. */}

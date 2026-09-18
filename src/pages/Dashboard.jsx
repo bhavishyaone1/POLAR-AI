@@ -132,14 +132,14 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
   const stockHealth = countInto(STOCK_STATUS, inventory, (i) => stockStatus(i), 'item')
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-8">
       {/* ============================================================
           1. THE ALERT BANNER
           Only rendered when something is genuinely open. An always-on
           red banner trains people to ignore red banners.
           ============================================================ */}
       {openIncidents.length > 0 && !alertDismissed && (
-        <div className="alert-strip flex items-center justify-between py-2 px-3.5">
+        <div className="alert-strip flex items-center justify-between py-2.5 px-4 rounded-xl">
           <div className="flex items-center gap-2.5 min-w-0">
             <Siren size={16} strokeWidth={2} className="pulse shrink-0 text-[var(--red)]" />
             <div className="min-w-0 flex-1 text-xs">
@@ -159,17 +159,17 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0 ml-3">
-            <button type="button" className="btn btn--alert btn--sm py-0.5 px-2.5 text-xs" onClick={() => goTo('emergency')}>
+            <button type="button" className="btn btn--alert btn--sm py-1 px-3 text-xs" onClick={() => goTo('emergency')}>
               Respond
             </button>
             <button
               type="button"
               onClick={() => setAlertDismissed(true)}
-              className="rounded p-1 text-low hover:text-hi transition"
+              className="rounded-md p-1.5 text-low hover:text-hi transition"
               title="Dismiss alert banner"
               aria-label="Dismiss alert banner"
             >
-              <X size={13} />
+              <X size={14} />
             </button>
           </div>
         </div>
@@ -178,11 +178,11 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           PREDICTIVE MISSION CONTINUITY HERO (CORE USP)
           ============================================================ */}
-      <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-[#09152b] via-[#070e1e] to-[#040810] p-5 shadow-xl space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
-          <div className="flex items-center gap-2">
-            <span className="rounded-full bg-cyan-950 border border-cyan-400 px-2.5 py-0.5 text-xs font-mono font-bold text-cyan-300 flex items-center gap-1.5">
-              <Sparkles size={13} className="text-cyan-400 animate-pulse" />
+      <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-card)] p-6 sm:p-7 shadow-sm space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] pb-4">
+          <div className="flex items-center gap-2.5">
+            <span className="rounded-full bg-cyan-950/60 border border-cyan-500/30 px-3 py-1 text-xs font-mono font-medium text-cyan-300 flex items-center gap-1.5">
+              <Sparkles size={13} className="text-cyan-400" />
               MISSION CONTINUITY INTELLIGENCE
             </span>
             <span className="text-xs text-slate-400 font-mono hidden sm:inline">
@@ -190,17 +190,17 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               onClick={() => onStartGuidedDemo ? onStartGuidedDemo() : goTo('impact')}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500/20 border border-amber-500/40 px-3 py-1.5 text-xs font-mono font-bold text-amber-300 transition hover:bg-amber-500/30"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 px-3.5 py-1.5 text-xs font-mono font-semibold text-amber-300 transition hover:bg-amber-500/20"
             >
               <Play size={13} className="fill-amber-300" />
               Guided Demo: Fuel Gap Walkthrough
             </button>
             <button
               onClick={() => goTo('landing')}
-              className="rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white"
+              className="rounded-lg border border-[var(--line)] bg-[var(--surface-raised)]/60 px-3.5 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-[var(--surface-raised)] hover:text-white"
             >
               System Comparison (PPT)
             </button>
@@ -208,40 +208,40 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         </div>
 
         {/* USP Quote Strip */}
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-          <p className="italic text-slate-200">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs py-0.5">
+          <p className="italic text-[var(--ink-mid)] font-medium">
             "{SYSTEM_USP.tagline}"
           </p>
-          <span className="font-mono text-[11px] text-cyan-300/80">
+          <span className="font-mono text-[11px] text-cyan-400/90">
             {SYSTEM_USP.philosophy}
           </span>
         </div>
 
         {/* Score & Resource Runway Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 pt-1">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 pt-1">
           {/* Continuity Score Gauge (4 cols) */}
-          <div className="md:col-span-4 rounded-xl border border-slate-800 bg-[#08101e] p-4 flex flex-col justify-between">
+          <div className="md:col-span-4 rounded-xl border border-[var(--line)] bg-[var(--surface-raised)]/35 p-5 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
                   Mission Continuity Score
                 </span>
-                <span className="rounded bg-amber-950/80 border border-amber-500/40 px-2 py-0.5 text-[10px] font-mono text-amber-300">
+                <span className="rounded-full bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-[10px] font-mono font-medium text-amber-300">
                   {continuityMetrics?.statusText ?? 'ATTENTION REQUIRED'}
                 </span>
               </div>
-              <div className="flex items-baseline gap-2 mt-2">
+              <div className="flex items-baseline gap-2 mt-3">
                 <span className="text-4xl font-extrabold text-amber-400">
                   {continuityMetrics?.score ?? 68}%
                 </span>
                 <span className="text-xs text-slate-400 font-mono">Weighted Health Index</span>
               </div>
-              <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+              <p className="text-xs text-[var(--ink-mid)] mt-3 leading-relaxed">
                 Logistics & fuel resupply deficits reduce station buffer below safety margins. Immediate mitigation recommended.
               </p>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <div className="mt-5 pt-3.5 border-t border-[var(--line)] flex items-center justify-between">
               <button
                 onClick={() => setShowWhyScore(!showWhyScore)}
                 className="inline-flex items-center gap-1 text-xs font-mono text-cyan-400 hover:text-cyan-300 font-semibold"
@@ -259,8 +259,8 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           </div>
 
           {/* Resource Depletion Forecast Runway (5 cols) */}
-          <div className="md:col-span-5 rounded-xl border border-slate-800 bg-[#08101e] p-4 flex flex-col justify-between">
-            <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
+          <div className="md:col-span-5 rounded-xl border border-[var(--line)] bg-[var(--surface-raised)]/35 p-5 flex flex-col justify-between">
+            <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">
               <span className="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
                 <Hourglass size={13} className="text-cyan-400" />
                 Resource Runway Forecast
@@ -268,17 +268,17 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <span className="text-[10px] font-mono text-rose-400 font-semibold">1 Critical Window Breach</span>
             </div>
 
-            <div className="space-y-2.5 py-2 text-xs">
+            <div className="space-y-3.5 py-3 text-xs">
               {/* Fuel */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <div className="flex justify-between font-mono">
-                  <span className="text-slate-300 flex items-center gap-1 font-semibold">
+                  <span className="text-slate-300 flex items-center gap-1.5 font-semibold">
                     <Flame size={12} className="text-rose-400" />
                     Diesel Fuel (Maitri)
                   </span>
                   <span className="text-rose-400 font-bold">12.0 Days Available</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden">
                   <div className="h-full bg-rose-500 rounded-full w-[40%]" />
                 </div>
                 <span className="text-[10px] text-slate-400 block">
@@ -287,36 +287,36 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               </div>
 
               {/* Food */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <div className="flex justify-between font-mono">
-                  <span className="text-slate-300 flex items-center gap-1 font-semibold">
+                  <span className="text-slate-300 flex items-center gap-1.5 font-semibold">
                     <Package size={12} className="text-emerald-400" />
                     Ration Packs (Food)
                   </span>
                   <span className="text-emerald-400 font-bold">24.0 Days Available</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden">
                   <div className="h-full bg-emerald-500 rounded-full w-[75%]" />
                 </div>
               </div>
 
               {/* Medical */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <div className="flex justify-between font-mono">
-                  <span className="text-slate-300 flex items-center gap-1 font-semibold">
+                  <span className="text-slate-300 flex items-center gap-1.5 font-semibold">
                     <ShieldAlert size={12} className="text-sky-400" />
                     Medical & Trauma Kits
                   </span>
                   <span className="text-sky-400 font-bold">40.0 Days Available</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden">
                   <div className="h-full bg-sky-500 rounded-full w-[88%]" />
                 </div>
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-mono">
-              <span>Last Safe Resupply Date: <strong>Sep 26, 2026</strong></span>
+            <div className="pt-3 border-t border-[var(--line)] flex items-center justify-between text-[11px] text-slate-400 font-mono">
+              <span>Last Safe Resupply Date: <strong className="text-[var(--ink-hi)]">Sep 26, 2026</strong></span>
               <button onClick={() => goTo('inventory')} className="text-cyan-400 hover:underline">
                 View All Runway
               </button>
@@ -324,22 +324,22 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           </div>
 
           {/* Operational Risk Alert (3 cols) */}
-          <div className="md:col-span-3 rounded-xl border border-rose-500/40 bg-rose-950/20 p-4 flex flex-col justify-between">
+          <div className="md:col-span-3 rounded-xl border border-rose-500/30 bg-rose-950/20 p-5 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase text-rose-400">
                 <AlertTriangle size={14} className="animate-pulse" />
                 Active Risk Flagged
               </div>
-              <h4 className="font-bold text-white text-sm mt-1">RSK-001: Fuel Window Breach</h4>
-              <p className="text-xs text-rose-200/90 mt-1 leading-relaxed">
+              <h4 className="font-bold text-white text-sm mt-2">RSK-001: Fuel Window Breach</h4>
+              <p className="text-xs text-rose-200/80 mt-2 leading-relaxed">
                 12 days of fuel remaining vs 17-day cargo arrival creates an unhedged 5-day deficit gap.
               </p>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-rose-500/20 flex flex-col gap-2">
+            <div className="mt-5 pt-3.5 border-t border-rose-500/20 flex flex-col gap-2.5">
               <button
                 onClick={() => goTo('impact')}
-                className="w-full rounded bg-rose-600 hover:bg-rose-500 py-1.5 text-xs font-bold text-white transition shadow-sm"
+                className="w-full rounded-lg bg-rose-600 hover:bg-rose-500 py-2 text-xs font-bold text-white transition shadow-sm"
               >
                 Trace Impact Graph →
               </button>
@@ -355,8 +355,8 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
         {/* Expandable "Why is my score this way?" Drawer */}
         {showWhyScore && (
-          <div className="rounded-xl border border-slate-800 bg-[#060c18] p-4 space-y-3 animate-fade-in">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div className="rounded-xl border border-[var(--line)] bg-[var(--surface-raised)]/60 p-5 space-y-3.5 animate-fade-in">
+            <div className="flex items-center justify-between border-b border-[var(--line)] pb-2.5">
               <h4 className="text-xs font-mono uppercase font-bold text-cyan-400">
                 Transparent Continuity Contributors Breakdown (0–100 Weighted Formulation)
               </h4>
@@ -365,15 +365,15 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               {continuityMetrics?.contributors?.map((c) => (
                 <div
                   key={c.id}
-                  className="rounded-lg border border-slate-800 bg-slate-900/60 p-3 flex items-start justify-between gap-3"
+                  className="rounded-lg border border-[var(--line)] bg-[var(--surface-card)] p-3.5 flex items-start justify-between gap-3"
                 >
                   <div>
                     <span className="font-semibold text-white block">{c.label}</span>
-                    <span className="text-slate-400 text-[11px] mt-0.5 block">{c.evidence}</span>
+                    <span className="text-slate-400 text-[11px] mt-1 block">{c.evidence}</span>
                   </div>
                   <span
                     className={`font-mono font-bold px-2 py-0.5 rounded text-xs shrink-0 ${
@@ -394,9 +394,9 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           EXPEDITION SELECTOR BAR
           ============================================================ */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-[var(--line)] bg-[var(--surface-card)] p-2.5 shadow-sm">
-        <div className="flex flex-wrap items-center gap-1.5">
-          <div className="mr-1 flex items-center gap-1 text-[11px] font-mono font-bold uppercase tracking-wider text-mid">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--line)] bg-[var(--surface-card)] p-3 px-4 shadow-sm">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="mr-1 flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-mid">
             <Compass size={13} className="text-[var(--ice)]" />
             <span>Expedition Filter:</span>
           </div>
@@ -417,7 +417,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                 key={exp.id}
                 type="button"
                 onClick={() => setSelectedExpedition(isSelected ? 'ALL' : exp.id)}
-                className={`btn btn--sm flex items-center gap-1.5 ${
+                className={`btn btn--sm flex items-center gap-2 ${
                   isSelected ? '' : 'btn--ghost'
                 }`}
               >
@@ -445,7 +445,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           2. THE HEADLINE NUMBERS
           Each card is clickable and takes you to the module behind it.
           ============================================================ */}
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-5">
         <StatCard
           label="Active Expeditions"
           value={stats.expeditionsActive}
@@ -490,7 +490,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           3. ACTIVE EXPEDITIONS + OPEN INCIDENTS side by side
           ============================================================ */}
-      <div className="grid gap-4 xl:grid-cols-3">
+      <div className="grid gap-6 xl:grid-cols-3">
         <Panel
           className="xl:col-span-2"
           eyebrow="Operations"
@@ -623,7 +623,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           </button>
         }
       >
-        <div className="grid gap-3.5 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {(selectedExpedition === 'ALL'
             ? expeditions
             : expeditions.filter((e) => e.id === selectedExpedition)
@@ -639,7 +639,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             return (
               <div
                 key={exp.id}
-                className="flex flex-col justify-between rounded-lg border border-[var(--line)] bg-[var(--surface-base)] p-4 shadow-sm transition hover:border-[var(--ice)]"
+                className="flex flex-col justify-between rounded-xl border border-[var(--line)] bg-[var(--surface-card)] p-5 shadow-sm transition hover:border-[var(--ice)]"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2">
@@ -726,7 +726,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           counted. An operator reads the shape of the operation here without
           reading a single number.
           ============================================================ */}
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         <Panel
           eyebrow="Logistics"
           title="Cargo Pipeline"
@@ -781,7 +781,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           5. CARGO NEEDING ATTENTION + LOW STOCK + ACTIVITY
           ============================================================ */}
-      <div className="grid gap-4 xl:grid-cols-3">
+      <div className="grid gap-6 xl:grid-cols-3">
         <Panel
           eyebrow="Logistics"
           title="Cargo Needing Attention"

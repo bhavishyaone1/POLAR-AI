@@ -66,14 +66,14 @@
   --ink-mid: #64748B;
   --ink-low: #94A3B8;
 
-  --font-display: 'Oswald', 'Arial Narrow', sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --radius: 8px;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --radius: 12px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.1);
 
   /* Compatibility aliases for provenance & research components */
   --primary: #0EA5E9;
@@ -87,68 +87,66 @@
 
 /* ---------- 2. CYAN THEME (ARCTIC CYAN DARK) ----------
    Activated by setting data-theme="cyan" (or "dark") on <html>.
-   Deep arctic cyan-to-dark command center palette. */
+   Deep arctic cyan-to-dark command center palette with calm, crisp slate typography. */
 [data-theme="dark"],
 [data-theme="cyan"] {
-  --surface-base: #030C12;
-  --surface-card: #071723;
-  --surface-raised: #0C2333;
-  --surface-sunken: #05131C;
-  --surface-hover: #0F2B3E;
-  --surface-active: #12334A;
+  --surface-base: #0B0F17;
+  --surface-card: #111827;
+  --surface-raised: #1E293B;
+  --surface-sunken: #070B11;
+  --surface-hover: #1E293B;
+  --surface-active: #243044;
 
-  --navy-950: #030C12;
-  --navy-900: #071723;
-  --navy-850: #0C2333;
-  --navy-800: #112F43;
-  --navy-700: #19445E;
-  --navy-600: #256082;
-  --line: #153E57;
-  --line-soft: #0E2A3C;
+  --navy-950: #0B0F17;
+  --navy-900: #111827;
+  --navy-850: #1E293B;
+  --navy-800: #273549;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-soft: rgba(255, 255, 255, 0.04);
 
-  --ice: #06B6D4;
-  --ice-dim: #0891B2;
-  --cyan: #22D3EE;
-  --orange: #FF6A3D;
-  --amber: #E8B84B;
+  --ice: #38BDF8;
+  --ice-dim: #0284C7;
+  --cyan: #06B6D4;
+  --orange: #F97316;
+  --amber: #F59E0B;
   --green: #10B981;
-  --red: #F43F5E;
-  --blue: #38BDF8;
-  --violet: #A78BFA;
+  --red: #EF4444;
+  --blue: #3B82F6;
+  --violet: #8B5CF6;
 
-  --ink-hi: #ECFEFF;
-  --ink-mid: #A5F3FC;
-  --ink-low: #67E8F9;
+  --ink-hi: #F8FAFC;
+  --ink-mid: #94A3B8;
+  --ink-low: #64748B;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.65);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.6);
 
-  --chart-grid: #0E2A3C;
-  --chart-label: #A5F3FC;
-  --chart-note: #A5F3FC;
-  --chart-tick: #67E8F9;
-  --chart-cursor: rgba(6, 182, 212, 0.12);
+  --chart-grid: rgba(255, 255, 255, 0.05);
+  --chart-label: #94A3B8;
+  --chart-note: #94A3B8;
+  --chart-tick: #64748B;
+  --chart-cursor: rgba(56, 189, 248, 0.1);
 
   /* Compatibility aliases for provenance & research components */
-  --primary: #06B6D4;
-  --border: #153E57;
-  --surface: #071723;
-  --text: #ECFEFF;
-  --text-hi: #ECFEFF;
-  --text-muted: #A5F3FC;
+  --primary: #38BDF8;
+  --border: rgba(255, 255, 255, 0.08);
+  --surface: #111827;
+  --text: #F8FAFC;
+  --text-hi: #F8FAFC;
+  --text-muted: #94A3B8;
 }
 
-/* Cyan mode body background pattern — luminous arctic cyan glow and tactical grid */
+/* Cyan mode body background pattern — clean, minimal dark atmosphere */
 [data-theme="dark"] body,
 [data-theme="cyan"] body {
   background-color: var(--surface-base);
   background-image:
-    radial-gradient(ellipse at 25% 10%, rgba(6, 182, 212, 0.09), transparent 50%),
-    radial-gradient(ellipse at 80% 85%, rgba(8, 145, 178, 0.06), transparent 50%),
-    repeating-linear-gradient(0deg, rgba(6, 182, 212, 0.02) 0px, rgba(6, 182, 212, 0.02) 1px, transparent 1px, transparent 48px),
-    repeating-linear-gradient(90deg, rgba(6, 182, 212, 0.02) 0px, rgba(6, 182, 212, 0.02) 1px, transparent 1px, transparent 48px);
-  background-repeat: no-repeat, no-repeat, repeat, repeat;
+    radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.04), transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(99, 102, 241, 0.02), transparent 50%);
+  background-repeat: no-repeat;
 }
 
 /* Cyan mode scrollbar */
@@ -300,16 +298,9 @@
     background-color: var(--surface-card);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 20px 22px;
+    padding: 24px 28px;
     box-shadow: var(--shadow-sm);
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
-
-    /* min-width: 0 is essential, not cosmetic.
-       A card is usually a grid or flex item, and those default to
-       `min-width: auto` — meaning they refuse to shrink below the widest
-       thing inside them. A wide table would therefore stretch the card
-       past the edge of a phone screen instead of scrolling inside it.
-       Setting 0 here lets .table-scroll do its job. */
     min-width: 0;
   }
 
@@ -317,7 +308,7 @@
     background-color: var(--surface-card);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 14px 16px;
+    padding: 18px 22px;
     box-shadow: var(--shadow-sm);
     min-width: 0;
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
@@ -335,7 +326,7 @@
     width: 100%;
   }
   .card-interactive:hover {
-    border-color: var(--ice-dim);
+    border-color: rgba(56, 189, 248, 0.35);
     background-color: var(--surface-hover);
     box-shadow: var(--shadow-md);
     transform: translateY(-1px);
@@ -346,29 +337,32 @@
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin: 0 0 14px;
+    margin: 0 0 6px;
     font-family: var(--font-display);
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: -0.01em;
     color: var(--ink-hi);
   }
 
   .panel-subtitle {
     font-family: var(--font-body);
-    font-size: 11.5px;
+    font-size: 13px;
     font-weight: 400;
-    letter-spacing: 0.02em;
-    color: var(--ink-low);
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: var(--ink-mid);
+    margin: 0 0 18px;
   }
 
   /* Small uppercase label used above values and section groups. */
   .eyebrow {
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.09em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink-low);
+    margin-bottom: 4px;
   }
 
   /* --- Stat cards (the big numbers on the dashboard) --- */
@@ -393,26 +387,27 @@
   /* --- Tables --- */
   .data-table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 13.5px;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
   }
   .data-table thead th {
     position: sticky;
     top: 0;
     z-index: 5;
     background: var(--surface-card);
-    padding: 8px 12px;
+    padding: 12px 16px;
     text-align: left;
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--ink-low);
-    border-bottom: 2px solid var(--line);
+    border-bottom: 1px solid var(--line);
     white-space: nowrap;
   }
   .data-table tbody td {
-    padding: 11px 12px;
+    padding: 14px 16px;
     border-bottom: 1px solid var(--line-soft);
     color: var(--ink-mid);
     vertical-align: middle;
@@ -772,15 +767,15 @@
     margin: 0;
     color: var(--ink-hi);
     font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
   .page-blurb {
-    margin: 2px 0 0;
-    color: var(--ink-low);
-    font-size: 12.5px;
+    margin: 3px 0 0;
+    color: var(--ink-mid);
+    font-size: 13px;
+    line-height: 1.4;
   }
 
   /* --- Thin progress bar, used for expedition completion --- */

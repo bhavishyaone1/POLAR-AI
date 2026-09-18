@@ -306,14 +306,14 @@ export default function Inventory({ goTo }) {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-8">
       {/* ================= SUMMARY STRIP =================
           A note on the labels, because it is easy to get this wrong:
           "At or below min" is the count of everything needing attention,
           and "Out of stock" is a SUBSET of it (an item at zero is also
           below its minimum). So Available + At-or-below-min = the total,
           and 'At or below min' is the same number the dashboard shows. */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:gap-5 sm:grid-cols-3 lg:grid-cols-5">
         {[
           { label: 'Items tracked', value: stats.inventoryTotal },
           {
@@ -391,13 +391,13 @@ export default function Inventory({ goTo }) {
           </div>
         }
       >
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {consumableMetrics.map(({ item, daysRemaining, etaDays, resupplyGapDays, isAtRisk, linkedCargo }) => {
             const isDeficit = resupplyGapDays > 0
             return (
               <div
                 key={item.id}
-                className="rounded border p-3.5 flex flex-col justify-between transition"
+                className="rounded-xl border p-5 flex flex-col justify-between transition shadow-sm"
                 style={{
                   backgroundColor: isDeficit ? 'rgba(239, 68, 68, 0.05)' : 'var(--surface-raised)',
                   borderColor: isDeficit ? 'rgba(239, 68, 68, 0.4)' : 'var(--line)',
@@ -678,7 +678,7 @@ export default function Inventory({ goTo }) {
         }
       >
         {/* ---------- FILTERS ---------- */}
-        <div className="mb-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <label className="field-label" htmlFor="inv-search">
               <Filter size={10} className="mr-1 inline" /> Search
@@ -959,7 +959,7 @@ export default function Inventory({ goTo }) {
       </Panel>
 
       {/* ================= RESTOCK LIST + GROUPED VIEWS ================= */}
-      <div className="grid gap-4 xl:grid-cols-3">
+      <div className="grid gap-6 xl:grid-cols-3">
         {/* ---------- Restock list ---------- */}
         <Panel
           eyebrow="Action required"

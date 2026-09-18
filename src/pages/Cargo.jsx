@@ -240,9 +240,9 @@ export default function Cargo({ goTo }) {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-8">
       {/* ================= SUMMARY STRIP ================= */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:gap-5 sm:grid-cols-3 lg:grid-cols-5">
         {[
           { label: 'Consignments', value: cargo.length },
           { label: 'In transit', value: inTransit.length, tone: 'ok' },
@@ -625,7 +625,7 @@ export default function Cargo({ goTo }) {
         </div>
 
         {/* ---------- FILTERS ---------- */}
-        <div className="mb-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <label className="field-label" htmlFor="cg-search">
               <Filter size={10} className="mr-1 inline" /> Search
@@ -1057,7 +1057,7 @@ export default function Cargo({ goTo }) {
           Two views of the same register: where consignments are, and how
           urgent they are. Both are counted on every render, so changing a
           status in the table above moves a bar here immediately. */}
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         <Panel
           eyebrow="Pipeline"
           title="Consignments by Status"
@@ -1088,7 +1088,7 @@ export default function Cargo({ goTo }) {
       </div>
 
       {/* ================= DETAIL + WATCHLIST + LOAD BY DESTINATION ================= */}
-      <div className="grid gap-4 xl:grid-cols-3">
+      <div className="grid gap-6 xl:grid-cols-3">
         {/* ---------- Selected consignment ---------- */}
         {!selected ? (
           <Panel eyebrow="Detail" title="Consignment Detail">

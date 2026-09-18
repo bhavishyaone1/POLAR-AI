@@ -64,7 +64,7 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
           height and scrolls on its own if it ever needs to. */}
       <aside
         className={`
-          fixed inset-y-0 left-0 z-40 flex w-[236px] flex-col border-r
+          fixed inset-y-0 left-0 z-40 flex w-[256px] flex-col border-r
           bg-[var(--surface-card)] transition-transform duration-200
           lg:sticky lg:bottom-auto lg:top-0 lg:z-auto lg:h-screen lg:translate-x-0
           ${open ? 'translate-x-0' : '-translate-x-full'}
@@ -73,7 +73,7 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
       >
         {/* ---------- Brand ---------- */}
         <div
-          className="flex items-start gap-2.5 border-b px-4 py-4"
+          className="flex items-start gap-3 border-b px-5 py-5"
           style={{ borderColor: 'var(--line)' }}
         >
           <PolarLogo size={28} withGlow={true} className="mt-0.5 shrink-0" />
@@ -144,7 +144,7 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
             Sits above the honesty footer because signing out is the last
             thing anybody looks for. */}
         {user && (
-          <div className="border-t px-4 py-3" style={{ borderColor: 'var(--line)' }}>
+          <div className="border-t px-5 py-4" style={{ borderColor: 'var(--line)' }}>
             <div className="flex items-start gap-2">
               <div className="min-w-0 flex-1">
                 <div className="eyebrow">Signed in</div>
@@ -183,7 +183,7 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
             it stays exactly as it is with a database connected, because
             storing a coordinate in Postgres does not make it a live position. */}
         <div
-          className="border-t px-4 py-3 text-[10px] leading-relaxed text-low"
+          className="border-t px-5 py-4 text-[10px] leading-relaxed text-low"
           style={{ borderColor: 'var(--line)' }}
         >
           <div className="flex items-center justify-between">

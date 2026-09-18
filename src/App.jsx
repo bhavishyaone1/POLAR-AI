@@ -410,7 +410,7 @@ export default function App() {
           </div>
         )}
 
-        <main className="flex-1 px-4 py-5 sm:px-6 sm:py-6">
+        <main className="flex-1 px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10 max-w-[1680px] w-full mx-auto">
           {/* key={view} restarts the error boundary when you navigate, so
               one broken page does not stay broken forever. */}
           <ErrorBoundary key={view} onReset={() => goTo('dashboard')}>

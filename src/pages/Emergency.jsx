@@ -486,9 +486,9 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
   const resolve = (id) => updateEmergency(id, { status: 'RESOLVED' })
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-8">
       {/* ================= 1. SUMMARY STRIP ================= */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:gap-5 sm:grid-cols-3 lg:grid-cols-5">
         {[
           { label: 'Open incidents', value: openIncidents.length, tone: openIncidents.length ? 'alert' : 'ok' },
           {
@@ -608,7 +608,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
 
       {/* ================= BOARD SUB-TAB ================= */}
       {activeSubTab === 'board' && (
-        <div className="space-y-5">
+        <div className="space-y-8">
           {/* ================= 2. SUCCESS MESSAGE ================= */}
           {formSuccess && (
             <div
@@ -656,7 +656,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
             </div>
           </div>
 
-          <div className="grid gap-3 xl:grid-cols-2">
+          <div className="grid gap-5 xl:grid-cols-2">
             {board.map((incident) => (
               <IncidentCard
                 key={incident.id}
@@ -1116,7 +1116,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
       </Panel>
 
       {/* ================= 6. DETAIL + READINESS ================= */}
-      <div className="grid gap-4 xl:grid-cols-3">
+      <div className="grid gap-6 xl:grid-cols-3">
         {/* ---------- Selected incident ---------- */}
         {!selected ? (
           <Panel className="xl:col-span-2" eyebrow="Detail" title="Incident Detail">
