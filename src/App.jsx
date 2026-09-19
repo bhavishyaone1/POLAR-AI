@@ -97,24 +97,6 @@ export default function App() {
     updateEmergency,
   } = useData()
 
-  /* Universal Project Data Adapter for the Portable AI Assistant */
-  const projectDataAdapter = useMemo(() => {
-    return createProjectDataAdapter(
-      {
-        expeditions,
-        personnel,
-        locations,
-        cargo,
-        inventory,
-        emergencies,
-        stats,
-      },
-      {
-        projectName: 'POLAR COMMAND CENTER',
-      }
-    )
-  }, [expeditions, personnel, locations, cargo, inventory, emergencies, stats])
-
   /* Which module is on screen — initialized from URL hash or sessionStorage. */
   const [view, setView] = useState(getInitialView)
 
