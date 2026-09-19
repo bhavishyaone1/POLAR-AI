@@ -82,9 +82,12 @@ export default function AssetDetailDrawer({
         aria-label={`Asset Telemetry - ${asset.name}`}
         className="relative z-10 flex h-full w-full sm:w-[480px] md:w-[520px] flex-col bg-white border-l border-[#DCEAF1] shadow-2xl animate-in slide-in-from-right duration-250 ease-out"
       >
+        {/* Mobile Drag/Grab Indicator */}
+        <div className="mx-auto mt-2 -mb-1 h-1.5 w-12 rounded-full bg-slate-300 sm:hidden shrink-0" aria-hidden="true" />
+
         {/* Drawer Header */}
-        <div className="flex items-center justify-between border-b border-[#DCEAF1] bg-[#F7FBFD] px-6 py-4">
-          <div className="min-w-0">
+        <div className="flex items-center justify-between border-b border-[#DCEAF1] bg-[#F7FBFD] px-4 py-3 sm:px-6 sm:py-4">
+          <div className="min-w-0 pr-2">
             <div className="flex items-center gap-2 mb-1">
               <span className="font-mono text-xs font-bold text-[#1597D4] bg-[#EAF6FA] px-2 py-0.5 rounded border border-[#BFDDE7]">
                 {asset.id}
@@ -93,16 +96,16 @@ export default function AssetDetailDrawer({
                 {asset.type || 'MACHINERY'}
               </span>
             </div>
-            <h2 className="text-base font-bold text-[#102A43] truncate" title={asset.name}>
+            <h2 className="text-base sm:text-base font-bold text-[#102A43] truncate" title={asset.name}>
               {asset.name}
             </h2>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-xl p-2 text-[#526779] hover:bg-[#EAF6FA] hover:text-[#102A43] transition"
+              className="flex h-10 w-10 sm:h-8 sm:w-8 items-center justify-center rounded-xl p-2 text-[#526779] hover:bg-[#EAF6FA] hover:text-[#102A43] transition touch-manipulation"
               aria-label="Close drawer"
             >
               <X size={18} />
@@ -111,7 +114,7 @@ export default function AssetDetailDrawer({
         </div>
 
         {/* Scrollable Content Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 sm:space-y-6">
           {/* Status & Risk Banner */}
           <div className="flex items-center justify-between rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] p-3.5">
             <div className="flex items-center gap-2">
@@ -253,17 +256,17 @@ export default function AssetDetailDrawer({
         </div>
 
         {/* Drawer Footer Actions */}
-        <div className="border-t border-[#DCEAF1] bg-[#F7FBFD] p-4 flex items-center justify-between gap-3">
+        <div className="border-t border-[#DCEAF1] bg-[#F7FBFD] p-3.5 sm:p-4 pb-[max(1rem,env(safe-area-inset-bottom))] flex items-center justify-between gap-2.5 sm:gap-3">
           <button
             type="button"
             onClick={() => {
               onClose()
               goTo('risks')
             }}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-[#DCEAF1] bg-white px-3.5 py-2 text-xs font-semibold text-[#102A43] hover:bg-[#EAF6FA] transition shadow-xs"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#DCEAF1] bg-white px-3.5 py-2.5 text-xs font-semibold text-[#102A43] hover:bg-[#EAF6FA] transition shadow-xs min-h-[44px] touch-manipulation"
           >
-            <ShieldAlert size={13} className="text-[#1597D4]" />
-            <span>Trace Cascade</span>
+            <ShieldAlert size={14} className="text-[#1597D4] shrink-0" />
+            <span className="truncate">Trace Cascade</span>
           </button>
 
           <button
@@ -272,10 +275,10 @@ export default function AssetDetailDrawer({
               onClose()
               goTo('simulator')
             }}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white px-4 py-2 text-xs font-semibold shadow-xs transition"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white px-4 py-2.5 text-xs font-semibold shadow-xs transition min-h-[44px] touch-manipulation"
           >
-            <Sliders size={13} />
-            <span>Simulate Outage</span>
+            <Sliders size={14} className="shrink-0" />
+            <span className="truncate">Simulate Outage</span>
           </button>
         </div>
       </aside>

@@ -27,6 +27,7 @@ import {
   Calendar,
   Check,
   CheckCircle2,
+  ChevronRight,
   Clock,
   Cpu,
   Flag,
@@ -59,11 +60,15 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
   const strokeDashoffset = circumference - (score / 100) * circumference
 
   return (
-    <div className="space-y-4 pb-16">
+    <div className="pb-16">
       {/* ============================================================
-          1. COMPACT MISSION COMMAND HERO BANNER
+          DESKTOP & TABLET DASHBOARD (LOCKED & UNTOUCHED for >= 768px)
           ============================================================ */}
-      <section className="relative overflow-hidden rounded-xl border border-[#DCE8F0] bg-white shadow-2xs">
+      <div className="hidden md:block space-y-4">
+        {/* ============================================================
+            1. COMPACT MISSION COMMAND HERO BANNER
+            ============================================================ */}
+        <section className="relative overflow-hidden rounded-xl border border-[#DCE8F0] bg-white shadow-2xs">
         {/* Right side photorealistic Antarctic research station background with clean fade */}
         <div
           className="absolute right-0 top-0 bottom-0 w-full sm:w-1/2 md:w-5/12 bg-cover bg-center z-0 pointer-events-none"
@@ -951,6 +956,336 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           </div>
         </div>
       </section>
+    </div>
+
+    {/* ============================================================
+        PURPOSE-BUILT MOBILE DASHBOARD (< 768px / md:hidden)
+        Clean vertical flow · Dominant Continuity Gauge · Priority Risk · Mission Pulse
+        ============================================================ */}
+    <div className="block md:hidden space-y-3.5">
+      {/* 1. Station Context Bar */}
+      <div className="flex items-center justify-between rounded-xl border border-[#DCE8F0] bg-white px-3.5 py-2.5 shadow-2xs">
+        <div className="min-w-0 flex items-center gap-2">
+          <div className="h-2 w-2 rounded-full bg-[#0284C7] shrink-0" />
+          <div className="min-w-0">
+            <span className="font-semibold text-xs text-[#0C1E30] block truncate">
+              Maitri Station Operations Command
+            </span>
+            <span className="text-[10.5px] font-mono text-[#6E8294] block truncate">
+              70°45′57″S, 11°44′09″E · ISEA-44
+            </span>
+          </div>
+        </div>
+        <div className="inline-flex items-center gap-1 rounded-md bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10.5px] font-medium text-emerald-800 shrink-0">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span>Nominal</span>
+        </div>
+      </div>
+
+      {/* 2. Dominant Mission Continuity Card */}
+      <div className="rounded-xl border border-[#DCE8F0] bg-white p-4 shadow-2xs">
+        <div className="flex items-center justify-between border-b border-[#F1F5F9] pb-2.5 mb-3">
+          <h2 className="text-sm font-semibold text-[#0C1E30] tracking-tight">
+            Mission Continuity
+          </h2>
+          <span className="text-[11px] font-mono text-[#6E8294]">
+            Cycle 42 · Real-Time
+          </span>
+        </div>
+
+        <div className="flex items-center gap-4">
+          {/* Circular Donut Gauge */}
+          <div className="relative flex items-center justify-center shrink-0">
+            <svg width="80" height="80" className="transform -rotate-90">
+              <circle
+                cx="40"
+                cy="40"
+                r="32"
+                stroke="#E6F3F9"
+                strokeWidth="7"
+                fill="transparent"
+              />
+              <circle
+                cx="40"
+                cy="40"
+                r="32"
+                stroke="#0284C7"
+                strokeWidth="7"
+                strokeDasharray={2 * Math.PI * 32}
+                strokeDashoffset={2 * Math.PI * 32 - (score / 100) * (2 * Math.PI * 32)}
+                strokeLinecap="round"
+                fill="transparent"
+                className="transition-all duration-1000 ease-out"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-2xl font-bold font-mono tracking-tight text-[#0C1E30]">
+                {score}<span className="text-xs font-normal text-[#6E8294] ml-0.5">%</span>
+              </span>
+            </div>
+          </div>
+
+          <div className="flex-1 min-w-0 space-y-1">
+            <div className="inline-flex items-center gap-1.5 rounded-md border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10.5px] font-semibold text-amber-800">
+              <AlertTriangle size={11} className="text-amber-600" />
+              <span>Resupply Deficit Flagged</span>
+            </div>
+            <p className="text-xs text-[#42586E] leading-relaxed">
+              Fuel runway may fall below safe threshold before next resupply.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-3 pt-2.5 border-t border-[#F8FAFC]">
+          <button
+            type="button"
+            onClick={() => setShowScoreBreakdown(true)}
+            className="w-full flex items-center justify-between text-xs font-semibold text-[#0284C7] bg-[#F0F9FF] border border-[#BAE6FD] rounded-lg px-3 py-2 min-h-[44px] transition active:scale-98"
+          >
+            <span>Why is score {score}%?</span>
+            <ArrowRight size={13} />
+          </button>
+        </div>
+      </div>
+
+      {/* 3. Priority Risk Card */}
+      <div className="rounded-xl border border-rose-200 bg-gradient-to-br from-white to-rose-50/30 p-4 shadow-2xs">
+        <div className="flex items-center justify-between border-b border-rose-100 pb-2 mb-2">
+          <div className="flex items-center gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-rose-600 animate-pulse" />
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-rose-700">
+              PRIORITY RISK · RSK-001
+            </span>
+          </div>
+          <span className="rounded bg-rose-100 border border-rose-300 px-1.5 py-0.5 text-[10px] font-bold text-rose-800">
+            HIGH
+          </span>
+        </div>
+
+        <h3 className="text-base font-bold text-[#0C1E30] tracking-tight">
+          Fuel Resupply Gap
+        </h3>
+        <p className="text-xs text-[#42586E] mt-0.5 leading-normal">
+          Potential 5-day deficit gap before maritime vessel arrival at Novo Staging.
+        </p>
+
+        <div className="mt-3 flex items-center justify-between bg-white rounded-lg p-2.5 border border-rose-100 text-xs">
+          <div>
+            <span className="text-[10.5px] text-[#6E8294] block">Safe Runway</span>
+            <span className="font-semibold text-[#0C1E30]">Day 12 (14,200 L)</span>
+          </div>
+          <div className="text-right">
+            <span className="text-[10.5px] text-rose-600 block">Cargo Arrival</span>
+            <span className="font-semibold text-rose-700">Day 17 (+3d delay)</span>
+          </div>
+        </div>
+
+        <div className="mt-3 pt-2">
+          <button
+            type="button"
+            onClick={() => goTo('risks')}
+            className="w-full rounded-xl bg-rose-600 text-white font-semibold py-2.5 text-xs shadow-2xs flex items-center justify-center gap-1.5 min-h-[44px] active:scale-98 transition"
+          >
+            <span>View Risk Analysis</span>
+            <ArrowRight size={13} />
+          </button>
+        </div>
+      </div>
+
+      {/* 4. Compact Mission Pulse Sections (Fuel, Cargo, Power, Assets) */}
+      <div className="space-y-2">
+        <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#6E8294] px-1">
+          Mission Telemetry Pulse
+        </div>
+
+        {/* Pulse: Fuel */}
+        <div
+          onClick={() => goTo('inventory')}
+          className="rounded-xl border border-[#DCE8F0] bg-white p-3 shadow-2xs flex items-center justify-between gap-3 active:scale-99 transition cursor-pointer min-h-[48px]"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="h-9 w-9 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200">
+              <Boxes size={17} />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold text-[#0C1E30]">Station Diesel</span>
+                <span className="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 px-1 rounded">12.0d</span>
+              </div>
+              <div className="text-[11px] text-[#6E8294] truncate">
+                14,200 L reserve · 1,180 L/d burn runway
+              </div>
+            </div>
+          </div>
+          <ChevronRight size={16} className="text-slate-400 shrink-0" />
+        </div>
+
+        {/* Pulse: Cargo */}
+        <div
+          onClick={() => goTo('cargo')}
+          className="rounded-xl border border-[#DCE8F0] bg-white p-3 shadow-2xs flex items-center justify-between gap-3 active:scale-99 transition cursor-pointer min-h-[48px]"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="h-9 w-9 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0 border border-[#BAE6FD]">
+              <Package size={17} />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold text-[#0C1E30]">Consignment C-101</span>
+                <span className="text-[10px] font-mono font-bold text-[#0284C7] bg-[#E0F2FE] px-1 rounded">+3d ETA</span>
+              </div>
+              <div className="text-[11px] text-[#6E8294] truncate">
+                Weddell Sea ice-pack hold · Arrival Day 17
+              </div>
+            </div>
+          </div>
+          <ChevronRight size={16} className="text-slate-400 shrink-0" />
+        </div>
+
+        {/* Pulse: Power */}
+        <div
+          onClick={() => goTo('assets')}
+          className="rounded-xl border border-[#DCE8F0] bg-white p-3 shadow-2xs flex items-center justify-between gap-3 active:scale-99 transition cursor-pointer min-h-[48px]"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="h-9 w-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200">
+              <Cpu size={17} />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold text-[#0C1E30]">Generator G-01</span>
+                <span className="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 px-1 rounded">60h left</span>
+              </div>
+              <div className="text-[11px] text-[#6E8294] truncate">
+                4,940/5,000h service overhaul threshold
+              </div>
+            </div>
+          </div>
+          <ChevronRight size={16} className="text-slate-400 shrink-0" />
+        </div>
+
+        {/* Pulse: Traverses */}
+        <div
+          onClick={() => goTo('personnel')}
+          className="rounded-xl border border-[#DCE8F0] bg-white p-3 shadow-2xs flex items-center justify-between gap-3 active:scale-99 transition cursor-pointer min-h-[48px]"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="h-9 w-9 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-200">
+              <Users size={17} />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold text-[#0C1E30]">Station Personnel</span>
+                <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-1 rounded">50 Crew</span>
+              </div>
+              <div className="text-[11px] text-[#6E8294] truncate">
+                100% check-in compliance · Nominal health
+              </div>
+            </div>
+          </div>
+          <ChevronRight size={16} className="text-slate-400 shrink-0" />
+        </div>
+      </div>
+
+      {/* 5. AI Mission Brief (Mobile Strip) */}
+      <div className="rounded-xl border border-[#DCE8F0] bg-white p-4 shadow-2xs space-y-3">
+        <div className="flex items-center justify-between border-b border-[#F1F5F9] pb-2">
+          <div className="flex items-center gap-1.5">
+            <span className="text-[11px] font-mono font-medium text-[#0284C7] bg-[#E0F2FE] border border-[#BAE6FD] px-2 py-0.5 rounded">
+              ✦ AI Mission Brief
+            </span>
+          </div>
+          <span className="text-[11px] text-[#6E8294] font-mono">08:00 UTC</span>
+        </div>
+
+        <div className="space-y-1.5 text-xs">
+          <div className="p-2 rounded-lg bg-[#F8FAFC] border border-[#E8F0F5] flex items-center justify-between">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="font-mono text-[11px] font-bold text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">01</span>
+              <span className="font-medium text-[#0C1E30] truncate">Fuel resupply deficit</span>
+            </div>
+            <span className="text-[11px] text-slate-500 shrink-0 font-mono">5d gap</span>
+          </div>
+
+          <div className="p-2 rounded-lg bg-[#F8FAFC] border border-[#E8F0F5] flex items-center justify-between">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="font-mono text-[11px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">02</span>
+              <span className="font-medium text-[#0C1E30] truncate">Generator maintenance</span>
+            </div>
+            <span className="text-[11px] text-slate-500 shrink-0 font-mono">60h left</span>
+          </div>
+
+          <div className="p-2 rounded-lg bg-[#F8FAFC] border border-[#E8F0F5] flex items-center justify-between">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="font-mono text-[11px] font-bold text-[#0284C7] bg-[#E0F2FE] px-1.5 py-0.5 rounded border border-[#BAE6FD]">03</span>
+              <span className="font-medium text-[#0C1E30] truncate">Cargo transit delay</span>
+            </div>
+            <span className="text-[11px] text-slate-500 shrink-0 font-mono">+3 days</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => goTo('copilot')}
+          className="w-full flex items-center justify-between text-xs font-semibold text-[#0284C7] pt-1"
+        >
+          <span>Consult AI Copilot Briefing</span>
+          <ArrowRight size={13} />
+        </button>
+      </div>
+
+      {/* 6. Mobile Quick Actions (2x2 Grid, 48px touch targets) */}
+      <div className="space-y-2">
+        <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#6E8294] px-1">
+          Quick Mission Actions
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={onStartGuidedDemo}
+            className="flex items-center gap-2.5 p-3 rounded-xl border border-[#DCE8F0] bg-white text-left font-semibold text-xs text-[#0C1E30] shadow-2xs active:scale-95 transition min-h-[48px]"
+          >
+            <div className="h-7 w-7 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0">
+              <Play size={12} className="fill-[#0284C7]" />
+            </div>
+            <span>Run Demo</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => goTo('simulator')}
+            className="flex items-center gap-2.5 p-3 rounded-xl border border-[#DCE8F0] bg-white text-left font-semibold text-xs text-[#0C1E30] shadow-2xs active:scale-95 transition min-h-[48px]"
+          >
+            <div className="h-7 w-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
+              <Sliders size={13} />
+            </div>
+            <span>Simulator</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => goTo('risks')}
+            className="flex items-center gap-2.5 p-3 rounded-xl border border-[#DCE8F0] bg-white text-left font-semibold text-xs text-[#0C1E30] shadow-2xs active:scale-95 transition min-h-[48px]"
+          >
+            <div className="h-7 w-7 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center shrink-0">
+              <AlertTriangle size={13} />
+            </div>
+            <span>Mission Risk</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => goTo('copilot')}
+            className="flex items-center gap-2.5 p-3 rounded-xl border border-[#DCE8F0] bg-white text-left font-semibold text-xs text-[#0C1E30] shadow-2xs active:scale-95 transition min-h-[48px]"
+          >
+            <div className="h-7 w-7 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0">
+              <Sparkles size={13} />
+            </div>
+            <span>Ask Copilot</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
       {/* ============================================================
           5. EXPLAINABLE MISSION CONTINUITY SCORE BREAKDOWN MODAL
@@ -969,7 +1304,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             role="dialog"
             aria-modal="true"
             aria-label="Mission Continuity Score Explanation"
-            className="relative z-10 w-full max-w-xl rounded-2xl border border-[#DCEAF1] bg-white p-6 shadow-2xl animate-in zoom-in-95 duration-200"
+            className="relative z-10 w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border border-[#DCEAF1] bg-white p-4 sm:p-6 shadow-2xl animate-in zoom-in-95 duration-200"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-[#DCEAF1] pb-4">

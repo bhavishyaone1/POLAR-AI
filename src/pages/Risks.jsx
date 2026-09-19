@@ -27,6 +27,7 @@ import {
   Package,
   ShieldAlert,
   Sliders,
+  Sparkles,
   ThermometerSnowflake,
   Zap,
 } from 'lucide-react'
@@ -80,8 +81,14 @@ export default function Risks({ goTo }) {
     },
   ]
 
+  const [mobileSection, setMobileSection] = React.useState(null)
+
   return (
-    <div className="max-w-5xl mx-auto space-y-8 pb-16">
+    <div className="max-w-5xl mx-auto pb-16">
+      {/* ============================================================
+          DESKTOP / TABLET RISK VIEW (LOCKED & UNTOUCHED for >= 768px)
+          ============================================================ */}
+      <div className="hidden md:block space-y-8">
       {/* ============================================================
           HEADLINE
           ============================================================ */}
@@ -306,6 +313,149 @@ export default function Risks({ goTo }) {
           <ArrowRight size={13} />
         </button>
       </footer>
+      </div>
+
+      {/* ============================================================
+          PURPOSE-BUILT MOBILE RISK (< 768px / md:hidden)
+          HIGH · Fuel Resupply Gap · Potential 5-day gap · Cargo ETA Day 17 · Safe runway Day 12
+          Actions: Why? · Impact · Simulate · AI Analysis
+          ============================================================ */}
+      <div className="block md:hidden space-y-4">
+        {/* Mobile Header */}
+        <div className="flex items-center justify-between border-b border-[#DCE8F0] pb-3">
+          <div>
+            <h1 className="text-xl font-bold tracking-tight text-[#0C1E30]">Mission Risk</h1>
+            <p className="text-xs text-[#6E8294]">Active Systemic Vulnerability</p>
+          </div>
+          <span className="rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-xs font-mono font-bold text-rose-700">
+            1 Critical Risk
+          </span>
+        </div>
+
+        {/* Primary Mobile Risk Card */}
+        <div className="rounded-2xl border border-rose-200 bg-white p-4 shadow-xs space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="rounded bg-rose-100 border border-rose-300 px-2 py-0.5 text-xs font-bold text-rose-800 font-mono">
+              HIGH
+            </span>
+            <span className="text-[11px] font-mono text-[#6E8294]">RSK-001</span>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold text-[#0C1E30] leading-snug">
+              Fuel Resupply Gap
+            </h2>
+            <div className="mt-1 inline-block text-sm font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-md">
+              Potential 5-day gap
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2.5 pt-2 border-t border-slate-100 text-xs">
+            <div className="bg-[#F8FAFC] p-2.5 rounded-xl border border-slate-200">
+              <span className="text-[10.5px] text-[#6E8294] block uppercase">Cargo ETA</span>
+              <span className="font-semibold text-[#0C1E30] text-sm mt-0.5 block">Day 17</span>
+              <span className="text-[10.5px] text-amber-700">+3d sea ice hold</span>
+            </div>
+            <div className="bg-[#F8FAFC] p-2.5 rounded-xl border border-slate-200">
+              <span className="text-[10.5px] text-[#6E8294] block uppercase">Safe Runway</span>
+              <span className="font-semibold text-[#0C1E30] text-sm mt-0.5 block">Day 12</span>
+              <span className="text-[10.5px] text-rose-700">14,200 L reserve</span>
+            </div>
+          </div>
+
+          {/* 4 Large Touch Action Buttons */}
+          <div className="pt-2 border-t border-slate-100 space-y-2">
+            <span className="text-[10.5px] font-mono uppercase tracking-wider text-slate-400 block px-1">
+              Operational Actions
+            </span>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setMobileSection(mobileSection === 'why' ? null : 'why')}
+                className={`flex items-center justify-center gap-1.5 p-2.5 rounded-xl border font-semibold text-xs min-h-[44px] transition active:scale-95 ${
+                  mobileSection === 'why'
+                    ? 'bg-[#0284C7] text-white border-[#0284C7]'
+                    : 'bg-[#F8FAFC] border-slate-200 text-[#0C1E30]'
+                }`}
+              >
+                <span>Why?</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setMobileSection(mobileSection === 'impact' ? null : 'impact')}
+                className={`flex items-center justify-center gap-1.5 p-2.5 rounded-xl border font-semibold text-xs min-h-[44px] transition active:scale-95 ${
+                  mobileSection === 'impact'
+                    ? 'bg-[#0284C7] text-white border-[#0284C7]'
+                    : 'bg-[#F8FAFC] border-slate-200 text-[#0C1E30]'
+                }`}
+              >
+                <span>Impact</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => goTo('simulator')}
+                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl border border-slate-200 bg-[#F8FAFC] font-semibold text-xs text-[#0C1E30] min-h-[44px] transition active:scale-95"
+              >
+                <Sliders size={13} />
+                <span>Simulate</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => goTo('copilot')}
+                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl border border-[#BAE6FD] bg-[#E0F2FE] font-semibold text-xs text-[#0284C7] min-h-[44px] transition active:scale-95"
+              >
+                <Sparkles size={13} />
+                <span>AI Analysis</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Expandable "Why?" Detail View */}
+        {mobileSection === 'why' && (
+          <div className="rounded-2xl border border-[#BAE6FD] bg-[#F0F9FF] p-4 text-xs space-y-2 animate-in fade-in duration-200">
+            <div className="font-semibold text-[#0C1E30] flex items-center gap-1.5">
+              <span className="text-[#0284C7]">✦</span>
+              <span>Root Cause Analysis</span>
+            </div>
+            <p className="text-[#42586E] leading-relaxed">
+              Maitri Station operates at an average burn of 1,180 L/day across primary diesel generators. Current stock is 14,200 L, yielding 12.0 days of safe runway. Incoming maritime consignment C-101 is throttled to 3.2 kts by Weddell Sea pack ice, pushing arrival to Day 17.
+            </p>
+            <div className="font-mono text-[11px] text-rose-700 font-semibold pt-1">
+              Result: An unhedged 5.0-day power and heating deficit window.
+            </div>
+          </div>
+        )}
+
+        {/* Expandable "Impact" Vertical Cascade View */}
+        {mobileSection === 'impact' && (
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3 animate-in fade-in duration-200">
+            <div className="text-xs font-semibold text-[#0C1E30] border-b border-slate-100 pb-2">
+              Downstream Dependency Cascade
+            </div>
+            <div className="space-y-2 text-xs">
+              {[
+                { step: '01', title: 'FUEL', desc: '14,200 L runs out on Day 12; 5-day gap.', color: 'text-rose-700' },
+                { step: '02', title: 'GENERATOR', desc: 'CAT 3512 primary starved of diesel fuel.', color: 'text-amber-700' },
+                { step: '03', title: 'POWER', desc: 'Microgrid output collapses by 96%.', color: 'text-amber-700' },
+                { step: '04', title: 'HEATING', desc: 'Hydronic glycol loops freeze in 18 hours.', color: 'text-amber-700' },
+                { step: '05', title: 'RESEARCH', desc: 'Paleoclimate drill halted; cryo loss.', color: 'text-rose-700' },
+              ].map((item, idx) => (
+                <div key={item.step} className="flex items-start gap-2.5 p-2 rounded-lg bg-[#F8FAFC] border border-slate-100">
+                  <span className={`font-mono font-bold text-xs shrink-0 ${item.color}`}>{item.step}</span>
+                  <div>
+                    <span className="font-bold text-[#0C1E30]">{item.title}: </span>
+                    <span className="text-[#42586E]">{item.desc}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

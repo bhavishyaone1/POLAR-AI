@@ -154,6 +154,13 @@ export default function TopBar({
         .join('')
     : 'OP'
 
+  // Mobile-specific interactive states (< 768px)
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
+  const [mobileSearchQuery, setMobileSearchQuery] = useState('')
+  const [mobileStationOpen, setMobileStationOpen] = useState(false)
+  const [mobileProfileOpen, setMobileProfileOpen] = useState(false)
+  const [mobileAiOpen, setMobileAiOpen] = useState(false)
+
   // Persist selected station
   const handleSelectStation = (stationId) => {
     setSelectedStationId(stationId)
@@ -163,6 +170,7 @@ export default function TopBar({
       // Storage unavailable
     }
     setLocationOpen(false)
+    setMobileStationOpen(false)
   }
 
   // Close menus on click outside
@@ -185,11 +193,14 @@ export default function TopBar({
   // Quick switch to a demo role
   const handleQuickSwitchRole = (userId, password) => {
     setProfileOpen(false)
+    setMobileProfileOpen(false)
     signIn({ userId, password })
   }
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-[#E5EDF2] bg-white/95 px-4 sm:px-8 backdrop-blur-md">
+    <>
+      {/* DESKTOP / TABLET HEADER (LOCKED & UNTOUCHED for >= 768px) */}
+      <header className="sticky top-0 z-30 hidden md:flex h-16 items-center justify-between border-b border-[#E5EDF2] bg-white/95 px-4 sm:px-8 backdrop-blur-md">
       {/* ============================================================
           LEFT: Mobile Menu Toggle + Interactive Location Dropdown
           ============================================================ */}
@@ -655,5 +666,396 @@ export default function TopBar({
         )}
       </div>
     </header>
+
+    {/* ============================================================
+        PURPOSE-BUILT MOBILE HEADER (< 768px / md:hidden)
+        Clean · Compact · Non-squeezed · 44px+ touch targets
+        ============================================================ */}
+    <header className="sticky top-0 z-30 flex md:hidden h-14 items-center justify-between border-b border-[#DCE8F0] bg-white/95 px-3 backdrop-blur-md">
+      {/* Left: POLAR-AI · Current Station (tap to switch base) */}
+      <button
+        type="button"
+        onClick={() => setMobileStationOpen(true)}
+        className="flex items-center gap-2 rounded-lg py-1 px-1.5 hover:bg-slate-50 transition text-left min-w-0 min-h-[44px] active:scale-95"
+        aria-label="Switch active polar station"
+      >
+        <div className="shrink-0 flex items-center justify-center">
+          <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
+            <polygon points="20,4 32,32 8,32" fill="#0284C7" />
+            <polygon points="20,4 26,32 8,32" fill="#38BDF8" opacity="0.85" />
+          </svg>
+        </div>
+        <div className="min-w-0 flex items-center gap-1">
+          <span className="font-semibold text-[13px] text-[#0C1E30] tracking-tight">POLAR-AI</span>
+          <span className="text-slate-300 text-xs">·</span>
+          <span className="text-xs font-medium text-[#42586E] truncate max-w-[100px]">
+            {selectedStation.name.replace(' Station', '').replace(' Operations Room', '')}
+          </span>
+          <ChevronDown size={12} className="text-slate-400 shrink-0" />
+        </div>
+      </button>
+
+      {/* Right: Search, AI Status, Notifications, Profile */}
+      <div className="flex items-center gap-1 shrink-0">
+        {/* Mobile Search Button */}
+        <button
+          type="button"
+          onClick={() => setMobileSearchOpen(true)}
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-[#42586E] hover:bg-slate-100 hover:text-[#0C1E30] transition active:scale-95"
+          aria-label="Search cargo, inventory, people, assets"
+        >
+          <Search size={18} />
+        </button>
+
+        {/* AI Status Badge */}
+        <button
+          type="button"
+          onClick={() => setMobileAiOpen(true)}
+          className="inline-flex items-center gap-1 rounded-lg border border-[#BAE6FD] bg-[#E0F2FE] px-2 py-1.5 text-[11px] font-medium text-[#0284C7] active:scale-95 transition min-h-[36px]"
+          title="AI Mission Monitoring"
+        >
+          <Sparkles size={13} />
+          <span>AI</span>
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        </button>
+
+        {/* Notification Bell */}
+        <button
+          type="button"
+          onClick={onAlertClick}
+          className="relative flex h-10 w-10 items-center justify-center rounded-lg text-[#42586E] hover:bg-slate-100 hover:text-[#0C1E30] transition active:scale-95"
+          aria-label="Active emergency incidents"
+        >
+          <Bell size={18} />
+          <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-rose-600 text-[9.5px] font-bold text-white">
+            3
+          </span>
+        </button>
+
+        {/* Profile Avatar */}
+        <button
+          type="button"
+          onClick={() => setMobileProfileOpen(true)}
+          className="h-8 w-8 rounded-full bg-gradient-to-tr from-[#0284C7] to-[#1597D4] text-white flex items-center justify-center font-bold text-xs ring-1 ring-slate-200 active:scale-95 transition shrink-0 ml-0.5"
+          aria-label="Operator profile and switcher"
+        >
+          {initials}
+        </button>
+      </div>
+    </header>
+
+    {/* ============================================================
+        FULL-SCREEN EXPANDABLE MOBILE SEARCH (< 768px)
+        "Search cargo, inventory, people, assets…"
+        ============================================================ */}
+    {mobileSearchOpen && (
+      <div className="fixed inset-0 z-50 md:hidden bg-white flex flex-col animate-in fade-in duration-200">
+        {/* Search Header Bar */}
+        <div className="flex items-center gap-2 border-b border-[#DCE8F0] p-3 pt-4">
+          <div className="relative flex-1 flex items-center">
+            <Search size={16} className="absolute left-3 text-slate-400 pointer-events-none" />
+            <input
+              type="search"
+              autoFocus
+              value={mobileSearchQuery}
+              onChange={(e) => setMobileSearchQuery(e.target.value)}
+              placeholder="Search cargo, inventory, people, assets…"
+              className="w-full rounded-xl border border-slate-200 bg-[#F8FAFC] py-2.5 pl-9 pr-8 text-sm text-[#0C1E30] placeholder-slate-400 focus:border-[#0284C7] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
+            />
+            {mobileSearchQuery && (
+              <button
+                type="button"
+                onClick={() => setMobileSearchQuery('')}
+                className="absolute right-2.5 p-1 text-slate-400 hover:text-slate-600"
+                aria-label="Clear search"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              setMobileSearchOpen(false)
+              setMobileSearchQuery('')
+            }}
+            className="text-xs font-semibold text-[#0284C7] px-2 py-2 min-h-[44px] flex items-center"
+          >
+            Cancel
+          </button>
+        </div>
+
+        {/* Search Content / Quick Results */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {/* Quick Shortcuts */}
+          <div>
+            <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400 block mb-2">
+              Fast Navigation
+            </span>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { label: 'Mission Continuity', view: 'dashboard', icon: '✦' },
+                { label: 'Cargo Pipeline', view: 'cargo', icon: '📦' },
+                { label: 'Station Inventory', view: 'inventory', icon: '🛢️' },
+                { label: 'What-If Simulator', view: 'simulator', icon: '⚡' },
+                { label: 'Risk Matrix', view: 'risks', icon: '⚠️' },
+                { label: 'AI Copilot', view: 'copilot', icon: '🤖' },
+              ].map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => {
+                    setMobileSearchOpen(false)
+                    goTo(item.view)
+                  }}
+                  className="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-[#F8FAFC] text-left text-xs font-medium text-[#0C1E30] hover:bg-white active:scale-95 transition min-h-[44px]"
+                >
+                  <span>{item.icon}</span>
+                  <span className="truncate">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Suggested Items */}
+          <div>
+            <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400 block mb-2">
+              Key Telemetry Items
+            </span>
+            <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden bg-white">
+              {[
+                { title: 'Consignment C-101', cat: 'Cargo · 12,000L Arctic Diesel', view: 'cargo' },
+                { title: 'Diesel Reserve (14,200 L)', cat: 'Inventory · 12.0d Safe Runway', view: 'inventory' },
+                { title: 'Primary Generator G-01', cat: 'Assets · 60h Overhaul Threshold', view: 'assets' },
+                { title: 'Dr. Rohan Desai (P-007)', cat: 'Personnel · Medical Distress (INC-001)', view: 'emergency' },
+              ]
+                .filter((item) =>
+                  mobileSearchQuery
+                    ? item.title.toLowerCase().includes(mobileSearchQuery.toLowerCase()) ||
+                      item.cat.toLowerCase().includes(mobileSearchQuery.toLowerCase())
+                    : true
+                )
+                .map((result) => (
+                  <button
+                    key={result.title}
+                    type="button"
+                    onClick={() => {
+                      setMobileSearchOpen(false)
+                      goTo(result.view)
+                    }}
+                    className="w-full flex items-center justify-between p-3 text-left hover:bg-slate-50 transition min-h-[48px]"
+                  >
+                    <div>
+                      <div className="text-xs font-semibold text-[#0C1E30]">{result.title}</div>
+                      <div className="text-[11px] text-slate-500">{result.cat}</div>
+                    </div>
+                    <span className="text-xs text-[#0284C7]">Jump →</span>
+                  </button>
+                ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* ============================================================
+        MOBILE STATION SELECTOR BOTTOM SHEET (< 768px)
+        ============================================================ */}
+    {mobileStationOpen && (
+      <div className="fixed inset-0 z-50 md:hidden flex flex-col justify-end">
+        <div
+          className="fixed inset-0 bg-[#0A1926]/40 backdrop-blur-xs transition-opacity"
+          onClick={() => setMobileStationOpen(false)}
+          aria-hidden="true"
+        />
+        <div className="relative z-10 w-full max-h-[80vh] overflow-y-auto rounded-t-3xl border-t border-[#DCE8F0] bg-white p-5 pb-8 shadow-2xl animate-in slide-in-from-bottom duration-250">
+          <div className="mx-auto -mt-1 mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+            <div>
+              <h3 className="text-base font-semibold text-[#0C1E30]">Select Polar Station</h3>
+              <p className="text-xs text-[#6E8294]">Operational Theatres &amp; Field Bases</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMobileStationOpen(false)}
+              className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 transition"
+            >
+              <X size={18} />
+            </button>
+          </div>
+
+          <div className="space-y-2">
+            {POLAR_STATIONS.map((station) => {
+              const isSelected = station.id === selectedStationId
+              return (
+                <button
+                  key={station.id}
+                  type="button"
+                  onClick={() => handleSelectStation(station.id)}
+                  className={`w-full flex items-center justify-between p-3 rounded-xl border transition text-left min-h-[48px] ${
+                    isSelected
+                      ? 'bg-[#E0F2FE] border-[#BAE6FD] text-[#0284C7]'
+                      : 'bg-[#F8FAFC] border-[#E8F0F5] text-[#0C1E30]'
+                  }`}
+                >
+                  <div>
+                    <div className="text-xs font-semibold">{station.name}</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5">{station.region}</div>
+                    <div className="text-[10px] font-mono text-slate-400">{station.coords}</div>
+                  </div>
+                  {isSelected && <Check size={16} className="text-[#0284C7] shrink-0" />}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* ============================================================
+        MOBILE AI MONITORING BOTTOM SHEET (< 768px)
+        ============================================================ */}
+    {mobileAiOpen && (
+      <div className="fixed inset-0 z-50 md:hidden flex flex-col justify-end">
+        <div
+          className="fixed inset-0 bg-[#0A1926]/40 backdrop-blur-xs transition-opacity"
+          onClick={() => setMobileAiOpen(false)}
+          aria-hidden="true"
+        />
+        <div className="relative z-10 w-full max-h-[85vh] overflow-y-auto rounded-t-3xl border-t border-[#DCE8F0] bg-white p-5 pb-8 shadow-2xl animate-in slide-in-from-bottom duration-250">
+          <div className="mx-auto -mt-1 mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
+                <Sparkles size={16} />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-[#0C1E30]">AI Mission Monitoring</h3>
+                <p className="text-xs text-[#6E8294]">Real-time subsystem telemetry</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMobileAiOpen(false)}
+              className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 transition"
+            >
+              <X size={18} />
+            </button>
+          </div>
+
+          {/* Subsystem status */}
+          <div className="space-y-2 py-2 divide-y divide-slate-100 text-xs">
+            {[
+              { name: 'Cargo Pipeline', desc: '1 maritime delay flagged', warn: true },
+              { name: 'Station Diesel', desc: '12.0d runway vs 17.0d ETA', alert: true },
+              { name: 'Primary Power', desc: 'Gen G-01 60h to overhaul', warn: true },
+              { name: 'Life Support / SOS', desc: '0 unacknowledged distress', ok: true },
+            ].map((sub) => (
+              <div key={sub.name} className="pt-2 flex items-center justify-between">
+                <div>
+                  <span className="font-semibold text-[#0C1E30]">{sub.name}</span>
+                  <p className="text-[11px] text-slate-500">{sub.desc}</p>
+                </div>
+                <span className={`font-mono text-xs font-bold ${
+                  sub.alert ? 'text-rose-700' : sub.warn ? 'text-amber-700' : 'text-emerald-700'
+                }`}>
+                  {sub.alert ? '⚠ GAP' : sub.warn ? '⚡ WARN' : '✓ OK'}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-slate-100 flex gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setMobileAiOpen(false)
+                goTo('copilot')
+              }}
+              className="flex-1 rounded-xl bg-[#0284C7] text-white py-3 text-xs font-semibold shadow-xs min-h-[44px]"
+            >
+              Ask AI Copilot
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setMobileAiOpen(false)
+                goTo('risks')
+              }}
+              className="flex-1 rounded-xl border border-slate-200 bg-white text-[#0C1E30] py-3 text-xs font-semibold min-h-[44px]"
+            >
+              View Risk Matrix
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* ============================================================
+        MOBILE PROFILE & OPERATOR SWITCHER BOTTOM SHEET (< 768px)
+        ============================================================ */}
+    {mobileProfileOpen && (
+      <div className="fixed inset-0 z-50 md:hidden flex flex-col justify-end">
+        <div
+          className="fixed inset-0 bg-[#0A1926]/40 backdrop-blur-xs transition-opacity"
+          onClick={() => setMobileProfileOpen(false)}
+          aria-hidden="true"
+        />
+        <div className="relative z-10 w-full max-h-[85vh] overflow-y-auto rounded-t-3xl border-t border-[#DCE8F0] bg-white p-5 pb-8 shadow-2xl animate-in slide-in-from-bottom duration-250">
+          <div className="mx-auto -mt-1 mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+            <div>
+              <h3 className="text-base font-semibold text-[#0C1E30]">Operator Profile</h3>
+              <p className="text-xs text-[#6E8294]">{user?.name || 'Cdr. Anjali Kulkarni'}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMobileProfileOpen(false)}
+              className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 transition"
+            >
+              <X size={18} />
+            </button>
+          </div>
+
+          <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400 mb-2">
+            Switch Operator Role
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { id: 'commander', label: 'Commander', name: 'Cdr. Anjali', pass: 'expedition@cmd' },
+              { id: 'logistics', label: 'Logistics', name: 'Vikram Mehta', pass: 'cargo@manage' },
+              { id: 'medical', label: 'Medical', name: 'Dr. Priya', pass: 'doctor@care' },
+              { id: 'station', label: 'Engineer', name: 'Rajesh Nair', pass: 'station@maint' },
+            ].map((op) => (
+              <button
+                key={op.id}
+                type="button"
+                onClick={() => handleQuickSwitchRole(op.id, op.pass)}
+                className="p-2.5 rounded-xl border border-slate-200 bg-[#F8FAFC] text-left hover:bg-white active:scale-95 transition min-h-[48px]"
+              >
+                <div className="text-xs font-semibold text-[#0C1E30]">{op.label}</div>
+                <div className="text-[10.5px] text-slate-500">{op.name}</div>
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-slate-100">
+            <button
+              type="button"
+              onClick={() => {
+                setMobileProfileOpen(false)
+                signOut()
+              }}
+              className="w-full rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700 flex items-center justify-center gap-2 min-h-[44px]"
+            >
+              <LogOut size={14} />
+              <span>Sign Out to Welcome Login</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+  </>
   )
 }
+

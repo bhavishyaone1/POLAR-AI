@@ -72,6 +72,26 @@ const COPILOT_KNOWLEDGE = {
     actionLabel: 'Open What-If Simulator',
     actionTarget: 'simulator',
   },
+  'What changed?': {
+    analysis:
+      'Station fuel burn accelerated by +8% due to thermal sub-zero load. Consignment C-101 ETA delayed +3 days due to Weddell Sea ice-pack hold. Generator G-01 servicing signed off by Chief Engineer.',
+    impact:
+      'An unhedged 5-day deficit gap now exists between fuel exhaustion on Day 12 and cargo arrival on Day 17.',
+    recommendation:
+      'Execute tactical reserve transfer protocol REC-001 to extend runway by +4.8 days.',
+    actionLabel: 'Inspect Risk Flow',
+    actionTarget: 'risks',
+  },
+  'Simulate 5-day delay': {
+    analysis:
+      'Simulating a 5-day delay pushes consignment C-101 arrival from Day 17 to Day 22.',
+    impact:
+      'Mission continuity drops from 63% to 51%. Auxiliary laboratory circuits must be shed.',
+    recommendation:
+      'Review alternate resupply options and test load shedding in the Simulator sandbox.',
+    actionLabel: 'Open What-If Simulator',
+    actionTarget: 'simulator',
+  },
 }
 
 export default function AiCopilot({ goTo }) {
@@ -101,13 +121,17 @@ export default function AiCopilot({ goTo }) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 pb-16">
+    <div className="max-w-4xl mx-auto pb-16">
       {/* ============================================================
-          HEADER
-          AI MISSION COPILOT
-          Context: Analyzing: Fuel Resupply Risk
+          DESKTOP / TABLET COPILOT VIEW (LOCKED & UNTOUCHED for >= 768px)
           ============================================================ */}
-      <header className="border-b border-[var(--line)] pb-5 space-y-2">
+      <div className="hidden md:block space-y-8">
+        {/* ============================================================
+            HEADER
+            AI MISSION COPILOT
+            Context: Analyzing: Fuel Resupply Risk
+            ============================================================ */}
+        <header className="border-b border-[var(--line)] pb-5 space-y-2">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <div className="h-8 w-8 rounded-lg bg-[var(--surface-ice)] border border-[var(--line)] text-[var(--ice)] flex items-center justify-center">
@@ -273,11 +297,147 @@ export default function AiCopilot({ goTo }) {
             disabled={!customQuery.trim()}
             className="absolute right-1.5 inline-flex items-center gap-1 rounded-md bg-[var(--ice)] hover:bg-[#3F96B2] disabled:opacity-40 text-white px-3 py-1.5 text-xs font-semibold shadow-xs transition"
           >
-            <span>Query</span>
-            <Send size={11} />
+            <Send size={13} />
+            <span>Send</span>
           </button>
         </div>
       </form>
+    </div>
+
+      {/* ============================================================
+          PURPOSE-BUILT MOBILE AI COPILOT (< 768px / md:hidden)
+          Mission Copilot · Context · Quick Action Chips · Concise Structured Answer
+          ============================================================ */}
+      <div className="block md:hidden space-y-4">
+        {/* Mobile Header */}
+        <div className="flex items-center justify-between border-b border-[#DCE8F0] pb-3">
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
+              <Bot size={17} />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold tracking-tight text-[#0C1E30]">Mission Copilot</h1>
+              <p className="text-xs text-[#6E8294]">Autonomous station advisory</p>
+            </div>
+          </div>
+
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] px-2.5 py-1 text-[11px] font-medium text-[#0284C7]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#0284C7] animate-pulse" />
+            <span>Online</span>
+          </div>
+        </div>
+
+        {/* Context Pill */}
+        <div className="rounded-xl border border-slate-200 bg-[#F8FAFC] p-2.5 flex items-center justify-between text-xs">
+          <span className="text-[11px] font-mono text-slate-400 uppercase font-semibold">Active Context:</span>
+          <span className="font-semibold text-[#0C1E30] truncate">Fuel Resupply Risk (12d runway)</span>
+        </div>
+
+        {/* Quick Action Chips (44px min tap area) */}
+        <div className="space-y-1.5">
+          <span className="text-[10.5px] font-mono uppercase tracking-wider text-slate-400 block px-1">
+            Suggested Mission Inquiries
+          </span>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              'Why is this a risk?',
+              'What changed?',
+              'Simulate 5-day delay',
+              'What should I review?',
+            ].map((q) => {
+              const isSelected = activeQuestion === q
+              return (
+                <button
+                  key={q}
+                  type="button"
+                  onClick={() => handleSelectQuestion(q)}
+                  className={`p-2.5 rounded-xl border text-left text-xs font-semibold min-h-[44px] transition active:scale-95 flex items-center ${
+                    isSelected
+                      ? 'bg-[#0284C7] text-white border-[#0284C7] shadow-2xs'
+                      : 'bg-white border-slate-200 text-[#0C1E30] hover:bg-slate-50'
+                  }`}
+                >
+                  <span className="truncate">{q}</span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Structured AI Response Card */}
+        <div className="rounded-2xl border border-[#BAE6FD] bg-white p-4 shadow-xs space-y-3">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#0284C7] font-bold">
+              ✦ Copilot Advisory
+            </span>
+            <span className="text-[11px] font-mono text-slate-400">Grounded in Live Telemetry</span>
+          </div>
+
+          <div className="space-y-2.5 text-xs">
+            {/* Analysis */}
+            <div className="p-2.5 rounded-xl bg-[#F8FAFC] border border-slate-100">
+              <span className="font-bold text-[10.5px] uppercase font-mono text-[#0284C7] block mb-1">
+                Analysis
+              </span>
+              <p className="text-[#0C1E30] leading-relaxed">
+                {activeResponse.analysis}
+              </p>
+            </div>
+
+            {/* Impact */}
+            <div className="p-2.5 rounded-xl bg-[#FFFBEB] border border-amber-200">
+              <span className="font-bold text-[10.5px] uppercase font-mono text-amber-800 block mb-1">
+                Impact
+              </span>
+              <p className="text-[#78350F] leading-relaxed">
+                {activeResponse.impact}
+              </p>
+            </div>
+
+            {/* Recommendation */}
+            <div className="p-2.5 rounded-xl bg-[#F0FDF4] border border-emerald-200">
+              <span className="font-bold text-[10.5px] uppercase font-mono text-emerald-800 block mb-1">
+                Recommendation
+              </span>
+              <p className="text-[#14532D] leading-relaxed">
+                {activeResponse.recommendation}
+              </p>
+            </div>
+          </div>
+
+          {/* Action Trigger */}
+          {activeResponse.actionLabel && (
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => goTo(activeResponse.actionTarget)}
+                className="w-full rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white font-semibold py-2.5 text-xs shadow-xs transition active:scale-98 flex items-center justify-center gap-1.5 min-h-[44px]"
+              >
+                <span>{activeResponse.actionLabel}</span>
+                <ArrowRight size={13} />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Mobile Input */}
+        <form onSubmit={handleSubmitCustom} className="rounded-xl border border-slate-200 bg-white p-2.5 flex items-center gap-2 shadow-2xs">
+          <input
+            type="text"
+            value={customQuery}
+            onChange={(e) => setCustomQuery(e.target.value)}
+            placeholder="Ask Copilot about fuel, cargo, power..."
+            className="flex-1 bg-transparent px-2 text-xs text-[#0C1E30] placeholder-slate-400 focus:outline-none"
+          />
+          <button
+            type="submit"
+            disabled={!customQuery.trim()}
+            className="rounded-lg bg-[#0284C7] text-white px-3 py-2 text-xs font-semibold disabled:opacity-40 active:scale-95 transition min-h-[36px] shrink-0"
+          >
+            Ask
+          </button>
+        </form>
+      </div>
     </div>
   )
 }

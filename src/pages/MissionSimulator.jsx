@@ -43,8 +43,8 @@ export default function MissionSimulator({ goTo }) {
   const [hasRun, setHasRun] = useState(true)
   const [mitigationAuthorized, setMitigationAuthorized] = useState(false)
 
-  const beforeScore = 68
-  const afterScore = Math.max(20, Math.round(beforeScore - delayDays * 3.4))
+  const beforeScore = 63
+  const afterScore = Math.max(20, Math.round(beforeScore - (delayDays > 0 ? (delayDays === 5 ? 12 : delayDays * 2.4) : 0)))
 
   const handleRunSimulation = () => {
     setIsSimulating(true)
@@ -91,11 +91,15 @@ export default function MissionSimulator({ goTo }) {
   ]
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 pb-16">
+    <div className="max-w-4xl mx-auto pb-16">
       {/* ============================================================
-          HEADER
+          DESKTOP / TABLET SIMULATOR VIEW (LOCKED & UNTOUCHED for >= 768px)
           ============================================================ */}
-      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-5">
+      <div className="hidden md:block space-y-8">
+        {/* ============================================================
+            HEADER
+            ============================================================ */}
+        <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-5">
         <div>
           <div className="flex items-center gap-2">
             <Sliders size={18} className="text-[var(--ice)]" />
@@ -339,6 +343,170 @@ export default function MissionSimulator({ goTo }) {
           </div>
         </section>
       )}
+      </div>
+
+      {/* ============================================================
+          PURPOSE-BUILT MOBILE SIMULATOR (< 768px / md:hidden)
+          WHAT IF? · Fuel shipment delayed · Delay [− 5 DAYS +] · RUN SIMULATION
+          63% -> 51% Mission Continuity
+          Fuel -> Generator -> Power -> Heating -> Research
+          AI Recommendation: Review alternate resupply options before Day 12.
+          ============================================================ */}
+      <div className="block md:hidden space-y-4">
+        {/* Mobile Header */}
+        <div className="flex items-center justify-between border-b border-[#DCE8F0] pb-3">
+          <div>
+            <div className="flex items-center gap-1.5">
+              <Sliders size={16} className="text-[#0284C7]" />
+              <h1 className="text-xl font-bold tracking-tight text-[#0C1E30]">WHAT IF?</h1>
+            </div>
+            <p className="text-xs text-[#6E8294]">Fuel shipment delay contingency</p>
+          </div>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 active:scale-95 transition min-h-[36px]"
+          >
+            <RotateCcw size={12} />
+            <span>Reset</span>
+          </button>
+        </div>
+
+        {/* Input Card */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs space-y-3.5">
+          <div>
+            <span className="text-[10.5px] font-mono uppercase tracking-wider text-[#0284C7] font-bold block">
+              Simulate Scenario
+            </span>
+            <h2 className="text-base font-bold text-[#0C1E30] mt-0.5">
+              Fuel shipment delayed
+            </h2>
+            <p className="text-xs text-[#42586E] mt-0.5">
+              Adjust expected transit slip to evaluate station continuity.
+            </p>
+          </div>
+
+          {/* Stepper Control: - [ 5 DAYS ] + */}
+          <div className="rounded-xl bg-[#F8FAFC] border border-slate-200 p-3 flex items-center justify-between gap-3">
+            <span className="text-xs font-medium text-[#42586E]">Delay:</span>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setDelayDays((d) => Math.max(0, d - 1))}
+                className="h-11 w-11 rounded-xl border border-slate-200 bg-white text-lg font-bold text-[#0C1E30] flex items-center justify-center active:scale-95 shadow-2xs transition"
+                aria-label="Decrease days"
+              >
+                −
+              </button>
+
+              <div className="text-center min-w-[80px]">
+                <span className="font-mono text-lg font-bold text-[#0C1E30] block">
+                  {delayDays} DAYS
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setDelayDays((d) => Math.min(20, d + 1))}
+                className="h-11 w-11 rounded-xl border border-slate-200 bg-white text-lg font-bold text-[#0C1E30] flex items-center justify-center active:scale-95 shadow-2xs transition"
+                aria-label="Increase days"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          {/* Run Simulation Button */}
+          <button
+            type="button"
+            onClick={handleRunSimulation}
+            disabled={isSimulating}
+            className="w-full rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white font-semibold py-3 text-xs shadow-xs transition active:scale-98 flex items-center justify-center gap-2 min-h-[48px]"
+          >
+            {isSimulating ? (
+              <>
+                <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                <span>Simulating Scenario...</span>
+              </>
+            ) : (
+              <>
+                <Sliders size={14} />
+                <span>RUN SIMULATION</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Results Card */}
+        {hasRun && (
+          <div className="rounded-2xl border border-[#DCE8F0] bg-white p-4 shadow-xs space-y-4 animate-in fade-in duration-200">
+            {/* Score Transition */}
+            <div className="rounded-xl bg-[#F8FAFC] border border-[#E8F0F5] p-3 text-center">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-[#6E8294] block">
+                Mission Continuity
+              </span>
+              <div className="flex items-center justify-center gap-3 mt-1 font-mono">
+                <span className="text-2xl font-bold text-slate-400 line-through">
+                  {beforeScore}%
+                </span>
+                <span className="text-lg text-rose-600 font-bold">→</span>
+                <span className="text-3xl font-bold text-rose-700">
+                  {afterScore}%
+                </span>
+              </div>
+              <span className="inline-block mt-1 text-[11px] font-mono font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-full">
+                −{beforeScore - afterScore}% Continuity Drop
+              </span>
+            </div>
+
+            {/* Impact Chain: Fuel -> Generator -> Power -> Heating -> Research */}
+            <div className="space-y-2">
+              <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400 block px-1">
+                Systemic Impact Cascade
+              </span>
+              <div className="flex flex-wrap items-center gap-1.5 text-xs">
+                {['Fuel', 'Generator', 'Power', 'Heating', 'Research'].map((node, idx) => (
+                  <React.Fragment key={node}>
+                    <span className="rounded-md bg-slate-100 border border-slate-200 px-2 py-1 font-semibold text-[#0C1E30]">
+                      {node}
+                    </span>
+                    {idx < 4 && <span className="text-[#0284C7] font-bold">→</span>}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+
+            {/* AI Recommendation */}
+            <div className="rounded-xl border border-[#BAE6FD] bg-[#F0F9FF] p-3.5 space-y-2">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#0284C7]">
+                <Sparkles size={13} />
+                <span>AI Recommendation</span>
+              </div>
+              <p className="text-xs font-medium text-[#0C1E30] leading-normal">
+                Review alternate resupply options before Day 12.
+              </p>
+              <p className="text-[11px] text-[#42586E] leading-relaxed">
+                Execute tactical reserve transfer protocol REC-001 to extend runway by +4.8 days and shed auxiliary lab heating.
+              </p>
+
+              {!mitigationAuthorized ? (
+                <button
+                  type="button"
+                  onClick={handleAuthorize}
+                  className="w-full mt-2 rounded-lg bg-[#0284C7] text-white py-2.5 text-xs font-semibold shadow-2xs active:scale-95 transition min-h-[44px]"
+                >
+                  Authorize Mitigation REC-001
+                </button>
+              ) : (
+                <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-2.5 text-xs font-semibold text-emerald-800 flex items-center gap-2">
+                  <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
+                  <span>Mitigation REC-001 Authorized (+4.8d)</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
