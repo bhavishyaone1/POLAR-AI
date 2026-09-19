@@ -2266,19 +2266,26 @@ export default function MapView({ goTo }) {
 
   return (
     <div className="space-y-4">
-      {/* ================= SUMMARY STRIP ================= */}
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      {/* ================= 5-PILLAR SUMMARY STRIP ================= */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         {[
-          { label: 'Sites plotted', value: sites.length },
-          { label: 'Personnel plotted', value: people.length },
-          { label: 'Open incidents', value: openIncidents.length, tone: openIncidents.length ? 'alert' : undefined },
-          { label: 'People in emergency', value: peopleAtEmergency, tone: peopleAtEmergency ? 'alert' : undefined },
+          { label: '1. Expedition Sites', value: `${sites.length} Bases`, sub: `${expeditions.length} active campaigns` },
+          { label: '2. Cargo Corridors', value: `${OPERATIONAL_ROUTES.length} Routes`, sub: 'Air-bridge & maritime' },
+          { label: '3. Inventory Depots', value: `${locations.length} Sites`, sub: 'Fuel & life-support' },
+          { label: '4. Personnel Deployed', value: `${people.length} Operatives`, sub: 'Field & station GPS' },
+          {
+            label: '5. Emergency Incidents',
+            value: `${openIncidents.length} Active`,
+            sub: openIncidents.length > 0 ? `${peopleAtEmergency} in distress` : 'All sectors nominal',
+            tone: openIncidents.length ? 'alert' : 'ok',
+          },
         ].map((item) => (
           <div key={item.label} className="card-tight">
-            <div className="eyebrow">{item.label}</div>
+            <div className="eyebrow truncate">{item.label}</div>
             <div className={`stat-value mt-1 ${item.tone ? `stat-value--${item.tone}` : ''}`}>
               {item.value}
             </div>
+            <div className="text-[11px] text-[var(--ink-low)] mt-0.5 truncate">{item.sub}</div>
           </div>
         ))}
       </div>
