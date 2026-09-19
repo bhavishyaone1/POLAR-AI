@@ -1,343 +1,206 @@
 /**
- * DEPENDENCY GRAPH & CHAIN REACTION ANALYSIS
- * ==========================================
- * Visualizes how single-point operational failures cascade across
- * Cargo → Inventory → Power Generation → Life Support → Science Missions.
- * Core differentiator: EVENT → IMPACT → DEPENDENCY → FORECAST → MITIGATION.
+ * IMPACT ANALYSIS — CRYSTAL CLEAR CASCADE
+ * ========================================
+ * Section 6:
+ * Make the cascading impact crystal clear:
+ * Direct Impact → Secondary Impact → Downstream Impact → Mission Impact
  */
 
 import React, { useState } from 'react'
 import {
   AlertOctagon,
-  AlertTriangle,
-  ArrowDown,
   ArrowRight,
   Boxes,
   Cpu,
   Flame,
   GitFork,
   Package,
-  RotateCcw,
-  Sparkles,
+  ShieldAlert,
+  Sliders,
+  ThermometerSnowflake,
   Zap,
 } from 'lucide-react'
-import { DEPENDENCY_EDGES, DEPENDENCY_NODES, traceImpactCascade } from '../services/dependencyGraph'
 
 export default function ImpactAnalysis({ goTo }) {
-  const [selectedNodeId, setSelectedNodeId] = useState('NODE-CARGO-C101')
-  const cascade = traceImpactCascade(selectedNodeId)
+  const [activeStage, setActiveStage] = useState(1)
 
-  const getNodeColor = (cat) => {
-    switch (cat) {
-      case 'CARGO':
-        return 'border-amber-500/40 bg-amber-950/30 text-amber-300'
-      case 'RESOURCE':
-        return 'border-rose-500/40 bg-rose-950/30 text-rose-300'
-      case 'ASSET':
-        return 'border-blue-500/40 bg-blue-950/30 text-blue-300'
-      case 'UTILITY':
-        return 'border-purple-500/40 bg-purple-950/30 text-purple-300'
-      case 'MISSION':
-        return 'border-cyan-500/40 bg-cyan-950/30 text-cyan-300'
-      default:
-        return 'border-slate-700 bg-slate-800 text-slate-200'
-    }
-  }
+  const stages = [
+    {
+      id: 1,
+      step: 'Direct Impact',
+      title: 'Fuel Reserve Depletion',
+      icon: Flame,
+      color: 'rose',
+      summary: 'Station central tank reservoir reaches empty on Day 12.',
+      detail:
+        'With current burn rate at 1,180 L/day, Maitri Station has 14,200 Liters available (12.0 days). Consignment C-101 is 17.0 days away, generating an unbuffered 5.0-day shortage gap.',
+      telemetry: 'Deficit Window: Day 12 to Day 17 (5.0 Days)',
+    },
+    {
+      id: 2,
+      step: 'Secondary Impact',
+      title: 'Power Generation Failure',
+      icon: Cpu,
+      color: 'blue',
+      summary: 'Primary CAT 3512 Generator trips off due to fuel starvation.',
+      detail:
+        'Station microgrid drops from 280 kW baseline down to emergency battery power (9 kW capacity). Backup generator G-02 cannot sustain habitat heating and science lab simultaneously.',
+      telemetry: 'Station Microgrid: 96% Capacity Drop',
+    },
+    {
+      id: 3,
+      step: 'Downstream Impact',
+      title: 'Hydronic Heating Loss',
+      icon: ThermometerSnowflake,
+      color: 'purple',
+      summary: 'Glycol heating loops freeze; station habitat ambient falls.',
+      detail:
+        'Thermal distribution ceases across living quarters and laboratory modules. Internal temperatures project to drop below -15°C within 18 hours of generator shutdown.',
+      telemetry: 'Habitat Thermal Decay: ~1.8°C per hour',
+    },
+    {
+      id: 4,
+      step: 'Mission Impact',
+      title: 'Science Mission Termination',
+      icon: ShieldAlert,
+      color: 'amber',
+      summary: 'Paleoclimate ice-core drill halt; sample cryogenic loss.',
+      detail:
+        'Drill motors lose 3-phase power; cryogenic freezer vaults containing 400m Antarctic ice-core samples suffer unrecoverable thermal degradation. Emergency evacuation required.',
+      telemetry: 'Scientific Loss: 3 Seasons of Field Data',
+    },
+  ]
 
   return (
-    <div className="space-y-6">
-      {/* Top Banner explaining the USP */}
-      <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-r from-[#0a1628] to-[#08101e] p-5">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-cyan-400 mb-1">
-              <GitFork size={14} />
-              Mission Continuity Core USP: Causal Propagation
-            </div>
-            <h2 className="text-lg font-bold text-white">
-              Chain Reaction & Operational Dependency Graph
-            </h2>
-            <p className="text-xs text-slate-300 mt-1">
-              Click any node in the Antarctic logistics chain below to calculate how a disruption cascades through power, heating, and scientific field missions.
-            </p>
-          </div>
-
+    <div className="max-w-5xl mx-auto space-y-8 pb-12">
+      {/* Header */}
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-5">
+        <div>
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => setSelectedNodeId('NODE-CARGO-C101')}
-              className="rounded-lg bg-amber-500/20 border border-amber-500/40 px-3 py-1.5 text-xs font-mono font-semibold text-amber-300 transition hover:bg-amber-500/30"
-            >
-              Demo: Fuel Resupply Delay (C-101)
-            </button>
-            <button
-              onClick={() => goTo('simulator')}
-              className="rounded-lg bg-cyan-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-cyan-500 shadow-md shadow-cyan-600/20"
-            >
-              Run In Simulator →
-            </button>
+            <GitFork size={18} className="text-[var(--ice)]" />
+            <h1 className="text-xl font-bold text-[var(--ink-hi)]">Cascading Impact Analysis</h1>
           </div>
-        </div>
-      </div>
-
-      {/* Main Interactive Graph & Impact Panel */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2 Cols: Interactive Node Layout */}
-        <div className="lg:col-span-2 space-y-5 rounded-xl border border-slate-800 bg-[#070e1c] p-5">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
-              Interactive System Topology
-            </span>
-            <span className="text-xs text-cyan-400 font-mono">
-              Active Focus: {cascade.sourceNode?.label}
-            </span>
-          </div>
-
-          {/* Layer 1: Logistics & Inbound Cargo */}
-          <div>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2">
-              Layer 1: External Cargo Corridors
-            </span>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {DEPENDENCY_NODES.filter((n) => n.category === 'CARGO').map((node) => {
-                const isSelected = selectedNodeId === node.id
-                return (
-                  <div
-                    key={node.id}
-                    onClick={() => setSelectedNodeId(node.id)}
-                    className={`cursor-pointer rounded-xl border p-3.5 transition ${
-                      isSelected
-                        ? 'border-cyan-400 bg-cyan-950/40 ring-2 ring-cyan-400/40 shadow-lg shadow-cyan-500/10'
-                        : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-mono text-[10px] text-amber-400 flex items-center gap-1">
-                        <Package size={12} />
-                        {node.id}
-                      </span>
-                      <span className="rounded bg-amber-950 px-1.5 py-0.5 text-[10px] font-mono text-amber-400">
-                        {node.status}
-                      </span>
-                    </div>
-                    <p className="font-semibold text-sm text-white mt-1.5">{node.label}</p>
-                    <p className="text-xs text-slate-400 mt-1">{node.notes}</p>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Cascade Connector Arrow */}
-          <div className="flex justify-center text-slate-600">
-            <ArrowDown size={18} className="animate-bounce text-cyan-400" />
-          </div>
-
-          {/* Layer 2: Station Inventory & Physical Resources */}
-          <div>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2">
-              Layer 2: Station Storage & Fuel Depots
-            </span>
-            <div className="grid grid-cols-1 gap-3">
-              {DEPENDENCY_NODES.filter((n) => n.category === 'RESOURCE').map((node) => {
-                const isSelected = selectedNodeId === node.id
-                return (
-                  <div
-                    key={node.id}
-                    onClick={() => setSelectedNodeId(node.id)}
-                    className={`cursor-pointer rounded-xl border p-3.5 transition ${
-                      isSelected
-                        ? 'border-rose-400 bg-rose-950/40 ring-2 ring-rose-400/40 shadow-lg shadow-rose-500/10'
-                        : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-mono text-[10px] text-rose-400 flex items-center gap-1">
-                        <Flame size={12} />
-                        {node.id}
-                      </span>
-                      <span className="rounded bg-rose-950 px-1.5 py-0.5 text-[10px] font-mono text-rose-400">
-                        {node.status}
-                      </span>
-                    </div>
-                    <p className="font-semibold text-sm text-white mt-1.5">{node.label}</p>
-                    <p className="text-xs text-slate-400 mt-1">{node.notes}</p>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Cascade Connector Arrow */}
-          <div className="flex justify-center text-slate-600">
-            <ArrowDown size={18} className="text-blue-400" />
-          </div>
-
-          {/* Layer 3: Power Generation & Assets */}
-          <div>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2">
-              Layer 3: Generation & Infrastructure Machinery
-            </span>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {DEPENDENCY_NODES.filter((n) => n.category === 'ASSET').map((node) => {
-                const isSelected = selectedNodeId === node.id
-                return (
-                  <div
-                    key={node.id}
-                    onClick={() => setSelectedNodeId(node.id)}
-                    className={`cursor-pointer rounded-xl border p-3.5 transition ${
-                      isSelected
-                        ? 'border-blue-400 bg-blue-950/40 ring-2 ring-blue-400/40 shadow-lg shadow-blue-500/10'
-                        : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-mono text-[10px] text-blue-400 flex items-center gap-1">
-                        <Cpu size={12} />
-                        {node.id}
-                      </span>
-                      <span className="rounded bg-blue-950 px-1.5 py-0.5 text-[10px] font-mono text-blue-400">
-                        {node.status}
-                      </span>
-                    </div>
-                    <p className="font-semibold text-sm text-white mt-1.5">{node.label}</p>
-                    <p className="text-xs text-slate-400 mt-1">{node.notes}</p>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Cascade Connector Arrow */}
-          <div className="flex justify-center text-slate-600">
-            <ArrowDown size={18} className="text-purple-400" />
-          </div>
-
-          {/* Layer 4: Microgrid & Scientific Programs */}
-          <div>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2">
-              Layer 4: Utilities & Science Missions
-            </span>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {DEPENDENCY_NODES.filter((n) => n.category === 'UTILITY' || n.category === 'MISSION').map((node) => {
-                const isSelected = selectedNodeId === node.id
-                return (
-                  <div
-                    key={node.id}
-                    onClick={() => setSelectedNodeId(node.id)}
-                    className={`cursor-pointer rounded-xl border p-3.5 transition ${
-                      isSelected
-                        ? 'border-purple-400 bg-purple-950/40 ring-2 ring-purple-400/40 shadow-lg shadow-purple-500/10'
-                        : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-mono text-[10px] text-purple-400 flex items-center gap-1">
-                        <Zap size={12} />
-                        {node.id}
-                      </span>
-                      <span className="rounded bg-purple-950 px-1.5 py-0.5 text-[10px] font-mono text-purple-400">
-                        {node.status}
-                      </span>
-                    </div>
-                    <p className="font-semibold text-sm text-white mt-1.5">{node.label}</p>
-                    <p className="text-xs text-slate-400 mt-1">{node.notes}</p>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+          <p className="mt-1 text-xs text-[var(--ink-mid)]">
+            Causal propagation from root logistics deficit to science mission viability.
+          </p>
         </div>
 
-        {/* Right Col: Cascade Consequences & Downstream Impact */}
-        <div className="space-y-4">
-          <div className="rounded-xl border border-slate-800 bg-[#091224] p-5 space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="font-bold text-white text-sm flex items-center gap-2">
-                <AlertOctagon size={16} className="text-amber-400" />
-                Chain Reaction Breakdown
-              </h3>
-              <span className="rounded-full bg-amber-950 border border-amber-500/40 px-2 py-0.5 text-[10px] font-mono text-amber-300">
-                {cascade.totalAffectedCount} Cascading Nodes
-              </span>
-            </div>
+        <div className="flex items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => goTo('simulator')}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--ice)] hover:bg-indigo-700 text-white font-semibold px-4 py-2 text-xs shadow-sm transition"
+          >
+            <Sliders size={13} />
+            <span>Simulate In What-If Sandbox</span>
+          </button>
+        </div>
+      </header>
 
-            {/* Focal Node */}
-            <div className="rounded-lg bg-slate-900/80 p-3 border border-slate-700/80">
-              <span className="text-[10px] font-mono uppercase text-slate-400 block">Root Disruption Node</span>
-              <p className="font-bold text-white text-sm mt-0.5">{cascade.sourceNode?.label}</p>
-              <p className="text-xs text-slate-300 mt-1">{cascade.sourceNode?.notes}</p>
-            </div>
+      {/* ============================================================
+          THE 4-STAGE CASCADE BANNER
+          Direct Impact → Secondary Impact → Downstream Impact → Mission Impact
+          ============================================================ */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-mid)]">
+            4-Stage Cascading Propagation
+          </h2>
+          <span className="text-xs text-[var(--ink-mid)]">Click any stage to inspect details</span>
+        </div>
 
-            {/* Direct Impacts */}
-            {cascade.directImpacts.length > 0 && (
-              <div className="space-y-2">
-                <span className="text-[11px] font-mono uppercase text-rose-400 font-semibold block">
-                  1. Direct Downstream Impact
-                </span>
-                <div className="space-y-1.5">
-                  {cascade.directImpacts.map((d) => (
-                    <div key={d.id} className="rounded border border-rose-500/30 bg-rose-950/20 p-2.5 text-xs text-rose-200">
-                      <span className="font-semibold block">{d.label}</span>
-                      <span className="text-slate-400 text-[11px] mt-0.5 block">{d.notes}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {stages.map((st) => {
+            const Icon = st.icon
+            const isSelected = activeStage === st.id
 
-            {/* Secondary Impacts */}
-            {cascade.secondaryImpacts.length > 0 && (
-              <div className="space-y-2">
-                <span className="text-[11px] font-mono uppercase text-amber-400 font-semibold block">
-                  2. Secondary Transmission (Power / Grid)
-                </span>
-                <div className="space-y-1.5">
-                  {cascade.secondaryImpacts.map((s) => (
-                    <div key={s.id} className="rounded border border-amber-500/30 bg-amber-950/20 p-2.5 text-xs text-amber-200">
-                      <span className="font-semibold block">{s.label}</span>
-                      <span className="text-slate-400 text-[11px] mt-0.5 block">{s.notes}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Downstream Impacts */}
-            {cascade.downstreamImpacts.length > 0 && (
-              <div className="space-y-2">
-                <span className="text-[11px] font-mono uppercase text-cyan-400 font-semibold block">
-                  3. Critical Mission & Habitat Impact
-                </span>
-                <div className="space-y-1.5">
-                  {cascade.downstreamImpacts.map((ds) => (
-                    <div key={ds.id} className="rounded border border-cyan-500/30 bg-cyan-950/20 p-2.5 text-xs text-cyan-200">
-                      <span className="font-semibold block">{ds.label}</span>
-                      <span className="text-slate-400 text-[11px] mt-0.5 block">{ds.notes}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Mitigation CTA */}
-            <div className="rounded-xl border border-cyan-500/30 bg-cyan-950/40 p-4 space-y-2">
-              <span className="text-xs font-mono text-cyan-300 uppercase font-semibold flex items-center gap-1.5">
-                <Sparkles size={13} />
-                Continuity Engine Recommendation
-              </span>
-              <p className="text-xs text-slate-200">
-                To prevent this cascade from forcing an emergency shutdown of the Paleoclimate drill, approve Level-1 non-critical circuit load shedding now.
-              </p>
-              <button
-                onClick={() => goTo('copilot')}
-                className="w-full mt-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 py-2 text-xs font-bold text-white transition shadow-md shadow-cyan-600/20"
+            return (
+              <div
+                key={st.id}
+                onClick={() => setActiveStage(st.id)}
+                className={`cursor-pointer rounded-2xl border p-5 transition space-y-3 ${
+                  isSelected
+                    ? 'border-[var(--ice)] bg-indigo-50/40 ring-2 ring-[var(--ice)]/20 shadow-sm'
+                    : 'border-[var(--line)] bg-white hover:border-slate-300'
+                }`}
               >
-                Open Copilot Recommendation →
+                <div className="flex items-center justify-between">
+                  <div className="h-8 w-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700">
+                    <Icon size={16} />
+                  </div>
+                  <span className="font-mono text-[10px] font-bold text-slate-400">
+                    0{st.id}
+                  </span>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
+                    {st.step}
+                  </span>
+                  <h3 className="text-sm font-bold text-slate-900 mt-0.5">
+                    {st.title}
+                  </h3>
+                </div>
+
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  {st.summary}
+                </p>
+              </div>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* Active Stage Detail Breakdown */}
+      {(() => {
+        const current = stages.find((s) => s.id === activeStage) || stages[0]
+        const CurrentIcon = current.icon
+
+        return (
+          <section className="rounded-2xl border border-[var(--line)] bg-white p-7 sm:p-8 shadow-sm space-y-6">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-indigo-50 border border-indigo-200 text-[var(--ice)] flex items-center justify-center">
+                  <CurrentIcon size={20} />
+                </div>
+                <div>
+                  <span className="text-xs font-mono font-bold uppercase text-[var(--ice)]">
+                    Stage {current.id}: {current.step}
+                  </span>
+                  <h2 className="text-lg font-bold text-slate-900">{current.title}</h2>
+                </div>
+              </div>
+
+              <span className="font-mono text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                {current.telemetry}
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-xs font-mono font-bold uppercase text-slate-500">
+                Detailed Transmission Analysis
+              </h3>
+              <p className="text-sm text-slate-700 leading-relaxed max-w-3xl">
+                {current.detail}
+              </p>
+            </div>
+
+            <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 text-xs">
+              <span className="text-slate-500">
+                Actionable Next Step: Test mitigation protocols in What-If Sandbox.
+              </span>
+              <button
+                type="button"
+                onClick={() => goTo('simulator')}
+                className="inline-flex items-center gap-1 font-bold text-[var(--ice)] hover:underline"
+              >
+                <span>Open What-If Simulator</span>
+                <ArrowRight size={13} />
               </button>
             </div>
-          </div>
-        </div>
-      </div>
+          </section>
+        )
+      })()}
     </div>
   )
 }

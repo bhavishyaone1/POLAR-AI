@@ -1,79 +1,85 @@
 /**
- * GUIDED DEMO TOUR (THE MAGIC MOMENT WALKTHROUGH)
- * ===============================================
- * Designed specifically for presentations to judges and reviewers.
- * Guides the user step-by-step through the 5-step Antarctic Fuel Resupply Gap:
- * Dashboard (68%) → Dependency Graph → What-If Simulator (51%) → AI Recommendation → Immutable Audit.
+ * GUIDED SCENARIO CONTROLLER (THE GUIDED DEMO MODE)
+ * =================================================
+ * Section 5: The most important feature of POLAR-AI.
+ *
+ * 6-step guided walkthrough:
+ * Step 1: Normal operations
+ * Step 2: Fuel resupply mismatch detected
+ * Step 3: Risk & potential gap (5 days)
+ * Step 4: Dependency chain
+ * Step 5: What-if simulation
+ * Step 6: AI recommendation & officer approval
+ *
+ * Clean, lightweight controller with Next, Back, Exit Demo.
  */
 
 import React, { useState } from 'react'
 import {
-  AlertTriangle,
   ArrowLeft,
   ArrowRight,
   CheckCircle2,
-  GitFork,
-  HelpCircle,
-  Play,
-  RotateCcw,
-  ShieldCheck,
-  Sliders,
   Sparkles,
   X,
+  Play,
 } from 'lucide-react'
 import { useData } from '../store/DataContext'
 
 export const DEMO_STEPS = [
   {
     step: 1,
-    view: 'dashboard',
-    badge: 'Step 1: Predictive Detection',
-    title: 'Command Center & Mission Continuity Score (68%)',
+    title: 'Normal Operations',
+    headline: 'Maitri Station Operations Overview',
     summary:
-      'Notice that the Mission Continuity Score is at 68% ("ATTENTION REQUIRED"). The engine does NOT wait for tanks to run empty; it immediately calculates that Maitri Station has 12.0 days of fuel remaining while Resupply Cargo C-101 has a 17-day ETA, triggering RSK-001 (5-day resupply deficit window).',
-    actionText: 'Inspect Dependency Cascade →',
-    targetView: 'impact',
+      'Maitri Station is operating under standard polar routines. Baseline mission continuity sits at 68% ("Attention Required") as autonomous logistics engines monitor incoming flights and vessel corridors.',
+    targetView: 'dashboard',
+    actionLabel: 'Detect Resupply Window →',
   },
   {
     step: 2,
-    view: 'impact',
-    badge: 'Step 2: Causal Propagation',
-    title: 'Dependency Graph & Chain Reaction Analysis',
+    title: 'Fuel Resupply Mismatch Detected',
+    headline: 'Schedule & Runway Disparity Identified',
     summary:
-      'Trace the causal propagation: Cargo C-101 → Fuel Reserve → Primary CAT 3512 Generator → Station Power Grid → Hydronic Heating Loop & Deep Ice-Core Science Mission. A logistics delay at Novo Runway directly threatens science operations.',
-    actionText: 'Launch What-If Simulator →',
-    targetView: 'simulator',
+      'The engine automatically detects a timeline mismatch: Station diesel fuel tank has 12 days remaining, but incoming resupply cargo C-101 has an arrival ETA of 17 days.',
+    targetView: 'dashboard',
+    actionLabel: 'Inspect Risk Gap →',
   },
   {
     step: 3,
-    view: 'simulator',
-    badge: 'Step 3: What-If Sandboxing',
-    title: 'Simulate +5 Days Delay Without Mutating Data',
+    title: 'Risk & Potential Gap (5 Days)',
+    headline: '5-Day Operating Deficit Flagged',
     summary:
-      'In this non-mutating sandbox, test what happens if severe blizzards delay C-101 by another +5 days. Watch the Mission Continuity Score drop from 68% down to 51%, and the shortage gap widen to 10 days.',
-    actionText: 'Review AI Mitigations →',
-    targetView: 'copilot',
+      'Risk RSK-001 is triggered: A critical 5-day shortage gap will occur before resupply arrives. Station safe operating buffer (14 days) is officially breached.',
+    targetView: 'risks',
+    actionLabel: 'Trace Dependency Chain →',
   },
   {
     step: 4,
-    view: 'copilot',
-    badge: 'Step 4: Explainable AI Recommendation',
-    title: 'Human-in-the-Loop Decision Gate',
+    title: 'Dependency Chain',
+    headline: 'Causal Chain Reaction Analysis',
     summary:
-      'POLAR-AI Copilot delivers grounded recommendation REC-001: "Activate Strategic Fuel Reserve & Initiate Level-1 Circuit Shedding" with 94% confidence, extending runway by +4.8 days without compromising life support.',
-    actionText: 'Approve & Verify Audit Trail →',
-    targetView: 'audit',
-    autoApprove: true,
+      'Trace the cascade: Cargo delayed → Inventory runs out → Generator stops → Heating lost → Science mission at risk. A logistics delay threatens station life support.',
+    targetView: 'impact',
+    actionLabel: 'Run What-If Simulation →',
   },
   {
     step: 5,
-    view: 'audit',
-    badge: 'Step 5: Governance Verification',
-    title: 'Immutable Cryptographic Audit Trail',
+    title: 'What-If Simulation',
+    headline: 'Simulate +5 Days Blizzard Delay',
     summary:
-      'The officer approval has been permanently stamped in the immutable audit log with timestamp, operator role, and verification hash. Mission continuity restored to safe margins!',
-    actionText: 'Finish Guided Tour',
-    targetView: 'dashboard',
+      'Testing hypothetical severe weather in the non-mutating sandbox: Adding +5 days cargo delay drops mission continuity score from 68% down to 51%, widening the gap to 10 days.',
+    targetView: 'simulator',
+    actionLabel: 'Review AI Mitigation →',
+  },
+  {
+    step: 6,
+    title: 'AI Recommendation & Officer Approval',
+    headline: 'Human-in-the-Loop Decision Authorisation',
+    summary:
+      'ASK POLAR recommends REC-001: Activate strategic fuel reserves and shed Level-1 non-critical laboratory circuits, regaining +4.8 days of runway. Officer authorizes action.',
+    targetView: 'copilot',
+    actionLabel: 'Finish Walkthrough',
+    autoApprove: true,
   },
 ]
 
@@ -93,9 +99,11 @@ export default function GuidedDemoTour({ isOpen, onClose, goTo, currentView }) {
     if (currentStepIndex < DEMO_STEPS.length - 1) {
       const nextStep = DEMO_STEPS[currentStepIndex + 1]
       setCurrentStepIndex(currentStepIndex + 1)
-      goTo(nextStep.view)
+      goTo(nextStep.targetView)
     } else {
       onClose()
+      setCurrentStepIndex(0)
+      goTo('dashboard')
     }
   }
 
@@ -103,85 +111,106 @@ export default function GuidedDemoTour({ isOpen, onClose, goTo, currentView }) {
     if (currentStepIndex > 0) {
       const prevStep = DEMO_STEPS[currentStepIndex - 1]
       setCurrentStepIndex(currentStepIndex - 1)
-      goTo(prevStep.view)
+      goTo(prevStep.targetView)
     }
   }
 
+  const handleExit = () => {
+    onClose()
+    setCurrentStepIndex(0)
+  }
+
   return (
-    <div className="fixed bottom-6 right-6 z-50 max-w-lg w-full px-4 sm:px-0">
-      <div className="overflow-hidden rounded-2xl border-2 border-cyan-400 bg-[#071124] p-5 shadow-2xl shadow-cyan-900/50 backdrop-blur-xl animate-fade-in space-y-4">
-        {/* Top Header */}
-        <div className="flex items-center justify-between border-b border-slate-700/80 pb-3">
+    <aside
+      aria-label="Guided Demo Walkthrough"
+      className="fixed bottom-6 inset-x-4 sm:inset-x-auto sm:right-6 sm:w-[500px] z-50 animate-fade-in"
+    >
+      <div className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-2xl shadow-slate-900/10 space-y-4">
+        {/* Header bar with step pill and Exit */}
+        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-cyan-950 border border-cyan-400 px-2.5 py-0.5 text-xs font-mono font-bold text-cyan-300 flex items-center gap-1.5">
-              <Sparkles size={13} className="text-cyan-400" />
-              {activeStep.badge}
-            </span>
-            <span className="text-xs text-slate-400 font-mono">
-              ({currentStepIndex + 1} of {DEMO_STEPS.length})
+            <span className="rounded-full bg-indigo-50 border border-indigo-200/80 px-2.5 py-0.5 text-xs font-semibold text-[var(--ice)] flex items-center gap-1.5">
+              <Sparkles size={13} />
+              Step {activeStep.step} of 6: {activeStep.title}
             </span>
           </div>
 
           <button
-            onClick={onClose}
-            className="rounded p-1 text-slate-400 hover:text-white transition"
-            title="Close Walkthrough"
+            type="button"
+            onClick={handleExit}
+            className="text-xs font-medium text-slate-400 hover:text-slate-800 transition"
           >
-            <X size={16} />
+            Exit Demo
           </button>
         </div>
 
         {/* Content */}
-        <div className="space-y-2">
-          <h4 className="text-base font-bold text-white leading-snug">
-            {activeStep.title}
-          </h4>
-          <p className="text-xs text-slate-300 leading-relaxed">
+        <div className="space-y-1.5">
+          <h2 className="text-base font-bold text-slate-900 leading-snug">
+            {activeStep.headline}
+          </h2>
+          <p className="text-xs text-slate-600 leading-relaxed">
             {activeStep.summary}
           </p>
         </div>
 
-        {/* Step Progress Dots */}
-        <div className="flex items-center gap-1.5 py-1">
+        {/* Step progress pills */}
+        <div className="flex items-center gap-1.5 pt-1">
           {DEMO_STEPS.map((s, idx) => (
-            <div
+            <button
               key={s.step}
+              type="button"
               onClick={() => {
                 setCurrentStepIndex(idx)
-                goTo(s.view)
+                goTo(s.targetView)
               }}
-              className={`h-1.5 flex-1 rounded-full cursor-pointer transition ${
+              title={`Jump to Step ${s.step}: ${s.title}`}
+              className={`h-1.5 flex-1 rounded-full transition ${
                 idx === currentStepIndex
-                  ? 'bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]'
+                  ? 'bg-[var(--ice)]'
                   : idx < currentStepIndex
-                  ? 'bg-emerald-400'
-                  : 'bg-slate-800'
+                  ? 'bg-emerald-500'
+                  : 'bg-slate-200'
               }`}
             />
           ))}
         </div>
 
-        {/* Footer Actions */}
-        <div className="flex items-center justify-between pt-1">
+        {/* Action Controls: Back, Next, Exit */}
+        <div className="flex items-center justify-between pt-2 border-t border-slate-100">
           <button
+            type="button"
             onClick={handlePrev}
             disabled={currentStepIndex === 0}
-            className={`inline-flex items-center gap-1 text-xs font-medium ${
-              currentStepIndex === 0 ? 'text-slate-600 cursor-not-allowed' : 'text-slate-400 hover:text-white'
+            className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg ${
+              currentStepIndex === 0
+                ? 'text-slate-300 cursor-not-allowed'
+                : 'text-slate-600 hover:bg-slate-100'
             }`}
           >
             <ArrowLeft size={13} />
-            Previous
+            Back
           </button>
 
-          <button
-            onClick={handleNext}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-xs font-bold text-white shadow-md shadow-cyan-500/30 transition hover:from-cyan-400 hover:to-blue-500"
-          >
-            {activeStep.actionText}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleExit}
+              className="text-xs font-medium text-slate-500 hover:text-slate-800 px-2.5 py-1.5 rounded-lg"
+            >
+              Exit
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--ice)] hover:bg-indigo-700 text-white font-semibold px-4 py-2 text-xs shadow-sm transition active:scale-95"
+            >
+              <span>{activeStep.actionLabel}</span>
+              <ArrowRight size={13} />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </aside>
   )
 }

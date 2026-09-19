@@ -442,18 +442,6 @@ export default function App() {
         goTo={goTo}
         currentView={view}
       />
-
-      {/* Global Floating AI Assistant — powered by portable Polar AI Assistant */}
-      <AIChatbot
-        dataAdapter={projectDataAdapter}
-        projectName="POLAR COMMAND CENTER"
-        title="Polar AI Assistant"
-        subtitle="NCPOR Mission Intelligence"
-        goTo={goTo}
-        onFocusMap={(action) => {
-          goTo('map')
-        }}
-      />
     </div>
   )
 }

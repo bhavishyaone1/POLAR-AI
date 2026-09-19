@@ -1,224 +1,279 @@
 /**
- * OPERATIONAL RISK ENGINE & RISK MATRIX
- * =====================================
- * Formal 5x5 Probability × Impact Risk Matrix.
- * Categorizes vulnerabilities across Logistics, Inventory, Machinery,
- * Climate, and Safety with evidence and actionable recommendations.
+ * MISSION RISK ENGINE — FOCUSED VIEW
+ * ==================================
+ * Section 6:
+ * Replaces the giant risk matrix with a focused view.
+ * Hero: Fuel Resupply Risk
+ * Below it:
+ * Visual dependency flow:
+ * Cargo delayed
+ * ↓
+ * Inventory runs out
+ * ↓
+ * Generator stops
+ * ↓
+ * Heating lost
+ * ↓
+ * Mission at risk
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import {
-  AlertOctagon,
   AlertTriangle,
+  ArrowDown,
   ArrowRight,
   Boxes,
-  CheckCircle2,
-  Clock,
   Cpu,
-  Filter,
   Flame,
-  Layers,
+  GitFork,
   Package,
-  Search,
   ShieldAlert,
+  Sliders,
+  ThermometerSnowflake,
   Wind,
 } from 'lucide-react'
 import { useData } from '../store/DataContext'
 
 export default function Risks({ goTo }) {
-  const { risks, recommendations } = useData()
-  const [selectedCategory, setSelectedCategory] = useState('ALL')
-  const [selectedSeverity, setSelectedSeverity] = useState('ALL')
+  const { risks } = useData()
 
-  const filteredRisks = (risks || []).filter((r) => {
-    if (selectedCategory !== 'ALL' && r.category !== selectedCategory) return false
-    if (selectedSeverity !== 'ALL' && r.severity !== selectedSeverity) return false
-    return true
-  })
-
-  const getSeverityBadge = (sev) => {
-    switch (sev) {
-      case 'CRITICAL':
-        return <span className="rounded bg-rose-950 border border-rose-500/50 px-2 py-0.5 text-[11px] font-mono font-bold text-rose-300">CRITICAL</span>
-      case 'HIGH':
-        return <span className="rounded bg-orange-950 border border-orange-500/50 px-2 py-0.5 text-[11px] font-mono font-bold text-orange-300">HIGH</span>
-      case 'MEDIUM':
-        return <span className="rounded bg-amber-950 border border-amber-500/50 px-2 py-0.5 text-[11px] font-mono text-amber-300">MEDIUM</span>
-      default:
-        return <span className="rounded bg-emerald-950 border border-emerald-500/50 px-2 py-0.5 text-[11px] font-mono text-emerald-300">LOW</span>
-    }
+  const fuelRisk = risks?.find((r) => r.id === 'RSK-001') || {
+    id: 'RSK-001',
+    title: 'Fuel Resupply Window Breach',
+    severity: 'CRITICAL',
+    station: 'Maitri Station',
+    evidence: 'Diesel fuel reserve at 12.0 days runway; resupply cargo C-101 ETA is 17.0 days.',
+    impact: 'Station generator fuel starvation, hydronic heating loop freeze, and paleoclimate drill stoppage.',
+    urgency: 'Immediate (Within 48h to avoid unrecoverable deficit)',
   }
 
   return (
-    <div className="space-y-6">
-      {/* Top Header */}
-      <div className="rounded-xl border border-slate-800 bg-[#081020] p-5 flex flex-wrap items-center justify-between gap-4">
+    <div className="max-w-5xl mx-auto space-y-8 pb-12">
+      {/* Header */}
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-5">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <AlertTriangle size={20} className="text-amber-400" />
-            Operational Risk Engine & Matrix
-          </h2>
-          <p className="text-xs text-slate-300 mt-1">
-            Systematic vulnerability detection linking root causes directly to downstream mission schedules.
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
+            <h1 className="text-xl font-bold text-[var(--ink-hi)]">Mission Risk Engine</h1>
+            <span className="rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-xs font-bold text-rose-700">
+              1 Critical Risk Active
+            </span>
+          </div>
+          <p className="mt-1 text-xs text-[var(--ink-mid)]">
+            Continuous vulnerability evaluation linking root logistics causes directly to habitat life support.
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <button
+            type="button"
             onClick={() => goTo('impact')}
-            className="rounded-lg border border-cyan-500/40 bg-cyan-950/40 px-3 py-1.5 text-xs font-semibold text-cyan-300 transition hover:bg-cyan-900/40"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--line)] bg-white hover:bg-slate-50 px-3.5 py-2 text-xs font-semibold text-[var(--ink-hi)] shadow-sm transition"
           >
-            Trace Impact Cascade →
+            <GitFork size={13} className="text-[var(--ice)]" />
+            <span>Impact Analysis</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => goTo('simulator')}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--ice)] hover:bg-indigo-700 text-white font-semibold px-3.5 py-2 text-xs shadow-sm transition"
+          >
+            <Sliders size={13} />
+            <span>Test In Simulator</span>
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* 5x5 Probability x Impact Visual Grid & Active Risk Stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Visual Risk Matrix (1 col) */}
-        <div className="rounded-xl border border-slate-800 bg-[#070e1c] p-5 space-y-3">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-            <h3 className="text-xs font-mono font-bold uppercase text-slate-300">
-              5×5 Risk Matrix (Likelihood × Impact)
-            </h3>
-            <span className="text-[10px] font-mono text-slate-500">ISO 31000 Standard</span>
-          </div>
-
-          <div className="grid grid-cols-3 gap-1.5 text-center font-mono text-[10px] pt-1">
-            <div className="rounded bg-amber-950/40 border border-amber-500/20 p-2 text-amber-300">
-              <span>Low Prob · High</span>
-              <span className="block font-bold text-sm mt-0.5">1</span>
+      {/* ============================================================
+          1. HERO: FUEL RESUPPLY RISK (RSK-001)
+          ============================================================ */}
+      <section className="rounded-2xl border border-rose-200/80 bg-white p-7 sm:p-8 shadow-sm space-y-5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-rose-100 pb-4">
+          <div className="flex items-center gap-2.5">
+            <div className="h-9 w-9 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center">
+              <AlertTriangle size={18} />
             </div>
-            <div className="rounded bg-orange-950/60 border border-orange-500/30 p-2 text-orange-300">
-              <span>Med Prob · High</span>
-              <span className="block font-bold text-sm mt-0.5">2</span>
-            </div>
-            <div className="rounded bg-rose-950/80 border border-rose-500/50 p-2 text-rose-300 shadow-md shadow-rose-900/30">
-              <span>High Prob · Crit</span>
-              <span className="block font-bold text-sm mt-0.5">2</span>
-            </div>
-
-            <div className="rounded bg-emerald-950/30 border border-emerald-500/20 p-2 text-emerald-300">
-              <span>Low Prob · Med</span>
-              <span className="block font-bold text-sm mt-0.5">0</span>
-            </div>
-            <div className="rounded bg-amber-950/40 border border-amber-500/20 p-2 text-amber-300">
-              <span>Med Prob · Med</span>
-              <span className="block font-bold text-sm mt-0.5">1</span>
-            </div>
-            <div className="rounded bg-orange-950/60 border border-orange-500/30 p-2 text-orange-300">
-              <span>High Prob · Med</span>
-              <span className="block font-bold text-sm mt-0.5">1</span>
-            </div>
-
-            <div className="rounded bg-emerald-950/20 border border-emerald-500/10 p-2 text-emerald-400">
-              <span>Low Prob · Low</span>
-              <span className="block font-bold text-sm mt-0.5">0</span>
-            </div>
-            <div className="rounded bg-emerald-950/30 border border-emerald-500/20 p-2 text-emerald-300">
-              <span>Med Prob · Low</span>
-              <span className="block font-bold text-sm mt-0.5">0</span>
-            </div>
-            <div className="rounded bg-amber-950/40 border border-amber-500/20 p-2 text-amber-300">
-              <span>High Prob · Low</span>
-              <span className="block font-bold text-sm mt-0.5">0</span>
+            <div>
+              <span className="font-mono text-xs font-bold text-rose-600">
+                {fuelRisk.id} · {fuelRisk.station}
+              </span>
+              <h2 className="text-lg font-bold text-[var(--ink-hi)]">
+                {fuelRisk.title}
+              </h2>
             </div>
           </div>
 
-          <p className="text-[11px] text-slate-400 leading-relaxed pt-2">
-            <strong>RSK-001</strong> (Fuel Resupply Window Breach) occupies the Critical/High quadrant, requiring immediate human officer intervention.
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-rose-50 border border-rose-200 px-3 py-1 text-xs font-bold text-rose-700">
+              SEVERITY: CRITICAL
+            </span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div className="rounded-xl bg-slate-50 border border-slate-200/80 p-4 space-y-1">
+            <span className="font-mono text-[11px] uppercase tracking-wider text-slate-500 font-bold block">
+              Telemetry Evidence
+            </span>
+            <p className="text-slate-800 leading-relaxed font-medium">
+              {fuelRisk.evidence}
+            </p>
+          </div>
+
+          <div className="rounded-xl bg-rose-50/60 border border-rose-200/70 p-4 space-y-1">
+            <span className="font-mono text-[11px] uppercase tracking-wider text-rose-700 font-bold block">
+              Direct Station Impact
+            </span>
+            <p className="text-rose-900 leading-relaxed font-medium">
+              {fuelRisk.impact}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs">
+          <span className="font-mono text-slate-500">
+            Urgency Level: <strong className="text-rose-600 font-bold">{fuelRisk.urgency}</strong>
+          </span>
+          <button
+            type="button"
+            onClick={() => goTo('copilot')}
+            className="inline-flex items-center gap-1.5 font-bold text-[var(--ice)] hover:underline"
+          >
+            <span>Review AI Mitigation Options</span>
+            <ArrowRight size={13} />
+          </button>
+        </div>
+      </section>
+
+      {/* ============================================================
+          2. VISUAL DEPENDENCY FLOW
+          Cargo delayed -> Inventory runs out -> Generator stops -> Heating lost -> Mission at risk
+          ============================================================ */}
+      <section className="space-y-4">
+        <div>
+          <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-mid)]">
+            Visual Dependency Flow
+          </h2>
+          <p className="text-xs text-[var(--ink-mid)] mt-0.5">
+            How a logistics shipping delay cascades into full mission failure:
           </p>
         </div>
 
-        {/* Risk Registry List (2 cols) */}
-        <div className="lg:col-span-2 space-y-4">
-          {/* Filter Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-800 bg-[#091222] p-3 text-xs">
-            <div className="flex items-center gap-2">
-              <span className="text-slate-400">Category:</span>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="rounded border border-slate-700 bg-slate-900 px-2.5 py-1 text-slate-200 focus:border-cyan-400 focus:outline-none"
-              >
-                <option value="ALL">All Categories</option>
-                <option value="LOGISTICS_INVENTORY">Logistics & Inventory</option>
-                <option value="LOGISTICS">Logistics Only</option>
-                <option value="ASSET">Machinery & Assets</option>
-                <option value="ENVIRONMENT">Severe Climate</option>
-                <option value="INVENTORY">Inventory Only</option>
-              </select>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <span className="text-slate-400">Severity:</span>
-              <select
-                value={selectedSeverity}
-                onChange={(e) => setSelectedSeverity(e.target.value)}
-                className="rounded border border-slate-700 bg-slate-900 px-2.5 py-1 text-slate-200 focus:border-cyan-400 focus:outline-none"
-              >
-                <option value="ALL">All Severities</option>
-                <option value="CRITICAL">Critical</option>
-                <option value="HIGH">High</option>
-                <option value="MEDIUM">Medium</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Risks Cards */}
-          <div className="space-y-3">
-            {filteredRisks.map((risk) => (
-              <div
-                key={risk.id}
-                className="rounded-xl border border-slate-800 bg-[#0a1326] p-4 transition hover:border-slate-700 space-y-3"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold text-amber-400">{risk.id}</span>
-                      <span className="text-xs font-mono text-slate-400">· {risk.station}</span>
-                    </div>
-                    <h4 className="font-bold text-white text-sm mt-0.5">{risk.title}</h4>
-                  </div>
-                  {getSeverityBadge(risk.severity)}
-                </div>
-
-                {/* Evidence & Impact */}
-                <div className="rounded-lg bg-slate-900/80 p-3 border border-slate-800/80 space-y-2 text-xs">
-                  <div>
-                    <span className="font-mono text-[10px] uppercase text-cyan-400 block font-semibold">
-                      Telemetry Evidence
-                    </span>
-                    <p className="text-slate-300 mt-0.5">{risk.evidence}</p>
-                  </div>
-
-                  <div>
-                    <span className="font-mono text-[10px] uppercase text-rose-400 block font-semibold">
-                      Potential Mission Impact
-                    </span>
-                    <p className="text-slate-300 mt-0.5">{risk.impact}</p>
-                  </div>
-                </div>
-
-                {/* Footer Action */}
-                <div className="flex items-center justify-between pt-1 text-xs">
-                  <span className="font-mono text-[11px] text-slate-400">
-                    Urgency: <strong className="text-amber-300">{risk.urgency}</strong>
-                  </span>
-
-                  <button
-                    onClick={() => goTo('copilot')}
-                    className="inline-flex items-center gap-1 text-cyan-400 hover:text-cyan-300 font-semibold"
-                  >
-                    View AI Mitigation
-                    <ArrowRight size={13} />
-                  </button>
-                </div>
+        <div className="rounded-2xl border border-[var(--line)] bg-white p-7 sm:p-9 shadow-sm">
+          <div className="max-w-md mx-auto space-y-3">
+            {/* Step 1 */}
+            <div className="rounded-xl border border-amber-200 bg-amber-50/50 p-4 flex items-center gap-3.5 shadow-sm">
+              <div className="h-9 w-9 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                <Package size={18} />
               </div>
-            ))}
+              <div>
+                <span className="text-[10px] font-mono font-bold uppercase text-amber-700">Root Cause</span>
+                <h3 className="text-sm font-bold text-slate-900">Cargo Delayed</h3>
+                <p className="text-xs text-slate-600">Consignment C-101 resupply ETA pushed to 17 days</p>
+              </div>
+            </div>
+
+            {/* Arrow */}
+            <div className="flex justify-center text-slate-400">
+              <ArrowDown size={18} className="text-amber-500" />
+            </div>
+
+            {/* Step 2 */}
+            <div className="rounded-xl border border-rose-200 bg-rose-50/50 p-4 flex items-center gap-3.5 shadow-sm">
+              <div className="h-9 w-9 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0">
+                <Flame size={18} />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono font-bold uppercase text-rose-700">Depletion</span>
+                <h3 className="text-sm font-bold text-slate-900">Inventory Runs Out</h3>
+                <p className="text-xs text-slate-600">Only 12 days remaining fuel creating a 5.0-day shortage gap</p>
+              </div>
+            </div>
+
+            {/* Arrow */}
+            <div className="flex justify-center text-slate-400">
+              <ArrowDown size={18} className="text-rose-500" />
+            </div>
+
+            {/* Step 3 */}
+            <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-4 flex items-center gap-3.5 shadow-sm">
+              <div className="h-9 w-9 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+                <Cpu size={18} />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono font-bold uppercase text-blue-700">Hardware Failure</span>
+                <h3 className="text-sm font-bold text-slate-900">Generator Stops</h3>
+                <p className="text-xs text-slate-600">CAT 3512 Generator starved of fuel; microgrid trips</p>
+              </div>
+            </div>
+
+            {/* Arrow */}
+            <div className="flex justify-center text-slate-400">
+              <ArrowDown size={18} className="text-blue-500" />
+            </div>
+
+            {/* Step 4 */}
+            <div className="rounded-xl border border-purple-200 bg-purple-50/50 p-4 flex items-center gap-3.5 shadow-sm">
+              <div className="h-9 w-9 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
+                <ThermometerSnowflake size={18} />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono font-bold uppercase text-purple-700">Habitat Impact</span>
+                <h3 className="text-sm font-bold text-slate-900">Heating Lost</h3>
+                <p className="text-xs text-slate-600">Hydronic glycol heating loop drops below critical freezing limit</p>
+              </div>
+            </div>
+
+            {/* Arrow */}
+            <div className="flex justify-center text-slate-400">
+              <ArrowDown size={18} className="text-purple-500" />
+            </div>
+
+            {/* Step 5 */}
+            <div className="rounded-xl border-2 border-rose-400 bg-rose-50 p-4 flex items-center gap-3.5 shadow-sm">
+              <div className="h-9 w-9 rounded-lg bg-rose-600 text-white flex items-center justify-center shrink-0">
+                <ShieldAlert size={18} />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono font-bold uppercase text-rose-700">Outcome</span>
+                <h3 className="text-sm font-bold text-rose-900">Mission At Risk</h3>
+                <p className="text-xs text-rose-800">Paleoclimate ice-core drill halt; evacuation protocol triggered</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Secondary Operational Risks */}
+      <section className="space-y-4">
+        <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-mid)]">
+          Monitored Secondary Risks
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="rounded-xl border border-[var(--line)] bg-white p-5 space-y-2 shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-xs font-bold text-amber-600">RSK-002</span>
+              <span className="rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-700">
+                HIGH
+              </span>
+            </div>
+            <h4 className="text-sm font-bold text-slate-900">Generator G-021 Service Overdue</h4>
+            <p className="text-xs text-slate-600">Operating hours at 4,820h vs 5,000h overhaul cycle.</p>
+          </div>
+
+          <div className="rounded-xl border border-[var(--line)] bg-white p-5 space-y-2 shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-xs font-bold text-sky-600">RSK-003</span>
+              <span className="rounded-full bg-sky-50 border border-sky-200 px-2 py-0.5 text-[10px] font-bold text-sky-700">
+                MEDIUM
+              </span>
+            </div>
+            <h4 className="text-sm font-bold text-slate-900">Novo Runway Blizzard Window</h4>
+            <p className="text-xs text-slate-600">Forecast indicates high surface wind gusting to 52 knots.</p>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
