@@ -92,10 +92,21 @@ export const DEMO_STAGES = [
     title: 'AI Copilot Explains Mitigation',
     headline: 'Human-in-the-Loop Decision Authorization',
     summary:
-      'AI Copilot delivers structured decision-support: Protocol REC-001 transfers 3,500L from strategic reserves and sheds non-critical circuits, extending runway to 16.8 days. Officer authorizes action.',
+      'AI Copilot delivers structured decision-support: Protocol REC-001 transfers 3,500L from strategic reserves and sheds non-critical circuits, extending runway to 16.8 days. Officer reviews tradeoffs.',
     targetView: 'copilot',
-    actionText: 'Complete Guided Demo',
+    actionText: 'Authorize Action & View Audit',
     autoApprove: true,
+  },
+  {
+    stageId: '05',
+    stageLabel: '05 Decision',
+    stepNumber: 7,
+    title: 'Cryptographic Audit Trail',
+    headline: 'Immutable Human Decision Logged',
+    summary:
+      'The approved mitigation is committed to the tamper-evident cryptographic ledger: Officer signature, protocol payload, and sha256 block hash recorded permanently for governance.',
+    targetView: 'audit',
+    actionText: 'Complete Guided Demo',
   },
 ]
 
@@ -104,7 +115,7 @@ const PROGRESS_PILLARS = [
   { id: '02', label: '02 Risk', steps: [3] },
   { id: '03', label: '03 Impact', steps: [4] },
   { id: '04', label: '04 Simulation', steps: [5] },
-  { id: '05', label: '05 Decision', steps: [6] },
+  { id: '05', label: '05 Decision', steps: [6, 7] },
 ]
 
 export default function GuidedDemoTour({ isOpen, onClose, goTo }) {

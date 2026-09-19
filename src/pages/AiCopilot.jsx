@@ -227,9 +227,19 @@ export default function AiCopilot({ goTo }) {
         </div>
 
         {authorized && (
-          <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3.5 flex items-center gap-2 text-xs text-emerald-800">
-            <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-            <span>Protocol REC-001 authorized by Operations Officer. Stamped in cryptographic audit log.</span>
+          <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3.5 flex items-center justify-between gap-2 text-xs text-emerald-800">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+              <span>Protocol REC-001 authorized by Operations Officer. Stamped in cryptographic audit log.</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => goTo('audit')}
+              className="inline-flex items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-900 underline"
+            >
+              <span>View Audit Ledger</span>
+              <ArrowRight size={12} />
+            </button>
           </div>
         )}
       </section>

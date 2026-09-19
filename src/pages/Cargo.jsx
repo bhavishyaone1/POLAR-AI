@@ -36,11 +36,14 @@ import {
   Package,
   Plus,
   Ship,
+  Sparkles,
   X,
   Zap,
 } from 'lucide-react'
 
 import Badge from '../components/Badge'
+import CargoDetailDrawer from '../components/CargoDetailDrawer'
+import ContextualAiInsight from '../components/ContextualAiInsight'
 import DataTable from '../components/DataTable'
 import HorizontalBarChart from '../components/HorizontalBarChart'
 import Panel from '../components/Panel'
@@ -86,6 +89,12 @@ export default function Cargo({ goTo }) {
   const [selectedId, setSelectedId] = useState(
     () => (cargo.find((c) => c.status === 'DELAYED') || cargo[0])?.id ?? null
   )
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
+  const handleSelectRow = (id) => {
+    setSelectedId(id)
+    setIsDrawerOpen(true)
+  }
 
   const [filters, setFilters] = useState(NO_FILTERS)
   const [viewMode, setViewMode] = useState('sections') // 'sections' | 'table'
@@ -329,43 +338,31 @@ export default function Cargo({ goTo }) {
 
       {/* ================= PREDICTIVE RESUPPLY RISK BANNER ================= */}
       {cargo.some((c) => c.status === 'DELAYED' && c.category === 'Fuel') && (
-        <div className="rounded-2xl border border-rose-200 bg-rose-50/70 p-5 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="flex items-start gap-3.5 min-w-0">
-            <div className="h-9 w-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
-              <AlertTriangle size={18} />
-            </div>
-            <div className="min-w-0">
-              <div className="text-sm font-bold text-[#12263A] flex items-center gap-2">
-                <span>Critical Resupply Deficit Detected — Consignment C-101 (Fuel)</span>
-                <span className="rounded-md bg-rose-200/80 px-2 py-0.5 text-[10px] font-mono font-bold text-rose-800">
-                  5.0-DAY GAP
-                </span>
-              </div>
-              <p className="mt-1 text-xs text-[#526779] leading-relaxed max-w-3xl">
-                Vessel delayed by fast pack-ice in Prydz Bay (ETA: 17 days). Maitri station fuel reserve depletes in 12.0 days (14,200 L @ 1,180 L/d).
-                Leaves an unhedged 5.0-day blackout window risking life-support and scientific heating systems.
-              </p>
-            </div>
-          </div>
-          <div className="flex shrink-0 flex-wrap items-center gap-2 self-end md:self-center">
-            <button
-              type="button"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white px-3.5 py-2 text-xs font-semibold shadow-xs transition"
-              onClick={() => goTo('simulator')}
-            >
-              <Zap size={13} />
-              <span>Simulate Scenario</span>
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3.5 py-2 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
-              onClick={() => goTo('risks')}
-            >
-              <span>View Impact Cascade</span>
-              <ArrowRight size={13} />
-            </button>
-          </div>
-        </div>
+        <ContextualAiInsight
+          badge="CRITICAL RESUPPLY DEFICIT DETECTED"
+          type="critical"
+          title="Consignment C-101 (Fuel) · 5.0-Day Unhedged Deficit Window"
+          description="Vessel delayed by fast pack-ice in Prydz Bay (ETA: 17 days). Maitri station fuel reserve depletes in 12.0 days (14,200 L @ 1,180 L/d). Depleting fuel threatens automated shutdown of primary generator microgrid and habitat heating loops."
+          metrics={[
+            { label: 'Station Runway', value: '12.0 Days' },
+            { label: 'Cargo ETA', value: '17.0 Days' },
+            { label: 'Shortfall', value: '5.0 Days' },
+          ]}
+          primaryAction={{
+            label: 'Simulate +5d Delay',
+            onClick: () => goTo('simulator'),
+            icon: <Zap size={13} />,
+          }}
+          secondaryAction={{
+            label: 'Consult AI Copilot',
+            onClick: () => goTo('copilot'),
+            icon: <Sparkles size={13} className="text-[#1597D4]" />,
+          }}
+          tertiaryAction={{
+            label: 'View Impact Cascade',
+            onClick: () => goTo('risks'),
+          }}
+        />
       )}
 
       {/* ================= SUCCESS MESSAGE ================= */}
@@ -845,7 +842,7 @@ export default function Cargo({ goTo }) {
                     error={error}
                     rows={expCargo}
                     rowKey={(row) => row.id}
-                    onRowClick={(row) => setSelectedId(row.id)}
+                    onRowClick={(row) => handleSelectRow(row.id)}
                     maxHeight={expCargo.length > 6 ? '320px' : undefined}
                     emptyTitle="No matching consignments for this expedition"
                     emptyMessage="Try adjusting your status or category filters."
@@ -973,7 +970,7 @@ export default function Cargo({ goTo }) {
             error={error}
             rows={visible}
             rowKey={(row) => row.id}
-            onRowClick={(row) => setSelectedId(row.id)}
+            onRowClick={(row) => handleSelectRow(row.id)}
             maxHeight="520px"
             emptyTitle="No consignments match these filters"
             emptyMessage="Clear the filters to see the full register."
@@ -1253,7 +1250,7 @@ export default function Cargo({ goTo }) {
                   <button
                     type="button"
                     className="w-full text-left"
-                    onClick={() => setSelectedId(item.id)}
+                    onClick={() => handleSelectRow(item.id)}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
@@ -1342,6 +1339,17 @@ export default function Cargo({ goTo }) {
           <strong className="text-hi">Logistics Operations Manifest.</strong> All consignments are synchronized across staging depots in Cape Town, chartered polar supply vessels, and station hubs (Maitri &amp; Bharati). Status updates are recorded immutably in the central command log.
         </div>
       </div>
+
+      {/* ================= INTERACTIVE CARGO DETAIL SLIDE-OVER DRAWER ================= */}
+      <CargoDetailDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        consignment={selected}
+        goTo={goTo}
+        canManage={canManage}
+        updateCargo={updateCargo}
+        expeditionName={getExpedition(selected?.expedition_id)?.name}
+      />
     </div>
   )
 }

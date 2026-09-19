@@ -21,10 +21,13 @@ import {
   Radio,
   Search,
   Sliders,
+  Sparkles,
   Truck,
   Wrench,
   Zap,
 } from 'lucide-react'
+import AssetDetailDrawer from '../components/AssetDetailDrawer'
+import ContextualAiInsight from '../components/ContextualAiInsight'
 import { useData } from '../store/DataContext'
 
 export default function Assets({ goTo }) {
@@ -32,6 +35,13 @@ export default function Assets({ goTo }) {
   const [filterType, setFilterType] = useState('ALL')
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedStation, setSelectedStation] = useState('ALL')
+  const [selectedAsset, setSelectedAsset] = useState(() => assets?.[0] || null)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
+  const handleSelectAsset = (asset) => {
+    setSelectedAsset(asset)
+    setIsDrawerOpen(true)
+  }
 
   const filteredAssets = (assets || []).filter((asset) => {
     if (filterType !== 'ALL' && asset.type !== filterType) return false
@@ -186,6 +196,33 @@ export default function Assets({ goTo }) {
         </div>
       </div>
 
+      {/* ================= AI CONTINUITY ADVISORY BANNER ================= */}
+      <ContextualAiInsight
+        badge="MICROGRID RESILIENCE ADVISORY"
+        type="insight"
+        title="Primary Generator G-01 Operating at 92% Overhaul Threshold"
+        description="Maitri base-load diesel generator unit (CAT 3512) requires overhaul in 760 operating hours. Generator output is directly coupled to station fuel runway (12.0 days). In the event of resupply delays, autonomous microgrid load-shedding will protect habitat heating."
+        metrics={[
+          { label: 'Run Hours', value: '9,240 / 10,000 hrs' },
+          { label: 'Wear Level', value: '92%' },
+          { label: 'Coupled Fuel', value: '1,180 L/d' },
+        ]}
+        primaryAction={{
+          label: 'Simulate Outage',
+          onClick: () => goTo('simulator'),
+          icon: <Zap size={13} />,
+        }}
+        secondaryAction={{
+          label: 'Ask AI Copilot',
+          onClick: () => goTo('copilot'),
+          icon: <Sparkles size={13} className="text-[#1597D4]" />,
+        }}
+        tertiaryAction={{
+          label: 'Trace Power Cascade',
+          onClick: () => goTo('risks'),
+        }}
+      />
+
       {/* ================= FILTER AND SEARCH BAR ================= */}
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#DDEAF0] bg-white p-3.5 shadow-xs">
         <div className="flex flex-wrap items-center gap-2.5 flex-1">
@@ -246,7 +283,8 @@ export default function Assets({ goTo }) {
           return (
             <div
               key={asset.id}
-              className="flex flex-col justify-between rounded-2xl border border-[#DDEAF0] bg-white p-5 shadow-xs transition hover:border-[#BFDDE7] hover:shadow-sm"
+              onClick={() => handleSelectAsset(asset)}
+              className="cursor-pointer flex flex-col justify-between rounded-2xl border border-[#DDEAF0] bg-white p-5 shadow-xs transition hover:border-[#1597D4]/60 hover:shadow-md hover:scale-[1.01]"
             >
               <div>
                 <div className="flex items-start justify-between gap-2">
@@ -311,6 +349,15 @@ export default function Assets({ goTo }) {
           )
         })}
       </div>
+
+      {/* ================= INTERACTIVE ASSET DETAIL SLIDE-OVER DRAWER ================= */}
+      <AssetDetailDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        asset={selectedAsset}
+        goTo={goTo}
+        updateAsset={updateAsset}
+      />
     </div>
   )
 }

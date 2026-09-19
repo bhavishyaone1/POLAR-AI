@@ -40,14 +40,17 @@ import {
   Plus,
   RotateCcw,
   ShieldAlert,
+  Sparkles,
   TrendingDown,
   X,
   Zap,
 } from 'lucide-react'
 
 import Badge from '../components/Badge'
+import ContextualAiInsight from '../components/ContextualAiInsight'
 import DataTable from '../components/DataTable'
 import HorizontalBarChart from '../components/HorizontalBarChart'
+import InventoryDetailDrawer from '../components/InventoryDetailDrawer'
 import Panel from '../components/Panel'
 import StateBlock from '../components/StateBlock'
 import { useData } from '../store/DataContext'
@@ -128,6 +131,17 @@ export default function Inventory({ goTo }) {
   const [form, setForm] = useState(EMPTY_FORM)
   const [formError, setFormError] = useState(null)
   const [formSuccess, setFormSuccess] = useState(null)
+  const [selectedId, setSelectedId] = useState(
+    () => inventory.find((i) => (Number(i.daily_burn_rate) || 0) > 0)?.id || inventory[0]?.id || null
+  )
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
+  const handleSelectRow = (id) => {
+    setSelectedId(id)
+    setIsDrawerOpen(true)
+  }
+
+  const selected = inventory.find((i) => i.id === selectedId) || null
 
   /* Predictive consumption and runway calculations for critical consumables */
   const consumableMetrics = inventory
@@ -427,6 +441,33 @@ export default function Inventory({ goTo }) {
         </div>
       )}
 
+      {/* ================= AI CONTINUITY ADVISORY BANNER ================= */}
+      <ContextualAiInsight
+        badge="CRITICAL ENERGY RUNWAY GAP"
+        type="critical"
+        title="Station Diesel Fuel (INV-001) · 5.0-Day Blackout Risk Window"
+        description="Maitri station diesel reserve will exhaust in 12.0 days at current baseline burn (1,180 L/d). Incoming polar resupply vessel cargo C-101 ETA is delayed to 17.0 days, leaving an unhedged 5.0-day blackout window. Authorizing AI load-shedding protocol extends runway to 16.8 days."
+        metrics={[
+          { label: 'Runway Remaining', value: '12.0 Days' },
+          { label: 'Burn Rate', value: '1,180 L/d' },
+          { label: 'Unhedged Deficit', value: '5.0 Days' },
+        ]}
+        primaryAction={{
+          label: 'Model Fuel Rationing',
+          onClick: () => goTo('simulator'),
+          icon: <Zap size={13} />,
+        }}
+        secondaryAction={{
+          label: 'Ask AI Copilot',
+          onClick: () => goTo('copilot'),
+          icon: <Sparkles size={13} className="text-[#1597D4]" />,
+        }}
+        tertiaryAction={{
+          label: 'Track Consignment C-101',
+          onClick: () => goTo('cargo'),
+        }}
+      />
+
       {/* ================= PREDICTIVE RUNWAY & CONSUMPTION ================= */}
       <Panel
         eyebrow="POLAR-AI Predictive Intelligence"
@@ -459,7 +500,8 @@ export default function Inventory({ goTo }) {
             return (
               <div
                 key={item.id}
-                className={`rounded-2xl border p-5 flex flex-col justify-between transition bg-white shadow-xs ${
+                onClick={() => handleSelectRow(item.id)}
+                className={`cursor-pointer rounded-2xl border p-5 flex flex-col justify-between transition bg-white shadow-xs hover:shadow-md hover:scale-[1.01] ${
                   isDeficit
                     ? 'border-rose-300 ring-1 ring-rose-200 hover:border-rose-400'
                     : 'border-[#DDEAF0] hover:border-[#BFDDE7]'
@@ -814,6 +856,7 @@ export default function Inventory({ goTo }) {
           error={error}
           rows={visible}
           rowKey={(row) => row.id}
+          onRowClick={(row) => handleSelectRow(row.id)}
           maxHeight="520px"
           emptyTitle="No stock items match these filters"
           emptyMessage="Clear the filters to see the full register."
@@ -1036,7 +1079,11 @@ export default function Inventory({ goTo }) {
             <ul className="space-y-3">
               {restockList.map(({ item, shortfall }) => (
                 <li key={item.id} className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
+                  <div
+                    className="min-w-0 cursor-pointer hover:opacity-80 transition"
+                    onClick={() => handleSelectRow(item.id)}
+                    title="View item telemetry"
+                  >
                     <div className="truncate text-[13px] text-hi">{item.item_name}</div>
                     <div className="truncate text-[11px] text-low">
                       <span className="mono">{item.id}</span> · {item.location}
@@ -1105,6 +1152,18 @@ export default function Inventory({ goTo }) {
           <strong className="text-hi">Station Logistics Directory.</strong> Consumable buffer thresholds, fuels, and critical spares calibrated to Antarctic wintering standards. Stock alerts recalculate dynamically across active field stations and remote shelters.
         </div>
       </div>
+
+      {/* ================= INTERACTIVE INVENTORY DETAIL SLIDE-OVER DRAWER ================= */}
+      <InventoryDetailDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        item={selected}
+        cargo={cargo}
+        goTo={goTo}
+        canManage={canManage}
+        adjustInventoryQuantity={adjustInventoryQuantity}
+        updateInventoryItem={updateInventoryItem}
+      />
     </div>
   )
 }
