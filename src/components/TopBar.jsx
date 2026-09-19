@@ -363,26 +363,26 @@ export default function TopBar({
               setLocationOpen(false)
               setProfileOpen(false)
             }}
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-[#BFDDE7] bg-[#EAF6FA]/90 hover:bg-[#DDF3FA] px-2.5 py-1 text-xs font-semibold text-[#1597D4] transition shadow-2xs"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-[#BAE6FD] bg-[#E0F2FE]/90 hover:bg-[#BAE6FD]/60 px-2.5 py-1 text-xs font-semibold text-[#0284C7] transition shadow-2xs"
             title="Click to view AI Mission Monitoring Subsystem Telemetry"
           >
-            <Sparkles size={13} className="text-[#1597D4]" />
+            <Sparkles size={13} className="text-[#0284C7]" />
             <span>AI MONITORING ACTIVE</span>
-            <span className="h-1.5 w-1.5 rounded-full bg-[#1597D4] animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#0284C7] animate-pulse" />
           </button>
 
           {aiMonitoringOpen && (
-            <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-[#DCEAF1] bg-white p-4 shadow-2xl z-50 animate-fade-in text-left">
-              <div className="border-b border-[#DCEAF1] pb-3 flex items-center justify-between">
+            <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-[#DCE8F0] bg-white p-4 shadow-2xl z-50 animate-fade-in text-left">
+              <div className="border-b border-[#DCE8F0] pb-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="h-7 w-7 rounded-lg bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center">
+                  <div className="h-7 w-7 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
                     <Sparkles size={14} />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#102A43] uppercase tracking-wider font-mono">
+                    <h4 className="text-xs font-bold text-[#0C1E30] uppercase tracking-wider font-mono">
                       AI MISSION MONITORING
                     </h4>
-                    <span className="text-[10.5px] text-[#526779]">
+                    <span className="text-[10.5px] text-[#42586E]">
                       Continuous Real-Time Telemetry
                     </span>
                   </div>
@@ -391,22 +391,22 @@ export default function TopBar({
               </div>
 
               {/* Subsystem checks */}
-              <div className="py-2.5 space-y-1.5 text-xs divide-y divide-[#F1F7FA]">
+              <div className="py-2.5 space-y-1.5 text-xs divide-y divide-[#F0F7FB]">
                 {[
-                  { name: 'Cargo', status: 'Tracking 3 in-transit, 1 delayed', ok: true },
-                  { name: 'Inventory', status: '12.0d fuel runway vs 17.0d ETA', warn: true },
-                  { name: 'Assets', status: 'Primary Gen G-01 nominal (92% wear)', ok: true },
-                  { name: 'Mission Schedule', status: 'Expedition on track (Milestone 4/6)', ok: true },
-                  { name: 'Risks', status: '1 critical supply gap flagged', alert: true },
-                  { name: 'Incidents', status: '0 active SOS signals', ok: true },
+                  { name: 'Cargo Pipeline', status: 'Tracking 3 in-transit, 1 ice pack hold', ok: true },
+                  { name: 'Station Inventory', status: '12.0d fuel runway vs 17.0d ETA', warn: true },
+                  { name: 'Primary Assets', status: 'Generator G-01 nominal (92% wear)', ok: true },
+                  { name: 'Mission Traversal', status: 'Sorties on track (Milestone 4/6)', ok: true },
+                  { name: 'Continuity Risks', status: '1 critical supply deficit flagged', alert: true },
+                  { name: 'Life Support / SOS', status: '0 active distress emergencies', ok: true },
                 ].map((sub) => (
                   <div key={sub.name} className="flex items-center justify-between pt-1.5">
                     <div>
-                      <span className="font-semibold text-[#102A43]">{sub.name}</span>
-                      <p className="text-[10px] text-[#526779]">{sub.status}</p>
+                      <span className="font-semibold text-[#0C1E30]">{sub.name}</span>
+                      <p className="text-[10px] text-[#42586E]">{sub.status}</p>
                     </div>
                     <span className={`font-mono text-xs font-bold ${
-                      sub.alert ? 'text-rose-600' : sub.warn ? 'text-amber-600' : 'text-emerald-600'
+                      sub.alert ? 'text-rose-700' : sub.warn ? 'text-amber-700' : 'text-emerald-700'
                     }`}>
                       {sub.alert ? '⚠' : '✓'}
                     </span>
@@ -415,29 +415,29 @@ export default function TopBar({
               </div>
 
               {/* Operational Activity Metadata */}
-              <div className="rounded-xl bg-[#F7FBFD] border border-[#DCEAF1] p-2.5 text-[11px] text-[#526779] space-y-1 my-2">
+              <div className="rounded-xl bg-[#F4F8FA] border border-[#DCE8F0] p-2.5 text-[11px] text-[#42586E] space-y-1 my-2">
                 <div className="flex justify-between">
                   <span>Last analysis:</span>
-                  <span className="font-mono font-semibold text-[#102A43]">2 minutes ago</span>
+                  <span className="font-mono font-semibold text-[#0C1E30]">2 minutes ago</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Active insights:</span>
-                  <span className="font-mono font-semibold text-[#1597D4]">4 operational</span>
+                  <span className="font-mono font-semibold text-[#0284C7]">4 operational</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Emerging risks:</span>
-                  <span className="font-mono font-semibold text-rose-600">2 flagged</span>
+                  <span className="font-mono font-semibold text-rose-700">2 flagged</span>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-[#DCEAF1] flex items-center justify-between gap-2">
+              <div className="pt-2 border-t border-[#DCE8F0] flex items-center justify-between gap-2">
                 <button
                   type="button"
                   onClick={() => {
                     setAiMonitoringOpen(false)
                     goTo && goTo('copilot')
                   }}
-                  className="flex-1 text-center rounded-lg bg-[#1597D4] hover:bg-[#1282b8] text-white py-1.5 text-xs font-semibold shadow-2xs transition"
+                  className="flex-1 text-center rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white py-1.5 text-xs font-semibold shadow-2xs transition"
                 >
                   Ask Copilot
                 </button>
@@ -447,7 +447,7 @@ export default function TopBar({
                     setAiMonitoringOpen(false)
                     goTo && goTo('risks')
                   }}
-                  className="flex-1 text-center rounded-lg border border-[#DCEAF1] bg-white hover:bg-[#F7FBFD] text-[#102A43] py-1.5 text-xs font-semibold shadow-2xs transition"
+                  className="flex-1 text-center rounded-lg border border-[#DCE8F0] bg-white hover:bg-[#F0F7FB] text-[#0C1E30] py-1.5 text-xs font-semibold shadow-2xs transition"
                 >
                   View Risks
                 </button>

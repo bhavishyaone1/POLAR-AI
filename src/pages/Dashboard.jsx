@@ -75,46 +75,47 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         />
 
         <div className="relative z-10 p-5 sm:p-7 flex flex-col justify-between min-h-[140px] max-w-2xl">
-          {/* Eyebrow and Operational Pill */}
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-widest text-[#8295A5]">
-              CURRENT EXPEDITION
+          {/* Eyebrow */}
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-[#0284C7] animate-pulse" />
+            <span className="text-[11px] font-bold uppercase tracking-widest text-[#6E8294]">
+              44TH INDIAN SCIENTIFIC EXPEDITION TO ANTARCTICA (ISEA-44)
             </span>
           </div>
 
           {/* Heading */}
           <div className="my-2">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#102A43]">
-              Antarctic Research Expedition 2027
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0C1E30]">
+              Maitri Station Operations Command &amp; Life Support
             </h1>
           </div>
 
           {/* Metadata Row */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[#526779] font-medium pt-1">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[#42586E] font-medium pt-1">
             <div className="flex items-center gap-1.5">
-              <MapPin size={14} className="text-[#1597D4]" />
-              <span>Maitri Station</span>
+              <MapPin size={14} className="text-[#0284C7]" />
+              <span>Maitri Station (70°45′57″S, 11°44′09″E)</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Calendar size={14} className="text-[#8295A5]" />
-              <span>Nov 2026 – Mar 2027</span>
+              <Calendar size={14} className="text-[#6E8294]" />
+              <span>Current Austral Summer Campaign · 2026–2027</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Users size={14} className="text-[#8295A5]" />
-              <span>50 Personnel</span>
+              <Users size={14} className="text-[#6E8294]" />
+              <span>50 Winter-Over &amp; Summer Crew</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Flag size={14} className="text-[#8295A5]" />
-              <span>Priority: High</span>
+              <Flag size={14} className="text-[#6E8294]" />
+              <span>Priority: Life-Support &amp; Cryo Science</span>
             </div>
           </div>
         </div>
 
         {/* Operational Badge on Top Right */}
         <div className="absolute top-5 right-5 sm:top-6 sm:right-6 z-20">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white/95 px-3 py-1 text-xs font-semibold text-emerald-700 shadow-2xs backdrop-blur-sm">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white/95 px-3 py-1 text-xs font-semibold text-emerald-800 shadow-2xs backdrop-blur-sm">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Operational</span>
+            <span>Operational Readiness: Nominal</span>
           </div>
         </div>
       </section>
@@ -124,10 +125,10 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           ============================================================ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4">
         {/* CARD 1: MISSION CONTINUITY (Spans 4 cols on lg) */}
-        <div className="sm:col-span-2 lg:col-span-4 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="sm:col-span-2 lg:col-span-4 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-[#102A43]">
-              Mission Continuity
+            <div className="text-xs font-bold uppercase tracking-wider text-[#0C1E30]">
+              Mission Continuity Index
             </div>
 
             <div className="mt-4 flex items-center gap-4">
@@ -138,7 +139,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                     cx="46"
                     cy="46"
                     r={radius}
-                    stroke="#EAF6FA"
+                    stroke="#E6F3F9"
                     strokeWidth="8"
                     fill="transparent"
                   />
@@ -146,7 +147,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                     cx="46"
                     cy="46"
                     r={radius}
-                    stroke="#1597D4"
+                    stroke="#0284C7"
                     strokeWidth="8"
                     strokeDasharray={circumference}
                     strokeDashoffset={strokeDashoffset}
@@ -156,7 +157,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl font-extrabold font-mono text-[#102A43]">
+                  <span className="text-2xl font-extrabold font-mono text-[#0C1E30]">
                     {score}%
                   </span>
                 </div>
@@ -164,20 +165,20 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
               {/* Attention text */}
               <div className="space-y-1.5 flex-1 min-w-0">
-                <div className="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 bg-rose-50 px-2 py-0.5 text-[11px] font-semibold text-rose-600">
-                  <AlertTriangle size={12} />
-                  <span>Attention Required</span>
+                <div className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-800">
+                  <AlertTriangle size={12} className="text-amber-600" />
+                  <span>Resupply Deficit Flagged</span>
                 </div>
-                <p className="text-xs text-[#526779] leading-relaxed">
-                  Fuel resupply may arrive after the current safe operating window.
+                <p className="text-xs text-[#42586E] leading-relaxed">
+                  Station fuel runway is projected to breach critical buffer 5.0 days before maritime arrival.
                 </p>
                 <div className="flex items-center gap-3 pt-0.5">
                   <button
                     type="button"
                     onClick={() => setShowScoreBreakdown(true)}
-                    className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
+                    className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
                   >
-                    <span>Why is my score {score}%?</span>
+                    <span>Why is score {score}%?</span>
                     <ArrowRight size={12} />
                   </button>
                 </div>
@@ -187,20 +188,23 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         </div>
 
         {/* CARD 2: CRITICAL RISK (Spans 2 cols on lg) */}
-        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
           <div className="space-y-2">
-            <div className="h-8 w-8 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
               <AlertTriangle size={16} />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-rose-500 block">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-rose-700 block">
                 Critical Risk
               </span>
-              <h3 className="text-sm font-bold text-[#102A43] mt-0.5">
-                Fuel Resupply Risk
+              <h3 className="text-sm font-bold text-[#0C1E30] mt-0.5">
+                RSK-001 · Resupply Gap
               </h3>
-              <p className="text-xs font-semibold text-rose-500 mt-1">
-                Potential supply gap: 5 days
+              <p className="text-xs font-semibold text-rose-700 mt-1">
+                5.0-day deficit window
+              </p>
+              <p className="text-[11px] text-[#6E8294] mt-0.5">
+                Microgrid heating loop at risk
               </p>
             </div>
           </div>
@@ -209,33 +213,33 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('risks')}
-              className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
-              <span>View Risk</span>
+              <span>Inspect Risk Flow</span>
               <ArrowRight size={12} />
             </button>
           </div>
         </div>
 
         {/* CARD 3: CARGO (Spans 2 cols on lg) */}
-        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
           <div className="space-y-2">
-            <div className="h-8 w-8 rounded-xl bg-sky-50 text-[#1597D4] flex items-center justify-center">
+            <div className="h-8 w-8 rounded-xl bg-sky-50 text-[#0284C7] flex items-center justify-center">
               <Package size={16} />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#1597D4] block">
-                Cargo
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0284C7] block">
+                Maritime Corridor
               </span>
-              <h3 className="text-sm font-bold text-[#102A43] mt-0.5">
-                C-104
+              <h3 className="text-sm font-bold text-[#0C1E30] mt-0.5">
+                Consignment C-101
               </h3>
-              <div className="text-xs text-[#526779] font-medium flex items-center gap-1 mt-1">
-                <span>In Transit</span>
-                <ArrowUpRight size={13} className="text-[#8295A5]" />
+              <div className="text-xs text-[#42586E] font-medium flex items-center gap-1 mt-1">
+                <span>MV Vasiliy Golovnin</span>
+                <ArrowUpRight size={13} className="text-[#6E8294]" />
               </div>
-              <p className="text-xs text-[#8295A5] mt-0.5 font-mono">
-                ETA 17 days
+              <p className="text-xs text-amber-700 mt-0.5 font-mono font-medium">
+                ETA Day 17 (+3d hold)
               </p>
             </div>
           </div>
@@ -244,34 +248,34 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('cargo')}
-              className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
-              <span>View Cargo</span>
+              <span>Track Corridor</span>
               <ArrowRight size={12} />
             </button>
           </div>
         </div>
 
         {/* CARD 4: INVENTORY (Spans 2 cols on lg) */}
-        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
           <div className="space-y-2">
-            <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
               <Boxes size={16} />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block">
-                Inventory
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 block">
+                Station Runway &amp; Buffer
               </span>
-              <h3 className="text-sm font-bold text-[#102A43] mt-0.5">
-                Fuel Reserves
+              <h3 className="text-sm font-bold text-[#0C1E30] mt-0.5">
+                14,200 L Diesel Stock
               </h3>
-              <div className="text-xs font-semibold text-emerald-600 flex items-center gap-1 mt-1">
-                <span>12.0 days remaining</span>
+              <div className="text-xs font-semibold text-emerald-800 flex items-center gap-1 mt-1">
+                <span>12.0d burn runway</span>
                 <ArrowDownRight size={13} />
               </div>
-              <div className="text-[11px] text-[#526779] mt-1 space-y-0.5">
-                <p>Last Safe Resupply: <strong className="text-[#102A43] font-mono">Day 8</strong></p>
-                <p className="text-[10.5px] text-rose-500 font-semibold">Gap: 5.0d vs Cargo ETA (17d)</p>
+              <div className="text-[11px] text-[#42586E] mt-1 space-y-0.5">
+                <p>Last Safe Resupply: <strong className="text-[#0C1E30] font-mono">Day 8</strong></p>
+                <p className="text-[10.5px] text-rose-700 font-semibold">Gap: 5.0d vs Cargo ETA (Day 17)</p>
               </div>
             </div>
           </div>
@@ -280,32 +284,32 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('inventory')}
-              className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
-              <span>View Inventory</span>
+              <span>Manage Stocks</span>
               <ArrowRight size={12} />
             </button>
           </div>
         </div>
 
         {/* CARD 5: ASSETS (Spans 2 cols on lg) */}
-        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
           <div className="space-y-2">
-            <div className="h-8 w-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center">
               <Cpu size={16} />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 block">
-                Assets
+              <span className="text-[10px] font-bold uppercase tracking-wider text-purple-800 block">
+                Primary Power
               </span>
-              <h3 className="text-sm font-bold text-[#102A43] mt-0.5">
-                Generator G-021
+              <h3 className="text-sm font-bold text-[#0C1E30] mt-0.5">
+                Generator G-01 · 280 kW
               </h3>
-              <p className="text-xs text-[#526779] mt-1">
-                Maintenance approaching
+              <p className="text-xs text-[#42586E] mt-1">
+                Active Nominal · Microgrid Primary
               </p>
-              <p className="text-xs text-[#8295A5] mt-0.5 font-mono">
-                In 60 hours
+              <p className="text-xs text-amber-800 mt-0.5 font-mono font-medium">
+                Overhaul due in 60h
               </p>
             </div>
           </div>
@@ -314,9 +318,9 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('assets')}
-              className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
-              <span>View Assets</span>
+              <span>Inspect Assets</span>
               <ArrowRight size={12} />
             </button>
           </div>
@@ -328,125 +332,125 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           ============================================================ */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Morning Operational Brief (7 cols) */}
-        <div className="lg:col-span-7 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-7 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between border-b border-[#F1F7FA] pb-3 mb-3">
+            <div className="flex items-center justify-between border-b border-[#F0F7FB] pb-3 mb-3">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#EAF6FA] text-[#1597D4] px-2 py-0.5 rounded border border-[#BFDDE7]">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#E0F2FE] text-[#0284C7] px-2 py-0.5 rounded border border-[#BAE6FD]">
                   ✦ AI MISSION BRIEF
                 </span>
-                <span className="text-xs text-[#526779] font-medium">08:00 UTC · Station Cycle 42</span>
+                <span className="text-xs text-[#42586E] font-medium">08:00 UTC · Station Cycle 42</span>
               </div>
-              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Nominal Baseline
               </span>
             </div>
 
-            <h3 className="text-sm font-bold text-[#102A43]">
-              Daily Operations Briefing — 3 Items Require Review
+            <h3 className="text-sm font-bold text-[#0C1E30]">
+              Daily Operations Briefing — 3 Operational Items Require Review
             </h3>
-            <p className="text-xs text-[#526779] mt-1 leading-relaxed">
-              No immediate distress signals active. Autonomous continuity monitoring has flagged an unhedged 5-day fuel window before Cargo C-104 arrival.
+            <p className="text-xs text-[#42586E] mt-1 leading-relaxed">
+              Zero unacknowledged distress events. Autonomous continuity engines flag an unhedged 5.0-day fuel gap prior to Consignment C-101 arrival.
             </p>
 
             <div className="mt-3 space-y-2">
-              <div className="flex items-start gap-2 text-xs bg-[#F7FBFD] p-2.5 rounded-xl border border-[#EEF7FA]">
-                <span className="font-mono font-bold text-rose-600 shrink-0">01.</span>
+              <div className="flex items-start gap-2 text-xs bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
+                <span className="font-mono font-bold text-rose-700 shrink-0">01.</span>
                 <div className="min-w-0 flex-1">
-                  <strong className="text-[#102A43]">Fuel Resupply Deficit Window:</strong>
-                  <span className="text-[#526779] ml-1">Station holds 12.0d runway; Last Safe Resupply Date is Day 8. Cargo ETA is Day 17.</span>
+                  <strong className="text-[#0C1E30]">Fuel Resupply Deficit Window:</strong>
+                  <span className="text-[#42586E] ml-1">Station maintains 12.0d burn runway; Last Safe Resupply Date is Day 8. Maritime arrival is Day 17.</span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2 text-xs bg-[#F7FBFD] p-2.5 rounded-xl border border-[#EEF7FA]">
-                <span className="font-mono font-bold text-amber-600 shrink-0">02.</span>
+              <div className="flex items-start gap-2 text-xs bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
+                <span className="font-mono font-bold text-amber-700 shrink-0">02.</span>
                 <div className="min-w-0 flex-1">
-                  <strong className="text-[#102A43]">Primary Generator G-021 Service:</strong>
-                  <span className="text-[#526779] ml-1">Run hours approaching 5,000h overhaul limit (60 operating hours remaining).</span>
+                  <strong className="text-[#0C1E30]">Primary Generator G-01 Overhaul:</strong>
+                  <span className="text-[#42586E] ml-1">Cumulative run-hours approaching 5,000h service threshold (60 operating hours remaining).</span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2 text-xs bg-[#F7FBFD] p-2.5 rounded-xl border border-[#EEF7FA]">
-                <span className="font-mono font-bold text-[#1597D4] shrink-0">03.</span>
+              <div className="flex items-start gap-2 text-xs bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
+                <span className="font-mono font-bold text-[#0284C7] shrink-0">03.</span>
                 <div className="min-w-0 flex-1">
-                  <strong className="text-[#102A43]">Cargo C-104 Pack-Ice Hold:</strong>
-                  <span className="text-[#526779] ml-1">Vessel throttled to 3.2 kts through Prydz Bay leads; ETA pushed by +3 days.</span>
+                  <strong className="text-[#0C1E30]">Consignment C-101 Pack-Ice Navigation:</strong>
+                  <span className="text-[#42586E] ml-1">Vessel throttled to 3.2 kts through Weddell Sea leads; ETA pushed by +3 days.</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="pt-3.5 mt-3 border-t border-[#F1F7FA] flex items-center justify-between">
-            <span className="text-[11px] text-[#8295A5]">Zero unacknowledged distress events</span>
+          <div className="pt-3.5 mt-3 border-t border-[#F0F7FB] flex items-center justify-between">
+            <span className="text-[11px] text-[#6E8294]">Zero unacknowledged distress events</span>
             <button
               type="button"
               onClick={() => goTo('copilot')}
-              className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
-              <span>Ask AI Copilot for Full Review</span>
+              <span>Consult AI Copilot Briefing</span>
               <ArrowRight size={12} />
             </button>
           </div>
         </div>
 
         {/* Change Detection (5 cols) */}
-        <div className="lg:col-span-5 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-5 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between border-b border-[#F1F7FA] pb-3 mb-3">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#F1F7FA] text-[#526779] px-2 py-0.5 rounded border border-[#DCEAF1]">
-                SINCE LAST REVIEW
+            <div className="flex items-center justify-between border-b border-[#F0F7FB] pb-3 mb-3">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#F4F8FA] text-[#42586E] px-2 py-0.5 rounded border border-[#DCE8F0]">
+                SINCE LAST 24H REVIEW
               </span>
-              <span className="text-[11px] text-[#8295A5] font-mono">Telemetry Δ 24h</span>
+              <span className="text-[11px] text-[#6E8294] font-mono">Telemetry Δ 24h</span>
             </div>
 
-            <h3 className="text-sm font-bold text-[#102A43]">
-              Autonomous Anomaly & Drift Tracking
+            <h3 className="text-sm font-bold text-[#0C1E30]">
+              Autonomous Anomaly &amp; Drift Detection
             </h3>
 
-            <div className="mt-3 divide-y divide-[#F1F7FA] text-xs">
+            <div className="mt-3 divide-y divide-[#F0F7FB] text-xs">
               <div className="py-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-rose-600 font-bold font-mono">↑ +8%</span>
-                  <span className="text-[#102A43] font-medium">Station Fuel Consumption</span>
+                  <span className="text-rose-700 font-bold font-mono">↑ +8%</span>
+                  <span className="text-[#0C1E30] font-medium">Station Fuel Burn Rate</span>
                 </div>
-                <span className="text-[11px] text-[#526779]">Sub-zero blizzard heating</span>
+                <span className="text-[11px] text-[#42586E]">Thermal heating load</span>
               </div>
 
               <div className="py-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-amber-600 font-bold font-mono">↑ +3d</span>
-                  <span className="text-[#102A43] font-medium">Cargo C-104 Vessel ETA</span>
+                  <span className="text-amber-700 font-bold font-mono">↑ +3d</span>
+                  <span className="text-[#0C1E30] font-medium">Consignment C-101 ETA</span>
                 </div>
-                <span className="text-[11px] text-[#526779]">Prydz Bay sea-ice hold</span>
+                <span className="text-[11px] text-[#42586E]">Weddell Sea ice pack hold</span>
               </div>
 
               <div className="py-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-emerald-600 font-bold font-mono">✓ Done</span>
-                  <span className="text-[#102A43] font-medium">Gen G-01 Filter Servicing</span>
+                  <span className="text-emerald-700 font-bold font-mono">✓ Verified</span>
+                  <span className="text-[#0C1E30] font-medium">Generator G-01 Filter Servicing</span>
                 </div>
-                <span className="text-[11px] text-[#526779]">Logged by Eng. Rao</span>
+                <span className="text-[11px] text-[#42586E]">Signed off by Chief Eng.</span>
               </div>
 
               <div className="py-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-rose-600 font-bold font-mono">⚠ RSK-001</span>
-                  <span className="text-[#102A43] font-medium">Resupply Deficit Flagged</span>
+                  <span className="text-rose-700 font-bold font-mono">⚠ RSK-001</span>
+                  <span className="text-[#0C1E30] font-medium">Resupply Deficit Flagged</span>
                 </div>
-                <span className="text-[11px] text-rose-600 font-semibold">Action Required</span>
+                <span className="text-[11px] text-rose-700 font-semibold">Action Required</span>
               </div>
             </div>
           </div>
 
-          <div className="pt-3 mt-2 border-t border-[#F1F7FA] flex items-center justify-between">
-            <span className="text-[11px] text-[#8295A5]">4 verified parameter shifts</span>
+          <div className="pt-3 mt-2 border-t border-[#F0F7FB] flex items-center justify-between">
+            <span className="text-[11px] text-[#6E8294]">4 verified parameter drifts</span>
             <button
               type="button"
               onClick={() => goTo('simulator')}
-              className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
-              <span>Simulate Scenario Impact</span>
+              <span>Simulate Scenario Drift</span>
               <ArrowRight size={12} />
             </button>
           </div>

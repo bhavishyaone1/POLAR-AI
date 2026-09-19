@@ -129,59 +129,59 @@ export default function Login() {
       {/* ============================================================
           1. TOP INSTITUTIONAL HEADER BAR
           ============================================================ */}
-      <header className="relative z-20 border-b border-[#DDEAF0] bg-white/90 px-4 py-3 backdrop-blur-md sm:px-8">
+      <header className="relative z-20 border-b border-[#DCE8F0] bg-white/95 px-4 py-3 backdrop-blur-md sm:px-8">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
           {/* Brand Identity */}
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EBF5FA] text-[#1597D4] shadow-xs">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E0F2FE] text-[#0284C7] shadow-xs">
               <PolarLogo size={28} withGlow={false} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-display text-sm font-bold uppercase tracking-wider text-[#12263A] sm:text-base">
+                <span className="font-display text-sm font-bold uppercase tracking-wider text-[#0C1E30] sm:text-base">
                   POLAR-AI
                 </span>
-                <span className="rounded-full bg-[#EBF5FA] px-2 py-0.5 text-[10px] font-mono font-semibold text-[#1597D4]">
-                  v2.4 CONSOLE
+                <span className="rounded-full bg-[#E0F2FE] px-2 py-0.5 text-[10px] font-mono font-semibold text-[#0284C7]">
+                  v2.4 OPERATIONS GATEWAY
                 </span>
               </div>
-              <div className="text-[11px] text-[#4A6572]">
+              <div className="text-[11px] text-[#42586E]">
                 National Centre for Polar and Ocean Research · Ministry of Earth Sciences
               </div>
             </div>
           </div>
 
           {/* Quick Info & Direct Navigation */}
-          <div className="flex items-center gap-2 sm:gap-4 text-xs font-medium text-[#4A6572]">
+          <div className="flex items-center gap-2 sm:gap-4 text-xs font-medium text-[#42586E]">
             <button
               type="button"
               onClick={() => setModalContent('pillars')}
-              className="flex items-center gap-1 hover:text-[#1597D4] transition"
+              className="flex items-center gap-1 hover:text-[#0284C7] transition"
             >
-              <Compass size={14} className="text-[#1597D4]" />
-              <span className="hidden sm:inline">Operational Pillars</span>
+              <Compass size={14} className="text-[#0284C7]" />
+              <span className="hidden sm:inline">Operational Architecture</span>
             </button>
-            <span className="text-[#DDEAF0]">|</span>
+            <span className="text-[#DCE8F0]">|</span>
             <button
               type="button"
               onClick={() => setModalContent('governance')}
-              className="hover:text-[#1597D4] transition"
+              className="hover:text-[#0284C7] transition"
             >
-              Governance
+              Mission Governance
             </button>
             <span className="text-[#DDEAF0]">|</span>
             <button
               type="button"
               onClick={() => setModalContent('support')}
-              className="hover:text-[#1597D4] transition"
+              className="hover:text-[#0284C7] transition"
             >
               Support
             </button>
 
             {/* Security Pill */}
-            <div className="ml-2 hidden items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-mono font-semibold text-emerald-700 md:flex">
-              <Lock size={11} className="text-emerald-600" />
-              <span>TLS 1.3 · ENCRYPTED</span>
+            <div className="ml-2 hidden items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-mono font-semibold text-emerald-800 md:flex">
+              <Lock size={11} className="text-emerald-700" />
+              <span>TLS 1.3 · 256-BIT ENCRYPTED</span>
             </div>
           </div>
         </div>
@@ -190,26 +190,26 @@ export default function Login() {
       {/* ============================================================
           2. WELCOME BANNER & LIVE STATION TELEMETRY
           ============================================================ */}
-      <section className="relative z-10 border-b border-[#DDEAF0] bg-gradient-to-b from-white to-[#F7FBFD] px-4 py-8 sm:px-8">
+      <section className="relative z-10 border-b border-[#DCE8F0] bg-gradient-to-b from-white to-[#F4F8FA] px-4 py-8 sm:px-8">
         <div className="mx-auto max-w-7xl">
           {/* Eyebrow Pill */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#DDEAF0] bg-white px-3 py-1 text-[11px] font-mono font-semibold text-[#1597D4] shadow-xs">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#BAE6FD] bg-[#E0F2FE] px-3 py-1 text-[11px] font-mono font-semibold text-[#0284C7] shadow-xs">
               <Sparkles size={12} />
-              EXPEDITION INTELLIGENCE & MISSION CONTINUITY PLATFORM
+              EXPEDITION INTELLIGENCE &amp; MISSION CONTINUITY PLATFORM
             </span>
-            <span className="text-[11px] text-[#8FA6B2] hidden sm:inline">
-              Authoritative Operations Console for Antarctic & Arctic Field Bases
+            <span className="text-[11px] text-[#6E8294] hidden sm:inline">
+              Authoritative Operations Console for Antarctic &amp; Arctic Field Bases
             </span>
           </div>
 
           <div className="mt-3 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
             <div>
-              <h1 className="font-display text-2xl font-bold tracking-tight text-[#12263A] sm:text-3xl lg:text-4xl">
+              <h1 className="font-display text-2xl font-bold tracking-tight text-[#0C1E30] sm:text-3xl lg:text-4xl">
                 Centralized Expedition Command &amp; Logistics
               </h1>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#4A6572]">
-                A unified operational dashboard connecting <strong>Expedition Planning</strong>,{' '}
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#42586E]">
+                A unified operational operating system connecting <strong>Expedition Planning</strong>,{' '}
                 <strong>Cargo Tracking</strong>, <strong>Inventory Management</strong>,{' '}
                 <strong>Personnel Movement</strong>, and <strong>Emergency Response</strong> across
                 India&apos;s polar stations.
@@ -218,27 +218,27 @@ export default function Login() {
 
             {/* Live Station Status Pills */}
             <div className="flex flex-wrap items-center gap-2 text-xs">
-              <div className="flex items-center gap-2 rounded-xl border border-[#DDEAF0] bg-white px-3 py-2 shadow-xs">
+              <div className="flex items-center gap-2 rounded-xl border border-[#DCE8F0] bg-white px-3 py-2 shadow-xs">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                 <div>
-                  <div className="font-bold text-[#12263A]">Maitri Base</div>
-                  <div className="text-[10px] text-[#4A6572] font-mono">70°45′S · -18°C Nominal</div>
+                  <div className="font-bold text-[#0C1E30]">Maitri Station</div>
+                  <div className="text-[10px] text-[#42586E] font-mono">70°45′S · -18°C Nominal</div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 rounded-xl border border-[#DDEAF0] bg-white px-3 py-2 shadow-xs">
+              <div className="flex items-center gap-2 rounded-xl border border-[#DCE8F0] bg-white px-3 py-2 shadow-xs">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                 <div>
-                  <div className="font-bold text-[#12263A]">Bharati Base</div>
-                  <div className="text-[10px] text-[#4A6572] font-mono">69°24′S · -12°C Online</div>
+                  <div className="font-bold text-[#0C1E30]">Bharati Station</div>
+                  <div className="text-[10px] text-[#42586E] font-mono">69°24′S · -12°C Online</div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 rounded-xl border border-[#DDEAF0] bg-white px-3 py-2 shadow-xs">
+              <div className="flex items-center gap-2 rounded-xl border border-[#DCE8F0] bg-white px-3 py-2 shadow-xs">
                 <span className="h-2 w-2 rounded-full bg-sky-500 animate-pulse" />
                 <div>
-                  <div className="font-bold text-[#12263A]">Himadri Base</div>
-                  <div className="text-[10px] text-[#4A6572] font-mono">78°55′N · -6°C Arctic Active</div>
+                  <div className="font-bold text-[#0C1E30]">Himadri Base</div>
+                  <div className="text-[10px] text-[#42586E] font-mono">78°55′N · -6°C Arctic Active</div>
                 </div>
               </div>
             </div>

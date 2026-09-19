@@ -56,14 +56,14 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
 
       <aside
         className={`
-          fixed inset-y-0 left-0 z-50 flex w-[260px] max-w-[85vw] flex-col border-r border-[#E5EDF2]
+          fixed inset-y-0 left-0 z-50 flex w-[260px] max-w-[85vw] flex-col border-r border-[#DCE8F0]
           bg-white transition-transform duration-250 ease-in-out
           lg:sticky lg:bottom-auto lg:top-0 lg:z-auto lg:h-screen lg:translate-x-0 lg:w-[240px]
           ${open ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
         `}
       >
         {/* ---------- Logo & Brand ---------- */}
-        <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-[#F1F5F9]">
+        <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-[#DCE8F0]">
           <div className="flex items-center gap-3 min-w-0">
             {/* Geometric Mountain Logo */}
             <div className="shrink-0 flex items-center justify-center">
@@ -75,10 +75,10 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
               </svg>
             </div>
             <div>
-              <div className="text-base font-bold tracking-tight text-[#0F172A]">
+              <div className="text-base font-bold tracking-tight text-[#0C1E30]">
                 POLAR-AI
               </div>
-              <div className="text-[10px] text-slate-400 font-medium">
+              <div className="text-[10px] text-[#6E8294] font-medium">
                 Mission Continuity Intelligence
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1 text-slate-400 hover:text-slate-700 lg:hidden"
+            className="rounded-lg p-1 text-[#6E8294] hover:text-[#0C1E30] lg:hidden"
             aria-label="Close navigation"
           >
             <X size={18} />
@@ -113,7 +113,7 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
                   ${
                     isActive
                       ? 'bg-[#E0F2FE] text-[#0284C7] font-semibold'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                      : 'text-[#42586E] hover:bg-[#F0F7FB] hover:text-[#0C1E30]'
                   }
                 `}
                 aria-current={isActive ? 'page' : undefined}
@@ -121,12 +121,12 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
                 <Icon
                   size={17}
                   strokeWidth={isActive ? 2.2 : 1.75}
-                  className={isActive ? 'text-[#0284C7]' : 'text-slate-400'}
+                  className={isActive ? 'text-[#0284C7]' : 'text-[#6E8294]'}
                 />
                 <span className="flex-1 text-left truncate">{item.label}</span>
 
                 {item.isAlert && item.alertCount > 0 ? (
-                  <span className="h-5 min-w-[20px] px-1.5 rounded-full text-[11px] font-bold flex items-center justify-center bg-rose-50 text-rose-600 border border-rose-200 animate-pulse">
+                  <span className="h-5 min-w-[20px] px-1.5 rounded-full text-[11px] font-bold flex items-center justify-center bg-rose-50 text-rose-700 border border-rose-200 animate-pulse">
                     {item.alertCount}
                   </span>
                 ) : item.badge ? (
@@ -149,24 +149,24 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
         </nav>
 
         {/* ---------- Footer Status Card & Mountain Silhouette ---------- */}
-        <div className="p-3.5 space-y-2.5 border-t border-[#F1F5F9] relative overflow-hidden bg-white">
+        <div className="p-3.5 space-y-2.5 border-t border-[#DCE8F0] relative overflow-hidden bg-white">
           <div className="space-y-0.5">
-            <div className="flex items-center gap-2 text-xs font-semibold text-slate-800">
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#0C1E30]">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>System Online</span>
             </div>
-            <div className="text-[10px] text-slate-400 pl-4 font-mono">
-              Sync: 2 min ago
+            <div className="text-[10px] text-[#6E8294] pl-4 font-mono">
+              SATCOM Sync: 2m ago
             </div>
           </div>
 
           <div className="flex items-center gap-2 pt-1.5">
-            <div className="h-7 w-7 rounded-lg bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center shrink-0">
+            <div className="h-7 w-7 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0">
               <Compass size={14} />
             </div>
             <div className="min-w-0">
-              <div className="text-xs font-bold text-[#102A43] truncate">Maitri Station</div>
-              <div className="text-[10px] text-[#8295A5] truncate">Current Station</div>
+              <div className="text-xs font-bold text-[#0C1E30] truncate">Maitri Station</div>
+              <div className="text-[10px] text-[#6E8294] truncate">Current Station Hub</div>
             </div>
           </div>
 

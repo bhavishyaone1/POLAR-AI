@@ -34,75 +34,75 @@
 */
 :root {
   /* Surfaces — Pure Arctic White & Ice Blue (Section 04 Tokens) */
-  --background: #F7FBFD;
+  --background: #F4F8FA;
   --surface: #FFFFFF;
-  --surface-soft: #F1F7FA;
-  --surface-ice: #EAF6FA;
-  --surface-hover: #F3FAFC;
+  --surface-soft: #EEF5F8;
+  --surface-ice: #E6F3F9;
+  --surface-hover: #F0F7FB;
 
-  --surface-base: #F7FBFD;
-  --surface-secondary: #F1F7FA;
-  --surface-section: #EAF5F9;
+  --surface-base: #F4F8FA;
+  --surface-secondary: #EEF5F8;
+  --surface-section: #E6F3F9;
   --surface-card: #FFFFFF;
   --surface-raised: #FFFFFF;
-  --surface-sunken: #EAF5F9;
-  --surface-active: #EEF9FC;
+  --surface-sunken: #E6F3F9;
+  --surface-active: #E0F2FE;
 
-  /* Borders */
-  --border: #DCEAF1;
-  --border-soft: #E8F1F5;
-  --line: #DCEAF1;
-  --line-hover: #BFDDE7;
-  --line-soft: #E8F1F5;
+  /* Borders — Clean Glacier Lines */
+  --border: #DCE8F0;
+  --border-soft: #E8F0F5;
+  --line: #DCE8F0;
+  --line-hover: #BCD4E3;
+  --line-soft: #E8F0F5;
 
-  /* Text — Deep scientific navy charcoal & cool slate */
-  --text-primary: #102A43;
-  --text-secondary: #526779;
-  --text-muted: #8295A5;
-  --text-disabled: #A9B7C3;
+  /* Text — Deep scientific navy charcoal & cool readable slate */
+  --text-primary: #0C1E30;
+  --text-secondary: #42586E;
+  --text-muted: #6E8294;
+  --text-disabled: #9BB0C1;
 
-  --ink-hi: #102A43;
-  --ink-mid: #526779;
-  --ink-low: #8295A5;
-  --ink-very-low: #A9B7C3;
+  --ink-hi: #0C1E30;
+  --ink-mid: #42586E;
+  --ink-low: #6E8294;
+  --ink-very-low: #9BB0C1;
 
   /* POLAR BLUE Accent System */
-  --polar-500: #1597D4;
-  --polar-400: #38AEE0;
-  --polar-300: #75C9E8;
-  --polar-100: #DDF3FA;
-  --polar-50: #EEF9FC;
+  --polar-500: #0284C7;
+  --polar-400: #38BDF8;
+  --polar-300: #7DD3FC;
+  --polar-100: #E0F2FE;
+  --polar-50: #F0F9FF;
 
-  --ice: #1597D4;
-  --ice-secondary: #38AEE0;
-  --ice-light: #DDF3FA;
-  --ice-very-light: #EEF9FC;
-  --ice-dim: #38AEE0;
-  --ice-vivid: #1597D4;
-  --cyan: #1597D4;
+  --ice: #0284C7;
+  --ice-secondary: #0369A1;
+  --ice-light: #E0F2FE;
+  --ice-very-light: #F0F9FF;
+  --ice-dim: #0284C7;
+  --ice-vivid: #0369A1;
+  --cyan: #0284C7;
 
-  /* Status Tokens */
-  --success: #18A878;
-  --warning: #E5A51A;
-  --danger: #E5484D;
-  --info: #1597D4;
+  /* Status Tokens — High-Contrast Professional Signaling */
+  --success: #15803D;
+  --warning: #B45309;
+  --danger: #BE123C;
+  --info: #0284C7;
 
   /* Restrained, professional status colors */
-  --green: #18A878;
-  --green-soft: #EBF7EE;
-  --green-border: #BEE3C8;
+  --green: #15803D;
+  --green-soft: #F0FDF4;
+  --green-border: #BBF7D0;
 
-  --amber: #E7A51A;
-  --amber-soft: #FFF8EB;
-  --amber-border: #FBD38D;
+  --amber: #B45309;
+  --amber-soft: #FFFBEB;
+  --amber-border: #FDE68A;
 
-  --red: #E5484D;
-  --red-soft: #FFF0F0;
-  --red-border: #FED7D7;
+  --red: #BE123C;
+  --red-soft: #FFF1F2;
+  --red-border: #FECDD3;
 
-  --orange: #E7A51A;
-  --blue: #1597D4;
-  --violet: #7C3AED;
+  --orange: #C2410C;
+  --blue: #0284C7;
+  --violet: #6D28D9;
 
   /* Typography */
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;

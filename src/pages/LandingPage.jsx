@@ -56,25 +56,25 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           HERO SECTION — MISSION CONTINUITY INTELLIGENCE
           ============================================================ */}
-      <section className="rounded-2xl border border-[#DCEAF1] bg-white p-6 sm:p-10 md:p-14 shadow-xs space-y-6 text-center sm:text-left">
-        <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF6FA] border border-[#BFDDE7] px-3.5 py-1 text-xs font-mono font-semibold text-[#1597D4]">
+      <section className="rounded-2xl border border-[#DCE8F0] bg-white p-6 sm:p-10 md:p-14 shadow-xs space-y-6 text-center sm:text-left">
+        <div className="inline-flex items-center gap-2 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] px-3.5 py-1 text-xs font-mono font-semibold text-[#0284C7]">
           <Sparkles size={13} />
           <span>POLAR-AI · MISSION CONTINUITY OPERATING SYSTEM</span>
         </div>
 
         <div className="space-y-3">
-          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#102A43] leading-[1.1]">
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#0C1E30] leading-[1.1]">
             Mission continuity intelligence
             <br />
-            <span className="text-[#1597D4]">for extreme environments.</span>
+            <span className="text-[#0284C7]">for extreme polar environments.</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-[#526779] max-w-3xl leading-relaxed font-medium">
+          <p className="text-base sm:text-lg text-[#42586E] max-w-3xl leading-relaxed font-medium">
             See the risk. Understand the impact. Simulate the future. Make the decision.
           </p>
 
-          <p className="text-xs sm:text-sm text-[#8295A5] max-w-2xl leading-relaxed">
-            A centralized digital platform for <strong>expedition planning</strong>, <strong>cargo tracking</strong>, <strong>inventory management</strong>, <strong>personnel movement</strong>, and <strong>emergency response</strong> in extreme Antarctic environments.
+          <p className="text-xs sm:text-sm text-[#6E8294] max-w-2xl leading-relaxed">
+            Centralized digital platform unifying <strong>expedition planning</strong>, <strong>cargo tracking</strong>, <strong>inventory management</strong>, <strong>personnel movement</strong>, and <strong>emergency response</strong> across extreme research facilities.
           </p>
         </div>
 
@@ -83,18 +83,18 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           <button
             type="button"
             onClick={onStartGuidedDemo}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white font-semibold px-7 py-3 text-xs shadow-xs transition active:scale-95"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white font-semibold px-7 py-3 text-xs shadow-xs transition active:scale-95"
           >
             <Play size={13} className="fill-white" />
-            <span>RUN DEMO</span>
+            <span>RUN GUIDED DEMO</span>
           </button>
 
           <button
             type="button"
             onClick={() => goTo('dashboard')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[#DCEAF1] bg-white hover:bg-[#F0F8FB] text-[#102A43] font-semibold px-6 py-3 text-xs shadow-xs transition"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[#DCE8F0] bg-white hover:bg-[#F0F7FB] text-[#0C1E30] font-semibold px-6 py-3 text-xs shadow-xs transition"
           >
-            <span>EXPLORE PLATFORM</span>
+            <span>ENTER COMMAND CENTER</span>
             <ArrowRight size={13} />
           </button>
         </div>
@@ -105,10 +105,10 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           ============================================================ */}
       <section className="space-y-4">
         <div>
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1597D4] block">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0284C7] block">
             CENTRALIZED ARCHITECTURE
           </span>
-          <h2 className="text-xl font-bold text-[#12263A] mt-0.5">
+          <h2 className="text-xl font-bold text-[#0C1E30] mt-0.5">
             Five Core Operational Pillars
           </h2>
         </div>
@@ -116,18 +116,18 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           <div
             onClick={() => goTo('expeditions')}
-            className="rounded-2xl border border-[#DDEAF0] bg-white p-5 shadow-xs hover:border-[#1597D4] hover:bg-[#F0F8FB] transition cursor-pointer flex flex-col justify-between"
+            className="rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs hover:border-[#0284C7] hover:bg-[#F0F7FB] transition cursor-pointer flex flex-col justify-between"
           >
             <div className="space-y-2.5">
-              <div className="h-8 w-8 rounded-xl bg-[#DDF3FA] text-[#1597D4] flex items-center justify-center">
+              <div className="h-8 w-8 rounded-xl bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
                 <Compass size={17} />
               </div>
-              <h3 className="text-sm font-bold text-[#12263A]">1. Expedition Planning</h3>
-              <p className="text-xs text-[#526779] leading-relaxed">
+              <h3 className="text-sm font-bold text-[#0C1E30]">1. Expedition Planning</h3>
+              <p className="text-xs text-[#42586E] leading-relaxed">
                 Scientific mission planning, traverse route schedules, milestone verification, and team assignments.
               </p>
             </div>
-            <div className="pt-3 text-xs font-semibold text-[#1597D4] inline-flex items-center gap-1">
+            <div className="pt-3 text-xs font-semibold text-[#0284C7] inline-flex items-center gap-1">
               <span>View Expeditions</span>
               <ArrowRight size={11} />
             </div>
@@ -135,18 +135,18 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
 
           <div
             onClick={() => goTo('cargo')}
-            className="rounded-2xl border border-[#DDEAF0] bg-white p-5 shadow-xs hover:border-[#1597D4] hover:bg-[#F0F8FB] transition cursor-pointer flex flex-col justify-between"
+            className="rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs hover:border-[#0284C7] hover:bg-[#F0F7FB] transition cursor-pointer flex flex-col justify-between"
           >
             <div className="space-y-2.5">
-              <div className="h-8 w-8 rounded-xl bg-[#DDF3FA] text-[#1597D4] flex items-center justify-center">
+              <div className="h-8 w-8 rounded-xl bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
                 <Package size={17} />
               </div>
-              <h3 className="text-sm font-bold text-[#12263A]">2. Cargo Tracking</h3>
-              <p className="text-xs text-[#526779] leading-relaxed">
-                Consignments manifest tracking, maritime vessel corridors, blue-ice runway arrivals, and delay management.
+              <h3 className="text-sm font-bold text-[#0C1E30]">2. Cargo Tracking</h3>
+              <p className="text-xs text-[#42586E] leading-relaxed">
+                Consignment manifest tracking, maritime vessel corridors, blue-ice runway arrivals, and delay management.
               </p>
             </div>
-            <div className="pt-3 text-xs font-semibold text-[#1597D4] inline-flex items-center gap-1">
+            <div className="pt-3 text-xs font-semibold text-[#0284C7] inline-flex items-center gap-1">
               <span>Track Manifests</span>
               <ArrowRight size={11} />
             </div>
@@ -154,18 +154,18 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
 
           <div
             onClick={() => goTo('inventory')}
-            className="rounded-2xl border border-[#DDEAF0] bg-white p-5 shadow-xs hover:border-[#1597D4] hover:bg-[#F0F8FB] transition cursor-pointer flex flex-col justify-between"
+            className="rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs hover:border-[#0284C7] hover:bg-[#F0F7FB] transition cursor-pointer flex flex-col justify-between"
           >
             <div className="space-y-2.5">
-              <div className="h-8 w-8 rounded-xl bg-[#DDF3FA] text-[#1597D4] flex items-center justify-center">
+              <div className="h-8 w-8 rounded-xl bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
                 <Boxes size={17} />
               </div>
-              <h3 className="text-sm font-bold text-[#12263A]">3. Inventory Reserves</h3>
-              <p className="text-xs text-[#526779] leading-relaxed">
+              <h3 className="text-sm font-bold text-[#0C1E30]">3. Inventory Reserves</h3>
+              <p className="text-xs text-[#42586E] leading-relaxed">
                 Continuous fuel burn rates, safe buffer thresholds, life-support reserves, and deficit forecasting.
               </p>
             </div>
-            <div className="pt-3 text-xs font-semibold text-[#1597D4] inline-flex items-center gap-1">
+            <div className="pt-3 text-xs font-semibold text-[#0284C7] inline-flex items-center gap-1">
               <span>Manage Stock</span>
               <ArrowRight size={11} />
             </div>
@@ -173,18 +173,18 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
 
           <div
             onClick={() => goTo('personnel')}
-            className="rounded-2xl border border-[#DDEAF0] bg-white p-5 shadow-xs hover:border-[#1597D4] hover:bg-[#F0F8FB] transition cursor-pointer flex flex-col justify-between"
+            className="rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs hover:border-[#0284C7] hover:bg-[#F0F7FB] transition cursor-pointer flex flex-col justify-between"
           >
             <div className="space-y-2.5">
-              <div className="h-8 w-8 rounded-xl bg-[#DDF3FA] text-[#1597D4] flex items-center justify-center">
+              <div className="h-8 w-8 rounded-xl bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
                 <Users size={17} />
               </div>
-              <h3 className="text-sm font-bold text-[#12263A]">4. Personnel Movement</h3>
-              <p className="text-xs text-[#526779] leading-relaxed">
+              <h3 className="text-sm font-bold text-[#0C1E30]">4. Personnel Movement</h3>
+              <p className="text-xs text-[#42586E] leading-relaxed">
                 Field camp deployments, active personnel rosters, satellite phone check-in times, and medical status.
               </p>
             </div>
-            <div className="pt-3 text-xs font-semibold text-[#1597D4] inline-flex items-center gap-1">
+            <div className="pt-3 text-xs font-semibold text-[#0284C7] inline-flex items-center gap-1">
               <span>Track Roster</span>
               <ArrowRight size={11} />
             </div>
@@ -198,8 +198,8 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
               <div className="h-8 w-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">
                 <AlertTriangle size={17} />
               </div>
-              <h3 className="text-sm font-bold text-[#12263A]">5. Emergency Response</h3>
-              <p className="text-xs text-[#526779] leading-relaxed">
+              <h3 className="text-sm font-bold text-[#0C1E30]">5. Emergency Response</h3>
+              <p className="text-xs text-[#42586E] leading-relaxed">
                 Autonomous spatial triage, armed SOS broadcasts, response team dispatch, and tactical field radio.
               </p>
             </div>
@@ -310,19 +310,19 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
             const isLast = idx === processSteps.length - 1
             return (
               <div key={step.step} className="relative">
-                <div className="rounded-xl border border-[#DCEAF1] bg-white p-4 space-y-2 h-full shadow-2xs">
-                  <span className="text-[10px] font-mono font-bold text-[#1597D4] block">
+                <div className="rounded-xl border border-[#DCE8F0] bg-white p-4 space-y-2 h-full shadow-2xs">
+                  <span className="text-[10px] font-mono font-bold text-[#0284C7] block">
                     {step.step}
                   </span>
-                  <h3 className="text-sm font-bold text-[#102A43] tracking-tight">
+                  <h3 className="text-sm font-bold text-[#0C1E30] tracking-tight">
                     {step.title}
                   </h3>
-                  <p className="text-[11px] text-[#526779] leading-relaxed">
+                  <p className="text-[11px] text-[#42586E] leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
                 {!isLast && (
-                  <div className="absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 hidden lg:flex text-[#1597D4]">
+                  <div className="absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 hidden lg:flex text-[#0284C7]">
                     <ArrowRight size={13} strokeWidth={2.5} />
                   </div>
                 )}
@@ -336,14 +336,14 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           {processSteps.map((step) => (
             <div
               key={step.step}
-              className="rounded-xl border border-[#DCEAF1] bg-white p-4 flex items-start gap-3 shadow-2xs"
+              className="rounded-xl border border-[#DCE8F0] bg-white p-4 flex items-start gap-3 shadow-2xs"
             >
-              <div className="h-7 w-7 rounded-lg bg-[#EAF6FA] text-[#1597D4] font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+              <div className="h-7 w-7 rounded-lg bg-[#E0F2FE] text-[#0284C7] font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                 {step.step}
               </div>
               <div>
-                <h3 className="text-sm font-bold text-[#102A43]">{step.title}</h3>
-                <p className="text-xs text-[#526779] mt-0.5">{step.desc}</p>
+                <h3 className="text-sm font-bold text-[#0C1E30]">{step.title}</h3>
+                <p className="text-xs text-[#42586E] mt-0.5">{step.desc}</p>
               </div>
             </div>
           ))}
@@ -353,64 +353,64 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           USP SECTION — FROM DATA TO DECISION
           ============================================================ */}
-      <section className="rounded-2xl border border-[#DCEAF1] bg-white p-6 sm:p-10 shadow-xs space-y-6">
+      <section className="rounded-2xl border border-[#DCE8F0] bg-white p-6 sm:p-10 shadow-xs space-y-6">
         <div className="max-w-3xl space-y-2">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1597D4] block">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0284C7] block">
             CENTRAL ARCHITECTURAL USP
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#102A43]">
-            From Isolated Data to Mission Continuity Intelligence
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#0C1E30]">
+            From Isolated Silos to Mission Continuity Intelligence
           </h2>
-          <p className="text-sm text-[#526779] leading-relaxed">
-            Traditional expedition systems tell you what is happening in isolated dashboards. POLAR-AI helps you understand what it means, predict what could happen next, see what it could affect, simulate possible futures, and decide what to do.
+          <p className="text-sm text-[#42586E] leading-relaxed">
+            Legacy expedition dashboards display data in isolation. POLAR-AI connects all variables into a causal resilience model: predict operational deficits, simulate cascading impacts across microgrids, and empower commanders with actionable decisions.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
           {/* Traditional Systems Silo */}
-          <div className="rounded-xl border border-slate-200 bg-[#F7FBFD] p-5 space-y-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#8295A5] block">
+          <div className="rounded-xl border border-slate-200 bg-[#F4F8FA] p-5 space-y-3">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#6E8294] block">
               Traditional Systems: Disconnected Silos
             </span>
             <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#526779]">
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#42586E]">
                 📦 Cargo Manifest
               </div>
-              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#526779]">
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#42586E]">
                 🛢️ Fuel Tanks
               </div>
-              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#526779]">
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#42586E]">
                 ⚙️ Generator Hours
               </div>
-              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#526779]">
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#42586E]">
                 👥 Personnel Roster
               </div>
             </div>
-            <p className="text-xs text-[#8295A5] italic leading-relaxed pt-1">
-              "Fuel is low, but no system calculates that incoming cargo is 5 days too late to prevent a generator microgrid blackout."
+            <p className="text-xs text-[#6E8294] italic leading-relaxed pt-1">
+              "Fuel tank shows low, but no system calculates that incoming resupply arrives 5 days too late to avoid life-support heating failure."
             </p>
           </div>
 
           {/* POLAR-AI Intelligence Engine */}
-          <div className="rounded-xl border border-[#BFDDE7] bg-[#EAF6FA]/40 p-5 space-y-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1597D4] block">
-              POLAR-AI: Mission Continuity Intelligence
+          <div className="rounded-xl border border-[#BAE6FD] bg-[#E0F2FE]/30 p-5 space-y-3">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0284C7] block">
+              POLAR-AI: Connected Mission Continuity
             </span>
-            <div className="rounded-lg bg-white p-3.5 border border-[#DCEAF1] space-y-2 text-xs">
+            <div className="rounded-lg bg-white p-3.5 border border-[#DCE8F0] space-y-2 text-xs">
               <div className="flex items-center justify-between font-mono text-[11px]">
-                <span className="font-bold text-[#1597D4]">Cargo + Inventory + Assets + Schedule</span>
+                <span className="font-bold text-[#0284C7]">Cargo + Inventory + Assets + Telemetry</span>
               </div>
-              <div className="text-center font-bold text-[#1597D4] text-xs">↓</div>
-              <div className="font-semibold text-[#102A43] text-[11.5px] bg-[#EAF6FA] p-1.5 rounded text-center">
+              <div className="text-center font-bold text-[#0284C7] text-xs">↓</div>
+              <div className="font-semibold text-[#0C1E30] text-[11.5px] bg-[#E0F2FE] p-1.5 rounded text-center">
                 Mission Continuity Intelligence Engine
               </div>
-              <div className="text-center font-bold text-[#1597D4] text-xs">↓</div>
-              <div className="text-[#526779] text-[11px] leading-tight text-center font-mono">
-                Prediction (5d gap) → Cascading Impact → Simulation → Human Sign-off
+              <div className="text-center font-bold text-[#0284C7] text-xs">↓</div>
+              <div className="text-[#42586E] text-[11px] leading-tight text-center font-mono">
+                Predict Deficit (5d) → Trace Cascade → Simulate Sandbox → Commander Authorization
               </div>
             </div>
-            <p className="text-xs text-[#1597D4] font-semibold leading-relaxed pt-1">
-              "Detects the mismatch 12 days early, simulates the cascade, and prepares fuel-shedding protocols with officer sign-off."
+            <p className="text-xs text-[#0284C7] font-semibold leading-relaxed pt-1">
+              "Detects the disparity 12 days in advance, projects downstream impacts, and prepares tactical load-shedding protocols with cryptographic audit sign-off."
             </p>
           </div>
         </div>
@@ -419,18 +419,18 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           FINAL TAGLINE
           ============================================================ */}
-      <footer className="rounded-2xl border border-[#DCEAF1] bg-[#F7FBFD] p-8 text-center space-y-3">
-        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1597D4] block">
-          POLAR-AI MISSION MOTTO
+      <footer className="rounded-2xl border border-[#DCE8F0] bg-[#F4F8FA] p-8 text-center space-y-3">
+        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0284C7] block">
+          POLAR-AI OPERATING MOTTO
         </span>
-        <blockquote className="text-lg sm:text-xl font-bold tracking-tight text-[#102A43] max-w-2xl mx-auto">
+        <blockquote className="text-lg sm:text-xl font-bold tracking-tight text-[#0C1E30] max-w-2xl mx-auto">
           "See the risk. Understand the impact. Simulate the future. Make the decision."
         </blockquote>
         <div className="pt-2">
           <button
             type="button"
             onClick={onStartGuidedDemo}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white font-semibold px-6 py-2.5 text-xs shadow-xs transition active:scale-95"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white font-semibold px-6 py-2.5 text-xs shadow-xs transition active:scale-95"
           >
             <Play size={12} className="fill-white" />
             <span>START GUIDED DEMO</span>
