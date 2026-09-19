@@ -1026,11 +1026,14 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           </div>
 
           <div className="flex-1 min-w-0 space-y-1">
+            <div className="text-[13px] font-semibold text-[#0C1E30] leading-tight">
+              Stable with emerging risk
+            </div>
             <div className="inline-flex items-center gap-1.5 rounded-md border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10.5px] font-semibold text-amber-800">
               <AlertTriangle size={11} className="text-amber-600" />
               <span>Resupply Deficit Flagged</span>
             </div>
-            <p className="text-xs text-[#42586E] leading-relaxed">
+            <p className="text-xs text-[#42586E] leading-snug">
               Fuel runway may fall below safe threshold before next resupply.
             </p>
           </div>
@@ -1065,8 +1068,11 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         <h3 className="text-base font-bold text-[#0C1E30] tracking-tight">
           Fuel Resupply Gap
         </h3>
+        <div className="text-xs font-semibold text-rose-700 mt-0.5">
+          Potential 5-day gap
+        </div>
         <p className="text-xs text-[#42586E] mt-0.5 leading-normal">
-          Potential 5-day deficit gap before maritime vessel arrival at Novo Staging.
+          Deficit gap before maritime vessel arrival at Novo Staging.
         </p>
 
         <div className="mt-3 flex items-center justify-between bg-white rounded-lg p-2.5 border border-rose-100 text-xs">
@@ -1086,8 +1092,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             onClick={() => goTo('risks')}
             className="w-full rounded-xl bg-rose-600 text-white font-semibold py-2.5 text-xs shadow-2xs flex items-center justify-center gap-1.5 min-h-[44px] active:scale-98 transition"
           >
-            <span>View Risk Analysis</span>
-            <ArrowRight size={13} />
+            <span>View Risk →</span>
           </button>
         </div>
       </div>
@@ -1095,7 +1100,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
       {/* 4. Compact Mission Pulse Sections (Fuel, Cargo, Power, Assets) */}
       <div className="space-y-2">
         <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#6E8294] px-1">
-          Mission Telemetry Pulse
+          Mission Pulse · Fuel · Cargo · Power · Personnel
         </div>
 
         {/* Pulse: Fuel */}

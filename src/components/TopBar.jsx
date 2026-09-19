@@ -208,10 +208,10 @@ export default function TopBar({
         <button
           type="button"
           onClick={onMenuClick}
-          className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800 lg:hidden transition shrink-0"
+          className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 lg:hidden transition shrink-0 active:scale-95"
           aria-label="Open navigation menu"
         >
-          <Menu size={18} />
+          <Menu size={19} />
         </button>
 
         {/* Interactive Location Switcher */}

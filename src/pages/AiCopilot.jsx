@@ -34,32 +34,72 @@ import { useData } from '../store/DataContext'
 const COPILOT_KNOWLEDGE = {
   'Why is this a risk?': {
     analysis:
-      'The current fuel reserve is projected to fall below the safe operating threshold before the expected cargo arrival. Maitri Station holds 14,200 L of diesel fuel (12.0 days remaining), while inbound resupply consignment C-101 has an arrival ETA of 17.0 days, creating an unhedged 5.0-day deficit window.',
+      'Current station fuel reserves stand at 14,200 L (12.0 days runway at 1,180 L/day burn rate). Inbound maritime consignment C-101 has an updated arrival ETA of 17.0 days due to pack-ice holds in Prydz Bay, creating an unhedged 5.0-day shortage gap.',
     impact:
-      'Station generators will starve on Day 12. Generator availability becomes constrained, triggering an automatic 96% output reduction across the microgrid and freezing the hydronic heating loop.',
+      'Station generators will starve on Day 12. Microgrid generation drops by 96%, disabling habitat hydronic heating loops and cutting power to cryogenic science sample vaults.',
+    prediction:
+      'Mission continuity score decays from 63% down to 38% if unhedged by Day 8.',
+    options:
+      'Option A: Authorize tactical transfer of 3,500 L from strategic bladder reserve 02. Option B: Shed Level-1 auxiliary laboratory heating circuits immediately.',
     recommendation:
-      'Execute tactical reserve transfer protocol REC-001: Transfer 3,500 L from strategic bladder 02 and shed Level-1 non-critical laboratory circuits.',
+      'Execute Mitigation Protocol REC-001 (Bladder transfer + selective circuit shedding) to extend runway to Day 17.',
     actionLabel: 'Review Simulation',
     actionTarget: 'simulator',
   },
+  'What changed?': {
+    analysis:
+      'Station thermal heating load increased daily burn rate by +8% under -38°C ambient conditions. Consignment C-101 maritime transit delayed +3 days due to fast sea-ice pack holds.',
+    impact:
+      'Projected shortage gap expanded from 2.0 days to 5.0 days between reserve depletion (Day 12) and vessel berth (Day 17).',
+    prediction:
+      'Buffer holding will reach zero 120 hours before vessel arrival at Novo Staging.',
+    options:
+      'Option A: Expedite snowcat traverse from Novo Runway supply depot. Option B: Stage air-drop via Troll Station blue-ice corridor.',
+    recommendation:
+      'Authorize snowcat ground traverse transfer before weather window closes on Day 10.',
+    actionLabel: 'Inspect Risk Flow',
+    actionTarget: 'risks',
+  },
   'What happens if the shipment is delayed?': {
     analysis:
-      'If extreme Antarctic climate conditions delay C-101 by +5 days, cargo ETA pushes from Day 17 to Day 22, widening the station deficit gap from 5.0 days to 10.0 days.',
+      'Simulating an additional +5-day maritime slip pushes vessel arrival from Day 17 to Day 22, widening the station deficit gap to 10.0 days.',
     impact:
-      'Mission continuity score drops sharply from 68% down to 51%. Deep ice-core drilling must be abandoned to avoid cryogenic sample destruction, and station evacuation protocols are armed.',
+      'Mission continuity score drops sharply from 63% down to 51%. Deep ice-core drilling must be halted to prevent specimen thermal decay.',
+    prediction:
+      'Critical life-support heating risk triggers on Day 15 if auxiliary generator redundancy is lost.',
+    options:
+      'Option A: Shed all non-essential scientific circuits (+3.2 days). Option B: Arm emergency polar evacuation protocol.',
     recommendation:
-      'Pre-authorize emergency load shedding now and establish alternate aircraft staging via Troll Station blue-ice runway to compress shipping timeline.',
+      'Pre-authorize emergency load shedding now and verify backup generator G-02 service readiness.',
     actionLabel: 'Open What-If Simulator',
     actionTarget: 'simulator',
   },
-  'What should the officer review?': {
+  'What should I review?': {
     analysis:
-      'Officer review should prioritize three key parameters: generator runtime limits on G-021 (4,820h vs 5,000h overhaul cycle), current fuel burn rate (1,180 L/day vs target 920 L/day under load-shedding), and maritime pack-ice satellite telemetry.',
+      'Command officer review should focus on three critical telemetry variables: primary generator G-01 run hours (4,940/5,000h), station fuel burn runway (12.0 days), and satellite pack-ice drift vectors.',
     impact:
-      'Delaying authorization by more than 48 hours eliminates the buffer needed to stabilize habitat temperatures during the transition period.',
+      'Delaying authorization past Day 8 eliminates the thermal buffer required for safe habitat maintenance.',
+    prediction:
+      'Without mitigation sign-off within 48 hours, deficit mitigation options drop from 3 viable pathways to 1.',
+    options:
+      'Option A: Authorize Protocol REC-001 immediately. Option B: Request emergency NCPOR command override.',
     recommendation:
-      'Approve Protocol REC-001 to lock in the +4.8-day runway extension and sign off on the immutable cryptographic audit entry.',
+      'Approve Protocol REC-001 to lock in the +4.8-day runway extension and record the cryptographic ledger audit entry.',
     actionLabel: 'Inspect Risk Flow',
+    actionTarget: 'risks',
+  },
+  'Explain the impact': {
+    analysis:
+      'The 5-day fuel deficit propagates a 4-stage systemic failure cascade across the station infrastructure.',
+    impact:
+      'Fuel depletion (Day 12) → Generator trip & microgrid drop → Hydronic glycol freeze within 18h → Cryogenic sample loss and habitat evacuation.',
+    prediction:
+      'Without generator redundancy, indoor habitat ambient falls from 19°C to -15°C within 36 hours of generator shutdown.',
+    options:
+      'Option A: Stage-gated electrical load shedding. Option B: Auxiliary space heater deployment in central dome.',
+    recommendation:
+      'Trace the full cascading chain in the Risk Analysis module and verify generator redundancy.',
+    actionLabel: 'Trace Cascade Flow',
     actionTarget: 'risks',
   },
   'Compare REC-001 vs REC-002': {
@@ -67,28 +107,12 @@ const COPILOT_KNOWLEDGE = {
       'Comparative evaluation: Protocol REC-001 proposes Strategic Reserve Transfer (3,500 L) combined with Level-1 circuit shedding. Protocol REC-002 proposes Emergency C-130 Air-drop staging from Cape Town via Troll Station.',
     impact:
       'REC-001 carries 0% personnel hazard, 94% execution confidence, and extends runway from 12.0d to 16.8d. REC-002 costs 4.2x more fuel logistics and has a 42% abort risk due to Weddell Sea katabatic gusts.',
+    prediction:
+      'REC-001 stabilizes mission continuity at 72%. REC-002 risks total air-drop scattering in high crosswinds.',
+    options:
+      'Option A: Authorize REC-001 immediately as primary mitigation. Option B: Keep REC-002 on warm standby.',
     recommendation:
       'Authorize REC-001 immediately as primary mitigation. Keep REC-002 on warm standby only if Weddell Sea weather degrades past Day 14.',
-    actionLabel: 'Open What-If Simulator',
-    actionTarget: 'simulator',
-  },
-  'What changed?': {
-    analysis:
-      'Station fuel burn accelerated by +8% due to thermal sub-zero load. Consignment C-101 ETA delayed +3 days due to Weddell Sea ice-pack hold. Generator G-01 servicing signed off by Chief Engineer.',
-    impact:
-      'An unhedged 5-day deficit gap now exists between fuel exhaustion on Day 12 and cargo arrival on Day 17.',
-    recommendation:
-      'Execute tactical reserve transfer protocol REC-001 to extend runway by +4.8 days.',
-    actionLabel: 'Inspect Risk Flow',
-    actionTarget: 'risks',
-  },
-  'Simulate 5-day delay': {
-    analysis:
-      'Simulating a 5-day delay pushes consignment C-101 arrival from Day 17 to Day 22.',
-    impact:
-      'Mission continuity drops from 63% to 51%. Auxiliary laboratory circuits must be shed.',
-    recommendation:
-      'Review alternate resupply options and test load shedding in the Simulator sandbox.',
     actionLabel: 'Open What-If Simulator',
     actionTarget: 'simulator',
   },
@@ -227,10 +251,34 @@ export default function AiCopilot({ goTo }) {
           </p>
         </div>
 
-        {/* 3. RECOMMENDATION */}
+        {/* 3. PREDICTION */}
+        {activeResponse.prediction && (
+          <div className="space-y-1.5 rounded-xl bg-amber-50/70 border border-amber-200 p-4">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-800">
+              PREDICTION
+            </span>
+            <p className="text-xs sm:text-sm text-amber-950 leading-relaxed font-medium">
+              {activeResponse.prediction}
+            </p>
+          </div>
+        )}
+
+        {/* 4. OPTIONS */}
+        {activeResponse.options && (
+          <div className="space-y-1.5 rounded-xl bg-slate-50 border border-slate-200 p-4">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-700">
+              OPTIONS
+            </span>
+            <p className="text-xs sm:text-sm text-[#0C1E30] leading-relaxed">
+              {activeResponse.options}
+            </p>
+          </div>
+        )}
+
+        {/* 5. RECOMMENDED REVIEW */}
         <div className="space-y-1.5 rounded-xl bg-[var(--surface-ice)] border border-[var(--line)] p-4">
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ice)]">
-            RECOMMENDATION
+            RECOMMENDED REVIEW
           </span>
           <p className="text-xs sm:text-sm text-[var(--ink-hi)] leading-relaxed">
             {activeResponse.recommendation}
@@ -342,8 +390,10 @@ export default function AiCopilot({ goTo }) {
             {[
               'Why is this a risk?',
               'What changed?',
-              'Simulate 5-day delay',
+              'What happens if the shipment is delayed?',
               'What should I review?',
+              'Explain the impact',
+              'Compare REC-001 vs REC-002',
             ].map((q) => {
               const isSelected = activeQuestion === q
               return (
@@ -374,7 +424,7 @@ export default function AiCopilot({ goTo }) {
           </div>
 
           <div className="space-y-2.5 text-xs">
-            {/* Analysis */}
+            {/* 1. Analysis */}
             <div className="p-2.5 rounded-xl bg-[#F8FAFC] border border-slate-100">
               <span className="font-bold text-[10.5px] uppercase font-mono text-[#0284C7] block mb-1">
                 Analysis
@@ -384,7 +434,7 @@ export default function AiCopilot({ goTo }) {
               </p>
             </div>
 
-            {/* Impact */}
+            {/* 2. Impact */}
             <div className="p-2.5 rounded-xl bg-[#FFFBEB] border border-amber-200">
               <span className="font-bold text-[10.5px] uppercase font-mono text-amber-800 block mb-1">
                 Impact
@@ -394,10 +444,34 @@ export default function AiCopilot({ goTo }) {
               </p>
             </div>
 
-            {/* Recommendation */}
+            {/* 3. Prediction */}
+            {activeResponse.prediction && (
+              <div className="p-2.5 rounded-xl bg-amber-50/70 border border-amber-200">
+                <span className="font-bold text-[10.5px] uppercase font-mono text-amber-900 block mb-1">
+                  Prediction
+                </span>
+                <p className="text-amber-950 leading-relaxed font-medium">
+                  {activeResponse.prediction}
+                </p>
+              </div>
+            )}
+
+            {/* 4. Options */}
+            {activeResponse.options && (
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="font-bold text-[10.5px] uppercase font-mono text-slate-700 block mb-1">
+                  Options
+                </span>
+                <p className="text-[#0C1E30] leading-relaxed">
+                  {activeResponse.options}
+                </p>
+              </div>
+            )}
+
+            {/* 5. Recommended Review */}
             <div className="p-2.5 rounded-xl bg-[#F0FDF4] border border-emerald-200">
               <span className="font-bold text-[10.5px] uppercase font-mono text-emerald-800 block mb-1">
-                Recommendation
+                Recommended Review
               </span>
               <p className="text-[#14532D] leading-relaxed">
                 {activeResponse.recommendation}
