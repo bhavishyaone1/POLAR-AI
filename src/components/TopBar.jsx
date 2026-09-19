@@ -1,20 +1,23 @@
 /**
  * TOP BAR — POLAR-AI
  * ==================
- * Matches reference design:
+ * Arctic White + Polar Ice header:
  * Left: Location breadcrumb (Maitri Station > Antarctic Research Expedition 2027)
- * Center: Full search bar with shortcut badge
- * Right: Notification bell (3), User profile (Dr. Anjali Kumar), RUN DEMO button
+ * Center: Full search bar with shortcut badge (⌘ K)
+ * Right: Notifications bell, Authenticated Operator profile with Switch/Sign Out, RUN DEMO
  */
 
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Bell,
   ChevronDown,
+  LogOut,
   MapPin,
   Menu,
   Play,
   Search,
+  ShieldCheck,
+  User,
 } from 'lucide-react'
 import { useAuth } from '../store/AuthContext'
 
@@ -24,7 +27,30 @@ export default function TopBar({
   onOpenSearch,
   onStartGuidedDemo,
 }) {
-  const { user } = useAuth()
+  const { user, signOut, roleLabel } = useAuth()
+  const [profileOpen, setProfileOpen] = useState(false)
+  const menuRef = useRef(null)
+
+  // Compute initials
+  const initials = user?.name
+    ? user.name
+        .split(' ')
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0].toUpperCase())
+        .join('')
+    : 'OP'
+
+  // Close menu on click outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setProfileOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-[#E5EDF2] bg-white/95 px-4 sm:px-8 backdrop-blur-md">
@@ -88,21 +114,70 @@ export default function TopBar({
           </span>
         </button>
 
-        {/* User Profile Avatar & Role */}
-        <div className="hidden sm:flex items-center gap-2.5 pl-1">
-          {/* Circular Avatar */}
-          <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-sky-600 to-indigo-500 text-white flex items-center justify-center font-bold text-xs shrink-0 ring-2 ring-white shadow-2xs">
-            AK
-          </div>
-          <div className="text-left">
-            <div className="text-xs font-bold text-slate-900 leading-tight">
-              Dr. Anjali Kumar
+        {/* User Profile Avatar & Role with Dropdown */}
+        <div className="relative" ref={menuRef}>
+          <button
+            type="button"
+            onClick={() => setProfileOpen(!profileOpen)}
+            className="flex items-center gap-2.5 rounded-xl p-1.5 hover:bg-slate-50 transition border border-transparent hover:border-slate-200"
+          >
+            {/* Circular Avatar */}
+            <div className="h-8 w-8 rounded-full bg-[#1597D4] text-white flex items-center justify-center font-bold text-xs shrink-0 ring-2 ring-white shadow-2xs">
+              {initials}
             </div>
-            <div className="text-[11px] text-slate-500 leading-tight flex items-center gap-1">
-              <span>Expedition Officer</span>
-              <ChevronDown size={11} className="text-slate-400" />
+            <div className="text-left hidden sm:block">
+              <div className="text-xs font-bold text-slate-900 leading-tight truncate max-w-[130px]">
+                {user?.name || 'Authorized Operator'}
+              </div>
+              <div className="text-[11px] text-slate-500 leading-tight flex items-center gap-1">
+                <span className="truncate max-w-[110px]">{roleLabel || user?.role || 'Mission Staff'}</span>
+                <ChevronDown size={11} className="text-slate-400" />
+              </div>
             </div>
-          </div>
+          </button>
+
+          {/* Profile Dropdown Menu */}
+          {profileOpen && (
+            <div className="absolute right-0 mt-2 w-64 rounded-2xl border border-[#DDEAF0] bg-white p-3 shadow-xl z-50 animate-fade-in">
+              <div className="border-b border-[#DDEAF0] pb-2.5 px-1">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck size={14} className="text-[#1597D4]" />
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#1597D4]">
+                    Active Session
+                  </span>
+                </div>
+                <div className="font-bold text-xs text-[#12263A] mt-1 truncate">
+                  {user?.name || 'Operator'}
+                </div>
+                <div className="text-[11px] text-[#4A6572] truncate">
+                  Role: <strong className="text-[#12263A]">{user?.role}</strong>
+                </div>
+              </div>
+
+              <div className="py-2 text-xs text-[#4A6572] space-y-1">
+                <div className="px-2 py-1 rounded-lg bg-[#F7FBFD] text-[10.5px] font-mono">
+                  Base: Maitri Station · 70.76°S
+                </div>
+              </div>
+
+              <div className="border-t border-[#DDEAF0] pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setProfileOpen(false)
+                    signOut()
+                  }}
+                  className="flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition"
+                >
+                  <span className="flex items-center gap-2">
+                    <LogOut size={14} />
+                    <span>Switch Operator / Sign Out</span>
+                  </span>
+                  <span className="text-[10px] font-mono text-rose-400">Exit</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Prominent RUN DEMO Button */}
