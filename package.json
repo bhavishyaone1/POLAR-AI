@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "generate:pdf": "node generate_resource_directory_pdf.js"
+    "generate:pdf": "node scripts/generate_resource_directory_pdf.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",

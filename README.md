@@ -138,62 +138,85 @@ so there is no Express app, no Docker, no deployment pipeline — one command ru
 
 ---
 
-## 4. Project structure
+### 4. Project Structure & Repository Layout
 
 ```
-polar-expedition-prototype/
-├── index.html                  Page shell that loads the app
-├── package.json                Dependencies and the npm scripts
-├── vite.config.js              Build configuration
-├── tailwind.config.js          Design tokens (colours, fonts)
-├── .env.example                Template for your keys — safe to commit
-├── .gitignore                  Keeps .env and node_modules out of git
+polar/
+├── .github/                     # GitHub Actions CI/CD workflows & templates
+│   ├── ISSUE_TEMPLATE/          # Structured bug report & feature request forms
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   ├── pull_request_template.md # Standard PR checklist for mission operations
+│   └── workflows/
+│       └── ci.yml               # Automated build & verification pipeline
+│
+├── docs/                        # Architecture guides, SOP runbooks & PDF references
+│   ├── ARCHITECTURE.md          # Comprehensive intelligence loop & engine design
+│   ├── OPERATIONS_GUIDE.md      # Polar SOPs (Blizzard Cond 1, Crevasse, Microgrid)
+│   ├── Polar_Command_Center_Resource_Attribution_Directory.pdf
+│   └── Real_World_Polar_Expedition_Reference_Data.pdf
+│
+├── public/                      # Web-accessible assets & client-downloadable PDFs
+│   ├── polar-hero-bg.jpg        # High-definition polar landscape backdrop
+│   ├── polar-logo.svg           # Vector mission emblem
+│   ├── Polar_Command_Center_Resource_Attribution_Directory.pdf
+│   └── Real_World_Polar_Expedition_Reference_Data.pdf
+│
+├── scripts/                     # Automation, packaging & schema generators
+│   ├── generate_resource_directory_pdf.js  # Compiles official PDF directories
+│   ├── generate-schema.mjs      # Database schema generation
+│   ├── create-zip.ps1           # Deployment packaging script
+│   └── verify-zip.ps1           # Package integrity validation
 │
 ├── src/
-│   ├── main.jsx                Entry point; wraps the app in its two providers
-│   ├── App.jsx                 Layout, sign-in gate, and which page is shown
-│   ├── index.css               Design system: colours, cards, tables, badges
+│   ├── main.jsx                 # Application entry point with providers
+│   ├── App.jsx                  # Main command center routing & layout shell
+│   ├── index.css                # Light Arctic Design System styling
 │   │
-│   ├── pages/                  ONE FILE PER MODULE — start reading here
-│   │   ├── Login.jsx           Role picker
-│   │   ├── Dashboard.jsx       Module 1
-│   │   ├── Expeditions.jsx     Module 2
-│   │   ├── Personnel.jsx       Module 3
-│   │   ├── Cargo.jsx           Module 4
-│   │   ├── Inventory.jsx       Module 5
-│   │   ├── Weather.jsx         Module 6
-│   │   ├── MapView.jsx         Module 7
-│   │   └── Emergency.jsx       Module 8
+│   ├── components/              # Reusable UI widgets, drawers & panels
+│   │   ├── AssetDetailDrawer.jsx     # Slide-over asset health & hours breakdown
+│   │   ├── CargoDetailDrawer.jsx     # Consignment tracking & cascade inspector
+│   │   ├── InventoryDetailDrawer.jsx # Stock burn runway & buffer levels
+│   │   ├── ContextualAiInsight.jsx   # Embedded AI continuity warning cards
+│   │   ├── GuidedDemoTour.jsx        # 9-Step "From Data to Decision" walkthrough
+│   │   ├── TopBar.jsx                # Global AI Monitoring Center & user profile
+│   │   ├── Sidebar.jsx               # Navigation bar with role badges
+│   │   └── weather/                  # Modular Antarctic weather components
 │   │
-│   ├── components/             Reused pieces: DataTable, StatCard, Badge,
-│   │                           Panel, Sidebar, TopBar, ErrorBoundary, charts
+│   ├── pages/                   # Operational command screens
+│   │   ├── Dashboard.jsx        # AI Briefing, Continuity Score (68%), Delta metrics
+│   │   ├── LandingPage.jsx      # Public mission presentation & architecture
+│   │   ├── MissionSimulator.jsx # What-If non-mutating sandbox engine
+│   │   ├── AiCopilot.jsx        # Officer decision support & trade-off analyzer
+│   │   ├── Cargo.jsx            # Manifests, icebreaker corridors & ETAs
+│   │   ├── Inventory.jsx        # Critical reserves, burn rates & buffers
+│   │   ├── Assets.jsx           # Caterpillar generators, snowcats, microgrid
+│   │   ├── Emergency.jsx        # Incident Command Room & 100% offline triage
+│   │   ├── Expeditions.jsx      # Scientific sortie planning & traversal
+│   │   ├── Personnel.jsx        # 16-person roster, medical credentials & roles
+│   │   ├── MapView.jsx          # Interactive spatial coordinates & geofences
+│   │   ├── Weather.jsx          # Live Open-Meteo telemetry & safe fly windows
+│   │   └── AuditLog.jsx         # Cryptographic SHA-256 tamper-evident ledger
 │   │
-│   ├── store/
-│   │   ├── DataContext.jsx     THE HEART OF THE PROJECT. All records live
-│   │   │                       here, so every module reads the same data —
-│   │   │                       this is what makes the modules connected.
-│   │   └── AuthContext.jsx     Who is signed in and what they may change
+│   ├── services/                # Core analytical & intelligence engines
+│   │   ├── continuityEngine.js  # Score calculations & explainable deductions
+│   │   ├── simulationEngine.js  # What-If parametric scenario models
+│   │   ├── dependencyGraph.js   # Physical DAG cascade models
+│   │   ├── offlineEmergencyService.js # Great-Circle Haversine spatial triage
+│   │   └── aiCopilotService.js  # Polar domain knowledge & RAG routines
 │   │
-│   ├── services/               All API and database code — kept out of the UI
-│   │   ├── db.js               Thin Supabase wrapper; never throws
-│   │   ├── weatherService.js   Open-Meteo calls
-│   │   └── …Service.js         One per table (expedition, personnel, cargo,
-│   │                           inventory, emergency)
+│   ├── store/                   # Centralized React Context stores
+│   │   ├── DataContext.jsx      # Unified reactive operational state
+│   │   └── AuthContext.jsx      # Role permissions & session handling
 │   │
-│   ├── lib/
-│   │   ├── supabase.js         Reads the keys; returns null if absent
-│   │   ├── statuses.js         Every status word, in one place
-│   │   ├── roles.js            The four roles and their permissions
-│   │   ├── format.js           Date and number formatting
-│   │   └── navigation.js       The sidebar menu definition
-│   │
-│   └── data/
-│       └── demoData.js         The built-in demo records (see below)
-├── supabase/
-│   └── schema.sql              The whole database in one file — paste and run
-├── scripts/
-│   └── generate-schema.mjs     Regenerates schema.sql from demoData.js
-└── legacy/                     The original v1 Express prototype, archived
+│   └── data/                    # Antarctic station telemetry & demo fixtures
+│
+├── supabase/                    # PostgreSQL schemas & migrations
+├── legacy/                      # Archived v1 Node.js express prototype
+├── LICENSE                      # MIT Open-Source License
+├── package.json                 # Project dependencies & npm scripts
+├── tailwind.config.js           # Arctic Ice palette & design tokens
+└── vite.config.js               # Vite build configuration
 ```
 
 **Demo data** (`src/data/demoData.js`): 5 expeditions, 16 personnel, 14 consignments,

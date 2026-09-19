@@ -2,14 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import PDFDocument from 'pdfkit';
 
-const primaryOutput = path.resolve('./Polar_Command_Center_Resource_Attribution_Directory.pdf');
+const primaryOutput = path.resolve('./docs/Polar_Command_Center_Resource_Attribution_Directory.pdf');
 
 // Target file locations to keep in sync
 const syncTargets = [
   primaryOutput,
+  path.resolve('./docs/Real_World_Polar_Expedition_Reference_Data.pdf'),
   path.resolve('./public/Polar_Command_Center_Resource_Attribution_Directory.pdf'),
   path.resolve('./public/Real_World_Polar_Expedition_Reference_Data.pdf'),
-  path.resolve('./Real_World_Polar_Expedition_Reference_Data.pdf'),
 ];
 
 // Document setup: standard A4, explicit margins, buffered pages
