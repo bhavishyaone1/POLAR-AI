@@ -290,6 +290,7 @@ export default function App() {
           <TopBar
             title={nav.title}
             blurb={nav.blurb}
+            goTo={goTo}
             onMenuClick={() => setNavOpen(true)}
             onAlertClick={() => goTo('emergency')}
             onSosClick={() => setSosModalOpen(true)}
