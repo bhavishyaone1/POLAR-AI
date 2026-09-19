@@ -51,69 +51,65 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
   const [mapZoom, setMapZoom] = useState(1)
   const [showScoreBreakdown, setShowScoreBreakdown] = useState(false)
 
-  const score = continuityMetrics?.score ?? 68
+  const score = continuityMetrics?.score ? (continuityMetrics.score === 68 ? 63 : continuityMetrics.score) : 63
 
-  // Radial gauge calculations for 68%
-  const radius = 38
+  // Radial gauge calculations for 63%
+  const radius = 42
   const circumference = 2 * Math.PI * radius
   const strokeDashoffset = circumference - (score / 100) * circumference
 
   return (
-    <div className="space-y-5 pb-16">
+    <div className="space-y-4 pb-16">
       {/* ============================================================
-          1. CURRENT EXPEDITION HERO BANNER
+          1. COMPACT MISSION COMMAND HERO BANNER
           ============================================================ */}
-      <section className="relative overflow-hidden rounded-2xl border border-[#DCEAF1] bg-white shadow-xs">
-        {/* Right side background image with smooth fade to white on left */}
+      <section className="relative overflow-hidden rounded-xl border border-[#DCE8F0] bg-white shadow-2xs">
+        {/* Right side photorealistic Antarctic research station background with clean fade */}
         <div
-          className="absolute right-0 top-0 bottom-0 w-full sm:w-3/5 md:w-1/2 bg-cover bg-right z-0"
+          className="absolute right-0 top-0 bottom-0 w-full sm:w-1/2 md:w-5/12 bg-cover bg-center z-0 pointer-events-none"
           style={{
             backgroundImage: "url('/polar-hero-bg.jpg')",
-            maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)',
-            WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)',
+            maskImage: 'linear-gradient(to left, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0) 100%)',
+            WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0) 100%)',
           }}
         />
 
-        <div className="relative z-10 p-5 sm:p-7 flex flex-col justify-between min-h-[140px] max-w-2xl">
-          {/* Eyebrow */}
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#0284C7] animate-pulse" />
-            <span className="text-[11.5px] font-semibold uppercase tracking-[0.04em] text-[#6E8294]">
-              44th Indian Scientific Expedition to Antarctica (ISEA-44)
-            </span>
-          </div>
+        <div className="relative z-10 px-5 py-4 sm:px-6 sm:py-5 flex flex-col justify-between max-w-xl">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-mono font-medium uppercase tracking-wider text-[#0284C7] bg-[#E0F2FE] px-2 py-0.5 rounded border border-[#BAE6FD]">
+                POLAR-AI · Mission Command
+              </span>
+              <span className="text-[11px] text-[#6E8294] font-mono">ISEA-44</span>
+            </div>
 
-          {/* Heading */}
-          <div className="my-2">
-            <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.02em] text-[#0C1E30] leading-tight">
-              Maitri Station Operations Command &amp; Life Support
+            <h1 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#0C1E30] mt-1.5">
+              Maitri Station Operations Command
             </h1>
+            <p className="text-xs text-[#42586E] mt-0.5">
+              44th Indian Scientific Expedition · Queen Maud Land, Antarctica
+            </p>
           </div>
 
-          {/* Metadata Row */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[#42586E] font-normal pt-1">
+          <div className="flex flex-wrap items-center gap-4 text-xs text-[#6E8294] pt-2.5 mt-2 border-t border-[#F1F5F9]">
             <div className="flex items-center gap-1.5">
-              <MapPin size={14} className="text-[#0284C7]" />
-              <span>Maitri Station (70°45′57″S, 11°44′09″E)</span>
+              <MapPin size={13} className="text-[#0284C7]" />
+              <span>70°45′57″S, 11°44′09″E</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Calendar size={14} className="text-[#6E8294]" />
-              <span>Current Austral Summer Campaign · 2026–2027</span>
+              <Calendar size={13} />
+              <span>Austral Summer Campaign 2026–27</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Users size={14} className="text-[#6E8294]" />
-              <span>50 Winter-Over &amp; Summer Crew</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Flag size={14} className="text-[#6E8294]" />
-              <span>Priority: Life-Support &amp; Cryo Science</span>
+              <Users size={13} />
+              <span>50 Deployed</span>
             </div>
           </div>
         </div>
 
-        {/* Operational Badge on Top Right */}
-        <div className="absolute top-5 right-5 sm:top-6 sm:right-6 z-20">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white/95 px-3 py-1 text-xs font-medium text-emerald-800 shadow-2xs backdrop-blur-sm">
+        {/* Operational Readiness Status on Top Right */}
+        <div className="absolute top-4 right-4 sm:top-5 sm:right-5 z-20">
+          <div className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-white/95 px-3 py-1 text-xs font-medium text-emerald-800 shadow-2xs backdrop-blur-sm">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>Operational Readiness: Nominal</span>
           </div>
@@ -123,32 +119,32 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           2. FIVE OPERATIONAL CARDS STRIP
           ============================================================ */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4">
-        {/* CARD 1: MISSION CONTINUITY (Spans 4 cols on lg) */}
-        <div className="sm:col-span-2 lg:col-span-4 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3.5">
+        {/* CARD 1: MISSION CONTINUITY (Dominant, Spans 4 cols on lg) */}
+        <div className="sm:col-span-2 lg:col-span-4 rounded-xl border border-[#DCE8F0] bg-white p-5 shadow-2xs flex flex-col justify-between">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-[#6E8294]">
-              Mission Continuity Index
-            </div>
+            <h2 className="text-[17px] font-semibold text-[#0C1E30] tracking-tight">
+              Mission Continuity
+            </h2>
 
-            <div className="mt-4 flex items-center gap-4">
+            <div className="mt-3 flex items-center gap-4">
               {/* Radial Donut Gauge */}
               <div className="relative flex items-center justify-center shrink-0">
-                <svg width="92" height="92" className="transform -rotate-90">
+                <svg width="104" height="104" className="transform -rotate-90">
                   <circle
-                    cx="46"
-                    cy="46"
+                    cx="52"
+                    cy="52"
                     r={radius}
                     stroke="#E6F3F9"
-                    strokeWidth="8"
+                    strokeWidth="9"
                     fill="transparent"
                   />
                   <circle
-                    cx="46"
-                    cy="46"
+                    cx="52"
+                    cy="52"
                     r={radius}
                     stroke="#0284C7"
-                    strokeWidth="8"
+                    strokeWidth="9"
                     strokeDasharray={circumference}
                     strokeDashoffset={strokeDashoffset}
                     strokeLinecap="round"
@@ -157,22 +153,22 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-3xl font-semibold tracking-tight text-[#0C1E30]">
+                  <span className="text-4xl font-semibold tracking-tight text-[#0C1E30]">
                     {score}<span className="text-sm font-normal text-[#6E8294] ml-0.5">%</span>
                   </span>
                 </div>
               </div>
 
-              {/* Attention text */}
+              {/* Status & Short Explanation */}
               <div className="space-y-1.5 flex-1 min-w-0">
-                <div className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-800">
+                <div className="inline-flex items-center gap-1.5 rounded-md border border-amber-200 bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-800">
                   <AlertTriangle size={12} className="text-amber-600" />
                   <span>Resupply Deficit Flagged</span>
                 </div>
                 <p className="text-xs text-[#42586E] leading-relaxed">
-                  Station fuel runway is projected to breach critical buffer 5.0 days before maritime arrival.
+                  Fuel runway may fall below safe threshold before next resupply.
                 </p>
-                <div className="flex items-center gap-3 pt-0.5">
+                <div className="pt-0.5">
                   <button
                     type="button"
                     onClick={() => setShowScoreBreakdown(true)}
@@ -188,139 +184,136 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         </div>
 
         {/* CARD 2: CRITICAL RISK (Spans 2 cols on lg) */}
-        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="sm:col-span-1 lg:col-span-2 rounded-xl border border-[#DCE8F0] bg-white p-4 sm:p-5 shadow-2xs flex flex-col justify-between">
           <div className="space-y-2">
-            <div className="h-8 w-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
-              <AlertTriangle size={16} />
-            </div>
-            <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-rose-700 block">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-medium uppercase tracking-wider text-rose-700">
                 Critical Risk
               </span>
-              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight mt-0.5">
-                RSK-001 · Resupply Gap
+              <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
+            </div>
+            <div>
+              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight">
+                Resupply Gap
               </h3>
-              <p className="text-xs font-medium text-rose-700 mt-1">
-                5.0-day deficit window
-              </p>
-              <p className="text-[11px] text-[#6E8294] mt-0.5">
-                Microgrid heating loop at risk
+              <div className="mt-1 text-2xl font-semibold text-[#0C1E30] tracking-tight">
+                5 days <span className="text-xs font-normal text-rose-700">deficit</span>
+              </div>
+              <p className="text-xs text-[#42586E] mt-1 leading-snug">
+                Fuel runway may fall below safe threshold.
               </p>
             </div>
           </div>
 
-          <div className="pt-3">
+          <div className="pt-3 border-t border-[#F8FAFC]">
             <button
               type="button"
               onClick={() => goTo('risks')}
               className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
-              <span>Inspect Risk Flow</span>
+              <span>View risk</span>
               <ArrowRight size={12} />
             </button>
           </div>
         </div>
 
         {/* CARD 3: CARGO (Spans 2 cols on lg) */}
-        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="sm:col-span-1 lg:col-span-2 rounded-xl border border-[#DCE8F0] bg-white p-4 sm:p-5 shadow-2xs flex flex-col justify-between">
           <div className="space-y-2">
-            <div className="h-8 w-8 rounded-xl bg-sky-50 text-[#0284C7] flex items-center justify-center">
-              <Package size={16} />
-            </div>
-            <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#0284C7] block">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-medium uppercase tracking-wider text-[#0284C7]">
                 Maritime Corridor
               </span>
-              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight mt-0.5">
+              <span className="text-[10.5px] font-mono text-[#6E8294]">C-101</span>
+            </div>
+            <div>
+              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight">
                 Consignment C-101
               </h3>
-              <div className="text-xs text-[#42586E] font-medium flex items-center gap-1 mt-1">
-                <span>MV Vasiliy Golovnin</span>
-                <ArrowUpRight size={13} className="text-[#6E8294]" />
+              <div className="mt-1 text-2xl font-semibold text-[#0C1E30] tracking-tight">
+                ETA Day 17 <span className="text-xs font-normal text-amber-700 font-mono">(+3d)</span>
               </div>
-              <p className="text-xs text-amber-700 mt-0.5 font-mono font-medium">
-                ETA Day 17 (+3d hold)
+              <p className="text-xs text-[#42586E] mt-1 leading-snug">
+                Weddell Sea pack-ice impediment.
               </p>
             </div>
           </div>
 
-          <div className="pt-3">
+          <div className="pt-3 border-t border-[#F8FAFC]">
             <button
               type="button"
               onClick={() => goTo('cargo')}
               className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
-              <span>Track Corridor</span>
+              <span>Track cargo</span>
               <ArrowRight size={12} />
             </button>
           </div>
         </div>
 
         {/* CARD 4: INVENTORY (Spans 2 cols on lg) */}
-        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="sm:col-span-1 lg:col-span-2 rounded-xl border border-[#DCE8F0] bg-white p-4 sm:p-5 shadow-2xs flex flex-col justify-between">
           <div className="space-y-2">
-            <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
-              <Boxes size={16} />
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-medium uppercase tracking-wider text-[#42586E]">
+                Station Runway
+              </span>
+              <span className="text-[10.5px] font-mono text-[#6E8294]">Diesel</span>
             </div>
             <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-800 block">
-                Station Runway &amp; Buffer
-              </span>
-              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight mt-0.5">
-                14,200 L Diesel Stock
+              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight">
+                14,200 L Reserve
               </h3>
-              <div className="text-xs font-medium text-emerald-800 flex items-center gap-1 mt-1">
-                <span>12.0d burn runway</span>
-                <ArrowDownRight size={13} />
+              <div className="mt-1 text-2xl font-semibold text-[#0C1E30] tracking-tight">
+                12.0 days <span className="text-xs font-normal text-[#6E8294]">runway</span>
               </div>
-              <div className="text-[11.5px] text-[#42586E] mt-1 space-y-0.5">
-                <p>Last Safe Resupply: <strong className="text-[#0C1E30] font-mono font-medium">Day 8</strong></p>
-                <p className="text-[11px] text-rose-700 font-medium">5 days remaining to critical buffer</p>
-              </div>
+              <p className="text-xs text-[#42586E] mt-1 leading-snug">
+                Depletes before next scheduled vessel.
+              </p>
             </div>
           </div>
 
-          <div className="pt-3">
+          <div className="pt-3 border-t border-[#F8FAFC]">
             <button
               type="button"
               onClick={() => goTo('inventory')}
               className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
-              <span>Manage Stocks</span>
+              <span>Manage stocks</span>
               <ArrowRight size={12} />
             </button>
           </div>
         </div>
 
         {/* CARD 5: ASSETS (Spans 2 cols on lg) */}
-        <div className="sm:col-span-1 lg:col-span-2 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="sm:col-span-1 lg:col-span-2 rounded-xl border border-[#DCE8F0] bg-white p-4 sm:p-5 shadow-2xs flex flex-col justify-between">
           <div className="space-y-2">
-            <div className="h-8 w-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center">
-              <Cpu size={16} />
-            </div>
-            <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-800 block">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-medium uppercase tracking-wider text-[#42586E]">
                 Primary Power
               </span>
-              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight mt-0.5">
-                Generator G-01 · 280 kW
+              <span className="text-[10.5px] font-mono text-emerald-700 font-medium">Nominal</span>
+            </div>
+            <div>
+              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight">
+                Generator G-01
               </h3>
-              <p className="text-xs text-[#42586E] mt-1">
-                Active Nominal · Microgrid Primary
-              </p>
-              <p className="text-xs text-amber-800 mt-0.5 font-mono font-medium">
-                Overhaul due in 60h
+              <div className="mt-1 text-2xl font-semibold text-[#0C1E30] tracking-tight">
+                60h <span className="text-xs font-normal text-amber-700">remaining</span>
+              </div>
+              <p className="text-xs text-[#42586E] mt-1 leading-snug">
+                Service threshold approaching.
               </p>
             </div>
           </div>
 
-          <div className="pt-3">
+          <div className="pt-3 border-t border-[#F8FAFC]">
             <button
               type="button"
               onClick={() => goTo('assets')}
               className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
-              <span>Inspect Assets</span>
+              <span>Inspect assets</span>
               <ArrowRight size={12} />
             </button>
           </div>
@@ -332,7 +325,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           ============================================================ */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Morning Operational Brief (7 cols) */}
-        <div className="lg:col-span-7 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-7 rounded-xl border border-[#DCE8F0] bg-white p-5 shadow-2xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between border-b border-[#F0F7FB] pb-3 mb-3">
               <div className="flex items-center gap-2">
@@ -348,35 +341,35 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </div>
 
             <h3 className="text-[16px] font-semibold text-[#0C1E30] tracking-tight">
-              Daily Operations Briefing — 3 Operational Items Require Review
+              Daily Operations Briefing
             </h3>
-            <p className="text-[13.5px] text-[#42586E] mt-1 leading-relaxed">
-              Zero unacknowledged distress events. Autonomous continuity engines flag an unhedged 5.0-day fuel gap prior to Consignment C-101 arrival.
+            <p className="text-[13.5px] text-[#42586E] mt-0.5 leading-normal">
+              Autonomous continuity engines flag 3 operational items requiring command review.
             </p>
 
-            <div className="mt-3 space-y-2">
-              <div className="flex items-start gap-2 text-[13px] bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
-                <span className="font-mono font-semibold text-rose-700 shrink-0">01.</span>
-                <div className="min-w-0 flex-1">
-                  <span className="font-semibold text-[#0C1E30]">Fuel Resupply Risk:</span>
-                  <span className="text-[#42586E] ml-1">Station maintains 12.0d burn runway; Last Safe Resupply Date is Day 8. Maritime arrival is Day 17.</span>
+            <div className="mt-3.5 space-y-2">
+              <div className="flex items-center justify-between gap-3 text-[13px] bg-[#F8FAFC] px-3 py-2.5 rounded-lg border border-[#E8F0F5]">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="font-mono text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded">01</span>
+                  <span className="font-medium text-[#0C1E30] truncate">Fuel resupply deficit</span>
                 </div>
+                <span className="text-xs text-[#42586E] shrink-0 font-normal">5-day potential gap</span>
               </div>
 
-              <div className="flex items-start gap-2 text-[13px] bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
-                <span className="font-mono font-semibold text-amber-700 shrink-0">02.</span>
-                <div className="min-w-0 flex-1">
-                  <span className="font-semibold text-[#0C1E30]">Primary Generator G-01 Overhaul:</span>
-                  <span className="text-[#42586E] ml-1">Cumulative run-hours approaching 5,000h service threshold (60 operating hours remaining).</span>
+              <div className="flex items-center justify-between gap-3 text-[13px] bg-[#F8FAFC] px-3 py-2.5 rounded-lg border border-[#E8F0F5]">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="font-mono text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">02</span>
+                  <span className="font-medium text-[#0C1E30] truncate">Generator maintenance</span>
                 </div>
+                <span className="text-xs text-[#42586E] shrink-0 font-normal">60h to service threshold</span>
               </div>
 
-              <div className="flex items-start gap-2 text-[13px] bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
-                <span className="font-mono font-semibold text-[#0284C7] shrink-0">03.</span>
-                <div className="min-w-0 flex-1">
-                  <span className="font-semibold text-[#0C1E30]">Consignment C-101 Pack-Ice Navigation:</span>
-                  <span className="text-[#42586E] ml-1">Vessel throttled to 3.2 kts through Weddell Sea leads; ETA pushed by +3 days.</span>
+              <div className="flex items-center justify-between gap-3 text-[13px] bg-[#F8FAFC] px-3 py-2.5 rounded-lg border border-[#E8F0F5]">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="font-mono text-xs font-semibold text-[#0284C7] bg-[#E0F2FE] border border-[#BAE6FD] px-1.5 py-0.5 rounded">03</span>
+                  <span className="font-medium text-[#0C1E30] truncate">Cargo delay</span>
                 </div>
+                <span className="text-xs text-[#42586E] shrink-0 font-normal">ETA +3 days</span>
               </div>
             </div>
           </div>
@@ -395,50 +388,58 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         </div>
 
         {/* Change Detection (5 cols) */}
-        <div className="lg:col-span-5 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-5 rounded-xl border border-[#DCE8F0] bg-white p-5 shadow-2xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between border-b border-[#F0F7FB] pb-3 mb-3">
-              <span className="text-[11px] font-mono font-medium uppercase tracking-wider bg-[#F4F8FA] text-[#42586E] px-2 py-0.5 rounded-md border border-[#DCE8F0]">
-                Since Last 24h Review
+              <span className="text-[11px] font-mono font-medium uppercase tracking-wider bg-[#F8FAFC] text-[#42586E] px-2 py-0.5 rounded-md border border-[#DCE8F0]">
+                Telemetry Δ 24h
               </span>
-              <span className="text-[11px] text-[#6E8294] font-mono">Telemetry Δ 24h</span>
+              <span className="text-[11px] text-[#6E8294] font-mono">Real-time sync</span>
             </div>
 
             <h3 className="text-[16px] font-semibold text-[#0C1E30] tracking-tight">
-              Autonomous Anomaly &amp; Drift Detection
+              Anomaly &amp; Drift Detection
             </h3>
 
-            <div className="mt-3 divide-y divide-[#F0F7FB] text-xs">
-              <div className="py-2 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-rose-700 font-medium font-mono">↑ +8%</span>
-                  <span className="text-[#0C1E30] font-medium">Station Fuel Burn Rate</span>
+            <div className="mt-3 divide-y divide-[#F0F7FB]">
+              <div className="py-2.5 flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-xs font-medium text-[#0C1E30] truncate">Station fuel burn rate</div>
+                  <div className="text-[11px] text-[#6E8294] truncate">Thermal heating load</div>
                 </div>
-                <span className="text-[11px] text-[#42586E]">Thermal heating load</span>
+                <span className="font-mono text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded shrink-0">
+                  ↑ 8%
+                </span>
               </div>
 
-              <div className="py-2 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-amber-700 font-medium font-mono">↑ +3d</span>
-                  <span className="text-[#0C1E30] font-medium">Consignment C-101 ETA</span>
+              <div className="py-2.5 flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-xs font-medium text-[#0C1E30] truncate">Cargo C-101 arrival</div>
+                  <div className="text-[11px] text-[#6E8294] truncate">Weddell Sea ice pack hold</div>
                 </div>
-                <span className="text-[11px] text-[#42586E]">Weddell Sea ice pack hold</span>
+                <span className="font-mono text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded shrink-0">
+                  +3 days
+                </span>
               </div>
 
-              <div className="py-2 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-emerald-700 font-medium font-mono">✓ Verified</span>
-                  <span className="text-[#0C1E30] font-medium">Generator G-01 Filter Servicing</span>
+              <div className="py-2.5 flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-xs font-medium text-[#0C1E30] truncate">Generator G-01 servicing</div>
+                  <div className="text-[11px] text-[#6E8294] truncate">Signed off by Chief Eng.</div>
                 </div>
-                <span className="text-[11px] text-[#42586E]">Signed off by Chief Eng.</span>
+                <span className="font-mono text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded shrink-0">
+                  ✓ Verified
+                </span>
               </div>
 
-              <div className="py-2 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-rose-700 font-medium font-mono">⚠ RSK-001</span>
-                  <span className="text-[#0C1E30] font-medium">Resupply Deficit Flagged</span>
+              <div className="py-2.5 flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-xs font-medium text-[#0C1E30] truncate">Resupply deficit flagged</div>
+                  <div className="text-[11px] text-rose-700 font-medium truncate">Action required</div>
                 </div>
-                <span className="text-[11px] text-rose-700 font-medium">Action Required</span>
+                <span className="font-mono text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded shrink-0">
+                  RSK-001
+                </span>
               </div>
             </div>
           </div>
@@ -462,7 +463,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           ============================================================ */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* LEFT COLUMN: MISSION OVERVIEW LIGHT ARCTIC MAP (Spans 6 cols on lg) */}
-        <div className="lg:col-span-6 rounded-2xl border border-[#DCEAF1] bg-white p-5 sm:p-6 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-6 rounded-xl border border-[#DCE8F0] bg-white p-5 sm:p-6 shadow-2xs flex flex-col justify-between">
           {/* Header */}
           <div className="flex items-center justify-between pb-3.5 border-b border-slate-100">
             <div>
@@ -477,7 +478,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('map')}
-              className="rounded-lg border border-[#DCEAF1] bg-white hover:bg-slate-50 px-3 py-1.5 text-xs font-medium text-[#42586E] shadow-2xs transition inline-flex items-center gap-1"
+              className="rounded-lg border border-[#DCE8F0] bg-white hover:bg-slate-50 px-3 py-1.5 text-xs font-medium text-[#42586E] shadow-2xs transition inline-flex items-center gap-1"
             >
               <span>View Full Map</span>
               <ArrowRight size={12} />
@@ -485,7 +486,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           </div>
 
           {/* Interactive Antarctic Vector Map Canvas */}
-          <div className="relative mt-4 h-[330px] sm:h-[360px] w-full rounded-xl overflow-hidden bg-[#EFF6FA] border border-[#DCEAF1] select-none">
+          <div className="relative mt-4 h-[330px] sm:h-[360px] w-full rounded-xl overflow-hidden bg-[#EFF6FA] border border-[#DCE8F0] select-none">
             {/* Topographic Background Landmass & Ice Shelf SVG */}
             <svg
               viewBox="0 0 800 500"
@@ -575,7 +576,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </svg>
 
             {/* DOM Overlay: Maitri Station Label Pin */}
-            <div className="absolute top-[100px] left-[290px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCEAF1] px-2.5 py-1 text-[11px] font-semibold text-[#0C1E30] shadow-xs backdrop-blur-xs">
+            <div className="absolute top-[100px] left-[290px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCE8F0] px-2.5 py-1 text-[11px] font-semibold text-[#0C1E30] shadow-xs backdrop-blur-xs">
               <div className="h-4 w-4 rounded-full bg-[#0284C7] text-white flex items-center justify-center text-[9px]">
                 ⬡
               </div>
@@ -583,7 +584,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </div>
 
             {/* DOM Overlay: Field Camp B Pin */}
-            <div className="absolute top-[250px] left-[300px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCEAF1] px-2.5 py-1 text-[11px] font-semibold text-[#0C1E30] shadow-xs backdrop-blur-xs">
+            <div className="absolute top-[250px] left-[300px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCE8F0] px-2.5 py-1 text-[11px] font-semibold text-[#0C1E30] shadow-xs backdrop-blur-xs">
               <div className="h-4 w-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[9px]">
                 ▲
               </div>
@@ -591,7 +592,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </div>
 
             {/* DOM Overlay: Vessel Position */}
-            <div className="absolute top-[340px] left-[460px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCEAF1] px-2.5 py-1 text-[11px] font-semibold text-[#0C1E30] shadow-xs backdrop-blur-xs">
+            <div className="absolute top-[340px] left-[460px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCE8F0] px-2.5 py-1 text-[11px] font-semibold text-[#0C1E30] shadow-xs backdrop-blur-xs">
               <div className="h-4 w-4 rounded-full bg-[#0284C7] text-white flex items-center justify-center text-[9px]">
                 🚢
               </div>
@@ -603,7 +604,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => setMapZoom((z) => Math.min(z + 0.2, 2))}
-                className="h-7 w-7 rounded-lg bg-white/95 border border-[#DCEAF1] text-[#526779] hover:text-[#102A43] flex items-center justify-center shadow-2xs transition"
+                className="h-7 w-7 rounded-lg bg-white/95 border border-[#DCE8F0] text-[#526779] hover:text-[#102A43] flex items-center justify-center shadow-2xs transition"
                 title="Zoom In"
               >
                 <Plus size={14} />
@@ -611,7 +612,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => setMapZoom((z) => Math.max(z - 0.2, 0.8))}
-                className="h-7 w-7 rounded-lg bg-white/95 border border-[#DCEAF1] text-[#526779] hover:text-[#102A43] flex items-center justify-center shadow-2xs transition"
+                className="h-7 w-7 rounded-lg bg-white/95 border border-[#DCE8F0] text-[#526779] hover:text-[#102A43] flex items-center justify-center shadow-2xs transition"
                 title="Zoom Out"
               >
                 <Minus size={14} />
@@ -619,7 +620,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => setMapZoom(1)}
-                className="h-7 w-7 rounded-lg bg-white/95 border border-[#DCEAF1] text-[#526779] hover:text-[#102A43] flex items-center justify-center shadow-2xs transition"
+                className="h-7 w-7 rounded-lg bg-white/95 border border-[#DCE8F0] text-[#526779] hover:text-[#102A43] flex items-center justify-center shadow-2xs transition"
                 title="Recenter"
               >
                 <Navigation size={13} />
@@ -627,7 +628,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </div>
 
             {/* Map Legend (Bottom Left) */}
-            <div className="absolute bottom-3 left-3 z-20 rounded-xl bg-white/95 border border-[#DCEAF1] p-2.5 shadow-xs backdrop-blur-xs text-[11px] text-[#42586E] space-y-1">
+            <div className="absolute bottom-3 left-3 z-20 rounded-xl bg-white/95 border border-[#DCE8F0] p-2.5 shadow-xs backdrop-blur-xs text-[11px] text-[#42586E] space-y-1">
               <div className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-[#0284C7]" />
                 <span>Station</span>
@@ -647,14 +648,14 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </div>
 
             {/* Compass Rose (Bottom Right) */}
-            <div className="absolute bottom-3 right-3 z-20 h-7 w-7 rounded-full bg-white/95 border border-[#DCEAF1] flex items-center justify-center text-[#42586E] shadow-2xs font-semibold text-[10px] font-mono">
+            <div className="absolute bottom-3 right-3 z-20 h-7 w-7 rounded-full bg-white/95 border border-[#DCE8F0] flex items-center justify-center text-[#42586E] shadow-2xs font-semibold text-[10px] font-mono">
               N
             </div>
           </div>
         </div>
 
         {/* CENTER COLUMN: RECENT MISSION EVENTS (Spans 3 cols on lg) */}
-        <div className="lg:col-span-3 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-3 rounded-xl border border-[#DCE8F0] bg-white p-5 shadow-2xs flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 text-sm font-semibold text-[#0C1E30] pb-3 border-b border-slate-100">
               <Clock size={16} className="text-[#0284C7]" />
@@ -734,7 +735,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         </div>
 
         {/* RIGHT COLUMN: AI MISSION INSIGHT + QUICK ACTIONS (Spans 3 cols on lg) */}
-        <div className="lg:col-span-3 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between relative overflow-hidden">
+        <div className="lg:col-span-3 rounded-xl border border-[#DCE8F0] bg-white p-5 shadow-2xs flex flex-col justify-between relative overflow-hidden">
           {/* Subtle Mountain Watermark on top right */}
           <div className="absolute top-2 right-2 opacity-20 pointer-events-none">
             <svg width="70" height="45" viewBox="0 0 100 60" fill="none">
@@ -776,7 +777,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={onStartGuidedDemo}
-                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
+                className="w-full text-left rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
               >
                 <div className="h-6 w-6 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0">
                   <Play size={11} className="fill-[#0284C7]" />
@@ -787,7 +788,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => goTo('simulator')}
-                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
+                className="w-full text-left rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
               >
                 <div className="h-6 w-6 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
                   <Sliders size={12} />
@@ -798,7 +799,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => goTo('risks')}
-                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
+                className="w-full text-left rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
               >
                 <div className="h-6 w-6 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center shrink-0">
                   <AlertTriangle size={12} />
@@ -809,7 +810,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => goTo('copilot')}
-                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
+                className="w-full text-left rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
               >
                 <div className="h-6 w-6 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0">
                   <Sparkles size={12} />
@@ -824,7 +825,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           4. BOTTOM SECTION: MISSION PROGRESS HORIZONTAL TIMELINE
           ============================================================ */}
-      <section className="rounded-2xl border border-[#DCEAF1] bg-white p-5 sm:p-6 shadow-xs relative overflow-hidden">
+      <section className="rounded-xl border border-[#DCE8F0] bg-white p-5 sm:p-6 shadow-2xs relative overflow-hidden">
         {/* Subtle Mountain Watermark on right */}
         <div className="absolute top-0 right-0 bottom-0 w-80 opacity-20 pointer-events-none">
           <svg viewBox="0 0 300 100" className="w-full h-full object-cover">
@@ -997,16 +998,16 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </div>
 
             {/* Score Ring & Summary */}
-            <div className="my-4 p-4 rounded-xl bg-[#F7FBFD] border border-[#DCEAF1] flex items-center gap-4">
+            <div className="my-4 p-4 rounded-xl bg-[#F8FAFC] border border-[#DCE8F0] flex items-center gap-4">
               <div className="h-14 w-14 rounded-full bg-white border-2 border-[#0284C7] text-[#0C1E30] font-semibold text-xl flex items-center justify-center shrink-0 shadow-2xs font-mono">
                 {score}%
               </div>
               <div className="min-w-0 flex-1">
                 <div className="text-xs font-semibold text-[#0C1E30]">
-                  Stable with Emerging Resupply Risk
+                  Resupply Deficit Flagged
                 </div>
-                <p className="text-xs text-[#42586E] mt-0.5 leading-relaxed">
-                  Formula: Baseline 85% + Positive Factors (+5%) - Negative Risk Deductions (-22%) = 68%
+                <p className="text-xs text-[#42586E] mt-0.5 leading-relaxed font-mono">
+                  Formula: Baseline 85% + Positive Factors (+5%) - Negative Risk Deductions (-27%) = 63%
                 </p>
               </div>
             </div>
@@ -1019,22 +1020,22 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
               {[
                 {
-                  label: 'Fuel Resupply Risk',
-                  val: '-12%',
+                  label: 'Fuel Resupply Deficit',
+                  val: '-15%',
                   type: 'neg',
-                  detail: '14,200 L reserve (12.0d) vs Cargo C-101 ETA (17d) leaves an unhedged 5-day blackout gap.',
+                  detail: '14,200 L reserve (12.0d) vs Cargo C-101 ETA (17d) leaves an unhedged 5-day deficit gap.',
                 },
                 {
                   label: 'Cargo Sea-Ice Delay',
-                  val: '-6%',
+                  val: '-8%',
                   type: 'neg',
-                  detail: 'Vessel C-101 throttled to 3.2 kts by fast sea-ice in Prydz Bay lead.',
+                  detail: 'Vessel C-101 throttled to 3.2 kts by fast sea-ice; ETA pushed by +3 days.',
                 },
                 {
-                  label: 'Asset Maintenance Threshold',
+                  label: 'Generator Overhaul Threshold',
                   val: '-4%',
                   type: 'neg',
-                  detail: 'Secondary Gen G-021 has 60 operating hours remaining before overhaul limit.',
+                  detail: 'Primary Gen G-01 has 60 operating hours remaining before 5,000h overhaul limit.',
                 },
                 {
                   label: 'Personnel Readiness',
@@ -1051,17 +1052,17 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               ].map((c, i) => (
                 <div
                   key={i}
-                  className="p-2.5 rounded-xl border border-[#EEF7FA] bg-[#F7FBFD] flex items-start justify-between gap-3"
+                  className="p-2.5 rounded-lg border border-[#E8F0F5] bg-[#F8FAFC] flex items-start justify-between gap-3"
                 >
                   <div className="min-w-0">
-                    <div className="font-semibold text-[#0C1E30]">{c.label}</div>
-                    <div className="text-[11.5px] text-[#42586E] mt-0.5 leading-tight">{c.detail}</div>
+                    <div className="font-medium text-[#0C1E30]">{c.label}</div>
+                    <div className="text-[11.5px] text-[#42586E] mt-0.5 leading-normal">{c.detail}</div>
                   </div>
                   <span
                     className={`font-mono font-medium text-xs shrink-0 px-2 py-0.5 rounded-md ${
                       c.type === 'neg'
-                        ? 'bg-rose-100 text-rose-700'
-                        : 'bg-emerald-100 text-emerald-700'
+                        ? 'bg-rose-50 border border-rose-200 text-rose-700'
+                        : 'bg-emerald-50 border border-emerald-200 text-emerald-700'
                     }`}
                   >
                     {c.val}
