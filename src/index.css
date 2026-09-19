@@ -33,64 +33,81 @@
             JetBrains Mono - data: IDs, timestamps, coordinates, quantities
 */
 :root {
-  /* Surfaces, lightest to mid-tones — crisp clean white aesthetic */
-  --surface-base: #F8FAFC;
+  /* Surfaces — Arctic Ice / Polar White */
+  --surface-base: #F8FBFD;
+  --surface-secondary: #F1F7FA;
   --surface-card: #FFFFFF;
-  --surface-raised: #F1F5F9;
-  --surface-sunken: #E2E8F0;
-  --surface-hover: #F8FAFC;
-  --surface-active: #EEF2FF;
+  --surface-ice: #EEF7FA;
+  --surface-raised: #EEF7FA;
+  --surface-sunken: #E5F0F5;
+  --surface-hover: #F1F7FA;
+  --surface-active: #EFFAFF;
 
-  /* Keep legacy names mapped for any remaining references */
-  --navy-950: #F8FAFC;
-  --navy-900: #FFFFFF;
-  --navy-850: #F1F5F9;
-  --navy-800: #E2E8F0;
-  --navy-700: #CBD5E1;
-  --navy-600: #94A3B8;
-  --line: #EEF2F6;
-  --line-soft: #F8FAFC;
+  /* Subtle ice borders */
+  --line: #DCEAF0;
+  --line-hover: #BFDDE7;
+  --line-soft: #EEF7FA;
 
-  /* Accent + signal colours */
-  --ice: #4F46E5;
-  --ice-dim: #818CF8;
-  --ice-vivid: #4338CA;
-  --cyan: #06B6D4;
-  --orange: #F97316;
-  --amber: #F59E0B;
-  --green: #10B981;
-  --red: #EF4444;
-  --blue: #3B82F6;
-  --violet: #8B5CF6;
+  /* Text — Crisp scientific charcoal & cool slate */
+  --ink-hi: #17232B;
+  --ink-mid: #5F707A;
+  --ink-low: #8A9AA3;
 
-  /* Text, highest to lowest emphasis */
-  --ink-hi: #0F172A;
-  --ink-mid: #475569;
-  --ink-low: #94A3B8;
+  /* Ice Blue Accent System */
+  --ice: #4BA7C5;
+  --ice-secondary: #76C7DD;
+  --ice-light: #DDF3F8;
+  --ice-very-light: #EFFAFF;
+  --ice-dim: #76C7DD;
+  --ice-vivid: #3895B3;
+  --cyan: #4BA7C5;
 
+  /* Restrained, professional status colors */
+  --green: #2E8540;
+  --green-soft: #EBF7EE;
+  --green-border: #BEE3C8;
+
+  --amber: #D97706;
+  --amber-soft: #FFF8EB;
+  --amber-border: #FBD38D;
+
+  --red: #C53030;
+  --red-soft: #FFF0F0;
+  --red-border: #FED7D7;
+
+  --orange: #DD6B20;
+  --blue: #4BA7C5;
+  --violet: #7C3AED;
+
+  /* Typography */
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --radius: 16px;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-md: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
-  --shadow-lg: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  --radius: 14px;
+  --shadow-sm: 0 1px 3px rgba(23, 35, 43, 0.03), 0 1px 2px rgba(23, 35, 43, 0.02);
+  --shadow-md: 0 4px 16px -2px rgba(23, 35, 43, 0.04), 0 2px 4px -1px rgba(23, 35, 43, 0.02);
+  --shadow-lg: 0 10px 28px -4px rgba(23, 35, 43, 0.06), 0 4px 10px -2px rgba(23, 35, 43, 0.02);
 
-  --chart-grid: #F1F5F9;
-  --chart-label: #64748B;
-  --chart-note: #64748B;
-  --chart-tick: #94A3B8;
-  --chart-cursor: rgba(79, 70, 229, 0.08);
+  --chart-grid: #EEF7FA;
+  --chart-label: #5F707A;
+  --chart-note: #5F707A;
+  --chart-tick: #8A9AA3;
+  --chart-cursor: rgba(75, 167, 197, 0.08);
 
-  /* Compatibility aliases for provenance & research components */
-  --primary: #4F46E5;
-  --cyan: #06B6D4;
-  --border: #EEF2F6;
+  /* Legacy & component mappings */
+  --navy-950: #F8FBFD;
+  --navy-900: #FFFFFF;
+  --navy-850: #F1F7FA;
+  --navy-800: #EEF7FA;
+  --navy-700: #DCEAF0;
+  --navy-600: #8A9AA3;
+  --primary: #4BA7C5;
+  --border: #DCEAF0;
   --surface: #FFFFFF;
-  --text: #0F172A;
-  --text-hi: #0F172A;
-  --text-muted: #475569;
+  --text: #17232B;
+  --text-hi: #17232B;
+  --text-muted: #5F707A;
 }
 
 /* ---------- 2. CYAN THEME (ARCTIC CYAN DARK) ----------
@@ -264,11 +281,9 @@
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 
-    /* Subtle clean pattern — very faint dotted grid */
-    background-image:
-      radial-gradient(circle at 20% 10%, rgba(14, 165, 233, 0.04), transparent 50%),
-      radial-gradient(circle at 80% 90%, rgba(139, 92, 246, 0.03), transparent 50%);
-    background-repeat: no-repeat;
+    /* Very subtle polar ice gradient */
+    background-image: linear-gradient(135deg, #F9FCFD 0%, #EFF8FB 100%);
+    background-attachment: fixed;
   }
 
   button {
@@ -282,21 +297,21 @@
     outline-offset: 2px;
   }
 
-  /* Scrollbars, styled to match the light theme. */
+  /* Scrollbars, styled to match the ice light theme. */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
   }
   ::-webkit-scrollbar-track {
     background: var(--surface-base);
   }
   ::-webkit-scrollbar-thumb {
-    background: #CBD5E1;
+    background: #CBDDE6;
     border-radius: 4px;
     border: 2px solid var(--surface-base);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #94A3B8;
+    background: #8A9AA3;
   }
 }
 
@@ -305,21 +320,27 @@
   .card {
     background-color: var(--surface-card);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border-radius: 14px;
     padding: 24px 28px;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 1px 3px rgba(23, 35, 43, 0.02), 0 1px 2px rgba(23, 35, 43, 0.01);
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
     min-width: 0;
+  }
+  .card:hover {
+    border-color: var(--line-hover);
   }
 
   .card-tight {
     background-color: var(--surface-card);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 18px 22px;
-    box-shadow: var(--shadow-sm);
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 2px rgba(23, 35, 43, 0.02);
     min-width: 0;
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .card-tight:hover {
+    border-color: var(--line-hover);
   }
 
   /* Card that is itself a button/link — lifts slightly on hover. */
@@ -334,9 +355,9 @@
     width: 100%;
   }
   .card-interactive:hover {
-    border-color: rgba(56, 189, 248, 0.35);
-    background-color: var(--surface-hover);
-    box-shadow: var(--shadow-md);
+    border-color: var(--line-hover);
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 14px -2px rgba(75, 167, 197, 0.08);
     transform: translateY(-1px);
   }
 
@@ -466,60 +487,61 @@
     background: var(--ice);
   }
 
-  /* --- Status badges --- */
+  /* --- Status badges (clean, small, restrained) --- */
   .badge {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 3px 10px;
+    gap: 4px;
+    padding: 2px 8px;
     border: 1px solid transparent;
-    border-radius: 20px;
-    font-size: 10.5px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-family: var(--font-mono);
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
     white-space: nowrap;
     transition: transform 0.12s ease;
   }
   .badge--ok {
-    background-color: rgba(34, 197, 94, 0.1);
-    border-color: rgba(34, 197, 94, 0.3);
-    color: #16A34A;
+    background-color: rgba(46, 133, 64, 0.08);
+    border-color: #BEE3C8;
+    color: #2E8540;
   }
   .badge--info {
-    background-color: rgba(14, 165, 233, 0.1);
-    border-color: rgba(14, 165, 233, 0.3);
-    color: #0284C7;
+    background-color: #EFFAFF;
+    border-color: #DDF3F8;
+    color: #3895B3;
   }
   .badge--blue {
-    background-color: rgba(59, 130, 246, 0.1);
-    border-color: rgba(59, 130, 246, 0.3);
-    color: #2563EB;
+    background-color: #EFFAFF;
+    border-color: #DDF3F8;
+    color: #3895B3;
   }
   .badge--warn {
-    background-color: rgba(245, 158, 11, 0.1);
-    border-color: rgba(245, 158, 11, 0.3);
-    color: #D97706;
+    background-color: rgba(217, 119, 6, 0.08);
+    border-color: #FBD38D;
+    color: #B7791F;
   }
   .badge--alert {
-    background-color: rgba(249, 115, 22, 0.1);
-    border-color: rgba(249, 115, 22, 0.3);
-    color: #EA580C;
+    background-color: rgba(221, 107, 32, 0.08);
+    border-color: #FEEBC8;
+    color: #DD6B20;
   }
   .badge--critical {
-    background-color: rgba(239, 68, 68, 0.1);
-    border-color: rgba(239, 68, 68, 0.35);
-    color: #DC2626;
+    background-color: rgba(197, 48, 48, 0.08);
+    border-color: #FED7D7;
+    color: #C53030;
   }
   .badge--violet {
-    background-color: rgba(139, 92, 246, 0.1);
-    border-color: rgba(139, 92, 246, 0.3);
+    background-color: rgba(124, 58, 237, 0.08);
+    border-color: #DDD6FE;
     color: #7C3AED;
   }
   .badge--muted {
-    background-color: rgba(100, 116, 139, 0.08);
-    border-color: rgba(100, 116, 139, 0.2);
-    color: var(--ink-mid);
+    background-color: #F1F7FA;
+    border-color: #DCEAF0;
+    color: #5F707A;
   }
 
   /* --- Status dots --- */
@@ -556,14 +578,15 @@
     align-items: center;
     justify-content: center;
     gap: 7px;
-    padding: 9px 16px;
+    padding: 8px 16px;
     border: 1px solid var(--ice);
-    border-radius: var(--radius);
-    background-color: rgba(14, 165, 233, 0.06);
-    color: var(--ice);
+    border-radius: 9px;
+    background-color: var(--ice);
+    color: #FFFFFF;
     font-size: 13px;
     font-weight: 600;
     white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(75, 167, 197, 0.15);
     transition:
       background-color 0.15s ease,
       border-color 0.15s ease,
@@ -572,8 +595,9 @@
       opacity 0.15s ease;
   }
   .btn:hover:not(:disabled) {
-    background-color: rgba(14, 165, 233, 0.12);
-    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.15);
+    background-color: #3F96B2;
+    border-color: #3F96B2;
+    box-shadow: 0 2px 6px rgba(75, 167, 197, 0.25);
     transform: translateY(-1px);
   }
   .btn:active:not(:disabled) {
@@ -585,30 +609,33 @@
   }
 
   .btn--alert {
-    border-color: var(--orange);
-    background-color: rgba(249, 115, 22, 0.08);
-    color: var(--orange);
+    border-color: var(--red);
+    background-color: var(--red);
+    color: #FFFFFF;
   }
   .btn--alert:hover:not(:disabled) {
-    background-color: rgba(249, 115, 22, 0.15);
-    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.15);
+    background-color: #A82828;
+    border-color: #A82828;
+    box-shadow: 0 2px 6px rgba(197, 48, 48, 0.25);
   }
 
   .btn--ghost {
     border-color: var(--line);
-    background-color: transparent;
-    color: var(--ink-mid);
+    background-color: #FFFFFF;
+    color: var(--ink-hi);
+    box-shadow: 0 1px 2px rgba(23, 35, 43, 0.02);
   }
   .btn--ghost:hover:not(:disabled) {
-    border-color: #CBD5E1;
+    border-color: var(--line-hover);
     color: var(--ink-hi);
-    background-color: var(--surface-raised);
-    box-shadow: var(--shadow-sm);
+    background-color: var(--surface-secondary);
+    box-shadow: 0 2px 5px rgba(23, 35, 43, 0.04);
   }
 
   .btn--sm {
-    padding: 5px 10px;
+    padding: 5px 11px;
     font-size: 11.5px;
+    border-radius: 8px;
   }
 
   /* --- Form fields --- */
@@ -713,28 +740,32 @@
   .nav-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    width: calc(100% - 20px);
-    margin: 3px 10px;
-    padding: 10px 14px;
-    border: 0;
-    border-radius: 12px;
+    gap: 11px;
+    width: calc(100% - 16px);
+    margin: 2px 8px;
+    padding: 9px 12px;
+    border: 1px solid transparent;
+    border-radius: 10px;
     background: transparent;
     color: var(--ink-mid);
     font-family: var(--font-body);
     font-size: 13px;
     font-weight: 500;
     text-align: left;
-    transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   }
   .nav-item:hover {
-    background: var(--surface-raised);
+    background: var(--surface-secondary);
     color: var(--ink-hi);
   }
   .nav-item--active {
-    background: var(--surface-active);
-    color: var(--ice);
+    background: var(--surface-ice);
+    border-color: var(--line);
+    color: var(--ink-hi);
     font-weight: 600;
+  }
+  .nav-item--active svg {
+    color: var(--ice);
   }
   [data-theme="cyan"] .nav-item--active,
   [data-theme="dark"] .nav-item--active {

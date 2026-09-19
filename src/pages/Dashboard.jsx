@@ -1,20 +1,25 @@
 /**
- * MAIN DASHBOARD — REDESIGNED & SIMPLIFIED
- * ========================================
- * POLAR-AI MISSION CONTINUITY INTELLIGENCE
+ * DASHBOARD — PREMIUM ARCTIC WHITE SPECIFICATION
+ * ===============================================
+ * Sections 4 & 5:
  *
- * Core Concept:
- * Cargo + Inventory + Consumption + Assets + Mission dependencies
- * -> Detects: Risk -> Impact -> Chain Reaction -> Mission Effect -> Recommended Action.
+ * Structure:
+ * POLAR-AI                    ONLINE   RUN DEMO
+ * Current Expedition: Antarctic Research Expedition 2027
  *
- * Designed for immediate executive clarity:
- * - Top header with station status and prominent [ ▶ RUN DEMO ]
- * - Dominant Mission Continuity hero (Score: 68%, "Attention Required: Fuel resupply may arrive after current safe operating window")
- * - Exactly the 4 key operational cards:
- *   1. Critical Risk (Fuel Resupply Gap)
- *   2. Cargo (C-104 / C-101 in transit, ETA 17d)
- *   3. Inventory (Diesel Fuel 12d remaining, safe window 14d)
- *   4. Asset (Generator G-021 maintenance approaching, run-time high)
+ *       68
+ * MISSION CONTINUITY
+ * Stable with emerging resupply risk
+ *
+ * Critical Risk:
+ * Fuel Resupply Risk · 12 days remaining · Cargo ETA: 17 days
+ *
+ * Cargo (03 In Transit, 01 At Risk)
+ * Inventory (Fuel: 12 days / 16.7d buffer, Food: 21 days)
+ * Assets (14 Active, 1 Maintenance)
+ *
+ * Recent Mission Event:
+ * Fuel shipment delay detected · 2 minutes ago
  */
 
 import React from 'react'
@@ -22,339 +27,353 @@ import {
   AlertTriangle,
   ArrowRight,
   Boxes,
+  Clock,
+  Compass,
   Cpu,
   Flame,
-  GitFork,
   Package,
   Play,
+  Radio,
   ShieldAlert,
   Sliders,
   Sparkles,
-  Bot,
 } from 'lucide-react'
 import { useData } from '../store/DataContext'
 
 export default function Dashboard({ goTo, onStartGuidedDemo }) {
-  const { continuityMetrics, stats } = useData()
+  const { continuityMetrics, stats, cargo } = useData()
 
-  const continuityScore = continuityMetrics?.score ?? 68
+  const score = continuityMetrics?.score ?? 68
+
+  // Calculate SVG circular ring metrics for clean circular indicator
+  const radius = 54
+  const circumference = 2 * Math.PI * radius
+  const strokeDashoffset = circumference - (score / 100) * circumference
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 pb-12">
+    <div className="max-w-5xl mx-auto space-y-8 pb-16">
       {/* ============================================================
-          1. TOP HEADER
+          TOP HEADER
+          POLAR-AI · ONLINE · RUN DEMO
+          Current Expedition: Antarctic Research Expedition 2027
           ============================================================ */}
       <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-5">
-        <div>
+        <div className="space-y-1">
           <div className="flex items-center gap-2.5">
-            <span className="font-display text-2xl font-bold tracking-tight text-[var(--ink-hi)]">
+            <h1 className="text-xl font-bold tracking-tight text-[var(--ink-hi)]">
               POLAR-AI
+            </h1>
+            <span className="text-xs text-[var(--ink-low)] font-mono">·</span>
+            <span className="text-xs font-mono uppercase tracking-wider text-[var(--ink-mid)] font-medium">
+              Mission Continuity Intelligence
             </span>
-            <span className="text-xs font-mono text-mid">·</span>
-            <span className="text-sm font-semibold text-[var(--ink-mid)]">
-              Maitri Station (Antarctica)
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200/80 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
-              Status: Attention Required
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--surface-ice)] border border-[var(--line)] px-2.5 py-0.5 text-[10px] font-mono font-semibold text-[var(--ink-hi)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--ice)] animate-pulse" />
+              ONLINE
             </span>
           </div>
-          <p className="mt-1 text-xs text-[var(--ink-mid)]">
-            Mission Continuity Intelligence · Continuous resupply & operational dependency forecasting
-          </p>
+
+          <div className="flex items-center gap-2 text-xs text-[var(--ink-mid)] pt-0.5">
+            <span className="font-mono text-[11px] text-[var(--ink-low)] uppercase">Current Expedition:</span>
+            <span className="font-medium text-[var(--ink-hi)]">Antarctic Research Expedition 2027</span>
+            <span className="text-[var(--ink-low)]">·</span>
+            <span>Maitri Station</span>
+          </div>
         </div>
 
-        {/* Prominent RUN DEMO Button */}
-        <div className="flex items-center gap-3 shrink-0">
+        {/* Action Controls */}
+        <div className="flex items-center gap-2.5 shrink-0">
           <button
             type="button"
             onClick={onStartGuidedDemo}
-            className="inline-flex items-center gap-2 rounded-xl bg-[var(--ice)] hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 text-sm shadow-sm transition active:scale-[0.98]"
+            className="inline-flex items-center gap-2 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-4 py-2 text-xs shadow-xs transition active:scale-95"
             title="Start step-by-step guided demonstration"
           >
-            <Play size={15} className="fill-white" />
+            <Play size={13} className="fill-white" />
             <span>RUN DEMO</span>
           </button>
         </div>
       </header>
 
       {/* ============================================================
-          2. DOMINANT ELEMENT: MISSION CONTINUITY HERO
+          DOMINANT VISUAL ELEMENT: MISSION CONTINUITY SCORE (68)
+          Clean circular ring indicator with refined ice-blue treatment
           ============================================================ */}
-      <section className="rounded-2xl border border-[var(--line)] bg-[var(--surface-card)] p-7 sm:p-9 shadow-sm space-y-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-[var(--line)] pb-6">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-mid)]">
-                Mission Continuity
-              </span>
-              <span className="rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[11px] font-bold text-amber-700">
-                Attention Required
-              </span>
+      <section className="rounded-2xl border border-[var(--line)] bg-[var(--surface-card)] p-8 sm:p-10 shadow-sm">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          {/* Left: Circular indicator & Score */}
+          <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 text-center sm:text-left">
+            <div className="relative flex items-center justify-center shrink-0">
+              <svg width="136" height="136" className="transform -rotate-90">
+                {/* Background Ring */}
+                <circle
+                  cx="68"
+                  cy="68"
+                  r={radius}
+                  stroke="#EEF7FA"
+                  strokeWidth="8"
+                  fill="transparent"
+                />
+                {/* Score Ring (Ice Blue) */}
+                <circle
+                  cx="68"
+                  cy="68"
+                  r={radius}
+                  stroke="#4BA7C5"
+                  strokeWidth="8"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={strokeDashoffset}
+                  strokeLinecap="round"
+                  fill="transparent"
+                  className="transition-all duration-1000 ease-out"
+                />
+              </svg>
+              {/* Centered Score */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-3xl font-extrabold tracking-tight text-[var(--ink-hi)] font-mono">
+                  {score}
+                </span>
+                <span className="text-[10px] font-mono text-[var(--ink-low)] uppercase">
+                  / 100
+                </span>
+              </div>
             </div>
 
-            <div className="flex items-baseline gap-3">
-              <span className="text-5xl sm:text-6xl font-extrabold tracking-tight text-[var(--ink-hi)]">
-                {continuityScore}%
-              </span>
-              <span className="text-xs font-mono text-[var(--ink-mid)]">
-                Weighted Operational Runway Index
-              </span>
+            <div className="space-y-1.5 max-w-md">
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ice)]">
+                  MISSION CONTINUITY
+                </span>
+                <span className="rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-700">
+                  Emerging Risk
+                </span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-[var(--ink-hi)]">
+                Stable with emerging resupply risk
+              </h2>
+              <p className="text-xs text-[var(--ink-mid)] leading-relaxed">
+                Fuel inventory is projected to exhaust on Day 12 while scheduled replenishment consignment C-101 reaches port on Day 17.
+              </p>
             </div>
-
-            <p className="text-base font-medium text-[var(--ink-hi)] max-w-2xl leading-relaxed">
-              "Fuel resupply may arrive after current safe operating window."
-            </p>
           </div>
 
-          {/* Quick Flow Actions */}
-          <div className="flex flex-col sm:flex-row md:flex-col gap-2.5 shrink-0">
+          {/* Right: Quick actions */}
+          <div className="flex flex-row md:flex-col gap-2 shrink-0 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => goTo('risks')}
-              className="inline-flex items-center justify-between gap-3 rounded-xl border border-[var(--line)] bg-[var(--surface-base)] hover:bg-[var(--line)]/50 px-4 py-2.5 text-xs font-semibold text-[var(--ink-hi)] transition"
+              className="flex-1 sm:flex-none inline-flex items-center justify-between gap-3 rounded-lg border border-[var(--line)] bg-[var(--surface-base)] hover:bg-[var(--surface-secondary)] hover:border-[var(--line-hover)] px-3.5 py-2 text-xs font-semibold text-[var(--ink-hi)] transition"
             >
-              <span>1. View Risk Details</span>
+              <span>Inspect Risk Flow</span>
               <ArrowRight size={13} className="text-[var(--ice)]" />
             </button>
             <button
               type="button"
               onClick={() => goTo('simulator')}
-              className="inline-flex items-center justify-between gap-3 rounded-xl border border-[var(--line)] bg-[var(--surface-base)] hover:bg-[var(--line)]/50 px-4 py-2.5 text-xs font-semibold text-[var(--ink-hi)] transition"
+              className="flex-1 sm:flex-none inline-flex items-center justify-between gap-3 rounded-lg border border-[var(--line)] bg-[var(--surface-base)] hover:bg-[var(--surface-secondary)] hover:border-[var(--line-hover)] px-3.5 py-2 text-xs font-semibold text-[var(--ink-hi)] transition"
             >
-              <span>2. What-If Simulator</span>
+              <span>What-If Sandbox</span>
               <Sliders size={13} className="text-[var(--ice)]" />
             </button>
-            <button
-              type="button"
-              onClick={() => goTo('copilot')}
-              className="inline-flex items-center justify-between gap-3 rounded-xl bg-indigo-50 hover:bg-indigo-100/80 border border-indigo-200/60 px-4 py-2.5 text-xs font-semibold text-[var(--ice)] transition"
-            >
-              <span>3. Ask AI Copilot</span>
-              <Bot size={13} />
-            </button>
           </div>
         </div>
+      </section>
 
-        {/* Continuity Logic Ribbon */}
-        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--ink-mid)] pt-1">
-          <div className="flex items-center gap-2">
-            <span className="font-semibold text-[var(--ink-hi)]">Continuity Formula:</span>
-            <span>Cargo ETA (17d) − Safe Fuel Window (12d) = 5.0d Projected Deficit</span>
-          </div>
-          <span className="font-mono text-[11px] text-[var(--ice)]">
-            Autonomous Telemetry Synchronization Active
+      {/* ============================================================
+          CRITICAL RISK HERO CARD
+          Fuel Resupply Risk · 12 days remaining · Cargo ETA: 17 days
+          ============================================================ */}
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-low)]">
+            Primary Vulnerability
+          </span>
+          <span className="text-xs font-mono text-rose-600 font-semibold">
+            Potential supply gap: 5.0 days
           </span>
         </div>
-      </section>
 
-      {/* ============================================================
-          3. BELOW IT: ONLY 4 CARDS (CRITICAL RISK, CARGO, INVENTORY, ASSET)
-          ============================================================ */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-mid)]">
-            Core Operational Drivers
-          </h2>
-          <span className="text-xs text-[var(--ink-mid)]">4 primary inputs driving 68% score</span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* Card 1: Critical Risk */}
-          <div
-            onClick={() => goTo('risks')}
-            className="cursor-pointer rounded-2xl border border-rose-200/80 bg-white p-6 shadow-sm transition hover:border-rose-400 hover:shadow-md space-y-4 group"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center">
-                  <AlertTriangle size={15} />
-                </div>
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-rose-700">
-                  1. Critical Risk
-                </span>
+        <div
+          onClick={() => goTo('risks')}
+          className="cursor-pointer rounded-2xl border border-rose-200/80 bg-white p-6 shadow-xs transition hover:border-rose-300 hover:shadow-sm space-y-4 group"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center">
+                <AlertTriangle size={16} />
               </div>
-              <span className="rounded-full bg-rose-50 border border-rose-200 px-2 py-0.5 text-[10px] font-bold text-rose-700">
-                CRITICAL
-              </span>
+              <div>
+                <span className="text-[10px] font-mono font-bold uppercase text-rose-700 tracking-wider">
+                  Critical Risk
+                </span>
+                <h3 className="text-base font-bold text-[var(--ink-hi)] group-hover:text-rose-600 transition">
+                  Fuel Resupply Risk
+                </h3>
+              </div>
             </div>
 
-            <div>
-              <h3 className="text-base font-bold text-[var(--ink-hi)] group-hover:text-rose-600 transition">
-                Fuel Resupply Gap
-              </h3>
-              <p className="mt-1 text-xs text-[var(--ink-mid)] leading-relaxed">
-                <strong className="text-[var(--ink-hi)]">Impact:</strong> Station generator shutdown
-              </p>
-            </div>
-
-            <div className="rounded-xl bg-slate-50 border border-slate-200/70 p-3 space-y-1">
-              <span className="text-[10px] font-mono uppercase text-slate-500 font-semibold block">
-                Causal Dependency Chain:
-              </span>
-              <p className="text-xs font-mono text-[var(--ink-hi)] font-medium">
-                Fuel → Generator → Power → Science
-              </p>
-            </div>
-
-            <div className="flex items-center justify-between pt-1 text-xs font-semibold text-rose-600">
-              <span>Inspect Risk Dependency</span>
-              <ArrowRight size={13} className="transition group-hover:translate-x-1" />
+            <div className="flex items-center gap-4 text-xs font-mono">
+              <span className="text-rose-600 font-bold">12 days remaining</span>
+              <span className="text-[var(--ink-low)]">vs</span>
+              <span className="text-[var(--ink-hi)] font-semibold">Cargo ETA: 17 days</span>
             </div>
           </div>
 
-          {/* Card 2: Cargo */}
+          <div className="rounded-xl bg-[var(--surface-ice)] border border-[var(--line)] p-3.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2 text-[var(--ink-mid)]">
+              <span className="font-semibold text-[var(--ink-hi)]">Dependency Chain:</span>
+              <span className="font-mono text-[11px] text-[var(--ink-hi)]">
+                FUEL → GENERATOR → POWER → HEATING → RESEARCH
+              </span>
+            </div>
+            <span className="text-[var(--ice)] font-semibold inline-flex items-center gap-1 group-hover:translate-x-1 transition">
+              View Dependency Flow <ArrowRight size={12} />
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          SUMMARY TRIO: CARGO · INVENTORY · ASSETS
+          Per Section 5 & 8 specifications
+          ============================================================ */}
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-low)]">
+            Operational Pillars
+          </span>
+          <span className="text-xs text-[var(--ink-low)]">Real-time station telemetry</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* 1. Cargo */}
           <div
             onClick={() => goTo('cargo')}
-            className="cursor-pointer rounded-2xl border border-[var(--line)] bg-white p-6 shadow-sm transition hover:border-[var(--ice)] hover:shadow-md space-y-4 group"
+            className="cursor-pointer rounded-2xl border border-[var(--line)] bg-white p-6 shadow-xs transition hover:border-[var(--line-hover)] hover:shadow-sm space-y-4 group"
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center">
-                  <Package size={15} />
-                </div>
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-blue-700">
-                  2. Cargo
-                </span>
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-low)]">
+                Cargo
+              </span>
+              <div className="h-7 w-7 rounded-lg bg-[var(--surface-ice)] text-[var(--ice)] flex items-center justify-center">
+                <Package size={14} />
               </div>
-              <span className="rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-700">
-                In Transit
-              </span>
             </div>
 
-            <div>
-              <h3 className="text-base font-bold text-[var(--ink-hi)] group-hover:text-[var(--ice)] transition">
-                Consignment C-104 / C-101
-              </h3>
-              <p className="mt-1 text-xs text-[var(--ink-mid)] leading-relaxed">
-                Primary station polar diesel replenishment shipment via Cape Town to Novo Runway.
-              </p>
+            <div className="space-y-1">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold font-mono text-[var(--ink-hi)]">03</span>
+                <span className="text-xs text-[var(--ink-mid)]">In Transit</span>
+              </div>
+              <div className="flex items-baseline gap-2 text-xs">
+                <span className="font-mono font-bold text-amber-600">01</span>
+                <span className="text-[var(--ink-low)]">At Risk (Consignment C-101)</span>
+              </div>
             </div>
 
-            <div className="rounded-xl bg-slate-50 border border-slate-200/70 p-3 flex items-center justify-between text-xs">
-              <span className="text-slate-600">Arrival Schedule:</span>
-              <span className="font-mono font-bold text-[var(--ink-hi)]">
-                ETA: 17 days
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between pt-1 text-xs font-semibold text-[var(--ice)]">
-              <span>View Cargo Pipeline</span>
-              <ArrowRight size={13} className="transition group-hover:translate-x-1" />
+            <div className="pt-2 border-t border-[var(--line)] flex items-center justify-between text-xs text-[var(--ink-low)] group-hover:text-[var(--ice)] transition font-medium">
+              <span>Cape Town corridor</span>
+              <ArrowRight size={12} />
             </div>
           </div>
 
-          {/* Card 3: Inventory */}
+          {/* 2. Inventory (Formatted per Section 8 example) */}
           <div
             onClick={() => goTo('inventory')}
-            className="cursor-pointer rounded-2xl border border-[var(--line)] bg-white p-6 shadow-sm transition hover:border-[var(--ice)] hover:shadow-md space-y-4 group"
+            className="cursor-pointer rounded-2xl border border-[var(--line)] bg-white p-6 shadow-xs transition hover:border-[var(--line-hover)] hover:shadow-sm space-y-4 group"
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center">
-                  <Boxes size={15} />
-                </div>
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-700">
-                  3. Inventory
-                </span>
-              </div>
-              <span className="rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-700">
-                Runway Alert
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-low)]">
+                Inventory
               </span>
-            </div>
-
-            <div>
-              <h3 className="text-base font-bold text-[var(--ink-hi)] group-hover:text-[var(--ice)] transition">
-                Diesel Fuel Reserve
-              </h3>
-              <p className="mt-1 text-xs text-[var(--ink-mid)] leading-relaxed">
-                Maitri Station central tank farm (14,200 Liters currently stored).
-              </p>
-            </div>
-
-            <div className="rounded-xl bg-slate-50 border border-slate-200/70 p-3 flex items-center justify-between text-xs">
-              <div className="space-y-0.5">
-                <span className="text-slate-600 block">Remaining Runway:</span>
-                <span className="font-mono font-bold text-rose-600">12 days remaining</span>
-              </div>
-              <div className="text-right space-y-0.5">
-                <span className="text-slate-600 block">Required Margin:</span>
-                <span className="font-mono font-bold text-slate-800">Safe window: 14 days</span>
+              <div className="h-7 w-7 rounded-lg bg-[var(--surface-ice)] text-[var(--ice)] flex items-center justify-center">
+                <Boxes size={14} />
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-1 text-xs font-semibold text-[var(--ice)]">
-              <span>Check Fuel Inventory</span>
-              <ArrowRight size={13} className="transition group-hover:translate-x-1" />
+            <div className="space-y-1.5 text-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-[var(--ink-mid)] font-medium">Fuel Runway:</span>
+                <span className="font-mono font-bold text-rose-600">12.0 days</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[var(--ink-mid)]">Safe Window Buffer:</span>
+                <span className="font-mono text-[var(--ink-hi)] font-semibold">16.7 days target</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[var(--ink-mid)]">Ration Packs (Food):</span>
+                <span className="font-mono text-[var(--ink-hi)]">21.0 days</span>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-[var(--line)] flex items-center justify-between text-xs text-[var(--ink-low)] group-hover:text-[var(--ice)] transition font-medium">
+              <span>300 L / day burn rate</span>
+              <ArrowRight size={12} />
             </div>
           </div>
 
-          {/* Card 4: Asset */}
+          {/* 3. Assets */}
           <div
             onClick={() => goTo('assets')}
-            className="cursor-pointer rounded-2xl border border-[var(--line)] bg-white p-6 shadow-sm transition hover:border-[var(--ice)] hover:shadow-md space-y-4 group"
+            className="cursor-pointer rounded-2xl border border-[var(--line)] bg-white p-6 shadow-xs transition hover:border-[var(--line-hover)] hover:shadow-sm space-y-4 group"
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-purple-50 border border-purple-200 text-purple-600 flex items-center justify-center">
-                  <Cpu size={15} />
-                </div>
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-purple-700">
-                  4. Asset
-                </span>
-              </div>
-              <span className="rounded-full bg-purple-50 border border-purple-200 px-2 py-0.5 text-[10px] font-bold text-purple-700">
-                Action Nearing
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-low)]">
+                Assets
               </span>
-            </div>
-
-            <div>
-              <h3 className="text-base font-bold text-[var(--ink-hi)] group-hover:text-[var(--ice)] transition">
-                Generator G-021 (Primary Unit)
-              </h3>
-              <p className="mt-1 text-xs text-[var(--ink-mid)] leading-relaxed">
-                Main caterpillar diesel generator carrying station baseline thermal & microgrid load.
-              </p>
-            </div>
-
-            <div className="rounded-xl bg-slate-50 border border-slate-200/70 p-3 flex items-center justify-between text-xs">
-              <div className="space-y-0.5">
-                <span className="text-slate-600 block">Maintenance Status:</span>
-                <span className="font-medium text-amber-700">Maintenance approaching</span>
-              </div>
-              <div className="text-right space-y-0.5">
-                <span className="text-slate-600 block">Duty Cycle:</span>
-                <span className="font-mono font-bold text-slate-800">Run-time: high (4,820h)</span>
+              <div className="h-7 w-7 rounded-lg bg-[var(--surface-ice)] text-[var(--ice)] flex items-center justify-center">
+                <Cpu size={14} />
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-1 text-xs font-semibold text-[var(--ice)]">
-              <span>View Machinery Health</span>
-              <ArrowRight size={13} className="transition group-hover:translate-x-1" />
+            <div className="space-y-1">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold font-mono text-[var(--ink-hi)]">14</span>
+                <span className="text-xs text-[var(--ink-mid)]">Active Machinery</span>
+              </div>
+              <div className="flex items-baseline gap-2 text-xs">
+                <span className="font-mono font-bold text-amber-600">1</span>
+                <span className="text-[var(--ink-low)]">Maintenance (G-021 Service)</span>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-[var(--line)] flex items-center justify-between text-xs text-[var(--ink-low)] group-hover:text-[var(--ice)] transition font-medium">
+              <span>CAT 3512 Primary Gen</span>
+              <ArrowRight size={12} />
             </div>
           </div>
         </div>
       </section>
 
       {/* ============================================================
-          4. FAST CORE FLOW FOOTER
+          RECENT MISSION EVENT STRIP
+          Section 5: "Fuel shipment delay detected · 2 minutes ago"
           ============================================================ */}
-      <footer className="rounded-2xl border border-[var(--line)] bg-[var(--surface-base)] p-5 flex flex-wrap items-center justify-between gap-4 text-xs">
-        <div className="flex items-center gap-2 text-[var(--ink-mid)]">
-          <span className="font-bold text-[var(--ink-hi)]">Core Flow:</span>
-          <span>DASHBOARD → RISK → IMPACT → SIMULATE → COPILOT</span>
+      <section className="rounded-xl border border-[var(--line)] bg-[var(--surface-base)] p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-3">
+          <div className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
+          <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[var(--ink-low)]">
+            Recent Mission Event
+          </span>
+          <span className="text-[var(--ink-hi)] font-medium">
+            Fuel shipment delay detected (Novo Runway transfer corridor)
+          </span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 text-[var(--ink-low)] font-mono text-[11px]">
+          <span className="flex items-center gap-1">
+            <Clock size={11} /> 2 minutes ago
+          </span>
+          <span>·</span>
           <button
             type="button"
-            onClick={onStartGuidedDemo}
-            className="font-bold text-[var(--ice)] hover:underline inline-flex items-center gap-1"
+            onClick={() => goTo('copilot')}
+            className="text-[var(--ice)] hover:underline font-semibold"
           >
-            Launch Interactive Guided Walkthrough <ArrowRight size={12} />
+            Review Copilot Mitigation →
           </button>
         </div>
-      </footer>
+      </section>
     </div>
   )
 }

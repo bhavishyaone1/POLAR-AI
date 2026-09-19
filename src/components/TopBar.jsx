@@ -1,237 +1,135 @@
 /**
- * TOPBAR — the strip across the top of every page.
- *
- * Holds the page title, a live IST clock (Indian Standard Time,
- * UTC+5:30), and a red pill showing how many things currently need
- * attention. That pill is counted from the shared data, so it changes by
- * itself the moment anything anywhere changes.
+ * TOP BAR — PREMIUM MINIMAL ARCTIC AESTHETIC
+ * ===========================================
+ * Section 7:
+ * Left: Current Expedition ("Antarctic Research Expedition 2027")
+ * Center: System status ("● SYSTEM ONLINE")
+ * Right: RUN DEMO, Notifications, Profile
  */
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
-  AlertTriangle,
-  HelpCircle,
+  Bell,
+  Compass,
   Menu,
-  Moon,
   Play,
   Search,
-  ShieldAlert,
-  Sparkles,
-  Sun,
-  Volume2,
-  VolumeX,
-  Wifi,
+  Shield,
+  User,
 } from 'lucide-react'
-import { formatUtcClock } from '../lib/format'
 import { useData } from '../store/DataContext'
-import { useTheme } from '../store/ThemeContext'
-import { getAudioEnabled, setAudioEnabled } from '../services/audioAlert'
+import { useAuth } from '../store/AuthContext'
 
 export default function TopBar({
-  title,
-  blurb,
   onMenuClick,
   onAlertClick,
-  onSosClick,
-  onHelpClick,
   onOpenSearch,
   onStartGuidedDemo,
 }) {
-  const { stats, continuityMetrics } = useData()
-  const { theme, toggleTheme } = useTheme()
-  const [soundOn, setSoundOn] = useState(getAudioEnabled)
+  const { emergencies } = useData()
+  const { user } = useAuth()
 
-  useEffect(() => {
-    const handleAudio = (e) => setSoundOn(e.detail)
-    window.addEventListener('polar:audio-toggle', handleAudio)
-    return () => window.removeEventListener('polar:audio-toggle', handleAudio)
-  }, [])
-
-  const toggleSound = () => {
-    const next = !soundOn
-    setSoundOn(next)
-    setAudioEnabled(next)
-  }
-
-  /* Timezone selector list */
-  const TIMEZONES = [
-    { value: 'UTC', label: 'UTC (Polar)' },
-    { value: 'Asia/Kolkata', label: 'India (IST)' },
-    { value: 'America/New_York', label: 'New York (EST)' },
-    { value: 'Europe/London', label: 'London (GMT)' },
-    { value: 'Pacific/Auckland', label: 'New Zealand' },
-    { value: 'Antarctica/McMurdo', label: 'McMurdo (NZST)' },
-  ]
-  const [tz, setTz] = useState('Asia/Kolkata')
-
-  /* A clock that actually ticks. */
-  const [clock, setClock] = useState(() => formatUtcClock(new Date(), tz))
-  useEffect(() => {
-    const timer = setInterval(() => setClock(formatUtcClock(new Date(), tz)), 1000)
-    return () => clearInterval(timer)
-  }, [tz])
+  const openIncidentsCount = (emergencies || []).filter((e) => e.status !== 'RESOLVED').length
 
   return (
-    <header
-      className="flex items-center gap-3 border-b bg-[var(--surface-card)]/95 px-5 py-3 backdrop-blur-md sm:gap-4 sm:px-8"
-      style={{ borderColor: 'var(--line)' }}
-    >
-      {/* Hamburger — only shown on small screens. */}
-      <button
-        type="button"
-        onClick={onMenuClick}
-        className="shrink-0 text-mid hover:text-hi lg:hidden"
-        aria-label="Open navigation"
-      >
-        <Menu size={20} />
-      </button>
-
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <h1 className="page-title truncate">{title}</h1>
-          <span className="hidden xl:inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 px-2 py-0.5 text-[10px] font-mono text-emerald-400">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
-            100% OFFLINE SAFE
-          </span>
-        </div>
-        {blurb && <p className="page-blurb hidden truncate sm:block">{blurb}</p>}
-      </div>
-
-      {/* Global Command Palette / Search Trigger */}
-      <button
-        type="button"
-        onClick={onOpenSearch}
-        className="hidden md:flex items-center gap-2.5 rounded-full border border-[var(--line)] bg-[var(--surface-raised)]/70 px-4 py-1.5 text-xs text-mid hover:border-indigo-400 hover:bg-white dark:hover:bg-slate-800 hover:text-hi hover:shadow-xs transition w-56 lg:w-72"
-        title="Quick search across polar records (Ctrl+K)"
-      >
-        <Search size={14} className="text-indigo-500 shrink-0" />
-        <span className="font-sans flex-1 text-left text-low">Search...</span>
-        <kbd className="rounded border border-[var(--line)] bg-[var(--surface-card)] px-1.5 py-0.5 text-[10px] font-mono text-low">
-          Ctrl K
-        </kbd>
-      </button>
-
-      {/* Quick Guided Demo Walkthrough */}
-      {onStartGuidedDemo && (
+    <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-[var(--line)] bg-[var(--surface-card)]/95 px-5 sm:px-8 backdrop-blur-md">
+      {/* LEFT: Mobile Menu + Current Expedition */}
+      <div className="flex items-center gap-3 min-w-0">
         <button
           type="button"
-          onClick={onStartGuidedDemo}
-          className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-amber-500/40 bg-amber-500/10 px-2.5 py-1 text-xs font-mono font-bold text-amber-300 transition hover:bg-amber-500/20 active:scale-95"
-          title="Start 1-minute guided presentation walkthrough for judges"
+          onClick={onMenuClick}
+          className="rounded-lg p-1.5 text-[var(--ink-mid)] hover:bg-[var(--surface-secondary)] hover:text-[var(--ink-hi)] lg:hidden transition"
+          aria-label="Open navigation menu"
         >
-          <Play size={12} className="fill-amber-300" />
-          <span>Demo Tour</span>
+          <Menu size={18} />
         </button>
-      )}
 
-      {/* Alert pill. Only appears when there is genuinely something open. */}
-      {stats.criticalAlerts > 0 && (
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="hidden sm:flex h-7 w-7 rounded-lg bg-[var(--surface-ice)] border border-[var(--line)] text-[var(--ice)] items-center justify-center shrink-0">
+            <Compass size={14} />
+          </div>
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-[var(--ink-low)]">
+              <span>Current Expedition</span>
+            </div>
+            <div className="truncate text-xs sm:text-sm font-semibold text-[var(--ink-hi)]">
+              Antarctic Research Expedition 2027
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CENTER: System Status Indicator */}
+      <div className="hidden md:flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface-ice)] px-3 py-1 text-xs">
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--ice)] opacity-75" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--ice)]" />
+        </span>
+        <span className="font-mono text-[11px] font-semibold text-[var(--ink-hi)] tracking-wide uppercase">
+          SYSTEM ONLINE
+        </span>
+        <span className="text-[var(--ink-low)]">·</span>
+        <span className="text-[11px] text-[var(--ink-mid)]">Maitri Telemetry Active</span>
+      </div>
+
+      {/* RIGHT: RUN DEMO, Search, Alert Bell, Profile */}
+      <div className="flex items-center gap-2.5 shrink-0">
+        {/* Quick Search */}
+        <button
+          type="button"
+          onClick={onOpenSearch}
+          className="hidden sm:flex items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--surface-base)] px-2.5 py-1.5 text-xs text-[var(--ink-mid)] hover:border-[var(--line-hover)] hover:text-[var(--ink-hi)] transition"
+          title="Command Palette (Ctrl+K)"
+        >
+          <Search size={13} className="text-[var(--ice)]" />
+          <span className="text-[11px]">Search...</span>
+          <kbd className="rounded border border-[var(--line)] bg-white px-1 py-0.2 text-[9px] font-mono text-[var(--ink-low)]">
+            ⌘K
+          </kbd>
+        </button>
+
+        {/* Prominent RUN DEMO Button */}
+        {onStartGuidedDemo && (
+          <button
+            type="button"
+            onClick={onStartGuidedDemo}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-3 py-1.5 text-xs shadow-xs transition active:scale-95"
+            title="Start step-by-step guided demonstration"
+          >
+            <Play size={12} className="fill-white" />
+            <span>RUN DEMO</span>
+          </button>
+        )}
+
+        {/* Notifications / Incidents Alert */}
         <button
           type="button"
           onClick={onAlertClick}
-          className="badge badge--critical shrink-0"
-          title="Go to Emergency Response"
+          className="relative rounded-lg border border-[var(--line)] bg-white p-1.5 text-[var(--ink-mid)] hover:bg-[var(--surface-secondary)] hover:text-[var(--ink-hi)] transition"
+          title={openIncidentsCount > 0 ? `${openIncidentsCount} active incidents` : 'Notifications'}
         >
-          <AlertTriangle size={12} strokeWidth={2.25} className="pulse" />
-          <span className="hidden sm:inline">
-            {stats.criticalAlerts} alert{stats.criticalAlerts === 1 ? '' : 's'}
-          </span>
-          <span className="sm:hidden">{stats.criticalAlerts}</span>
+          <Bell size={15} />
+          {openIncidentsCount > 0 && (
+            <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--amber)] text-[9px] font-bold text-white">
+              {openIncidentsCount}
+            </span>
+          )}
         </button>
-      )}
 
-      {/* Quick SOS Trigger Button */}
-      <button
-        type="button"
-        id="topbar-sos-btn"
-        onClick={onSosClick}
-        className="flex items-center gap-1.5 rounded-lg border border-red-500/40 bg-red-950/40 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-red-300 shadow-sm transition-all hover:border-red-400 hover:bg-red-900/60 hover:text-white active:scale-95"
-        title="Broadcast Emergency SOS"
-      >
-        <ShieldAlert size={14} className="animate-pulse text-red-400" />
-        <span className="hidden sm:inline">SOS Distress</span>
-      </button>
-
-      {/* Audio Siren Mute/Unmute Toggle */}
-      <button
-        type="button"
-        onClick={toggleSound}
-        className="shrink-0 rounded-lg p-1.5 text-mid transition-colors hover:bg-[var(--surface-raised)] hover:text-hi"
-        aria-label={soundOn ? 'Mute emergency siren' : 'Unmute emergency siren'}
-        title={soundOn ? 'Emergency siren: ACTIVE' : 'Emergency siren: MUTED'}
-      >
-        {soundOn ? (
-          <Volume2 size={18} className="text-[var(--ice)]" />
-        ) : (
-          <VolumeX size={18} className="text-low" />
-        )}
-      </button>
-
-      {/* Theme toggle — switches between Cyan Dark, Pitch Black, and Light Snow mode. */}
-      <button
-        type="button"
-        onClick={toggleTheme}
-        className="shrink-0 flex items-center gap-1.5 rounded-lg border border-[var(--line)] bg-[var(--surface-raised)]/60 px-2.5 py-1 text-xs font-mono transition-all hover:border-[var(--ice)] hover:bg-[var(--surface-raised)] active:scale-95"
-        aria-label="Switch theme (Cyan Dark, Pitch Black, Light)"
-        title={`Theme: ${theme === 'black' ? 'Pitch Black' : theme === 'light' ? 'Light Snow' : 'Arctic Cyan'} (Click to cycle)`}
-      >
-        {(theme === 'cyan' || theme === 'dark') && (
-          <>
-            <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22D3EE]" />
-            <span className="hidden sm:inline text-cyan-400 font-semibold text-[11px] uppercase tracking-wider">
-              Cyan
-            </span>
-          </>
-        )}
-        {theme === 'black' && (
-          <>
-            <Moon size={14} className="text-white fill-white" />
-            <span className="hidden sm:inline text-white font-semibold text-[11px] uppercase tracking-wider">
-              Black
-            </span>
-          </>
-        )}
-        {theme === 'light' && (
-          <>
-            <Sun size={14} className="text-amber-500 fill-amber-400" />
-            <span className="hidden sm:inline text-amber-600 font-semibold text-[11px] uppercase tracking-wider">
-              Light
-            </span>
-          </>
-        )}
-      </button>
-
-      {/* Hidden Data Methodology & Sources Registry Trigger (?) */}
-      <button
-        type="button"
-        onClick={onHelpClick}
-        className="shrink-0 rounded-lg p-1.5 text-mid transition-colors hover:bg-[var(--surface-raised)] hover:text-[var(--ice)]"
-        aria-label="System Information & Data Sources"
-        title="System Information & Data Sources"
-      >
-        <HelpCircle size={18} />
-      </button>
-
-      {/* Clock with Timezone Selector */}
-      <div className="hidden shrink-0 text-right md:block">
-        <select
-          value={tz}
-          onChange={(e) => setTz(e.target.value)}
-          className="eyebrow block w-full appearance-none bg-transparent pr-2 text-right outline-none cursor-pointer hover:text-hi focus:ring-0"
-          title="Change timezone"
-          style={{ backgroundImage: 'none' }} /* hide default browser dropdown arrow */
-        >
-          {TIMEZONES.map((z) => (
-            <option
-              key={z.value}
-              value={z.value}
-              className="bg-[var(--surface-card)] text-[var(--ink-hi)]"
-            >
-              {z.label}
-            </option>
-          ))}
-        </select>
-        <div className="mono text-[13px] text-hi">{clock}</div>
+        {/* Profile Pill */}
+        <div className="flex items-center gap-2 pl-1">
+          <div className="h-7 w-7 rounded-lg bg-[var(--surface-ice)] border border-[var(--line)] text-[var(--ink-hi)] flex items-center justify-center font-bold text-xs shrink-0">
+            {user?.name ? user.name.slice(0, 2).toUpperCase() : 'PO'}
+          </div>
+          <div className="hidden xl:block text-left">
+            <div className="text-xs font-semibold text-[var(--ink-hi)] leading-tight truncate max-w-[100px]">
+              {user?.name || 'Operator'}
+            </div>
+            <div className="text-[10px] text-[var(--ink-low)] font-mono leading-tight">
+              {user?.role || 'Mission Officer'}
+            </div>
+          </div>
+        </div>
       </div>
     </header>
   )

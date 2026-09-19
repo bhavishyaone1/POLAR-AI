@@ -29,8 +29,8 @@ export const NAV_ITEMS = [
   /* ---------- 8 Primary Navigation Items ---------- */
   {
     id: 'dashboard',
-    label: 'Dashboard',
-    title: 'Mission Operations Dashboard',
+    label: 'Overview',
+    title: 'Mission Operations Overview',
     blurb: 'Continuous mission continuity intelligence, resource runway, and active risk telemetry.',
     icon: LayoutDashboard,
     group: 'Operations',
