@@ -137,6 +137,10 @@ export default function TopBar({
   const [profileOpen, setProfileOpen] = useState(false)
   const profileRef = useRef(null)
 
+  // AI Monitoring Center Popover State
+  const [aiMonitoringOpen, setAiMonitoringOpen] = useState(false)
+  const aiMonitoringRef = useRef(null)
+
   const selectedStation =
     POLAR_STATIONS.find((s) => s.id === selectedStationId) || POLAR_STATIONS[0]
 
@@ -169,6 +173,9 @@ export default function TopBar({
       }
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setProfileOpen(false)
+      }
+      if (aiMonitoringRef.current && !aiMonitoringRef.current.contains(event.target)) {
+        setAiMonitoringOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -347,6 +354,108 @@ export default function TopBar({
           RIGHT: Notifications, Profile Dropdown, RUN DEMO
           ============================================================ */}
       <div className="flex items-center gap-3 shrink-0">
+        {/* AI Monitoring Center Popover (Matching Master Prompt) */}
+        <div className="relative" ref={aiMonitoringRef}>
+          <button
+            type="button"
+            onClick={() => {
+              setAiMonitoringOpen(!aiMonitoringOpen)
+              setLocationOpen(false)
+              setProfileOpen(false)
+            }}
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-[#BFDDE7] bg-[#EAF6FA]/90 hover:bg-[#DDF3FA] px-2.5 py-1 text-xs font-semibold text-[#1597D4] transition shadow-2xs"
+            title="Click to view AI Mission Monitoring Subsystem Telemetry"
+          >
+            <Sparkles size={13} className="text-[#1597D4]" />
+            <span>AI MONITORING ACTIVE</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-[#1597D4] animate-pulse" />
+          </button>
+
+          {aiMonitoringOpen && (
+            <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-[#DCEAF1] bg-white p-4 shadow-2xl z-50 animate-fade-in text-left">
+              <div className="border-b border-[#DCEAF1] pb-3 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="h-7 w-7 rounded-lg bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center">
+                    <Sparkles size={14} />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[#102A43] uppercase tracking-wider font-mono">
+                      AI MISSION MONITORING
+                    </h4>
+                    <span className="text-[10.5px] text-[#526779]">
+                      Continuous Real-Time Telemetry
+                    </span>
+                  </div>
+                </div>
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              </div>
+
+              {/* Subsystem checks */}
+              <div className="py-2.5 space-y-1.5 text-xs divide-y divide-[#F1F7FA]">
+                {[
+                  { name: 'Cargo', status: 'Tracking 3 in-transit, 1 delayed', ok: true },
+                  { name: 'Inventory', status: '12.0d fuel runway vs 17.0d ETA', warn: true },
+                  { name: 'Assets', status: 'Primary Gen G-01 nominal (92% wear)', ok: true },
+                  { name: 'Mission Schedule', status: 'Expedition on track (Milestone 4/6)', ok: true },
+                  { name: 'Risks', status: '1 critical supply gap flagged', alert: true },
+                  { name: 'Incidents', status: '0 active SOS signals', ok: true },
+                ].map((sub) => (
+                  <div key={sub.name} className="flex items-center justify-between pt-1.5">
+                    <div>
+                      <span className="font-semibold text-[#102A43]">{sub.name}</span>
+                      <p className="text-[10px] text-[#526779]">{sub.status}</p>
+                    </div>
+                    <span className={`font-mono text-xs font-bold ${
+                      sub.alert ? 'text-rose-600' : sub.warn ? 'text-amber-600' : 'text-emerald-600'
+                    }`}>
+                      {sub.alert ? '⚠' : '✓'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Operational Activity Metadata */}
+              <div className="rounded-xl bg-[#F7FBFD] border border-[#DCEAF1] p-2.5 text-[11px] text-[#526779] space-y-1 my-2">
+                <div className="flex justify-between">
+                  <span>Last analysis:</span>
+                  <span className="font-mono font-semibold text-[#102A43]">2 minutes ago</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Active insights:</span>
+                  <span className="font-mono font-semibold text-[#1597D4]">4 operational</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Emerging risks:</span>
+                  <span className="font-mono font-semibold text-rose-600">2 flagged</span>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-[#DCEAF1] flex items-center justify-between gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAiMonitoringOpen(false)
+                    goTo && goTo('copilot')
+                  }}
+                  className="flex-1 text-center rounded-lg bg-[#1597D4] hover:bg-[#1282b8] text-white py-1.5 text-xs font-semibold shadow-2xs transition"
+                >
+                  Ask Copilot
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAiMonitoringOpen(false)
+                    goTo && goTo('risks')
+                  }}
+                  className="flex-1 text-center rounded-lg border border-[#DCEAF1] bg-white hover:bg-[#F7FBFD] text-[#102A43] py-1.5 text-xs font-semibold shadow-2xs transition"
+                >
+                  View Risks
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* System Online Status Pill (Matching Screenshot) */}
         <div className="hidden lg:flex items-center gap-1.5 px-2 py-1 text-xs font-semibold text-slate-700">
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />

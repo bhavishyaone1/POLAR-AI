@@ -587,6 +587,84 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
         ))}
       </div>
 
+      {/* ================= ✦ AI EMERGENCY ASSIST PANEL ================= */}
+      {selected && selected.status !== 'RESOLVED' && (
+        <div className="rounded-2xl border border-rose-200 bg-rose-50/40 p-5 shadow-xs transition hover:border-rose-300">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div className="flex items-start gap-3.5 min-w-0">
+              <div className="h-9 w-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
+                <ShieldAlert size={18} />
+              </div>
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2 mb-1">
+                  <span className="text-[10px] font-mono font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">
+                    ✦ AI EMERGENCY ASSIST
+                  </span>
+                  <span className="rounded-md border border-rose-200 bg-white px-2 py-0.5 text-[10.5px] font-mono font-semibold text-[#102A43]">
+                    Incident: <strong className="text-rose-600">{selected.id}</strong>
+                  </span>
+                  <span className="rounded-md border border-rose-200 bg-white px-2 py-0.5 text-[10.5px] font-mono font-semibold text-[#102A43]">
+                    Location: <strong>{selected.location || 'Maitri Sector B'}</strong>
+                  </span>
+                </div>
+                <h3 className="text-sm font-bold text-[#102A43]">
+                  Tactical Operational Assistance — Human Commander In Command
+                </h3>
+                <p className="mt-0.5 text-xs text-[#526779] leading-relaxed">
+                  Known casualty details: 1 person affected · Casualty conscious · Automated operational readiness checks completed below:
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => setActiveSubTab('board')}
+                className="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 text-xs font-semibold shadow-xs transition active:scale-95"
+              >
+                <CheckCircle2 size={13} />
+                <span>Review Response Plan</span>
+              </button>
+            </div>
+          </div>
+
+          {/* 4 Operational Readiness Checks */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mt-3.5 pt-3.5 border-t border-rose-200/60 text-xs">
+            <div className="p-2.5 rounded-xl bg-white border border-rose-100 flex items-start gap-2">
+              <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold text-[#102A43] block">Medical Team</span>
+                <span className="text-[11px] text-[#526779]">Dr. Anjali Kumar on duty</span>
+              </div>
+            </div>
+
+            <div className="p-2.5 rounded-xl bg-white border border-rose-100 flex items-start gap-2">
+              <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold text-[#102A43] block">Transport Ready</span>
+                <span className="text-[11px] text-[#526779]">PB-01 tracked (warmup 12m)</span>
+              </div>
+            </div>
+
+            <div className="p-2.5 rounded-xl bg-white border border-rose-100 flex items-start gap-2">
+              <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold text-[#102A43] block">Route Conditions</span>
+                <span className="text-[11px] text-[#526779]">Wind 28 kts, Vis 1.2 km (Safe)</span>
+              </div>
+            </div>
+
+            <div className="p-2.5 rounded-xl bg-white border border-rose-100 flex items-start gap-2">
+              <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold text-[#102A43] block">Facility Readiness</span>
+                <span className="text-[11px] text-[#526779]">Trauma Bay 1 on standby</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ================= TACTICAL SUB-NAVIGATION & ACTIONS ================= */}
       <div
         className="flex flex-wrap items-center justify-between gap-3 border-b pb-3"

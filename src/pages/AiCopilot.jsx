@@ -62,6 +62,16 @@ const COPILOT_KNOWLEDGE = {
     actionLabel: 'Inspect Risk Flow',
     actionTarget: 'risks',
   },
+  'Compare REC-001 vs REC-002': {
+    analysis:
+      'Comparative evaluation: Protocol REC-001 proposes Strategic Reserve Transfer (3,500 L) combined with Level-1 circuit shedding. Protocol REC-002 proposes Emergency C-130 Air-drop staging from Cape Town via Troll Station.',
+    impact:
+      'REC-001 carries 0% personnel hazard, 94% execution confidence, and extends runway from 12.0d to 16.8d. REC-002 costs 4.2x more fuel logistics and has a 42% abort risk due to Weddell Sea katabatic gusts.',
+    recommendation:
+      'Authorize REC-001 immediately as primary mitigation. Keep REC-002 on warm standby only if Weddell Sea weather degrades past Day 14.',
+    actionLabel: 'Open What-If Simulator',
+    actionTarget: 'simulator',
+  },
 }
 
 export default function AiCopilot({ goTo }) {
@@ -137,6 +147,7 @@ export default function AiCopilot({ goTo }) {
             'Why is this a risk?',
             'What happens if the shipment is delayed?',
             'What should the officer review?',
+            'Compare REC-001 vs REC-002',
           ].map((q) => {
             const isSelected = activeQuestion === q
             return (

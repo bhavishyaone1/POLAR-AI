@@ -40,6 +40,8 @@ import {
   Sliders,
   Sparkles,
   Users,
+  ShieldCheck,
+  X,
 } from 'lucide-react'
 import { useData } from '../store/DataContext'
 
@@ -47,6 +49,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
   const { continuityMetrics } = useData()
 
   const [mapZoom, setMapZoom] = useState(1)
+  const [showScoreBreakdown, setShowScoreBreakdown] = useState(false)
 
   const score = continuityMetrics?.score ?? 68
 
@@ -168,13 +171,13 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                 <p className="text-xs text-[#526779] leading-relaxed">
                   Fuel resupply may arrive after the current safe operating window.
                 </p>
-                <div>
+                <div className="flex items-center gap-3 pt-0.5">
                   <button
                     type="button"
-                    onClick={() => goTo('risks')}
+                    onClick={() => setShowScoreBreakdown(true)}
                     className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
                   >
-                    <span>View Details</span>
+                    <span>Why is my score {score}%?</span>
                     <ArrowRight size={12} />
                   </button>
                 </div>
@@ -260,15 +263,16 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                 Inventory
               </span>
               <h3 className="text-sm font-bold text-[#102A43] mt-0.5">
-                Fuel
+                Fuel Reserves
               </h3>
               <div className="text-xs font-semibold text-emerald-600 flex items-center gap-1 mt-1">
-                <span>12 days remaining</span>
+                <span>12.0 days remaining</span>
                 <ArrowDownRight size={13} />
               </div>
-              <p className="text-xs text-[#8295A5] mt-0.5">
-                Safe level: 4 days
-              </p>
+              <div className="text-[11px] text-[#526779] mt-1 space-y-0.5">
+                <p>Last Safe Resupply: <strong className="text-[#102A43] font-mono">Day 8</strong></p>
+                <p className="text-[10.5px] text-rose-500 font-semibold">Gap: 5.0d vs Cargo ETA (17d)</p>
+              </div>
             </div>
           </div>
 
@@ -313,6 +317,136 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
             >
               <span>View Assets</span>
+              <ArrowRight size={12} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ============================================================
+          2.5. AI MISSION BRIEFING & CHANGE DETECTION STRIP
+          ============================================================ */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        {/* Morning Operational Brief (7 cols) */}
+        <div className="lg:col-span-7 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between border-b border-[#F1F7FA] pb-3 mb-3">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#EAF6FA] text-[#1597D4] px-2 py-0.5 rounded border border-[#BFDDE7]">
+                  ✦ AI MISSION BRIEF
+                </span>
+                <span className="text-xs text-[#526779] font-medium">08:00 UTC · Station Cycle 42</span>
+              </div>
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Nominal Baseline
+              </span>
+            </div>
+
+            <h3 className="text-sm font-bold text-[#102A43]">
+              Daily Operations Briefing — 3 Items Require Review
+            </h3>
+            <p className="text-xs text-[#526779] mt-1 leading-relaxed">
+              No immediate distress signals active. Autonomous continuity monitoring has flagged an unhedged 5-day fuel window before Cargo C-104 arrival.
+            </p>
+
+            <div className="mt-3 space-y-2">
+              <div className="flex items-start gap-2 text-xs bg-[#F7FBFD] p-2.5 rounded-xl border border-[#EEF7FA]">
+                <span className="font-mono font-bold text-rose-600 shrink-0">01.</span>
+                <div className="min-w-0 flex-1">
+                  <strong className="text-[#102A43]">Fuel Resupply Deficit Window:</strong>
+                  <span className="text-[#526779] ml-1">Station holds 12.0d runway; Last Safe Resupply Date is Day 8. Cargo ETA is Day 17.</span>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2 text-xs bg-[#F7FBFD] p-2.5 rounded-xl border border-[#EEF7FA]">
+                <span className="font-mono font-bold text-amber-600 shrink-0">02.</span>
+                <div className="min-w-0 flex-1">
+                  <strong className="text-[#102A43]">Primary Generator G-021 Service:</strong>
+                  <span className="text-[#526779] ml-1">Run hours approaching 5,000h overhaul limit (60 operating hours remaining).</span>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2 text-xs bg-[#F7FBFD] p-2.5 rounded-xl border border-[#EEF7FA]">
+                <span className="font-mono font-bold text-[#1597D4] shrink-0">03.</span>
+                <div className="min-w-0 flex-1">
+                  <strong className="text-[#102A43]">Cargo C-104 Pack-Ice Hold:</strong>
+                  <span className="text-[#526779] ml-1">Vessel throttled to 3.2 kts through Prydz Bay leads; ETA pushed by +3 days.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-3.5 mt-3 border-t border-[#F1F7FA] flex items-center justify-between">
+            <span className="text-[11px] text-[#8295A5]">Zero unacknowledged distress events</span>
+            <button
+              type="button"
+              onClick={() => goTo('copilot')}
+              className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
+            >
+              <span>Ask AI Copilot for Full Review</span>
+              <ArrowRight size={12} />
+            </button>
+          </div>
+        </div>
+
+        {/* Change Detection (5 cols) */}
+        <div className="lg:col-span-5 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between border-b border-[#F1F7FA] pb-3 mb-3">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#F1F7FA] text-[#526779] px-2 py-0.5 rounded border border-[#DCEAF1]">
+                SINCE LAST REVIEW
+              </span>
+              <span className="text-[11px] text-[#8295A5] font-mono">Telemetry Δ 24h</span>
+            </div>
+
+            <h3 className="text-sm font-bold text-[#102A43]">
+              Autonomous Anomaly & Drift Tracking
+            </h3>
+
+            <div className="mt-3 divide-y divide-[#F1F7FA] text-xs">
+              <div className="py-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-rose-600 font-bold font-mono">↑ +8%</span>
+                  <span className="text-[#102A43] font-medium">Station Fuel Consumption</span>
+                </div>
+                <span className="text-[11px] text-[#526779]">Sub-zero blizzard heating</span>
+              </div>
+
+              <div className="py-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-amber-600 font-bold font-mono">↑ +3d</span>
+                  <span className="text-[#102A43] font-medium">Cargo C-104 Vessel ETA</span>
+                </div>
+                <span className="text-[11px] text-[#526779]">Prydz Bay sea-ice hold</span>
+              </div>
+
+              <div className="py-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-emerald-600 font-bold font-mono">✓ Done</span>
+                  <span className="text-[#102A43] font-medium">Gen G-01 Filter Servicing</span>
+                </div>
+                <span className="text-[11px] text-[#526779]">Logged by Eng. Rao</span>
+              </div>
+
+              <div className="py-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-rose-600 font-bold font-mono">⚠ RSK-001</span>
+                  <span className="text-[#102A43] font-medium">Resupply Deficit Flagged</span>
+                </div>
+                <span className="text-[11px] text-rose-600 font-semibold">Action Required</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-3 mt-2 border-t border-[#F1F7FA] flex items-center justify-between">
+            <span className="text-[11px] text-[#8295A5]">4 verified parameter shifts</span>
+            <button
+              type="button"
+              onClick={() => goTo('simulator')}
+              className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
+            >
+              <span>Simulate Scenario Impact</span>
               <ArrowRight size={12} />
             </button>
           </div>
@@ -815,6 +949,155 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           </div>
         </div>
       </section>
+
+      {/* ============================================================
+          5. EXPLAINABLE MISSION CONTINUITY SCORE BREAKDOWN MODAL
+          ============================================================ */}
+      {showScoreBreakdown && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-[#0A1926]/35 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+            onClick={() => setShowScoreBreakdown(false)}
+            aria-hidden="true"
+          />
+
+          {/* Modal Panel */}
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mission Continuity Score Explanation"
+            className="relative z-10 w-full max-w-xl rounded-2xl border border-[#DCEAF1] bg-white p-6 shadow-2xl animate-in zoom-in-95 duration-200"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-[#DCEAF1] pb-4">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-xl bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center">
+                  <Sparkles size={16} />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#102A43]">
+                    Mission Continuity Breakdown
+                  </h3>
+                  <p className="text-xs text-[#526779]">
+                    Why is the station score calculated at {score}%?
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowScoreBreakdown(false)}
+                className="rounded-xl p-1.5 text-[#526779] hover:bg-[#F0F8FB] hover:text-[#102A43] transition"
+                aria-label="Close modal"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Score Ring & Summary */}
+            <div className="my-4 p-4 rounded-xl bg-[#F7FBFD] border border-[#DCEAF1] flex items-center gap-4">
+              <div className="h-14 w-14 rounded-full bg-white border-2 border-[#1597D4] text-[#102A43] font-mono font-extrabold text-xl flex items-center justify-center shrink-0 shadow-2xs">
+                {score}%
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-xs font-bold text-[#102A43] uppercase tracking-wider">
+                  Stable with Emerging Resupply Risk
+                </div>
+                <p className="text-xs text-[#526779] mt-0.5 leading-relaxed">
+                  Formula: Baseline 85% + Positive Factors (+5%) - Negative Risk Deductions (-22%) = 68%
+                </p>
+              </div>
+            </div>
+
+            {/* Contributor items */}
+            <div className="space-y-2 text-xs">
+              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#8295A5] mb-1">
+                Active Contributors & Deductions:
+              </div>
+
+              {[
+                {
+                  label: 'Fuel Resupply Risk',
+                  val: '-12%',
+                  type: 'neg',
+                  detail: '14,200 L reserve (12.0d) vs Cargo C-104 ETA (17d) leaves an unhedged 5-day blackout gap.',
+                },
+                {
+                  label: 'Cargo Sea-Ice Delay',
+                  val: '-6%',
+                  type: 'neg',
+                  detail: 'Vessel C-104 throttled to 3.2 kts by fast sea-ice in Prydz Bay lead.',
+                },
+                {
+                  label: 'Asset Maintenance Threshold',
+                  val: '-4%',
+                  type: 'neg',
+                  detail: 'Secondary Gen G-021 has 60 operating hours remaining before overhaul limit.',
+                },
+                {
+                  label: 'Personnel Readiness',
+                  val: '+2%',
+                  type: 'pos',
+                  detail: '100% of wintering team medically fit with active satellite check-in compliance.',
+                },
+                {
+                  label: 'SATCOM & Microgrid Stability',
+                  val: '+3%',
+                  type: 'pos',
+                  detail: 'Continuous telemetry telemetry uplink active; station base-load microgrid running nominal.',
+                },
+              ].map((c, i) => (
+                <div
+                  key={i}
+                  className="p-2.5 rounded-xl border border-[#EEF7FA] bg-[#F7FBFD] flex items-start justify-between gap-3"
+                >
+                  <div className="min-w-0">
+                    <div className="font-semibold text-[#102A43]">{c.label}</div>
+                    <div className="text-[11px] text-[#526779] mt-0.5 leading-tight">{c.detail}</div>
+                  </div>
+                  <span
+                    className={`font-mono font-bold text-xs shrink-0 px-2 py-0.5 rounded-md ${
+                      c.type === 'neg'
+                        ? 'bg-rose-100 text-rose-700'
+                        : 'bg-emerald-100 text-emerald-700'
+                    }`}
+                  >
+                    {c.val}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Actions footer */}
+            <div className="mt-5 pt-4 border-t border-[#DCEAF1] flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowScoreBreakdown(false)
+                  goTo('copilot')
+                }}
+                className="inline-flex items-center gap-1.5 rounded-xl border border-[#DCEAF1] bg-white px-3.5 py-2 text-xs font-semibold text-[#102A43] hover:bg-[#F0F8FB] transition shadow-xs"
+              >
+                <Sparkles size={13} className="text-[#1597D4]" />
+                <span>Ask AI for Mitigation</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setShowScoreBreakdown(false)
+                  goTo('simulator')
+                }}
+                className="inline-flex items-center gap-1.5 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white px-4 py-2 text-xs font-semibold shadow-xs transition"
+              >
+                <Sliders size={13} />
+                <span>Simulate Delay (+5d)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -32,90 +32,112 @@ import { useData } from '../store/DataContext'
 export const DEMO_STAGES = [
   {
     stageId: '01',
-    stageLabel: '01 Mission',
+    stageLabel: '01 Monitor',
     stepNumber: 1,
-    title: 'Mission Operating Normally',
+    title: 'Mission Healthy',
     headline: 'Standard Polar Station Operations',
     summary:
       'Maitri Station is operating under standard polar routines. Baseline mission continuity sits at 68% ("Stable with emerging resupply risk") as autonomous logistics engines monitor incoming flights and maritime corridors.',
     targetView: 'dashboard',
-    actionText: 'Detect Resupply Window',
+    actionText: 'Track Resupply Fleet',
   },
   {
     stageId: '01',
-    stageLabel: '01 Mission',
+    stageLabel: '01 Monitor',
     stepNumber: 2,
-    title: 'Fuel Resupply Mismatch Detected',
-    headline: 'Schedule & Runway Disparity Identified',
+    title: 'Fuel Delay Detected',
+    headline: 'Cargo Vessel C-101 Schedule Slip',
     summary:
-      'The engine flags an imminent schedule mismatch: Station diesel fuel tank has only 12.0 days remaining, but incoming resupply cargo C-101 ETA is 17.0 days. A 5-day unhedged gap is forming.',
-    targetView: 'dashboard',
-    actionText: 'Inspect Emerging Risk',
+      'Maritime corridor telemetry detects pack-ice thickening in the Weddell Sea. Inbound vessel C-101 schedule slips by +3 days. Station diesel tank holds 14,200L (12.0d runway at 1,180 L/d burn).',
+    targetView: 'cargo',
+    actionText: 'Detect Emerging Risk',
   },
   {
     stageId: '02',
-    stageLabel: '02 Risk',
+    stageLabel: '02 Detect',
     stepNumber: 3,
-    title: 'Show Risk',
-    headline: '5-Day Operating Deficit Flagged',
+    title: 'AI Detects Emerging Risk',
+    headline: 'Autonomous Risk RSK-001 Flagged',
     summary:
-      'Risk RSK-001 is triggered: A critical 5-day shortage gap will occur before resupply arrives. Station safe operating buffer (14 days) is officially breached.',
+      'Global AI monitoring detects that incoming cargo ETA has slipped to Day 17 while station reserves are burning down. Risk RSK-001 is automatically raised with HIGH priority.',
     targetView: 'risks',
-    actionText: 'Trace Dependency Chain',
+    actionText: 'Calculate Supply Gap',
+  },
+  {
+    stageId: '02',
+    stageLabel: '02 Detect',
+    stepNumber: 4,
+    title: 'System Predicts Supply Gap',
+    headline: '5-Day Unhedged Deficit Window',
+    summary:
+      'Mathematical depletion analysis calculates the Last Safe Resupply Date as Day 8 (reserves minus 4-day critical safety buffer). With arrival on Day 17, an unhedged 5.0-day blackout gap is confirmed.',
+    targetView: 'inventory',
+    actionText: 'Trace Cascading Impact',
   },
   {
     stageId: '03',
-    stageLabel: '03 Impact',
-    stepNumber: 4,
-    title: 'Show Dependency Chain',
-    headline: 'Causal Chain Reaction Analysis',
+    stageLabel: '03 Cascade',
+    stepNumber: 5,
+    title: 'Causal Impact Cascade',
+    headline: 'Fuel → Generator → Power → Heating → Research',
     summary:
-      'Scientific system diagram traces the cascade: FUEL → GENERATOR → POWER → HEATING → RESEARCH OPERATIONS. A logistics shipping delay threatens station life support.',
+      'Scientific system diagram traces the cross-system failure cascade: Fuel starvation forces primary Generator G-01 offline, cutting microgrid power, collapsing habitat heating, and threatening cryogenic ice-core samples.',
     targetView: 'risks',
     actionText: 'Open What-If Simulator',
   },
   {
     stageId: '04',
-    stageLabel: '04 Simulation',
-    stepNumber: 5,
-    title: 'Open Simulator',
-    headline: 'Simulate +5 Days Blizzard Delay',
+    stageLabel: '04 Simulate',
+    stepNumber: 6,
+    title: 'What-If Simulation (+5d Delay)',
+    headline: 'Non-Mutating Sandbox Stress Test',
     summary:
-      'Testing hypothetical severe weather in the non-mutating sandbox: Adding +5 days cargo delay drops mission continuity score from 68% down to 51%, doubling the deficit gap to 10 days.',
+      'Hypothetical +5 day blizzard delay is injected into the sandbox: Mission Continuity Score plummets from 68% down to 51%, doubling the life-support deficit to 10 days without altering live telemetry.',
     targetView: 'simulator',
-    actionText: 'Review AI Mitigations',
+    actionText: 'Compare AI Mitigations',
   },
   {
     stageId: '05',
-    stageLabel: '05 Decision',
-    stepNumber: 6,
-    title: 'AI Copilot Explains Mitigation',
-    headline: 'Human-in-the-Loop Decision Authorization',
+    stageLabel: '05 Decide',
+    stepNumber: 7,
+    title: 'AI Mitigation Comparison',
+    headline: 'REC-001 vs REC-002 Trade-Off Analysis',
     summary:
-      'AI Copilot delivers structured decision-support: Protocol REC-001 transfers 3,500L from strategic reserves and sheds non-critical circuits, extending runway to 16.8 days. Officer reviews tradeoffs.',
+      'AI Copilot presents structured decision-support: Protocol REC-001 (Reserve Transfer + Level-1 load shedding) extends runway to 16.8 days with zero human risk; REC-002 (Air-drop) entails 42% abort probability.',
     targetView: 'copilot',
-    actionText: 'Authorize Action & View Audit',
+    actionText: 'Human Officer Review',
+  },
+  {
+    stageId: '05',
+    stageLabel: '05 Decide',
+    stepNumber: 8,
+    title: 'Human Review & Sign-Off',
+    headline: 'Human-in-the-Loop Mission Governance',
+    summary:
+      'AI provides rationale and predictive confidence (94%), but the mission commander retains exclusive execution authority. Officer authorizes Protocol REC-001 with full accountability.',
+    targetView: 'copilot',
+    actionText: 'Authorize & Stamp Ledger',
     autoApprove: true,
   },
   {
     stageId: '05',
-    stageLabel: '05 Decision',
-    stepNumber: 7,
-    title: 'Cryptographic Audit Trail',
-    headline: 'Immutable Human Decision Logged',
+    stageLabel: '05 Decide',
+    stepNumber: 9,
+    title: 'Decision Stamped in Audit Ledger',
+    headline: 'Immutable Cryptographic Record',
     summary:
-      'The approved mitigation is committed to the tamper-evident cryptographic ledger: Officer signature, protocol payload, and sha256 block hash recorded permanently for governance.',
+      'The mitigation order is cryptographically signed and stamped into the SHA-256 tamper-evident ledger with timestamp, officer identity, and state delta. Microgrid and logistics systems synchronize.',
     targetView: 'audit',
-    actionText: 'Complete Guided Demo',
+    actionText: 'Complete Guided Tour',
   },
 ]
 
 const PROGRESS_PILLARS = [
-  { id: '01', label: '01 Mission', steps: [1, 2] },
-  { id: '02', label: '02 Risk', steps: [3] },
-  { id: '03', label: '03 Impact', steps: [4] },
-  { id: '04', label: '04 Simulation', steps: [5] },
-  { id: '05', label: '05 Decision', steps: [6, 7] },
+  { id: '01', label: '01 Monitor', steps: [1, 2] },
+  { id: '02', label: '02 Detect', steps: [3, 4] },
+  { id: '03', label: '03 Cascade', steps: [5] },
+  { id: '04', label: '04 Simulate', steps: [6] },
+  { id: '05', label: '05 Decide', steps: [7, 8, 9] },
 ]
 
 export default function GuidedDemoTour({ isOpen, onClose, goTo }) {
@@ -212,7 +234,7 @@ export default function GuidedDemoTour({ isOpen, onClose, goTo }) {
         {/* Content */}
         <div className="space-y-1.5">
           <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--ink-low)]">
-            Step 0{activeStep.stepNumber} of 06 · {activeStep.title}
+            Step 0{activeStep.stepNumber} of 09 · {activeStep.title}
           </div>
           <h3 className="text-base font-bold text-[var(--ink-hi)] leading-snug">
             {activeStep.headline}

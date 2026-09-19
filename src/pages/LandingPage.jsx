@@ -37,46 +37,52 @@ import {
   ShieldCheck,
   Sliders,
   Sparkles,
+  Zap,
 } from 'lucide-react'
 
 export default function LandingPage({ goTo, onStartGuidedDemo }) {
   const processSteps = [
-    { step: '01', title: 'TRACK', desc: 'Consumables, fuel burn & cargo schedules' },
-    { step: '02', title: 'DETECT', desc: 'Supply window gaps & safe buffer breaches' },
-    { step: '03', title: 'UNDERSTAND', desc: 'Cascading chain: Fuel → Gen → Power → Science' },
-    { step: '04', title: 'SIMULATE', desc: 'Non-mutating what-if disruption scenarios' },
-    { step: '05', title: 'DECIDE', desc: 'Actionable mitigations with officer sign-off' },
+    { step: '01', title: 'TRACK', desc: 'Continuous observation of consumables, fuel burn & cargo manifests' },
+    { step: '02', title: 'DETECT', desc: 'Identify emerging anomalies & schedule disparities before they escalate' },
+    { step: '03', title: 'PREDICT', desc: 'Calculate depletion horizons, supply gaps & last safe resupply dates' },
+    { step: '04', title: 'UNDERSTAND', desc: 'Connect cascading dependencies: Fuel → Generator → Power → Heating' },
+    { step: '05', title: 'SIMULATE', desc: 'Explore what-if scenarios in a non-mutating sandbox before deciding' },
+    { step: '06', title: 'DECIDE', desc: 'Human-in-the-loop decision authorization recorded in audit ledger' },
   ]
 
   return (
     <div className="max-w-5xl mx-auto space-y-12 pb-20">
       {/* ============================================================
-          HERO SECTION
+          HERO SECTION — MISSION CONTINUITY INTELLIGENCE
           ============================================================ */}
-      <section className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-8 md:p-12 shadow-xs space-y-6 text-center sm:text-left">
-        <div className="inline-flex items-center gap-2 rounded-full bg-[#EEF9FC] border border-[#DDF3FA] px-3 py-1 text-xs font-mono font-semibold text-[#1597D4]">
+      <section className="rounded-2xl border border-[#DCEAF1] bg-white p-6 sm:p-10 md:p-14 shadow-xs space-y-6 text-center sm:text-left">
+        <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF6FA] border border-[#BFDDE7] px-3.5 py-1 text-xs font-mono font-semibold text-[#1597D4]">
           <Sparkles size={13} />
-          <span>POLAR-AI · Centralized Mission Operations Platform</span>
+          <span>POLAR-AI · MISSION CONTINUITY OPERATING SYSTEM</span>
         </div>
 
         <div className="space-y-3">
-          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight text-[#12263A] leading-tight">
-            Centralized digital platform
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#102A43] leading-[1.1]">
+            Mission continuity intelligence
             <br />
-            <span className="text-[#1597D4]">for polar mission operations.</span>
+            <span className="text-[#1597D4]">for extreme environments.</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-[#526779] max-w-3xl leading-relaxed">
+          <p className="text-base sm:text-lg text-[#526779] max-w-3xl leading-relaxed font-medium">
+            See the risk. Understand the impact. Simulate the future. Make the decision.
+          </p>
+
+          <p className="text-xs sm:text-sm text-[#8295A5] max-w-2xl leading-relaxed">
             A centralized digital platform for <strong>expedition planning</strong>, <strong>cargo tracking</strong>, <strong>inventory management</strong>, <strong>personnel movement</strong>, and <strong>emergency response</strong> in extreme Antarctic environments.
           </p>
         </div>
 
         {/* Hero Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center sm:justify-start gap-3 pt-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center sm:justify-start gap-3.5 pt-3">
           <button
             type="button"
             onClick={onStartGuidedDemo}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white font-semibold px-6 py-3 sm:py-2.5 text-xs shadow-xs transition active:scale-95"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white font-semibold px-7 py-3 text-xs shadow-xs transition active:scale-95"
           >
             <Play size={13} className="fill-white" />
             <span>RUN DEMO</span>
@@ -85,7 +91,7 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           <button
             type="button"
             onClick={() => goTo('dashboard')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[#DDEAF0] bg-white hover:bg-[#F0F8FB] text-[#12263A] font-semibold px-5 py-3 sm:py-2.5 text-xs shadow-xs transition"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[#DCEAF1] bg-white hover:bg-[#F0F8FB] text-[#102A43] font-semibold px-6 py-3 text-xs shadow-xs transition"
           >
             <span>EXPLORE PLATFORM</span>
             <ArrowRight size={13} />
@@ -297,26 +303,26 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           </h2>
         </div>
 
-        {/* Desktop 5-step horizontal flow */}
-        <div className="hidden lg:grid grid-cols-5 gap-3">
+        {/* Desktop 6-step horizontal flow */}
+        <div className="hidden lg:grid grid-cols-6 gap-2.5">
           {processSteps.map((step, idx) => {
             const isLast = idx === processSteps.length - 1
             return (
               <div key={step.step} className="relative">
-                <div className="rounded-xl border border-[var(--line)] bg-white p-5 space-y-2 h-full shadow-2xs">
-                  <span className="text-[10px] font-mono font-bold text-[var(--ice)] block">
+                <div className="rounded-xl border border-[#DCEAF1] bg-white p-4 space-y-2 h-full shadow-2xs">
+                  <span className="text-[10px] font-mono font-bold text-[#1597D4] block">
                     {step.step}
                   </span>
-                  <h3 className="text-sm font-bold text-[var(--ink-hi)] tracking-tight">
+                  <h3 className="text-sm font-bold text-[#102A43] tracking-tight">
                     {step.title}
                   </h3>
-                  <p className="text-xs text-[var(--ink-mid)] leading-relaxed">
+                  <p className="text-[11px] text-[#526779] leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
                 {!isLast && (
-                  <div className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 hidden lg:flex text-[var(--ice)]">
-                    <ArrowRight size={14} strokeWidth={2.5} />
+                  <div className="absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 hidden lg:flex text-[#1597D4]">
+                    <ArrowRight size={13} strokeWidth={2.5} />
                   </div>
                 )}
               </div>
@@ -326,17 +332,17 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
 
         {/* Mobile vertical flow */}
         <div className="lg:hidden space-y-2.5">
-          {processSteps.map((step, idx) => (
+          {processSteps.map((step) => (
             <div
               key={step.step}
-              className="rounded-xl border border-[var(--line)] bg-white p-4 flex items-start gap-3 shadow-2xs"
+              className="rounded-xl border border-[#DCEAF1] bg-white p-4 flex items-start gap-3 shadow-2xs"
             >
-              <div className="h-7 w-7 rounded-lg bg-[var(--surface-ice)] text-[var(--ice)] font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+              <div className="h-7 w-7 rounded-lg bg-[#EAF6FA] text-[#1597D4] font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                 {step.step}
               </div>
               <div>
-                <h3 className="text-sm font-bold text-[var(--ink-hi)]">{step.title}</h3>
-                <p className="text-xs text-[var(--ink-mid)] mt-0.5">{step.desc}</p>
+                <h3 className="text-sm font-bold text-[#102A43]">{step.title}</h3>
+                <p className="text-xs text-[#526779] mt-0.5">{step.desc}</p>
               </div>
             </div>
           ))}
@@ -344,20 +350,86 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
       </section>
 
       {/* ============================================================
+          USP SECTION — FROM DATA TO DECISION
+          ============================================================ */}
+      <section className="rounded-2xl border border-[#DCEAF1] bg-white p-6 sm:p-10 shadow-xs space-y-6">
+        <div className="max-w-3xl space-y-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1597D4] block">
+            CENTRAL ARCHITECTURAL USP
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#102A43]">
+            From Isolated Data to Mission Continuity Intelligence
+          </h2>
+          <p className="text-sm text-[#526779] leading-relaxed">
+            Traditional expedition systems tell you what is happening in isolated dashboards. POLAR-AI helps you understand what it means, predict what could happen next, see what it could affect, simulate possible futures, and decide what to do.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+          {/* Traditional Systems Silo */}
+          <div className="rounded-xl border border-slate-200 bg-[#F7FBFD] p-5 space-y-3">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#8295A5] block">
+              Traditional Systems: Disconnected Silos
+            </span>
+            <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#526779]">
+                📦 Cargo Manifest
+              </div>
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#526779]">
+                🛢️ Fuel Tanks
+              </div>
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#526779]">
+                ⚙️ Generator Hours
+              </div>
+              <div className="p-2.5 rounded-lg bg-white border border-slate-200 text-[#526779]">
+                👥 Personnel Roster
+              </div>
+            </div>
+            <p className="text-xs text-[#8295A5] italic leading-relaxed pt-1">
+              "Fuel is low, but no system calculates that incoming cargo is 5 days too late to prevent a generator microgrid blackout."
+            </p>
+          </div>
+
+          {/* POLAR-AI Intelligence Engine */}
+          <div className="rounded-xl border border-[#BFDDE7] bg-[#EAF6FA]/40 p-5 space-y-3">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1597D4] block">
+              POLAR-AI: Mission Continuity Intelligence
+            </span>
+            <div className="rounded-lg bg-white p-3.5 border border-[#DCEAF1] space-y-2 text-xs">
+              <div className="flex items-center justify-between font-mono text-[11px]">
+                <span className="font-bold text-[#1597D4]">Cargo + Inventory + Assets + Schedule</span>
+              </div>
+              <div className="text-center font-bold text-[#1597D4] text-xs">↓</div>
+              <div className="font-semibold text-[#102A43] text-[11.5px] bg-[#EAF6FA] p-1.5 rounded text-center">
+                Mission Continuity Intelligence Engine
+              </div>
+              <div className="text-center font-bold text-[#1597D4] text-xs">↓</div>
+              <div className="text-[#526779] text-[11px] leading-tight text-center font-mono">
+                Prediction (5d gap) → Cascading Impact → Simulation → Human Sign-off
+              </div>
+            </div>
+            <p className="text-xs text-[#1597D4] font-semibold leading-relaxed pt-1">
+              "Detects the mismatch 12 days early, simulates the cascade, and prepares fuel-shedding protocols with officer sign-off."
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
           FINAL TAGLINE
           ============================================================ */}
-      <footer className="rounded-2xl border border-[var(--line)] bg-[var(--surface-base)] p-8 text-center space-y-3">
-        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ice)] block">
-          POLAR-AI
+      <footer className="rounded-2xl border border-[#DCEAF1] bg-[#F7FBFD] p-8 text-center space-y-3">
+        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1597D4] block">
+          POLAR-AI MISSION MOTTO
         </span>
-        <blockquote className="text-lg sm:text-xl font-bold tracking-tight text-[var(--ink-hi)] max-w-2xl mx-auto">
+        <blockquote className="text-lg sm:text-xl font-bold tracking-tight text-[#102A43] max-w-2xl mx-auto">
           "See the risk. Understand the impact. Simulate the future. Make the decision."
         </blockquote>
         <div className="pt-2">
           <button
             type="button"
             onClick={onStartGuidedDemo}
-            className="inline-flex items-center gap-2 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-5 py-2 text-xs shadow-xs transition active:scale-95"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white font-semibold px-6 py-2.5 text-xs shadow-xs transition active:scale-95"
           >
             <Play size={12} className="fill-white" />
             <span>START GUIDED DEMO</span>
