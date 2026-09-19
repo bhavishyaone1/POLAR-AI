@@ -146,31 +146,85 @@ export default function Expeditions({ goTo }) {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-7">
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#DDEAF0]">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#1597D4] bg-[#DDF3FA] px-2 py-0.5 rounded-full">
+              EXPEDITION PLANNING &amp; MISSION CONTROL
+            </span>
+            <span className="text-[11px] text-[#8495A3] font-mono">INDIAN ANTARCTIC PROGRAM</span>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-[#12263A]">Expedition Planning &amp; Operations</h1>
+          <p className="text-xs text-[#526779] mt-0.5">
+            Active scientific expeditions, traverse schedules, milestone tracking, and assigned teams across Antarctica.
+          </p>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <button
+            type="button"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3.5 py-2 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
+            onClick={() => goTo('map')}
+          >
+            <Compass size={14} className="text-[#1597D4]" />
+            <span>Tactical Map</span>
+          </button>
+          {canManage && (
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white px-3.5 py-2 text-xs font-semibold shadow-xs transition"
+              onClick={() => setShowForm((prev) => !prev)}
+            >
+              <Plus size={14} />
+              <span>Plan Expedition</span>
+            </button>
+          )}
+        </div>
+      </div>
+
       {/* ---------- Summary strip ---------- */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:gap-5 sm:grid-cols-4">
         {[
-          { label: 'Total', value: expeditions.length, tone: undefined },
+          { label: 'Total Expeditions', value: expeditions.length, hint: 'All registered missions' },
           {
-            label: 'Active',
+            label: 'Active Missions',
             value: expeditions.filter((e) => e.status === 'ACTIVE').length,
             tone: 'ok',
+            hint: 'Field & station active',
           },
           {
-            label: 'Planning',
+            label: 'Planning Phase',
             value: expeditions.filter((e) => e.status === 'PLANNING').length,
-            tone: undefined,
+            tone: 'info',
+            hint: 'Route & logistics review',
           },
           {
-            label: 'Completed',
+            label: 'Completed Expeditions',
             value: expeditions.filter((e) => e.status === 'COMPLETED').length,
-            tone: undefined,
+            hint: 'Successfully demobilized',
           },
         ].map((item) => (
-          <div key={item.label} className="card-tight">
-            <div className="eyebrow">{item.label}</div>
-            <div className={`stat-value ${item.tone ? `stat-value--${item.tone}` : ''}`}>
+          <div
+            key={item.label}
+            className="rounded-2xl border border-[#DDEAF0] bg-white p-4 sm:p-5 shadow-xs transition hover:border-[#BFDDE7]"
+          >
+            <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#8495A3] mb-1">
+              {item.label}
+            </div>
+            <div
+              className={`text-2xl sm:text-3xl font-bold font-mono tracking-tight ${
+                item.tone === 'ok'
+                  ? 'text-[#18A878]'
+                  : item.tone === 'info'
+                  ? 'text-[#1597D4]'
+                  : 'text-[#12263A]'
+              }`}
+            >
               {item.value}
+            </div>
+            <div className="text-[11px] text-[#526779] mt-1 truncate">
+              {item.hint}
             </div>
           </div>
         ))}

@@ -359,46 +359,108 @@ export default function Personnel({ goTo }) {
     : null
 
   return (
-    <div className="space-y-5">
-      {/* ============================================================
-          1. SUMMARY STRIP
-          ============================================================ */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {summary.map((item) => (
-          <div key={item.label} className="card-tight">
-            <div className="eyebrow">{item.label}</div>
-            <div className={`stat-value ${item.tone ? `stat-value--${item.tone}` : ''}`}>
+    <div className="space-y-7">
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#DDEAF0]">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#1597D4] bg-[#DDF3FA] px-2 py-0.5 rounded-full">
+              PERSONNEL MOVEMENT &amp; FIELD ROSTER
+            </span>
+            <span className="text-[11px] text-[#8495A3] font-mono">ACTIVE DEPLOYMENTS</span>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-[#12263A]">Personnel Movement &amp; Deployments</h1>
+          <p className="text-xs text-[#526779] mt-0.5">
+            Real-time roster tracking, field camp movements, satellite check-ins, and medical clearance across Antarctic sectors.
+          </p>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <button
+            type="button"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3.5 py-2 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
+            onClick={() => goTo('map')}
+          >
+            <MapPin size={14} className="text-[#1597D4]" />
+            <span>Field Map</span>
+          </button>
+          {canManage && (
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white px-3.5 py-2 text-xs font-semibold shadow-xs transition"
+              onClick={() => setShowForm((prev) => !prev)}
+            >
+              <UserPlus size={14} />
+              <span>Deploy Personnel</span>
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* ================= 1. SUMMARY STRIP ================= */}
+      <div className="grid grid-cols-2 gap-4 sm:gap-5 sm:grid-cols-3 lg:grid-cols-5">
+        {[
+          { label: 'On Roster', value: stats.personnelTotal, hint: 'All registered personnel' },
+          { label: 'Active on Duty', value: countStatus('ACTIVE'), tone: 'ok', hint: 'Station & field active' },
+          { label: 'In Transit', value: countStatus('IN_TRANSIT'), tone: countStatus('IN_TRANSIT') > 0 ? 'info' : undefined, hint: 'Traverses & air corridors' },
+          { label: 'Resting / Off Duty', value: countStatus('RESTING') + countStatus('OFF_DUTY'), hint: 'Habitation modules' },
+          {
+            label: 'Emergency Flag',
+            value: stats.personnelEmergency,
+            tone: stats.personnelEmergency > 0 ? 'alert' : undefined,
+            hint: stats.personnelEmergency > 0 ? 'Urgent attention required' : 'Zero active distress',
+          },
+        ].map((item) => (
+          <div
+            key={item.label}
+            className="rounded-2xl border border-[#DDEAF0] bg-white p-4 sm:p-5 shadow-xs transition hover:border-[#BFDDE7]"
+          >
+            <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#8495A3] mb-1">
+              {item.label}
+            </div>
+            <div
+              className={`text-2xl sm:text-3xl font-bold font-mono tracking-tight ${
+                item.tone === 'ok'
+                  ? 'text-[#18A878]'
+                  : item.tone === 'alert'
+                  ? 'text-[#E5484D]'
+                  : item.tone === 'info'
+                  ? 'text-[#1597D4]'
+                  : 'text-[#12263A]'
+              }`}
+            >
               {item.value}
+            </div>
+            <div className="text-[11px] text-[#526779] mt-1 truncate">
+              {item.hint}
             </div>
           </div>
         ))}
       </div>
 
-      {/* ============================================================
-          2. EMERGENCY NOTICE
-          Only shown when somebody is actually in that state.
-          ============================================================ */}
+      {/* ================= 2. EMERGENCY NOTICE ================= */}
       {stats.personnelEmergency > 0 && (
-        <div className="alert-strip">
-          <Siren size={17} strokeWidth={2} className="pulse mt-0.5 shrink-0 text-[var(--red)]" />
-          <div className="min-w-0 flex-1 text-[12.5px] text-mid">
-            <strong className="text-hi">
-              {stats.personnelEmergency} team member
-              {stats.personnelEmergency === 1 ? '' : 's'} flagged EMERGENCY
-            </strong>{' '}
-            —{' '}
-            {personnel
-              .filter((p) => p.status === 'EMERGENCY')
-              .map((p) => `${p.name} (${p.id})`)
-              .join(', ')}
-            . Select them below to see the incident.
+        <div className="rounded-2xl border border-rose-200 bg-rose-50/70 p-4 shadow-xs flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="h-8 w-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0">
+              <Siren size={17} className="animate-pulse" />
+            </div>
+            <div className="min-w-0 text-xs text-[#526779]">
+              <strong className="text-rose-800 font-bold">
+                {stats.personnelEmergency} team member{stats.personnelEmergency === 1 ? '' : 's'} flagged EMERGENCY:
+              </strong>{' '}
+              {personnel
+                .filter((p) => p.status === 'EMERGENCY')
+                .map((p) => `${p.name} (${p.id})`)
+                .join(', ')}
+              . Select them in the roster to review incident telemetry.
+            </div>
           </div>
           <button
             type="button"
-            className="btn btn--alert btn--sm shrink-0"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white px-3.5 py-1.5 text-xs font-semibold shrink-0 shadow-xs transition"
             onClick={() => goTo('emergency')}
           >
-            Response
+            <span>Response Center</span>
           </button>
         </div>
       )}

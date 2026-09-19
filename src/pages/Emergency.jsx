@@ -486,36 +486,102 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
   const resolve = (id) => updateEmergency(id, { status: 'RESOLVED' })
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-7">
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#DDEAF0]">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
+              CRITICAL INCIDENT COMMAND
+            </span>
+            <span className="text-[11px] text-[#8495A3] font-mono">DISTRESS FREQUENCY 406 MHZ</span>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-[#12263A]">Emergency Response &amp; Incident Dispatch</h1>
+          <p className="text-xs text-[#526779] mt-0.5">
+            Autonomous spatial triage, armed SOS broadcast management, search-and-rescue readiness, and field radio communications.
+          </p>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenSos?.()}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white px-3.5 py-2 text-xs font-semibold shadow-xs transition active:scale-95"
+          >
+            <ShieldAlert size={14} className="animate-pulse" />
+            <span>ACTIVATE ARMED SOS</span>
+          </button>
+          {!showForm && (
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3.5 py-2 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
+              onClick={() => {
+                setShowForm(true)
+                setActiveSubTab('board')
+              }}
+            >
+              <Plus size={14} />
+              <span>Report Incident</span>
+            </button>
+          )}
+        </div>
+      </div>
+
       {/* ================= 1. SUMMARY STRIP ================= */}
       <div className="grid grid-cols-2 gap-4 sm:gap-5 sm:grid-cols-3 lg:grid-cols-5">
         {[
-          { label: 'Open incidents', value: openIncidents.length, tone: openIncidents.length ? 'alert' : 'ok' },
+          {
+            label: 'Open Incidents',
+            value: openIncidents.length,
+            tone: openIncidents.length ? 'alert' : 'ok',
+            hint: openIncidents.length ? 'Active operational incidents' : 'All clear across stations',
+          },
           {
             label: 'Unacknowledged',
             value: unacknowledged.length,
             tone: unacknowledged.length ? 'alert' : 'ok',
+            hint: unacknowledged.length ? 'Requires immediate pickup' : 'All incidents assigned',
           },
           {
-            label: 'Responding',
+            label: 'Responding Teams',
             value: emergencies.filter((e) => e.status === 'RESPONDING').length,
             tone: 'warn',
+            hint: 'En route / field operations',
           },
           {
-            label: 'Resolved',
+            label: 'Resolved Incidents',
             value: emergencies.filter((e) => e.status === 'RESOLVED').length,
             tone: 'ok',
+            hint: 'Secured & debriefed',
           },
           {
-            label: 'Longest open',
+            label: 'Longest Active',
             value: oldestOpen ? duration(oldestOpen.reported_at, now) : '—',
             tone: openIncidents.length ? 'alert' : undefined,
+            hint: 'Incident duration clock',
           },
         ].map((item) => (
-          <div key={item.label} className="card-tight">
-            <div className="eyebrow">{item.label}</div>
-            <div className={`stat-value ${item.tone ? `stat-value--${item.tone}` : ''}`}>
+          <div
+            key={item.label}
+            className="rounded-2xl border border-[#DDEAF0] bg-white p-4 sm:p-5 shadow-xs transition hover:border-[#BFDDE7]"
+          >
+            <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#8495A3] mb-1">
+              {item.label}
+            </div>
+            <div
+              className={`text-2xl sm:text-3xl font-bold font-mono tracking-tight ${
+                item.tone === 'ok'
+                  ? 'text-[#18A878]'
+                  : item.tone === 'alert'
+                  ? 'text-[#E5484D]'
+                  : item.tone === 'warn'
+                  ? 'text-[#E7A51A]'
+                  : 'text-[#12263A]'
+              }`}
+            >
               {item.value}
+            </div>
+            <div className="text-[11px] text-[#526779] mt-1 truncate">
+              {item.hint}
             </div>
           </div>
         ))}

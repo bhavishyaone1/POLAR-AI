@@ -54,20 +54,20 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           HERO SECTION
           ============================================================ */}
       <section className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-8 md:p-12 shadow-xs space-y-6 text-center sm:text-left">
-        <div className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-ice)] border border-[var(--line)] px-3 py-1 text-xs font-mono font-semibold text-[var(--ice)]">
+        <div className="inline-flex items-center gap-2 rounded-full bg-[#EEF9FC] border border-[#DDF3FA] px-3 py-1 text-xs font-mono font-semibold text-[#1597D4]">
           <Sparkles size={13} />
-          <span>POLAR-AI · Mission Continuity Intelligence</span>
+          <span>POLAR-AI · Centralized Mission Operations Platform</span>
         </div>
 
         <div className="space-y-3">
-          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink-hi)] leading-tight">
-            Mission continuity intelligence
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight text-[#12263A] leading-tight">
+            Centralized digital platform
             <br />
-            <span className="text-[var(--ice)]">for extreme environments.</span>
+            <span className="text-[#1597D4]">for polar mission operations.</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-[var(--ink-mid)] max-w-2xl leading-relaxed">
-            Track mission resources, detect emerging risks, understand cascading impacts, simulate scenarios and support better operational decisions.
+          <p className="text-sm sm:text-base text-[#526779] max-w-3xl leading-relaxed">
+            A centralized digital platform for <strong>expedition planning</strong>, <strong>cargo tracking</strong>, <strong>inventory management</strong>, <strong>personnel movement</strong>, and <strong>emergency response</strong> in extreme Antarctic environments.
           </p>
         </div>
 
@@ -76,7 +76,7 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           <button
             type="button"
             onClick={onStartGuidedDemo}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-6 py-3 sm:py-2.5 text-xs shadow-xs transition active:scale-95"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white font-semibold px-6 py-3 sm:py-2.5 text-xs shadow-xs transition active:scale-95"
           >
             <Play size={13} className="fill-white" />
             <span>RUN DEMO</span>
@@ -85,11 +85,122 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           <button
             type="button"
             onClick={() => goTo('dashboard')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--line)] bg-white hover:bg-[var(--surface-secondary)] text-[var(--ink-hi)] font-semibold px-5 py-3 sm:py-2.5 text-xs shadow-xs transition"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[#DDEAF0] bg-white hover:bg-[#F0F8FB] text-[#12263A] font-semibold px-5 py-3 sm:py-2.5 text-xs shadow-xs transition"
           >
             <span>EXPLORE PLATFORM</span>
             <ArrowRight size={13} />
           </button>
+        </div>
+      </section>
+
+      {/* ============================================================
+          THE FIVE CORE OPERATIONAL PILLARS
+          ============================================================ */}
+      <section className="space-y-4">
+        <div>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#1597D4] block">
+            CENTRALIZED ARCHITECTURE
+          </span>
+          <h2 className="text-xl font-bold text-[#12263A] mt-0.5">
+            Five Core Operational Pillars
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div
+            onClick={() => goTo('expeditions')}
+            className="rounded-2xl border border-[#DDEAF0] bg-white p-5 shadow-xs hover:border-[#1597D4] hover:bg-[#F0F8FB] transition cursor-pointer flex flex-col justify-between"
+          >
+            <div className="space-y-2.5">
+              <div className="h-8 w-8 rounded-xl bg-[#DDF3FA] text-[#1597D4] flex items-center justify-center">
+                <Compass size={17} />
+              </div>
+              <h3 className="text-sm font-bold text-[#12263A]">1. Expedition Planning</h3>
+              <p className="text-xs text-[#526779] leading-relaxed">
+                Scientific mission planning, traverse route schedules, milestone verification, and team assignments.
+              </p>
+            </div>
+            <div className="pt-3 text-xs font-semibold text-[#1597D4] inline-flex items-center gap-1">
+              <span>View Expeditions</span>
+              <ArrowRight size={11} />
+            </div>
+          </div>
+
+          <div
+            onClick={() => goTo('cargo')}
+            className="rounded-2xl border border-[#DDEAF0] bg-white p-5 shadow-xs hover:border-[#1597D4] hover:bg-[#F0F8FB] transition cursor-pointer flex flex-col justify-between"
+          >
+            <div className="space-y-2.5">
+              <div className="h-8 w-8 rounded-xl bg-[#DDF3FA] text-[#1597D4] flex items-center justify-center">
+                <Package size={17} />
+              </div>
+              <h3 className="text-sm font-bold text-[#12263A]">2. Cargo Tracking</h3>
+              <p className="text-xs text-[#526779] leading-relaxed">
+                Consignments manifest tracking, maritime vessel corridors, blue-ice runway arrivals, and delay management.
+              </p>
+            </div>
+            <div className="pt-3 text-xs font-semibold text-[#1597D4] inline-flex items-center gap-1">
+              <span>Track Manifests</span>
+              <ArrowRight size={11} />
+            </div>
+          </div>
+
+          <div
+            onClick={() => goTo('inventory')}
+            className="rounded-2xl border border-[#DDEAF0] bg-white p-5 shadow-xs hover:border-[#1597D4] hover:bg-[#F0F8FB] transition cursor-pointer flex flex-col justify-between"
+          >
+            <div className="space-y-2.5">
+              <div className="h-8 w-8 rounded-xl bg-[#DDF3FA] text-[#1597D4] flex items-center justify-center">
+                <Boxes size={17} />
+              </div>
+              <h3 className="text-sm font-bold text-[#12263A]">3. Inventory Reserves</h3>
+              <p className="text-xs text-[#526779] leading-relaxed">
+                Continuous fuel burn rates, safe buffer thresholds, life-support reserves, and deficit forecasting.
+              </p>
+            </div>
+            <div className="pt-3 text-xs font-semibold text-[#1597D4] inline-flex items-center gap-1">
+              <span>Manage Stock</span>
+              <ArrowRight size={11} />
+            </div>
+          </div>
+
+          <div
+            onClick={() => goTo('personnel')}
+            className="rounded-2xl border border-[#DDEAF0] bg-white p-5 shadow-xs hover:border-[#1597D4] hover:bg-[#F0F8FB] transition cursor-pointer flex flex-col justify-between"
+          >
+            <div className="space-y-2.5">
+              <div className="h-8 w-8 rounded-xl bg-[#DDF3FA] text-[#1597D4] flex items-center justify-center">
+                <Users size={17} />
+              </div>
+              <h3 className="text-sm font-bold text-[#12263A]">4. Personnel Movement</h3>
+              <p className="text-xs text-[#526779] leading-relaxed">
+                Field camp deployments, active personnel rosters, satellite phone check-in times, and medical status.
+              </p>
+            </div>
+            <div className="pt-3 text-xs font-semibold text-[#1597D4] inline-flex items-center gap-1">
+              <span>Track Roster</span>
+              <ArrowRight size={11} />
+            </div>
+          </div>
+
+          <div
+            onClick={() => goTo('emergency')}
+            className="rounded-2xl border border-rose-200 bg-rose-50/40 p-5 shadow-xs hover:border-rose-300 hover:bg-rose-50 transition cursor-pointer flex flex-col justify-between"
+          >
+            <div className="space-y-2.5">
+              <div className="h-8 w-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">
+                <AlertTriangle size={17} />
+              </div>
+              <h3 className="text-sm font-bold text-[#12263A]">5. Emergency Response</h3>
+              <p className="text-xs text-[#526779] leading-relaxed">
+                Autonomous spatial triage, armed SOS broadcasts, response team dispatch, and tactical field radio.
+              </p>
+            </div>
+            <div className="pt-3 text-xs font-semibold text-rose-700 inline-flex items-center gap-1">
+              <span>Response Command</span>
+              <ArrowRight size={11} />
+            </div>
+          </div>
         </div>
       </section>
 

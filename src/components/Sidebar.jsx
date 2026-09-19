@@ -17,20 +17,26 @@ import {
   Cpu,
   LayoutDashboard,
   Package,
+  Siren,
   Sliders,
+  Users,
   X,
 } from 'lucide-react'
 import { useAuth } from '../store/AuthContext'
+import { useData } from '../store/DataContext'
 
 export default function Sidebar({ view, onNavigate, open, onClose }) {
   const { signOut } = useAuth()
+  const { stats } = useData()
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'expeditions', label: 'Expedition', icon: Compass },
-    { id: 'cargo', label: 'Cargo', icon: Package, badge: 3 },
+    { id: 'expeditions', label: 'Expeditions', icon: Compass, badge: 3 },
+    { id: 'cargo', label: 'Cargo Tracking', icon: Package, badge: 3 },
     { id: 'inventory', label: 'Inventory', icon: Boxes, badge: 2 },
-    { id: 'assets', label: 'Assets', icon: Cpu },
+    { id: 'personnel', label: 'Personnel', icon: Users, badge: stats?.personnelTotal || 50 },
+    { id: 'emergency', label: 'Emergency', icon: Siren, isAlert: true, alertCount: stats?.openEmergenciesCount || 1 },
+    { id: 'assets', label: 'Station Assets', icon: Cpu },
     { id: 'risks', label: 'Mission Risk', icon: AlertTriangle, badge: 4 },
     { id: 'simulator', label: 'Simulator', icon: Sliders },
     { id: 'copilot', label: 'AI Copilot', icon: Bot },
@@ -118,7 +124,11 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
                 />
                 <span className="flex-1 text-left truncate">{item.label}</span>
 
-                {item.badge && (
+                {item.isAlert && item.alertCount > 0 ? (
+                  <span className="h-5 min-w-[20px] px-1.5 rounded-full text-[11px] font-bold flex items-center justify-center bg-rose-50 text-rose-600 border border-rose-200 animate-pulse">
+                    {item.alertCount}
+                  </span>
+                ) : item.badge ? (
                   <span
                     className={`
                       h-5 min-w-[20px] px-1.5 rounded-full text-[11px] font-semibold flex items-center justify-center
@@ -131,7 +141,7 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
                   >
                     {item.badge}
                   </span>
-                )}
+                ) : null}
               </button>
             )
           })}

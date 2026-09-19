@@ -31,6 +31,7 @@ import {
   Plus,
   Radio,
   Ship,
+  Siren,
   Sliders,
   Sparkles,
   Tent,
@@ -43,6 +44,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
   const { continuityMetrics, stats, cargo, inventory, assets } = useData()
 
   const [mapZoom, setMapZoom] = useState(1)
+  const [mapCenter, setMapCenter] = useState({ x: 0, y: 0 })
 
   const score = continuityMetrics?.score ?? 68
 
@@ -111,6 +113,87 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           </div>
         </div>
       </section>
+
+      {/* ============================================================
+          CENTRALIZED PLATFORM: 5 CORE OPERATIONAL PILLARS QUICK ACCESS
+          Expedition Planning · Cargo Tracking · Inventory Management · Personnel Movement · Emergency Response
+          ============================================================ */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+        <button
+          type="button"
+          onClick={() => goTo('expeditions')}
+          className="rounded-2xl border border-[#DDEAF0] bg-white p-3.5 text-left hover:border-[#1597D4] hover:bg-[#F0F8FB] transition shadow-xs group flex flex-col justify-between"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10.5px] font-mono font-bold uppercase tracking-wider text-[#8495A3] group-hover:text-[#1597D4]">
+              1. Expedition Planning
+            </span>
+            <Compass size={15} className="text-[#1597D4]" />
+          </div>
+          <div className="text-sm font-bold text-[#12263A] mt-2">3 Active Missions</div>
+          <div className="text-[11px] text-[#526779] truncate mt-0.5">Route planning &amp; milestones</div>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => goTo('cargo')}
+          className="rounded-2xl border border-[#DDEAF0] bg-white p-3.5 text-left hover:border-[#1597D4] hover:bg-[#F0F8FB] transition shadow-xs group flex flex-col justify-between"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10.5px] font-mono font-bold uppercase tracking-wider text-[#8495A3] group-hover:text-[#1597D4]">
+              2. Cargo Tracking
+            </span>
+            <Package size={15} className="text-[#1597D4]" />
+          </div>
+          <div className="text-sm font-bold text-[#12263A] mt-2">14 Consignments</div>
+          <div className="text-[11px] text-[#526779] truncate mt-0.5">3 in transit · 1 delayed (C-101)</div>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => goTo('inventory')}
+          className="rounded-2xl border border-[#DDEAF0] bg-white p-3.5 text-left hover:border-[#1597D4] hover:bg-[#F0F8FB] transition shadow-xs group flex flex-col justify-between"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10.5px] font-mono font-bold uppercase tracking-wider text-[#8495A3] group-hover:text-[#1597D4]">
+              3. Inventory Reserves
+            </span>
+            <Boxes size={15} className="text-[#1597D4]" />
+          </div>
+          <div className="text-sm font-bold text-[#12263A] mt-2">12.0d Fuel Runway</div>
+          <div className="text-[11px] text-[#E7A51A] font-semibold truncate mt-0.5">2 items below safe buffer</div>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => goTo('personnel')}
+          className="rounded-2xl border border-[#DDEAF0] bg-white p-3.5 text-left hover:border-[#1597D4] hover:bg-[#F0F8FB] transition shadow-xs group flex flex-col justify-between"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10.5px] font-mono font-bold uppercase tracking-wider text-[#8495A3] group-hover:text-[#1597D4]">
+              4. Personnel Movement
+            </span>
+            <Users size={15} className="text-[#1597D4]" />
+          </div>
+          <div className="text-sm font-bold text-[#12263A] mt-2">{stats?.personnelTotal || 50} Deployed</div>
+          <div className="text-[11px] text-[#526779] truncate mt-0.5">Roster &amp; camp check-ins</div>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => goTo('emergency')}
+          className="rounded-2xl border border-rose-200 bg-rose-50/60 p-3.5 text-left hover:border-rose-400 hover:bg-rose-50 transition shadow-xs group flex flex-col justify-between"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10.5px] font-mono font-bold uppercase tracking-wider text-rose-700">
+              5. Emergency Response
+            </span>
+            <Siren size={15} className="text-rose-600 animate-pulse" />
+          </div>
+          <div className="text-sm font-bold text-rose-800 mt-2">1 Incident Active</div>
+          <div className="text-[11px] text-rose-700/90 truncate mt-0.5">Response team dispatched</div>
+        </button>
+      </div>
 
       {/* ============================================================
           2. FIVE TOP METRIC CARDS ROW
