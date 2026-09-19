@@ -19,6 +19,7 @@ import {
   Package,
   Siren,
   Sliders,
+  Sparkles,
   Users,
   X,
 } from 'lucide-react'

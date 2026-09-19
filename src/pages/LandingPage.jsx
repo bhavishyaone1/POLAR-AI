@@ -37,6 +37,7 @@ import {
   ShieldCheck,
   Sliders,
   Sparkles,
+  Users,
   Zap,
 } from 'lucide-react'
 
