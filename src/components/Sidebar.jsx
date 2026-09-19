@@ -31,15 +31,15 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'expeditions', label: 'Expeditions', icon: Compass, badge: 3 },
-    { id: 'cargo', label: 'Cargo Tracking', icon: Package, badge: 3 },
+    { id: 'expeditions', label: 'Expedition', icon: Compass },
+    { id: 'cargo', label: 'Cargo', icon: Package, badge: 3 },
     { id: 'inventory', label: 'Inventory', icon: Boxes, badge: 2 },
-    { id: 'personnel', label: 'Personnel', icon: Users, badge: stats?.personnelTotal || 50 },
-    { id: 'emergency', label: 'Emergency', icon: Siren, isAlert: true, alertCount: stats?.openEmergenciesCount || 1 },
-    { id: 'assets', label: 'Station Assets', icon: Cpu },
+    { id: 'assets', label: 'Assets', icon: Cpu },
     { id: 'risks', label: 'Mission Risk', icon: AlertTriangle, badge: 4 },
     { id: 'simulator', label: 'Simulator', icon: Sliders },
-    { id: 'copilot', label: 'AI Copilot', icon: Bot },
+    { id: 'copilot', label: 'AI Copilot', icon: Sparkles },
+    { id: 'personnel', label: 'Personnel', icon: Users, badge: stats?.personnelTotal || 50, subtle: true },
+    { id: 'emergency', label: 'Emergency', icon: Siren, isAlert: true, alertCount: stats?.openEmergenciesCount || 1, subtle: true },
   ]
 
   return (
@@ -148,15 +148,24 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
         </nav>
 
         {/* ---------- Footer Status Card & Mountain Silhouette ---------- */}
-        <div className="p-3.5 space-y-3 border-t border-[#F1F5F9] relative overflow-hidden bg-gradient-to-b from-white to-[#F8FAFC]">
-          {/* Status Card */}
-          <div className="rounded-xl border border-slate-200/80 bg-white p-2.5 shadow-2xs">
+        <div className="p-3.5 space-y-2.5 border-t border-[#F1F5F9] relative overflow-hidden bg-white">
+          <div className="space-y-0.5">
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-800">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>System Online</span>
             </div>
-            <div className="text-[10px] text-slate-400 pl-4 mt-0.5">
+            <div className="text-[10px] text-slate-400 pl-4 font-mono">
               Sync: 2 min ago
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 pt-1.5">
+            <div className="h-7 w-7 rounded-lg bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center shrink-0">
+              <Compass size={14} />
+            </div>
+            <div className="min-w-0">
+              <div className="text-xs font-bold text-[#102A43] truncate">Maitri Station</div>
+              <div className="text-[10px] text-[#8295A5] truncate">Current Station</div>
             </div>
           </div>
 
@@ -164,17 +173,12 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
           <div className="relative pt-1">
             <svg
               viewBox="0 0 200 45"
-              className="w-full h-10 text-sky-100/80 fill-current opacity-70"
+              className="w-full h-10 text-sky-100/80 fill-current opacity-80"
               preserveAspectRatio="none"
             >
               <polygon points="0,45 25,20 45,32 75,10 100,28 135,8 165,30 200,16 200,45" />
               <polygon points="0,45 40,25 65,35 110,18 145,30 180,22 200,45" fill="#BAE6FD" opacity="0.4" />
             </svg>
-
-            <div className="text-[11px] text-slate-400 leading-tight pt-1">
-              <div>Smarter decisions.</div>
-              <div>Safer missions.</div>
-            </div>
           </div>
         </div>
       </aside>

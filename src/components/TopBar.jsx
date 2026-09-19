@@ -347,6 +347,12 @@ export default function TopBar({
           RIGHT: Notifications, Profile Dropdown, RUN DEMO
           ============================================================ */}
       <div className="flex items-center gap-3 shrink-0">
+        {/* System Online Status Pill (Matching Screenshot) */}
+        <div className="hidden lg:flex items-center gap-1.5 px-2 py-1 text-xs font-semibold text-slate-700">
+          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>System Online</span>
+        </div>
+
         {/* Incident Alerts Bell */}
         <button
           type="button"

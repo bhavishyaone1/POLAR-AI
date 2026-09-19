@@ -33,36 +33,59 @@
             JetBrains Mono - data: IDs, timestamps, coordinates, quantities
 */
 :root {
-  /* Surfaces — Pure Arctic White & Ice Blue */
+  /* Surfaces — Pure Arctic White & Ice Blue (Section 04 Tokens) */
+  --background: #F7FBFD;
+  --surface: #FFFFFF;
+  --surface-soft: #F1F7FA;
+  --surface-ice: #EAF6FA;
+  --surface-hover: #F3FAFC;
+
   --surface-base: #F7FBFD;
   --surface-secondary: #F1F7FA;
   --surface-section: #EAF5F9;
   --surface-card: #FFFFFF;
-  --surface-ice: #F0F8FB;
   --surface-raised: #FFFFFF;
   --surface-sunken: #EAF5F9;
-  --surface-hover: #F0F8FB;
   --surface-active: #EEF9FC;
 
-  /* Subtle ice borders */
-  --line: #DDEAF0;
+  /* Borders */
+  --border: #DCEAF1;
+  --border-soft: #E8F1F5;
+  --line: #DCEAF1;
   --line-hover: #BFDDE7;
-  --line-soft: #EEF7FA;
+  --line-soft: #E8F1F5;
 
   /* Text — Deep scientific navy charcoal & cool slate */
-  --ink-hi: #12263A;
+  --text-primary: #102A43;
+  --text-secondary: #526779;
+  --text-muted: #8295A5;
+  --text-disabled: #A9B7C3;
+
+  --ink-hi: #102A43;
   --ink-mid: #526779;
-  --ink-low: #8495A3;
-  --ink-very-low: #A8B7C2;
+  --ink-low: #8295A5;
+  --ink-very-low: #A9B7C3;
 
   /* POLAR BLUE Accent System */
+  --polar-500: #1597D4;
+  --polar-400: #38AEE0;
+  --polar-300: #75C9E8;
+  --polar-100: #DDF3FA;
+  --polar-50: #EEF9FC;
+
   --ice: #1597D4;
-  --ice-secondary: #48B8DF;
+  --ice-secondary: #38AEE0;
   --ice-light: #DDF3FA;
   --ice-very-light: #EEF9FC;
-  --ice-dim: #48B8DF;
+  --ice-dim: #38AEE0;
   --ice-vivid: #1597D4;
   --cyan: #1597D4;
+
+  /* Status Tokens */
+  --success: #18A878;
+  --warning: #E5A51A;
+  --danger: #E5484D;
+  --info: #1597D4;
 
   /* Restrained, professional status colors */
   --green: #18A878;
