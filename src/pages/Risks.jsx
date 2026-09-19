@@ -100,11 +100,11 @@ export default function Risks({ goTo }) {
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 w-full sm:w-auto">
           <button
             type="button"
             onClick={() => goTo('simulator')}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-4 py-2 text-xs shadow-xs transition"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-4 py-2 text-xs shadow-xs transition"
           >
             <Sliders size={13} />
             <span>Launch What-If Sandbox</span>
@@ -116,7 +116,7 @@ export default function Risks({ goTo }) {
           HERO: FUEL RESUPPLY RISK
           HIGH · 12 days remaining · 17 day cargo ETA · Potential supply gap: 5 days
           ============================================================ */}
-      <section className="rounded-2xl border border-[var(--line)] bg-white p-7 sm:p-9 shadow-xs space-y-6">
+      <section className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-7 md:p-9 shadow-xs space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-6">
           <div className="space-y-1">
             <div className="flex items-center gap-2.5">
@@ -201,7 +201,7 @@ export default function Risks({ goTo }) {
           </span>
         </div>
 
-        <div className="rounded-2xl border border-[var(--line)] bg-white p-7 sm:p-9 shadow-xs space-y-4">
+        <div className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-7 md:p-9 shadow-xs space-y-4">
           {/* Horizontal flow on desktop / vertical on small */}
           <div className="hidden lg:grid grid-cols-5 gap-3 relative">
             {chainNodes.map((node, idx) => {

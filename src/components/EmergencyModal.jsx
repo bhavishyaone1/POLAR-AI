@@ -114,7 +114,7 @@ export default function EmergencyModal({
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
     >
       <div
-        className="fade-up relative w-full max-w-lg overflow-hidden rounded-xl border-2 shadow-2xl"
+        className="fade-up relative w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden rounded-xl border-2 shadow-2xl"
         style={{
           backgroundColor: 'var(--surface-card)',
           borderColor: 'var(--red)',
@@ -141,7 +141,7 @@ export default function EmergencyModal({
           </button>
         </div>
 
-        <div className="p-5 space-y-4 text-xs">
+        <div className="p-4 sm:p-5 space-y-4 text-xs overflow-y-auto flex-1">
           {/* Warning Notice */}
           <div
             className="rounded border p-3"

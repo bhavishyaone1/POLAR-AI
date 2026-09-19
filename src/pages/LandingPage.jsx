@@ -53,14 +53,14 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
       {/* ============================================================
           HERO SECTION
           ============================================================ */}
-      <section className="rounded-2xl border border-[var(--line)] bg-white p-8 sm:p-12 shadow-xs space-y-6 text-center sm:text-left">
+      <section className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-8 md:p-12 shadow-xs space-y-6 text-center sm:text-left">
         <div className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-ice)] border border-[var(--line)] px-3 py-1 text-xs font-mono font-semibold text-[var(--ice)]">
           <Sparkles size={13} />
           <span>POLAR-AI · Mission Continuity Intelligence</span>
         </div>
 
         <div className="space-y-3">
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink-hi)] leading-tight">
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink-hi)] leading-tight">
             Mission continuity intelligence
             <br />
             <span className="text-[var(--ice)]">for extreme environments.</span>
@@ -72,11 +72,11 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
         </div>
 
         {/* Hero Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center sm:justify-start gap-3 pt-2">
           <button
             type="button"
             onClick={onStartGuidedDemo}
-            className="inline-flex items-center gap-2 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-6 py-2.5 text-xs shadow-xs transition active:scale-95"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-6 py-3 sm:py-2.5 text-xs shadow-xs transition active:scale-95"
           >
             <Play size={13} className="fill-white" />
             <span>RUN DEMO</span>
@@ -85,7 +85,7 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           <button
             type="button"
             onClick={() => goTo('dashboard')}
-            className="inline-flex items-center gap-2 rounded-lg border border-[var(--line)] bg-white hover:bg-[var(--surface-secondary)] text-[var(--ink-hi)] font-semibold px-5 py-2.5 text-xs shadow-xs transition"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--line)] bg-white hover:bg-[var(--surface-secondary)] text-[var(--ink-hi)] font-semibold px-5 py-3 sm:py-2.5 text-xs shadow-xs transition"
           >
             <span>EXPLORE PLATFORM</span>
             <ArrowRight size={13} />
@@ -108,7 +108,7 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
 
         <div
           onClick={() => goTo('dashboard')}
-          className="cursor-pointer rounded-2xl border border-[var(--line)] bg-white p-6 sm:p-8 shadow-xs transition hover:border-[var(--line-hover)] hover:shadow-sm space-y-6 group"
+          className="cursor-pointer rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-7 md:p-8 shadow-xs transition hover:border-[var(--line-hover)] hover:shadow-sm space-y-6 group"
         >
           {/* Top Preview Bar */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] pb-4">

@@ -55,7 +55,7 @@ import AuditLog from './pages/AuditLog'
 import ResearchSources from './pages/ResearchSources'
 import CommandPalette from './components/CommandPalette'
 import GuidedDemoTour from './components/GuidedDemoTour'
-import { AIChatbot, createProjectDataAdapter } from './polar-ai-assistant/src/index.js'
+import MobileBottomNav from './components/MobileBottomNav'
 
 function getInitialView() {
   try {
@@ -410,7 +410,7 @@ export default function App() {
           </div>
         )}
 
-        <main className="flex-1 px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10 max-w-[1680px] w-full mx-auto">
+        <main className="flex-1 px-3.5 py-4 sm:px-6 sm:py-7 lg:px-8 lg:py-8 max-w-[1440px] w-full mx-auto pb-24 lg:pb-8">
           {/* key={view} restarts the error boundary when you navigate, so
               one broken page does not stay broken forever. */}
           <ErrorBoundary key={view} onReset={() => goTo('dashboard')}>
@@ -441,6 +441,13 @@ export default function App() {
         onClose={() => setGuidedDemoOpen(false)}
         goTo={goTo}
         currentView={view}
+      />
+
+      {/* Native Mobile Bottom Navigation Bar (< 1024px) */}
+      <MobileBottomNav
+        currentView={view}
+        onNavigate={goTo}
+        onOpenMenu={() => setNavOpen(true)}
       />
     </div>
   )

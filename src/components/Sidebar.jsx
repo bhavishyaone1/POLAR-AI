@@ -60,10 +60,10 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
 
       <aside
         className={`
-          fixed inset-y-0 left-0 z-40 flex w-[240px] flex-col border-r
-          bg-[var(--surface-card)] transition-transform duration-200
-          lg:sticky lg:bottom-auto lg:top-0 lg:z-auto lg:h-screen lg:translate-x-0
-          ${open ? 'translate-x-0' : '-translate-x-full'}
+          fixed inset-y-0 left-0 z-50 flex w-[260px] max-w-[85vw] flex-col border-r
+          bg-[var(--surface-card)] transition-transform duration-250 ease-in-out
+          lg:sticky lg:bottom-auto lg:top-0 lg:z-auto lg:h-screen lg:translate-x-0 lg:w-[240px]
+          ${open ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
         `}
         style={{ borderColor: 'var(--line)' }}
       >
@@ -115,7 +115,10 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
                     <button
                       key={item.id}
                       type="button"
-                      onClick={() => onNavigate(item.id)}
+                      onClick={() => {
+                        onNavigate(item.id)
+                        if (onClose) onClose()
+                      }}
                       className={`
                         flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium transition
                         ${

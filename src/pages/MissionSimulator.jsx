@@ -123,7 +123,7 @@ export default function MissionSimulator({ goTo }) {
           Question: "What happens if the fuel shipment is delayed?"
           Input: Delay [ 5 ] days  [ RUN SIMULATION ]
           ============================================================ */}
-      <section className="rounded-2xl border border-[var(--line)] bg-white p-7 sm:p-9 shadow-xs space-y-6">
+      <section className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-7 md:p-9 shadow-xs space-y-6">
         <div>
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ice)] block">
             SCENARIO QUESTION
@@ -136,8 +136,8 @@ export default function MissionSimulator({ goTo }) {
           </p>
         </div>
 
-        <div className="rounded-xl bg-[var(--surface-base)] border border-[var(--line)] p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="rounded-xl bg-[var(--surface-base)] border border-[var(--line)] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-3">
             <span className="text-sm font-semibold text-[var(--ink-hi)]">
               Delay:
             </span>
@@ -155,7 +155,7 @@ export default function MissionSimulator({ goTo }) {
               />
               <span className="text-sm font-medium text-[var(--ink-mid)]">days</span>
             </div>
-            <span className="text-xs text-[var(--ink-low)] font-mono hidden md:inline">
+            <span className="text-xs text-[var(--ink-low)] font-mono hidden sm:inline">
               (Adjusted C-101 ETA: {17 + delayDays} days)
             </span>
           </div>
@@ -164,7 +164,7 @@ export default function MissionSimulator({ goTo }) {
             type="button"
             onClick={handleRunSimulation}
             disabled={isSimulating}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-6 py-2.5 text-xs shadow-xs transition active:scale-95 disabled:opacity-50"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-6 py-2.5 text-xs shadow-xs transition active:scale-95 disabled:opacity-50"
           >
             <Sliders size={14} />
             <span>{isSimulating ? 'SIMULATING...' : 'RUN SIMULATION'}</span>
@@ -236,7 +236,7 @@ export default function MissionSimulator({ goTo }) {
               IMPACT CASCADE
               Fuel shortage → Generator constraint → Power reduction → Research disruption
               ============================================================ */}
-          <div className="rounded-2xl border border-[var(--line)] bg-white p-7 sm:p-9 shadow-xs space-y-5">
+          <div className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-7 md:p-9 shadow-xs space-y-5">
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ice)] block">
                 CASCADE CONSEQUENCES
@@ -269,7 +269,7 @@ export default function MissionSimulator({ goTo }) {
               2. Prioritize fuel allocation
               3. Review alternate cargo routing
               ============================================================ */}
-          <div className="rounded-2xl border border-[var(--line)] bg-white p-7 sm:p-9 shadow-xs space-y-6">
+          <div className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-7 md:p-9 shadow-xs space-y-6">
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ice)] block">
@@ -279,7 +279,7 @@ export default function MissionSimulator({ goTo }) {
                   Recommended Mitigations
                 </h3>
               </div>
-              <span className="text-xs text-[var(--ink-low)] font-mono">
+              <span className="text-xs text-[var(--ink-low)] font-mono hidden xs:inline">
                 AI Telemetry Linked
               </span>
             </div>
@@ -306,7 +306,7 @@ export default function MissionSimulator({ goTo }) {
             </div>
 
             {/* Authorize action button */}
-            <div className="pt-2 border-t border-[var(--line)] flex flex-wrap items-center justify-between gap-3">
+            <div className="pt-2 border-t border-[var(--line)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <span className="text-xs text-[var(--ink-mid)]">
                 Authorizing applies circuit load shedding and reserve bladder release (+4.8 days).
               </span>
@@ -314,7 +314,7 @@ export default function MissionSimulator({ goTo }) {
               <button
                 type="button"
                 onClick={handleAuthorize}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-4 py-2 text-xs shadow-xs transition active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-4 py-2.5 text-xs shadow-xs transition active:scale-95 shrink-0"
               >
                 <Sparkles size={13} />
                 <span>Authorize Recommended Protocols</span>

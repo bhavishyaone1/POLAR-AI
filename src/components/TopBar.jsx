@@ -32,13 +32,13 @@ export default function TopBar({
   const openIncidentsCount = (emergencies || []).filter((e) => e.status !== 'RESOLVED').length
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-[var(--line)] bg-[var(--surface-card)]/95 px-5 sm:px-8 backdrop-blur-md">
+    <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-[var(--line)] bg-[var(--surface-card)]/95 px-3 sm:px-8 backdrop-blur-md">
       {/* LEFT: Mobile Menu + Current Expedition */}
-      <div className="flex items-center gap-3 min-w-0">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
         <button
           type="button"
           onClick={onMenuClick}
-          className="rounded-lg p-1.5 text-[var(--ink-mid)] hover:bg-[var(--surface-secondary)] hover:text-[var(--ink-hi)] lg:hidden transition"
+          className="rounded-lg p-1.5 text-[var(--ink-mid)] hover:bg-[var(--surface-secondary)] hover:text-[var(--ink-hi)] lg:hidden transition shrink-0"
           aria-label="Open navigation menu"
         >
           <Menu size={18} />
@@ -49,11 +49,11 @@ export default function TopBar({
             <Compass size={14} />
           </div>
           <div className="min-w-0">
-            <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-[var(--ink-low)]">
-              <span>Current Expedition</span>
+            <div className="hidden xs:flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-[var(--ink-low)]">
+              <span>Expedition 2027</span>
             </div>
-            <div className="truncate text-xs sm:text-sm font-semibold text-[var(--ink-hi)]">
-              Antarctic Research Expedition 2027
+            <div className="truncate text-xs sm:text-sm font-semibold text-[var(--ink-hi)] max-w-[120px] xs:max-w-[170px] sm:max-w-none">
+              Maitri Station
             </div>
           </div>
         </div>

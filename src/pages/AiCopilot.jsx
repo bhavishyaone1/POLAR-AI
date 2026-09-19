@@ -132,7 +132,7 @@ export default function AiCopilot({ goTo }) {
           Suggested Questions
         </span>
 
-        <div className="flex flex-wrap gap-2.5">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-2.5">
           {[
             'Why is this a risk?',
             'What happens if the shipment is delayed?',
@@ -144,7 +144,7 @@ export default function AiCopilot({ goTo }) {
                 key={q}
                 type="button"
                 onClick={() => handleSelectQuestion(q)}
-                className={`rounded-lg px-4 py-2 text-xs font-semibold transition text-left shadow-2xs ${
+                className={`rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-2 text-xs font-semibold transition text-left shadow-2xs ${
                   isSelected
                     ? 'bg-[var(--ice)] text-white shadow-xs'
                     : 'bg-white border border-[var(--line)] text-[var(--ink-hi)] hover:border-[var(--line-hover)] hover:bg-[var(--surface-secondary)]'
@@ -161,7 +161,7 @@ export default function AiCopilot({ goTo }) {
           STRUCTURED AI RESPONSE PANEL
           ANALYSIS · IMPACT · RECOMMENDATION · ACTION
           ============================================================ */}
-      <section className="rounded-2xl border border-[var(--line)] bg-white p-7 sm:p-9 shadow-xs space-y-6">
+      <section className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-8 md:p-9 shadow-xs space-y-5 sm:space-y-6">
         <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
           <div className="flex items-center gap-2">
             <Sparkles size={14} className="text-[var(--ice)]" />

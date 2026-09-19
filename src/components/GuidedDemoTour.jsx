@@ -147,9 +147,9 @@ export default function GuidedDemoTour({ isOpen, onClose, goTo }) {
   return (
     <aside
       aria-label="Guided Demo Walkthrough"
-      className="fixed bottom-6 inset-x-4 sm:inset-x-auto sm:right-6 sm:w-[520px] z-50 animate-fade-in"
+      className="fixed bottom-20 sm:bottom-6 inset-x-3 sm:inset-x-auto sm:right-6 sm:w-[520px] max-w-[calc(100vw-24px)] z-50 animate-fade-in"
     >
-      <div className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-xl space-y-4">
+      <div className="rounded-2xl border border-[var(--line)] bg-white p-4 sm:p-6 shadow-xl space-y-3.5 sm:space-y-4">
         {/* Top Progress Indicator: 01 Mission · 02 Risk · 03 Impact · 04 Simulation · 05 Decision */}
         <div className="border-b border-[var(--line)] pb-3 space-y-2">
           <div className="flex items-center justify-between text-[11px] font-mono font-bold">

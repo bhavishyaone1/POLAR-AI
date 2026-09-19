@@ -165,14 +165,14 @@ export default function CommandPalette({ isOpen, onClose, goTo }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-6 sm:pt-20 px-3 sm:px-4 bg-black/70 backdrop-blur-sm animate-fade-in">
       <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-cyan-500/40 bg-[#070e1c] shadow-2xl shadow-cyan-900/40">
         {/* Search Input */}
         <div className="relative flex items-center border-b border-slate-800 px-4 py-3.5">
           <Search size={18} className="text-cyan-400 shrink-0 mr-3" />
           <input
             type="text"
-            placeholder="Type a command, asset (e.g. CAT 3512, Snowcat), cargo, or risk (Ctrl+K)..."
+            placeholder="Type a command, asset, cargo, or risk..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
@@ -187,7 +187,7 @@ export default function CommandPalette({ isOpen, onClose, goTo }) {
         </div>
 
         {/* Results List */}
-        <div className="max-h-96 overflow-y-auto p-2 divide-y divide-slate-800/50">
+        <div className="max-h-[65vh] sm:max-h-96 overflow-y-auto p-2 divide-y divide-slate-800/50">
           {!q ? (
             <div className="p-6 text-center text-xs text-slate-400 space-y-2">
               <p className="font-mono uppercase text-slate-500 text-[10px]">Suggested Commands</p>
