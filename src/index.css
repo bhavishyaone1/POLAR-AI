@@ -104,10 +104,36 @@
   --blue: #0284C7;
   --violet: #6D28D9;
 
-  /* Typography */
-  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+  /* Typography Tokens */
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Typography Scale & Metrics */
+  --font-size-display: 38px;
+  --line-height-display: 1.15;
+  --tracking-display: -0.025em;
+
+  --font-size-section: 26px;
+  --line-height-section: 1.2;
+  --tracking-section: -0.02em;
+
+  --font-size-card: 18.5px;
+  --line-height-card: 1.25;
+  --tracking-card: -0.015em;
+
+  --font-size-sub: 15px;
+  --line-height-sub: 1.35;
+
+  --font-size-body: 14.5px;
+  --line-height-body: 1.6;
+
+  --font-size-secondary: 13.5px;
+  --line-height-secondary: 1.45;
+
+  --font-size-meta: 11.5px;
+  --line-height-meta: 1.35;
 
   --radius: 16px;
   --shadow-sm: 0 1px 3px rgba(40, 100, 130, 0.03);
@@ -305,6 +331,100 @@
     transform: translateY(-1px);
   }
 
+  /* ============================================================
+     UNIFIED TYPOGRAPHY UTILITY SYSTEM
+     ============================================================ */
+  .heading-page {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 36px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+  }
+
+  .heading-section {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2.5vw, 24px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .heading-card {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+  }
+
+  .heading-sub {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+
+  .body-main {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .body-sub {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  .text-meta {
+    font-size: 11.5px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--text-muted);
+  }
+
+  .text-tech {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .metric-group {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .metric-val {
+    font-family: var(--font-body);
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .metric-unit {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: normal;
+  }
+
   .panel-title {
     display: flex;
     align-items: center;
@@ -314,47 +434,28 @@
     font-family: var(--font-display);
     font-size: 16px;
     font-weight: 600;
-    letter-spacing: -0.01em;
-    color: var(--ink-hi);
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
   }
 
   .panel-subtitle {
     font-family: var(--font-body);
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 400;
     line-height: 1.5;
     letter-spacing: normal;
-    color: var(--ink-mid);
-    margin: 0 0 18px;
+    color: var(--text-secondary);
+    margin: 0 0 16px;
   }
 
   /* Small uppercase label used above values and section groups. */
   .eyebrow {
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--ink-low);
+    color: var(--text-muted);
     margin-bottom: 4px;
-  }
-
-  /* --- Stat cards (the big numbers on the dashboard) --- */
-  .stat-value {
-    font-family: var(--font-mono);
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--ink-hi);
-    font-variant-numeric: tabular-nums;
-  }
-  .stat-value--warn {
-    color: var(--amber);
-  }
-  .stat-value--alert {
-    color: var(--orange);
-  }
-  .stat-value--ok {
-    color: var(--green);
   }
 
   /* --- Tables --- */
@@ -362,7 +463,7 @@
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    font-size: 13px;
+    font-size: 13.5px;
   }
   .data-table thead th {
     position: sticky;
@@ -373,17 +474,18 @@
     text-align: left;
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--ink-low);
+    color: var(--text-muted);
     border-bottom: 1px solid var(--line);
     white-space: nowrap;
   }
   .data-table tbody td {
-    padding: 14px 16px;
+    padding: 12px 16px;
     border-bottom: 1px solid var(--line-soft);
-    color: var(--ink-mid);
+    color: var(--text-secondary);
     vertical-align: middle;
+    line-height: 1.5;
   }
   .data-table tbody tr:last-child td {
     border-bottom: none;
@@ -392,7 +494,7 @@
     background-color: var(--surface-hover);
   }
   .data-table .cell-strong {
-    color: var(--ink-hi);
+    color: var(--text-primary);
     font-weight: 500;
   }
 
@@ -400,6 +502,7 @@
      "EXP-001" split over two rows looks like a bug. */
   .data-table td.mono {
     white-space: nowrap;
+    font-family: var(--font-mono);
   }
 
   /* Wrapper that lets wide tables scroll sideways on small screens
@@ -436,14 +539,13 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 2px 8px;
+    padding: 2.5px 8px;
     border: 1px solid transparent;
     border-radius: 6px;
-    font-size: 10px;
+    font-size: 11px;
     font-family: var(--font-mono);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.01em;
     white-space: nowrap;
     transition: transform 0.12s ease;
   }
@@ -524,11 +626,13 @@
     gap: 7px;
     padding: 8px 16px;
     border: 1px solid var(--ice);
-    border-radius: 9px;
+    border-radius: 8px;
     background-color: var(--ice);
     color: #FFFFFF;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.4;
     white-space: nowrap;
     box-shadow: 0 1px 2px rgba(75, 167, 197, 0.15);
     transition:

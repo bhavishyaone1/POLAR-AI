@@ -75,11 +75,11 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
               </svg>
             </div>
             <div>
-              <div className="text-base font-bold tracking-tight text-[#0C1E30]">
+              <div className="text-[15px] font-semibold tracking-tight text-[#0C1E30]">
                 POLAR-AI
               </div>
-              <div className="text-[10px] text-[#6E8294] font-medium">
-                Mission Continuity Intelligence
+              <div className="text-[11px] text-[#6E8294] font-normal leading-tight">
+                Mission Continuity
               </div>
             </div>
           </div>
@@ -109,7 +109,7 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
                   if (onClose) onClose()
                 }}
                 className={`
-                  flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-xs transition font-medium
+                  flex w-full items-center gap-3 rounded-xl px-3.5 py-2 text-[13px] transition font-medium
                   ${
                     isActive
                       ? 'bg-[#E0F2FE] text-[#0284C7] font-semibold'
@@ -119,20 +119,20 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
                 aria-current={isActive ? 'page' : undefined}
               >
                 <Icon
-                  size={17}
+                  size={16}
                   strokeWidth={isActive ? 2.2 : 1.75}
                   className={isActive ? 'text-[#0284C7]' : 'text-[#6E8294]'}
                 />
                 <span className="flex-1 text-left truncate">{item.label}</span>
 
                 {item.isAlert && item.alertCount > 0 ? (
-                  <span className="h-5 min-w-[20px] px-1.5 rounded-full text-[11px] font-bold flex items-center justify-center bg-rose-50 text-rose-700 border border-rose-200 animate-pulse">
+                  <span className="h-5 min-w-[20px] px-1.5 rounded-full text-[11px] font-mono font-medium flex items-center justify-center bg-rose-50 text-rose-700 border border-rose-200 animate-pulse">
                     {item.alertCount}
                   </span>
                 ) : item.badge ? (
                   <span
                     className={`
-                      h-5 min-w-[20px] px-1.5 rounded-full text-[11px] font-semibold flex items-center justify-center
+                      h-5 min-w-[20px] px-1.5 rounded-full text-[11px] font-mono font-medium flex items-center justify-center
                       ${
                         isActive
                           ? 'bg-white text-[#0284C7] shadow-2xs'
@@ -151,22 +151,22 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
         {/* ---------- Footer Status Card & Mountain Silhouette ---------- */}
         <div className="p-3.5 space-y-2.5 border-t border-[#DCE8F0] relative overflow-hidden bg-white">
           <div className="space-y-0.5">
-            <div className="flex items-center gap-2 text-xs font-semibold text-[#0C1E30]">
+            <div className="flex items-center gap-2 text-xs font-medium text-[#0C1E30]">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>System Online</span>
             </div>
-            <div className="text-[10px] text-[#6E8294] pl-4 font-mono">
+            <div className="text-[10.5px] text-[#6E8294] pl-4 font-mono">
               SATCOM Sync: 2m ago
             </div>
           </div>
 
-          <div className="flex items-center gap-2 pt-1.5">
+          <div className="flex items-center gap-2 pt-1">
             <div className="h-7 w-7 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0">
               <Compass size={14} />
             </div>
             <div className="min-w-0">
-              <div className="text-xs font-bold text-[#0C1E30] truncate">Maitri Station</div>
-              <div className="text-[10px] text-[#6E8294] truncate">Current Station Hub</div>
+              <div className="text-xs font-semibold text-[#0C1E30] truncate">Maitri Station</div>
+              <div className="text-[10.5px] text-[#6E8294] truncate">Primary Antarctic Base</div>
             </div>
           </div>
 

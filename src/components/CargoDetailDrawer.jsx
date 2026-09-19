@@ -87,14 +87,14 @@ export default function CargoDetailDrawer({
         <div className="flex items-center justify-between border-b border-[#DCEAF1] bg-[#F7FBFD] px-6 py-4">
           <div className="min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <span className="font-mono text-xs font-bold text-[#1597D4] bg-[#EAF6FA] px-2 py-0.5 rounded border border-[#BFDDE7]">
+              <span className="font-mono text-xs font-medium text-[#0284C7] bg-[#E0F2FE] px-2 py-0.5 rounded-md border border-[#BAE6FD]">
                 {consignment.id}
               </span>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#526779]">
+              <span className="text-[11.5px] uppercase tracking-wider text-[#6E8294]">
                 {consignment.category}
               </span>
             </div>
-            <h2 className="text-base font-bold text-[#102A43] truncate" title={consignment.item_name}>
+            <h2 className="text-[18px] font-semibold text-[#0C1E30] tracking-tight truncate" title={consignment.item_name}>
               {consignment.item_name}
             </h2>
           </div>
@@ -103,7 +103,7 @@ export default function CargoDetailDrawer({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-xl p-2 text-[#526779] hover:bg-[#EAF6FA] hover:text-[#102A43] transition"
+              className="rounded-xl p-2 text-[#6E8294] hover:bg-[#E0F2FE] hover:text-[#0C1E30] transition"
               aria-label="Close drawer"
             >
               <X size={18} />
@@ -111,16 +111,16 @@ export default function CargoDetailDrawer({
           </div>
         </div>
 
-        {/* Scrollable Content Body */}
+        {/* Drawer Scrollable Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {/* Status & Priority Strip */}
-          <div className="flex items-center justify-between rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] p-3.5">
+          {/* Status & Critical Flags */}
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-[#F7FBFD] border border-[#DCEAF1]">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-[#526779]">Status:</span>
+              <span className="text-xs font-medium text-[#42586E]">Status:</span>
               <Badge map={CARGO_STATUS} value={consignment.status} dot />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-[#526779]">Priority:</span>
+              <span className="text-xs font-medium text-[#42586E]">Priority:</span>
               <Badge map={PRIORITY} value={consignment.priority} />
             </div>
           </div>
@@ -128,11 +128,11 @@ export default function CargoDetailDrawer({
           {/* Critical Resupply Alert (If delayed or Fuel) */}
           {isDelayed && (
             <div className="rounded-xl border border-rose-200 bg-rose-50/70 p-4 space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold text-rose-800">
+              <div className="flex items-center gap-2 text-xs font-semibold text-rose-800">
                 <AlertTriangle size={15} className="text-rose-600 shrink-0" />
                 <span>Maritime Transit Interruption · 5.0-Day Supply Gap</span>
               </div>
-              <p className="text-xs text-[#526779] leading-relaxed">
+              <p className="text-xs text-[#42586E] leading-relaxed">
                 Pack-ice obstruction in Prydz Bay has delayed vessel ETA to 17 days. Station fuel reserves deplete in 12 days, leaving a 5-day unhedged deficit window.
               </p>
               <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -142,7 +142,7 @@ export default function CargoDetailDrawer({
                     onClose()
                     goTo('simulator')
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 text-xs font-semibold shadow-xs transition"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 text-xs font-medium shadow-xs transition"
                 >
                   <Sliders size={13} />
                   <span>Simulate Delay</span>
@@ -153,7 +153,7 @@ export default function CargoDetailDrawer({
                     onClose()
                     goTo('risks')
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-rose-300 bg-white hover:bg-rose-50 text-rose-800 px-3 py-1.5 text-xs font-semibold transition"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-rose-300 bg-white hover:bg-rose-50 text-rose-800 px-3 py-1.5 text-xs font-medium transition"
                 >
                   <ShieldAlert size={13} />
                   <span>Trace Cascade</span>
@@ -164,27 +164,27 @@ export default function CargoDetailDrawer({
 
           {/* Route & Transit Telemetry */}
           <div>
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#526779] mb-2.5">
-              Corridor & Transit Route
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#6E8294] mb-2.5">
+              Corridor &amp; Transit Route
             </h3>
             <div className="rounded-xl border border-[#DCEAF1] bg-white p-4 space-y-3">
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <div className="h-6 w-6 rounded-full bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center font-bold text-[10px]">
+                  <div className="h-6 w-6 rounded-full bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center font-semibold text-[10px]">
                     A
                   </div>
                   <div>
-                    <div className="font-semibold text-[#102A43]">{consignment.location || 'Staging Depot'}</div>
-                    <div className="text-[10.5px] text-[#526779]">Origin / Loading Hub</div>
+                    <div className="font-semibold text-[#0C1E30]">{consignment.location || 'Staging Depot'}</div>
+                    <div className="text-[11px] text-[#6E8294]">Origin / Loading Hub</div>
                   </div>
                 </div>
-                <ArrowRight size={14} className="text-[#8495A3]" />
+                <ArrowRight size={14} className="text-[#6E8294]" />
                 <div className="flex items-center gap-2 text-right">
                   <div>
-                    <div className="font-semibold text-[#102A43]">{consignment.destination || 'Maitri Station'}</div>
-                    <div className="text-[10.5px] text-[#526779]">Destination / Depot</div>
+                    <div className="font-semibold text-[#0C1E30]">{consignment.destination || 'Maitri Station'}</div>
+                    <div className="text-[11px] text-[#6E8294]">Destination / Depot</div>
                   </div>
-                  <div className="h-6 w-6 rounded-full bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center font-bold text-[10px]">
+                  <div className="h-6 w-6 rounded-full bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center font-semibold text-[10px]">
                     B
                   </div>
                 </div>
@@ -192,14 +192,14 @@ export default function CargoDetailDrawer({
 
               <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#F1F7FA] text-xs">
                 <div>
-                  <span className="text-[#8495A3] block text-[10px] uppercase font-mono">Carrier / Vessel</span>
-                  <span className="font-medium text-[#102A43]">
+                  <span className="text-[#6E8294] block text-[10.5px] uppercase font-mono">Carrier / Vessel</span>
+                  <span className="font-medium text-[#0C1E30]">
                     {isFuel ? 'MV Vasiliy Golovnin' : 'Polar Air Corridor C-17'}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[#8495A3] block text-[10px] uppercase font-mono">Current Sector</span>
-                  <span className="font-medium text-[#102A43]">
+                  <span className="text-[#6E8294] block text-[10.5px] uppercase font-mono">Current Sector</span>
+                  <span className="font-medium text-[#0C1E30]">
                     {isDelayed ? 'Prydz Bay Sea-Ice Shelf' : 'Southern Ocean 54°S'}
                   </span>
                 </div>
@@ -209,15 +209,15 @@ export default function CargoDetailDrawer({
 
           {/* Resupply Lifecycle Timeline */}
           <div>
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#526779] mb-2.5">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#6E8294] mb-2.5">
               Consignment Lifecycle Tracker
             </h3>
             <div className="rounded-xl border border-[#DCEAF1] bg-white p-4">
               <ol className="relative border-l border-[#DCEAF1] ml-2 space-y-4">
                 <li className="ml-4">
-                  <span className="absolute -left-1.5 mt-1 h-3 w-3 rounded-full border-2 border-white bg-[#18A878]" />
-                  <div className="text-xs font-semibold text-[#102A43]">Manifest Audited & Loaded</div>
-                  <div className="text-[11px] text-[#526779]">Staged at Cape Town Maritime Depot · Verified Nov 2026</div>
+                  <span className="absolute -left-1.5 mt-1 h-3 w-3 rounded-full border-2 border-white bg-[#15803D]" />
+                  <div className="text-xs font-semibold text-[#0C1E30]">Manifest Audited &amp; Loaded</div>
+                  <div className="text-[11.5px] text-[#42586E]">Staged at Cape Town Maritime Depot · Verified Nov 2026</div>
                 </li>
 
                 <li className="ml-4">

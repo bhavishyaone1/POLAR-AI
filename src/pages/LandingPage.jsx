@@ -57,23 +57,23 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           HERO SECTION — MISSION CONTINUITY INTELLIGENCE
           ============================================================ */}
       <section className="rounded-2xl border border-[#DCE8F0] bg-white p-6 sm:p-10 md:p-14 shadow-xs space-y-6 text-center sm:text-left">
-        <div className="inline-flex items-center gap-2 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] px-3.5 py-1 text-xs font-mono font-semibold text-[#0284C7]">
+        <div className="inline-flex items-center gap-2 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] px-3.5 py-1 text-xs font-mono font-medium text-[#0284C7]">
           <Sparkles size={13} />
-          <span>POLAR-AI · MISSION CONTINUITY OPERATING SYSTEM</span>
+          <span>POLAR-AI · Mission Continuity Operating System</span>
         </div>
 
         <div className="space-y-3">
-          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#0C1E30] leading-[1.1]">
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-[#0C1E30] leading-[1.12]">
             Mission continuity intelligence
             <br />
             <span className="text-[#0284C7]">for extreme polar environments.</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-[#42586E] max-w-3xl leading-relaxed font-medium">
+          <p className="text-base sm:text-lg text-[#42586E] max-w-3xl leading-relaxed font-normal">
             See the risk. Understand the impact. Simulate the future. Make the decision.
           </p>
 
-          <p className="text-xs sm:text-sm text-[#6E8294] max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-[14px] text-[#6E8294] max-w-2xl leading-relaxed">
             Centralized digital platform unifying <strong>expedition planning</strong>, <strong>cargo tracking</strong>, <strong>inventory management</strong>, <strong>personnel movement</strong>, and <strong>emergency response</strong> across extreme research facilities.
           </p>
         </div>
@@ -83,18 +83,18 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           <button
             type="button"
             onClick={onStartGuidedDemo}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white font-semibold px-7 py-3 text-xs shadow-xs transition active:scale-95"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white font-medium px-7 py-3 text-xs shadow-xs transition active:scale-95"
           >
             <Play size={13} className="fill-white" />
-            <span>RUN GUIDED DEMO</span>
+            <span>Run Guided Demo</span>
           </button>
 
           <button
             type="button"
             onClick={() => goTo('dashboard')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[#DCE8F0] bg-white hover:bg-[#F0F7FB] text-[#0C1E30] font-semibold px-6 py-3 text-xs shadow-xs transition"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[#DCE8F0] bg-white hover:bg-[#F0F7FB] text-[#0C1E30] font-medium px-6 py-3 text-xs shadow-xs transition"
           >
-            <span>ENTER COMMAND CENTER</span>
+            <span>Enter Command Center</span>
             <ArrowRight size={13} />
           </button>
         </div>
@@ -105,10 +105,10 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           ============================================================ */}
       <section className="space-y-4">
         <div>
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0284C7] block">
-            CENTRALIZED ARCHITECTURE
+          <span className="text-[11.5px] font-semibold uppercase tracking-wider text-[#0284C7] block">
+            Centralized Architecture
           </span>
-          <h2 className="text-xl font-bold text-[#0C1E30] mt-0.5">
+          <h2 className="text-[22px] font-semibold text-[#0C1E30] tracking-tight mt-0.5">
             Five Core Operational Pillars
           </h2>
         </div>
@@ -122,7 +122,7 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
               <div className="h-8 w-8 rounded-xl bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
                 <Compass size={17} />
               </div>
-              <h3 className="text-sm font-bold text-[#0C1E30]">1. Expedition Planning</h3>
+              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight">1. Expedition Planning</h3>
               <p className="text-xs text-[#42586E] leading-relaxed">
                 Scientific mission planning, traverse route schedules, milestone verification, and team assignments.
               </p>
@@ -296,10 +296,10 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
           ============================================================ */}
       <section className="space-y-4">
         <div>
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ice)] block">
-            HOW IT WORKS
+          <span className="text-[11.5px] font-semibold uppercase tracking-wider text-[#0284C7] block">
+            Operational Methodology
           </span>
-          <h2 className="text-xl font-bold text-[var(--ink-hi)] mt-0.5">
+          <h2 className="text-[22px] font-semibold text-[#0C1E30] tracking-tight mt-0.5">
             The Continuous Resilience Loop
           </h2>
         </div>
@@ -311,13 +311,13 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
             return (
               <div key={step.step} className="relative">
                 <div className="rounded-xl border border-[#DCE8F0] bg-white p-4 space-y-2 h-full shadow-2xs">
-                  <span className="text-[10px] font-mono font-bold text-[#0284C7] block">
+                  <span className="text-[10.5px] font-mono font-medium text-[#0284C7] block">
                     {step.step}
                   </span>
-                  <h3 className="text-sm font-bold text-[#0C1E30] tracking-tight">
+                  <h3 className="text-[14px] font-semibold text-[#0C1E30] tracking-tight">
                     {step.title}
                   </h3>
-                  <p className="text-[11px] text-[#42586E] leading-relaxed">
+                  <p className="text-[11.5px] text-[#42586E] leading-relaxed">
                     {step.desc}
                   </p>
                 </div>

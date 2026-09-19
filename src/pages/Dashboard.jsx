@@ -78,20 +78,20 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           {/* Eyebrow */}
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-[#0284C7] animate-pulse" />
-            <span className="text-[11px] font-bold uppercase tracking-widest text-[#6E8294]">
-              44TH INDIAN SCIENTIFIC EXPEDITION TO ANTARCTICA (ISEA-44)
+            <span className="text-[11.5px] font-semibold uppercase tracking-[0.04em] text-[#6E8294]">
+              44th Indian Scientific Expedition to Antarctica (ISEA-44)
             </span>
           </div>
 
           {/* Heading */}
           <div className="my-2">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0C1E30]">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.02em] text-[#0C1E30] leading-tight">
               Maitri Station Operations Command &amp; Life Support
             </h1>
           </div>
 
           {/* Metadata Row */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[#42586E] font-medium pt-1">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[#42586E] font-normal pt-1">
             <div className="flex items-center gap-1.5">
               <MapPin size={14} className="text-[#0284C7]" />
               <span>Maitri Station (70°45′57″S, 11°44′09″E)</span>
@@ -113,7 +113,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
         {/* Operational Badge on Top Right */}
         <div className="absolute top-5 right-5 sm:top-6 sm:right-6 z-20">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white/95 px-3 py-1 text-xs font-semibold text-emerald-800 shadow-2xs backdrop-blur-sm">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white/95 px-3 py-1 text-xs font-medium text-emerald-800 shadow-2xs backdrop-blur-sm">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>Operational Readiness: Nominal</span>
           </div>
@@ -127,7 +127,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         {/* CARD 1: MISSION CONTINUITY (Spans 4 cols on lg) */}
         <div className="sm:col-span-2 lg:col-span-4 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-[#0C1E30]">
+            <div className="text-xs font-semibold uppercase tracking-wider text-[#6E8294]">
               Mission Continuity Index
             </div>
 
@@ -157,15 +157,15 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl font-extrabold font-mono text-[#0C1E30]">
-                    {score}%
+                  <span className="text-3xl font-semibold tracking-tight text-[#0C1E30]">
+                    {score}<span className="text-sm font-normal text-[#6E8294] ml-0.5">%</span>
                   </span>
                 </div>
               </div>
 
               {/* Attention text */}
               <div className="space-y-1.5 flex-1 min-w-0">
-                <div className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-800">
+                <div className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-800">
                   <AlertTriangle size={12} className="text-amber-600" />
                   <span>Resupply Deficit Flagged</span>
                 </div>
@@ -176,7 +176,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                   <button
                     type="button"
                     onClick={() => setShowScoreBreakdown(true)}
-                    className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
+                    className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
                   >
                     <span>Why is score {score}%?</span>
                     <ArrowRight size={12} />
@@ -194,13 +194,13 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <AlertTriangle size={16} />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-rose-700 block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-rose-700 block">
                 Critical Risk
               </span>
-              <h3 className="text-sm font-bold text-[#0C1E30] mt-0.5">
+              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight mt-0.5">
                 RSK-001 · Resupply Gap
               </h3>
-              <p className="text-xs font-semibold text-rose-700 mt-1">
+              <p className="text-xs font-medium text-rose-700 mt-1">
                 5.0-day deficit window
               </p>
               <p className="text-[11px] text-[#6E8294] mt-0.5">
@@ -213,7 +213,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('risks')}
-              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
               <span>Inspect Risk Flow</span>
               <ArrowRight size={12} />
@@ -228,10 +228,10 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <Package size={16} />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0284C7] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#0284C7] block">
                 Maritime Corridor
               </span>
-              <h3 className="text-sm font-bold text-[#0C1E30] mt-0.5">
+              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight mt-0.5">
                 Consignment C-101
               </h3>
               <div className="text-xs text-[#42586E] font-medium flex items-center gap-1 mt-1">
@@ -248,7 +248,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('cargo')}
-              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
               <span>Track Corridor</span>
               <ArrowRight size={12} />
@@ -263,19 +263,19 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <Boxes size={16} />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-800 block">
                 Station Runway &amp; Buffer
               </span>
-              <h3 className="text-sm font-bold text-[#0C1E30] mt-0.5">
+              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight mt-0.5">
                 14,200 L Diesel Stock
               </h3>
-              <div className="text-xs font-semibold text-emerald-800 flex items-center gap-1 mt-1">
+              <div className="text-xs font-medium text-emerald-800 flex items-center gap-1 mt-1">
                 <span>12.0d burn runway</span>
                 <ArrowDownRight size={13} />
               </div>
-              <div className="text-[11px] text-[#42586E] mt-1 space-y-0.5">
-                <p>Last Safe Resupply: <strong className="text-[#0C1E30] font-mono">Day 8</strong></p>
-                <p className="text-[10.5px] text-rose-700 font-semibold">Gap: 5.0d vs Cargo ETA (Day 17)</p>
+              <div className="text-[11.5px] text-[#42586E] mt-1 space-y-0.5">
+                <p>Last Safe Resupply: <strong className="text-[#0C1E30] font-mono font-medium">Day 8</strong></p>
+                <p className="text-[11px] text-rose-700 font-medium">5 days remaining to critical buffer</p>
               </div>
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('inventory')}
-              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
               <span>Manage Stocks</span>
               <ArrowRight size={12} />
@@ -299,10 +299,10 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <Cpu size={16} />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-purple-800 block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-800 block">
                 Primary Power
               </span>
-              <h3 className="text-sm font-bold text-[#0C1E30] mt-0.5">
+              <h3 className="text-[15px] font-semibold text-[#0C1E30] tracking-tight mt-0.5">
                 Generator G-01 · 280 kW
               </h3>
               <p className="text-xs text-[#42586E] mt-1">
@@ -318,7 +318,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('assets')}
-              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
               <span>Inspect Assets</span>
               <ArrowRight size={12} />
@@ -336,45 +336,45 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           <div>
             <div className="flex items-center justify-between border-b border-[#F0F7FB] pb-3 mb-3">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#E0F2FE] text-[#0284C7] px-2 py-0.5 rounded border border-[#BAE6FD]">
-                  ✦ AI MISSION BRIEF
+                <span className="text-[11px] font-mono font-medium uppercase tracking-wider bg-[#E0F2FE] text-[#0284C7] px-2 py-0.5 rounded-md border border-[#BAE6FD]">
+                  ✦ AI Mission Brief
                 </span>
-                <span className="text-xs text-[#42586E] font-medium">08:00 UTC · Station Cycle 42</span>
+                <span className="text-xs text-[#42586E] font-normal">08:00 UTC · Station Cycle 42</span>
               </div>
-              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800">
+              <span className="inline-flex items-center gap-1 text-[11.5px] font-medium text-emerald-800">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Nominal Baseline
               </span>
             </div>
 
-            <h3 className="text-sm font-bold text-[#0C1E30]">
+            <h3 className="text-[16px] font-semibold text-[#0C1E30] tracking-tight">
               Daily Operations Briefing — 3 Operational Items Require Review
             </h3>
-            <p className="text-xs text-[#42586E] mt-1 leading-relaxed">
+            <p className="text-[13.5px] text-[#42586E] mt-1 leading-relaxed">
               Zero unacknowledged distress events. Autonomous continuity engines flag an unhedged 5.0-day fuel gap prior to Consignment C-101 arrival.
             </p>
 
             <div className="mt-3 space-y-2">
-              <div className="flex items-start gap-2 text-xs bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
-                <span className="font-mono font-bold text-rose-700 shrink-0">01.</span>
+              <div className="flex items-start gap-2 text-[13px] bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
+                <span className="font-mono font-semibold text-rose-700 shrink-0">01.</span>
                 <div className="min-w-0 flex-1">
-                  <strong className="text-[#0C1E30]">Fuel Resupply Deficit Window:</strong>
+                  <span className="font-semibold text-[#0C1E30]">Fuel Resupply Risk:</span>
                   <span className="text-[#42586E] ml-1">Station maintains 12.0d burn runway; Last Safe Resupply Date is Day 8. Maritime arrival is Day 17.</span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2 text-xs bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
-                <span className="font-mono font-bold text-amber-700 shrink-0">02.</span>
+              <div className="flex items-start gap-2 text-[13px] bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
+                <span className="font-mono font-semibold text-amber-700 shrink-0">02.</span>
                 <div className="min-w-0 flex-1">
-                  <strong className="text-[#0C1E30]">Primary Generator G-01 Overhaul:</strong>
+                  <span className="font-semibold text-[#0C1E30]">Primary Generator G-01 Overhaul:</span>
                   <span className="text-[#42586E] ml-1">Cumulative run-hours approaching 5,000h service threshold (60 operating hours remaining).</span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2 text-xs bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
-                <span className="font-mono font-bold text-[#0284C7] shrink-0">03.</span>
+              <div className="flex items-start gap-2 text-[13px] bg-[#F4F8FA] p-2.5 rounded-xl border border-[#E8F0F5]">
+                <span className="font-mono font-semibold text-[#0284C7] shrink-0">03.</span>
                 <div className="min-w-0 flex-1">
-                  <strong className="text-[#0C1E30]">Consignment C-101 Pack-Ice Navigation:</strong>
+                  <span className="font-semibold text-[#0C1E30]">Consignment C-101 Pack-Ice Navigation:</span>
                   <span className="text-[#42586E] ml-1">Vessel throttled to 3.2 kts through Weddell Sea leads; ETA pushed by +3 days.</span>
                 </div>
               </div>
@@ -382,11 +382,11 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           </div>
 
           <div className="pt-3.5 mt-3 border-t border-[#F0F7FB] flex items-center justify-between">
-            <span className="text-[11px] text-[#6E8294]">Zero unacknowledged distress events</span>
+            <span className="text-[11.5px] text-[#6E8294]">Zero unacknowledged distress events</span>
             <button
               type="button"
               onClick={() => goTo('copilot')}
-              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
               <span>Consult AI Copilot Briefing</span>
               <ArrowRight size={12} />
@@ -398,20 +398,20 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         <div className="lg:col-span-5 rounded-2xl border border-[#DCE8F0] bg-white p-5 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between border-b border-[#F0F7FB] pb-3 mb-3">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#F4F8FA] text-[#42586E] px-2 py-0.5 rounded border border-[#DCE8F0]">
-                SINCE LAST 24H REVIEW
+              <span className="text-[11px] font-mono font-medium uppercase tracking-wider bg-[#F4F8FA] text-[#42586E] px-2 py-0.5 rounded-md border border-[#DCE8F0]">
+                Since Last 24h Review
               </span>
               <span className="text-[11px] text-[#6E8294] font-mono">Telemetry Δ 24h</span>
             </div>
 
-            <h3 className="text-sm font-bold text-[#0C1E30]">
+            <h3 className="text-[16px] font-semibold text-[#0C1E30] tracking-tight">
               Autonomous Anomaly &amp; Drift Detection
             </h3>
 
             <div className="mt-3 divide-y divide-[#F0F7FB] text-xs">
               <div className="py-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-rose-700 font-bold font-mono">↑ +8%</span>
+                  <span className="text-rose-700 font-medium font-mono">↑ +8%</span>
                   <span className="text-[#0C1E30] font-medium">Station Fuel Burn Rate</span>
                 </div>
                 <span className="text-[11px] text-[#42586E]">Thermal heating load</span>
@@ -419,7 +419,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
               <div className="py-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-amber-700 font-bold font-mono">↑ +3d</span>
+                  <span className="text-amber-700 font-medium font-mono">↑ +3d</span>
                   <span className="text-[#0C1E30] font-medium">Consignment C-101 ETA</span>
                 </div>
                 <span className="text-[11px] text-[#42586E]">Weddell Sea ice pack hold</span>
@@ -427,7 +427,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
               <div className="py-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-emerald-700 font-bold font-mono">✓ Verified</span>
+                  <span className="text-emerald-700 font-medium font-mono">✓ Verified</span>
                   <span className="text-[#0C1E30] font-medium">Generator G-01 Filter Servicing</span>
                 </div>
                 <span className="text-[11px] text-[#42586E]">Signed off by Chief Eng.</span>
@@ -435,20 +435,20 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
               <div className="py-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-rose-700 font-bold font-mono">⚠ RSK-001</span>
+                  <span className="text-rose-700 font-medium font-mono">⚠ RSK-001</span>
                   <span className="text-[#0C1E30] font-medium">Resupply Deficit Flagged</span>
                 </div>
-                <span className="text-[11px] text-rose-700 font-semibold">Action Required</span>
+                <span className="text-[11px] text-rose-700 font-medium">Action Required</span>
               </div>
             </div>
           </div>
 
           <div className="pt-3 mt-2 border-t border-[#F0F7FB] flex items-center justify-between">
-            <span className="text-[11px] text-[#6E8294]">4 verified parameter drifts</span>
+            <span className="text-[11.5px] text-[#6E8294]">4 verified parameter drifts</span>
             <button
               type="button"
               onClick={() => goTo('simulator')}
-              className="text-xs font-semibold text-[#0284C7] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
               <span>Simulate Scenario Drift</span>
               <ArrowRight size={12} />
@@ -466,10 +466,10 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
           {/* Header */}
           <div className="flex items-center justify-between pb-3.5 border-b border-slate-100">
             <div>
-              <h2 className="text-base font-bold text-[#102A43]">
+              <h2 className="text-[17px] font-semibold text-[#0C1E30] tracking-tight">
                 Mission Overview
               </h2>
-              <p className="text-xs text-[#8295A5] mt-0.5">
+              <p className="text-xs text-[#6E8294] mt-0.5">
                 Live location, cargo routes and key assets
               </p>
             </div>
@@ -477,7 +477,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('map')}
-              className="rounded-lg border border-[#DCEAF1] bg-white hover:bg-slate-50 px-3 py-1.5 text-xs font-semibold text-[#526779] shadow-2xs transition inline-flex items-center gap-1"
+              className="rounded-lg border border-[#DCEAF1] bg-white hover:bg-slate-50 px-3 py-1.5 text-xs font-medium text-[#42586E] shadow-2xs transition inline-flex items-center gap-1"
             >
               <span>View Full Map</span>
               <ArrowRight size={12} />
@@ -532,7 +532,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <path
                 d="M 270,120 C 300,160 300,240 280,270 C 260,300 360,340 440,360"
                 fill="none"
-                stroke="#1597D4"
+                stroke="#0284C7"
                 strokeWidth="2.5"
                 strokeDasharray="6 4"
               />
@@ -549,7 +549,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               {/* WAYPOINT 1: Maitri Station */}
               <g transform="translate(270, 120)">
                 <circle r="16" fill="#E0F2FE" opacity="0.6" />
-                <circle r="8" fill="#1597D4" />
+                <circle r="8" fill="#0284C7" />
                 <circle r="4" fill="#FFFFFF" />
               </g>
 
@@ -563,7 +563,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               {/* VESSEL: C-104 */}
               <g transform="translate(440, 360)">
                 <circle r="14" fill="#E0F2FE" />
-                <circle r="7" fill="#1597D4" />
+                <circle r="7" fill="#0284C7" />
               </g>
 
               {/* INCIDENT BEACON: Red Alert Pulse */}
@@ -575,30 +575,27 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </svg>
 
             {/* DOM Overlay: Maitri Station Label Pin */}
-            <div className="absolute top-[100px] left-[290px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCEAF1] px-2.5 py-1 text-[11px] font-semibold text-[#102A43] shadow-xs backdrop-blur-xs">
-              <div className="h-4 w-4 rounded-full bg-[#1597D4] text-white flex items-center justify-center text-[9px]">
+            <div className="absolute top-[100px] left-[290px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCEAF1] px-2.5 py-1 text-[11px] font-semibold text-[#0C1E30] shadow-xs backdrop-blur-xs">
+              <div className="h-4 w-4 rounded-full bg-[#0284C7] text-white flex items-center justify-center text-[9px]">
                 ⬡
               </div>
-              <span>Maitri Station</span>
+              <span>Maitri Station Hub</span>
             </div>
 
-            {/* DOM Overlay: Field Camp B Label Pin */}
-            <div className="absolute top-[255px] left-[300px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCEAF1] px-2.5 py-1 text-[11px] font-semibold text-[#102A43] shadow-xs backdrop-blur-xs">
-              <div className="h-4 w-4 rounded-full bg-[#10B981] text-white flex items-center justify-center text-[9px]">
+            {/* DOM Overlay: Field Camp B Pin */}
+            <div className="absolute top-[250px] left-[300px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCEAF1] px-2.5 py-1 text-[11px] font-semibold text-[#0C1E30] shadow-xs backdrop-blur-xs">
+              <div className="h-4 w-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[9px]">
                 ▲
               </div>
-              <span>Field Camp B</span>
+              <span>Field Camp Bravo</span>
             </div>
 
-            {/* DOM Overlay: Vessel C-104 Card Tag */}
-            <div className="absolute bottom-[75px] left-[370px] z-10 rounded-xl bg-white border border-[#DCEAF1] px-3 py-1.5 shadow-md flex items-center gap-2">
-              <div className="h-6 w-6 rounded-lg bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center shrink-0">
-                <Ship size={13} />
+            {/* DOM Overlay: Vessel Position */}
+            <div className="absolute top-[340px] left-[460px] z-10 hidden sm:flex items-center gap-1.5 rounded-full bg-white/95 border border-[#DCEAF1] px-2.5 py-1 text-[11px] font-semibold text-[#0C1E30] shadow-xs backdrop-blur-xs">
+              <div className="h-4 w-4 rounded-full bg-[#0284C7] text-white flex items-center justify-center text-[9px]">
+                🚢
               </div>
-              <div>
-                <div className="text-xs font-bold text-[#102A43] leading-tight">C-104</div>
-                <div className="text-[10px] text-[#8295A5] leading-tight">ETA 17 days</div>
-              </div>
+              <span>MV Vasiliy Golovnin</span>
             </div>
 
             {/* Map Controls (Top Right: Zoom +, Zoom -, Target) */}
@@ -630,9 +627,9 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </div>
 
             {/* Map Legend (Bottom Left) */}
-            <div className="absolute bottom-3 left-3 z-20 rounded-xl bg-white/95 border border-[#DCEAF1] p-2.5 shadow-xs backdrop-blur-xs text-[11px] text-[#526779] space-y-1">
+            <div className="absolute bottom-3 left-3 z-20 rounded-xl bg-white/95 border border-[#DCEAF1] p-2.5 shadow-xs backdrop-blur-xs text-[11px] text-[#42586E] space-y-1">
               <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#1597D4]" />
+                <span className="h-2 w-2 rounded-full bg-[#0284C7]" />
                 <span>Station</span>
               </div>
               <div className="flex items-center gap-2">
@@ -640,7 +637,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                 <span>Field Camp</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-3.5 h-0.5 border-b border-dashed border-[#1597D4]" />
+                <span className="w-3.5 h-0.5 border-b border-dashed border-[#0284C7]" />
                 <span>Cargo Route</span>
               </div>
               <div className="flex items-center gap-2">
@@ -650,7 +647,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             </div>
 
             {/* Compass Rose (Bottom Right) */}
-            <div className="absolute bottom-3 right-3 z-20 h-7 w-7 rounded-full bg-white/95 border border-[#DCEAF1] flex items-center justify-center text-[#526779] shadow-2xs font-bold text-[10px] font-mono">
+            <div className="absolute bottom-3 right-3 z-20 h-7 w-7 rounded-full bg-white/95 border border-[#DCEAF1] flex items-center justify-center text-[#42586E] shadow-2xs font-semibold text-[10px] font-mono">
               N
             </div>
           </div>
@@ -659,8 +656,8 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         {/* CENTER COLUMN: RECENT MISSION EVENTS (Spans 3 cols on lg) */}
         <div className="lg:col-span-3 rounded-2xl border border-[#DCEAF1] bg-white p-5 shadow-xs flex flex-col justify-between">
           <div>
-            <div className="flex items-center gap-2 text-sm font-bold text-[#102A43] pb-3 border-b border-slate-100">
-              <Clock size={16} className="text-[#1597D4]" />
+            <div className="flex items-center gap-2 text-sm font-semibold text-[#0C1E30] pb-3 border-b border-slate-100">
+              <Clock size={16} className="text-[#0284C7]" />
               <span>Recent Mission Events</span>
             </div>
 
@@ -669,27 +666,27 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               {/* Event 1: Fuel shipment delay (Red) */}
               <div className="relative space-y-0.5">
                 <span className="absolute -left-4 top-1 h-2.5 w-2.5 rounded-full bg-rose-500 ring-4 ring-white" />
-                <div className="text-xs font-bold text-rose-600">
+                <div className="text-xs font-semibold text-rose-700">
                   Fuel shipment delay detected
                 </div>
-                <div className="text-[11px] text-[#526779]">
+                <div className="text-[11px] text-[#42586E]">
                   Cargo C-104 • ETA 17 days
                 </div>
-                <div className="text-[10px] text-[#8295A5] font-mono">
+                <div className="text-[10.5px] text-[#6E8294] font-mono">
                   2 minutes ago
                 </div>
               </div>
 
               {/* Event 2: Generator maintenance (Blue) */}
               <div className="relative space-y-0.5">
-                <span className="absolute -left-4 top-1 h-2.5 w-2.5 rounded-full bg-[#1597D4] ring-4 ring-white" />
-                <div className="text-xs font-bold text-[#102A43]">
+                <span className="absolute -left-4 top-1 h-2.5 w-2.5 rounded-full bg-[#0284C7] ring-4 ring-white" />
+                <div className="text-xs font-semibold text-[#0C1E30]">
                   Generator maintenance due
                 </div>
-                <div className="text-[11px] text-[#526779]">
+                <div className="text-[11px] text-[#42586E]">
                   G-021 • 60 hours
                 </div>
-                <div className="text-[10px] text-[#8295A5] font-mono">
+                <div className="text-[10.5px] text-[#6E8294] font-mono">
                   1 hour ago
                 </div>
               </div>
@@ -697,13 +694,13 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               {/* Event 3: Inventory level updated (Green) */}
               <div className="relative space-y-0.5">
                 <span className="absolute -left-4 top-1 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-4 ring-white" />
-                <div className="text-xs font-bold text-emerald-700">
+                <div className="text-xs font-semibold text-emerald-800">
                   Inventory level updated
                 </div>
-                <div className="text-[11px] text-[#526779]">
+                <div className="text-[11px] text-[#42586E]">
                   Fuel • 5,000 L
                 </div>
-                <div className="text-[10px] text-[#8295A5] font-mono">
+                <div className="text-[10.5px] text-[#6E8294] font-mono">
                   3 hours ago
                 </div>
               </div>
@@ -711,13 +708,13 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               {/* Event 4: Personnel status change (Slate) */}
               <div className="relative space-y-0.5">
                 <span className="absolute -left-4 top-1 h-2.5 w-2.5 rounded-full bg-slate-400 ring-4 ring-white" />
-                <div className="text-xs font-bold text-[#526779]">
+                <div className="text-xs font-semibold text-[#42586E]">
                   Personnel status change
                 </div>
-                <div className="text-[11px] text-[#8295A5]">
+                <div className="text-[11px] text-[#6E8294]">
                   Team Alpha • Field Mission
                 </div>
-                <div className="text-[10px] text-[#8295A5] font-mono">
+                <div className="text-[10.5px] text-[#6E8294] font-mono">
                   5 hours ago
                 </div>
               </div>
@@ -728,7 +725,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             <button
               type="button"
               onClick={() => goTo('audit')}
-              className="text-xs font-semibold text-[#1597D4] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-medium text-[#0284C7] hover:underline inline-flex items-center gap-1"
             >
               <span>View All Events</span>
               <ArrowRight size={12} />
@@ -748,12 +745,12 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
           {/* AI Mission Insight Section */}
           <div className="space-y-3">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-[#1597D4]">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#0284C7]">
               <Sparkles size={14} />
               <span>AI Mission Insight</span>
             </div>
 
-            <p className="text-xs text-[#526779] leading-relaxed">
+            <p className="text-[13px] text-[#42586E] leading-relaxed">
               Fuel resupply is projected to arrive after the current safe operating window. This may impact generator operation and research activities.
             </p>
 
@@ -761,7 +758,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => goTo('copilot')}
-                className="rounded-lg border border-[#1597D4] text-[#1597D4] hover:bg-[#EAF6FA] px-3.5 py-1.5 text-xs font-semibold inline-flex items-center gap-1 transition shadow-2xs"
+                className="rounded-lg border border-[#0284C7] text-[#0284C7] hover:bg-[#E0F2FE] px-3.5 py-1.5 text-xs font-medium inline-flex items-center gap-1 transition shadow-2xs"
               >
                 <span>Ask POLAR</span>
                 <ArrowRight size={12} />
@@ -771,7 +768,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
           {/* Quick Actions Sub-Section */}
           <div className="pt-4 border-t border-slate-100 mt-4 space-y-2.5">
-            <div className="text-xs font-bold text-[#102A43]">
+            <div className="text-xs font-semibold text-[#0C1E30]">
               Quick Actions
             </div>
 
@@ -779,10 +776,10 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={onStartGuidedDemo}
-                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#1597D4] p-2 text-xs text-[#526779] hover:text-[#102A43] font-semibold flex items-center gap-2.5 transition shadow-2xs group"
+                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
               >
-                <div className="h-6 w-6 rounded-lg bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center shrink-0">
-                  <Play size={11} className="fill-[#1597D4]" />
+                <div className="h-6 w-6 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0">
+                  <Play size={11} className="fill-[#0284C7]" />
                 </div>
                 <span>Run Demo</span>
               </button>
@@ -790,9 +787,9 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => goTo('simulator')}
-                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#1597D4] p-2 text-xs text-[#526779] hover:text-[#102A43] font-semibold flex items-center gap-2.5 transition shadow-2xs group"
+                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
               >
-                <div className="h-6 w-6 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                <div className="h-6 w-6 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
                   <Sliders size={12} />
                 </div>
                 <span>Open Simulator</span>
@@ -801,9 +798,9 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => goTo('risks')}
-                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#1597D4] p-2 text-xs text-[#526779] hover:text-[#102A43] font-semibold flex items-center gap-2.5 transition shadow-2xs group"
+                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
               >
-                <div className="h-6 w-6 rounded-lg bg-rose-50 text-rose-500 flex items-center justify-center shrink-0">
+                <div className="h-6 w-6 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center shrink-0">
                   <AlertTriangle size={12} />
                 </div>
                 <span>View Mission Risk</span>
@@ -812,9 +809,9 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => goTo('copilot')}
-                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#1597D4] p-2 text-xs text-[#526779] hover:text-[#102A43] font-semibold flex items-center gap-2.5 transition shadow-2xs group"
+                className="w-full text-left rounded-xl border border-[#DCEAF1] bg-[#F7FBFD] hover:bg-white hover:border-[#0284C7] p-2 text-xs text-[#42586E] hover:text-[#0C1E30] font-medium flex items-center gap-2.5 transition shadow-2xs group"
               >
-                <div className="h-6 w-6 rounded-lg bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center shrink-0">
+                <div className="h-6 w-6 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0">
                   <Sparkles size={12} />
                 </div>
                 <span>Ask AI Copilot</span>
@@ -840,15 +837,15 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         {/* Section Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-100">
           <div>
-            <h3 className="text-base font-bold text-[#102A43]">
-              Mission Progress
+            <h3 className="text-[17px] font-semibold text-[#0C1E30] tracking-tight">
+              Mission Milestones &amp; Progress
             </h3>
-            <p className="text-xs text-[#8295A5] mt-0.5">
-              Expedition timeline and key milestones
+            <p className="text-xs text-[#6E8294] mt-0.5">
+              Expedition timeline and key operational phases
             </p>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11.5px] font-medium text-emerald-800">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
             <span>On Track</span>
           </div>
@@ -905,7 +902,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                     <div
                       className={`hidden lg:block absolute top-3.5 left-7 right-[-50%] h-[2px] z-0 ${
                         isCompleted
-                          ? 'bg-[#1597D4]'
+                          ? 'bg-[#0284C7]'
                           : 'bg-[#DCEAF1]'
                       }`}
                     />
@@ -913,12 +910,12 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
                   {/* Step Node Icon */}
                   <div
-                    className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full font-bold text-xs transition ${
+                    className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full font-semibold text-xs transition ${
                       isCompleted
-                        ? 'bg-[#EAF6FA] text-[#1597D4] border border-[#1597D4]'
+                        ? 'bg-[#E0F2FE] text-[#0284C7] border border-[#0284C7]'
                         : isCurrent
-                        ? 'bg-[#1597D4] text-white ring-4 ring-[#EAF6FA]'
-                        : 'bg-white border border-[#DCEAF1] text-[#8295A5]'
+                        ? 'bg-[#0284C7] text-white ring-4 ring-[#E0F2FE]'
+                        : 'bg-white border border-[#DCEAF1] text-[#6E8294]'
                     }`}
                   >
                     {isCompleted ? (
@@ -933,17 +930,17 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                   {/* Step Labels */}
                   <div className="mt-2.5">
                     <div
-                      className={`text-xs font-bold leading-tight ${
+                      className={`text-xs font-semibold leading-tight ${
                         isCurrent
-                          ? 'text-[#1597D4]'
+                          ? 'text-[#0284C7]'
                           : isCompleted
-                          ? 'text-[#102A43]'
-                          : 'text-[#8295A5]'
+                          ? 'text-[#0C1E30]'
+                          : 'text-[#6E8294]'
                       }`}
                     >
                       {step.title}
                     </div>
-                    <div className="text-[11px] text-[#8295A5] font-mono mt-0.5">
+                    <div className="text-[11px] text-[#6E8294] font-mono mt-0.5">
                       {step.date}
                     </div>
                   </div>
@@ -961,7 +958,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-[#0A1926]/35 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+            className="fixed inset-0 bg-[#0C1E30]/40 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
             onClick={() => setShowScoreBreakdown(false)}
             aria-hidden="true"
           />
@@ -976,14 +973,14 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
             {/* Header */}
             <div className="flex items-center justify-between border-b border-[#DCEAF1] pb-4">
               <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-xl bg-[#EAF6FA] text-[#1597D4] flex items-center justify-center">
+                <div className="h-8 w-8 rounded-xl bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
                   <Sparkles size={16} />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-[#102A43]">
+                  <h3 className="text-[17px] font-semibold text-[#0C1E30] tracking-tight">
                     Mission Continuity Breakdown
                   </h3>
-                  <p className="text-xs text-[#526779]">
+                  <p className="text-xs text-[#6E8294]">
                     Why is the station score calculated at {score}%?
                   </p>
                 </div>
@@ -992,7 +989,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
               <button
                 type="button"
                 onClick={() => setShowScoreBreakdown(false)}
-                className="rounded-xl p-1.5 text-[#526779] hover:bg-[#F0F8FB] hover:text-[#102A43] transition"
+                className="rounded-xl p-1.5 text-[#6E8294] hover:bg-[#F0F8FB] hover:text-[#0C1E30] transition"
                 aria-label="Close modal"
               >
                 <X size={18} />
@@ -1001,14 +998,14 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
             {/* Score Ring & Summary */}
             <div className="my-4 p-4 rounded-xl bg-[#F7FBFD] border border-[#DCEAF1] flex items-center gap-4">
-              <div className="h-14 w-14 rounded-full bg-white border-2 border-[#1597D4] text-[#102A43] font-mono font-extrabold text-xl flex items-center justify-center shrink-0 shadow-2xs">
+              <div className="h-14 w-14 rounded-full bg-white border-2 border-[#0284C7] text-[#0C1E30] font-semibold text-xl flex items-center justify-center shrink-0 shadow-2xs font-mono">
                 {score}%
               </div>
               <div className="min-w-0 flex-1">
-                <div className="text-xs font-bold text-[#102A43] uppercase tracking-wider">
+                <div className="text-xs font-semibold text-[#0C1E30]">
                   Stable with Emerging Resupply Risk
                 </div>
-                <p className="text-xs text-[#526779] mt-0.5 leading-relaxed">
+                <p className="text-xs text-[#42586E] mt-0.5 leading-relaxed">
                   Formula: Baseline 85% + Positive Factors (+5%) - Negative Risk Deductions (-22%) = 68%
                 </p>
               </div>
@@ -1016,8 +1013,8 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
 
             {/* Contributor items */}
             <div className="space-y-2 text-xs">
-              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#8295A5] mb-1">
-                Active Contributors & Deductions:
+              <div className="text-[11.5px] font-semibold uppercase tracking-wider text-[#6E8294] mb-1">
+                Active Contributors &amp; Deductions:
               </div>
 
               {[
@@ -1025,13 +1022,13 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                   label: 'Fuel Resupply Risk',
                   val: '-12%',
                   type: 'neg',
-                  detail: '14,200 L reserve (12.0d) vs Cargo C-104 ETA (17d) leaves an unhedged 5-day blackout gap.',
+                  detail: '14,200 L reserve (12.0d) vs Cargo C-101 ETA (17d) leaves an unhedged 5-day blackout gap.',
                 },
                 {
                   label: 'Cargo Sea-Ice Delay',
                   val: '-6%',
                   type: 'neg',
-                  detail: 'Vessel C-104 throttled to 3.2 kts by fast sea-ice in Prydz Bay lead.',
+                  detail: 'Vessel C-101 throttled to 3.2 kts by fast sea-ice in Prydz Bay lead.',
                 },
                 {
                   label: 'Asset Maintenance Threshold',
@@ -1049,7 +1046,7 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                   label: 'SATCOM & Microgrid Stability',
                   val: '+3%',
                   type: 'pos',
-                  detail: 'Continuous telemetry telemetry uplink active; station base-load microgrid running nominal.',
+                  detail: 'Continuous telemetry uplink active; station base-load microgrid running nominal.',
                 },
               ].map((c, i) => (
                 <div
@@ -1057,11 +1054,11 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                   className="p-2.5 rounded-xl border border-[#EEF7FA] bg-[#F7FBFD] flex items-start justify-between gap-3"
                 >
                   <div className="min-w-0">
-                    <div className="font-semibold text-[#102A43]">{c.label}</div>
-                    <div className="text-[11px] text-[#526779] mt-0.5 leading-tight">{c.detail}</div>
+                    <div className="font-semibold text-[#0C1E30]">{c.label}</div>
+                    <div className="text-[11.5px] text-[#42586E] mt-0.5 leading-tight">{c.detail}</div>
                   </div>
                   <span
-                    className={`font-mono font-bold text-xs shrink-0 px-2 py-0.5 rounded-md ${
+                    className={`font-mono font-medium text-xs shrink-0 px-2 py-0.5 rounded-md ${
                       c.type === 'neg'
                         ? 'bg-rose-100 text-rose-700'
                         : 'bg-emerald-100 text-emerald-700'
@@ -1081,22 +1078,20 @@ export default function Dashboard({ goTo, onStartGuidedDemo }) {
                   setShowScoreBreakdown(false)
                   goTo('copilot')
                 }}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-[#DCEAF1] bg-white px-3.5 py-2 text-xs font-semibold text-[#102A43] hover:bg-[#F0F8FB] transition shadow-xs"
+                className="flex-1 text-center rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white py-2 text-xs font-medium shadow-2xs transition"
               >
-                <Sparkles size={13} className="text-[#1597D4]" />
-                <span>Ask AI for Mitigation</span>
+                Consult AI Copilot
               </button>
 
               <button
                 type="button"
                 onClick={() => {
                   setShowScoreBreakdown(false)
-                  goTo('simulator')
+                  goTo('risks')
                 }}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white px-4 py-2 text-xs font-semibold shadow-xs transition"
+                className="flex-1 text-center rounded-lg border border-[#DCEAF1] bg-white hover:bg-[#F0F8FB] text-[#0C1E30] py-2 text-xs font-medium shadow-2xs transition"
               >
-                <Sliders size={13} />
-                <span>Simulate Delay (+5d)</span>
+                Open Risk Engine
               </button>
             </div>
           </div>

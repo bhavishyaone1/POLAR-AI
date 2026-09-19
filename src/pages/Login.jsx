@@ -138,11 +138,11 @@ export default function Login() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-display text-sm font-bold uppercase tracking-wider text-[#0C1E30] sm:text-base">
+                <span className="text-[15px] font-semibold tracking-tight text-[#0C1E30]">
                   POLAR-AI
                 </span>
-                <span className="rounded-full bg-[#E0F2FE] px-2 py-0.5 text-[10px] font-mono font-semibold text-[#0284C7]">
-                  v2.4 OPERATIONS GATEWAY
+                <span className="rounded-full bg-[#E0F2FE] px-2 py-0.5 text-[10.5px] font-mono font-medium text-[#0284C7]">
+                  v2.4 Operations Gateway
                 </span>
               </div>
               <div className="text-[11px] text-[#42586E]">
@@ -179,9 +179,9 @@ export default function Login() {
             </button>
 
             {/* Security Pill */}
-            <div className="ml-2 hidden items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-mono font-semibold text-emerald-800 md:flex">
+            <div className="ml-2 hidden items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-mono font-medium text-emerald-800 md:flex">
               <Lock size={11} className="text-emerald-700" />
-              <span>TLS 1.3 · 256-BIT ENCRYPTED</span>
+              <span>TLS 1.3 · 256-bit Encrypted</span>
             </div>
           </div>
         </div>
@@ -194,21 +194,21 @@ export default function Login() {
         <div className="mx-auto max-w-7xl">
           {/* Eyebrow Pill */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#BAE6FD] bg-[#E0F2FE] px-3 py-1 text-[11px] font-mono font-semibold text-[#0284C7] shadow-xs">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#BAE6FD] bg-[#E0F2FE] px-3 py-1 text-[11.5px] font-medium text-[#0284C7] shadow-xs">
               <Sparkles size={12} />
-              EXPEDITION INTELLIGENCE &amp; MISSION CONTINUITY PLATFORM
+              Expedition Intelligence &amp; Mission Continuity Platform
             </span>
-            <span className="text-[11px] text-[#6E8294] hidden sm:inline">
+            <span className="text-[11.5px] text-[#6E8294] hidden sm:inline">
               Authoritative Operations Console for Antarctic &amp; Arctic Field Bases
             </span>
           </div>
 
           <div className="mt-3 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
             <div>
-              <h1 className="font-display text-2xl font-bold tracking-tight text-[#0C1E30] sm:text-3xl lg:text-4xl">
+              <h1 className="text-2xl font-semibold tracking-tight text-[#0C1E30] sm:text-3xl lg:text-4xl">
                 Centralized Expedition Command &amp; Logistics
               </h1>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#42586E]">
+              <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-[#42586E]">
                 A unified operational operating system connecting <strong>Expedition Planning</strong>,{' '}
                 <strong>Cargo Tracking</strong>, <strong>Inventory Management</strong>,{' '}
                 <strong>Personnel Movement</strong>, and <strong>Emergency Response</strong> across
@@ -221,24 +221,24 @@ export default function Login() {
               <div className="flex items-center gap-2 rounded-xl border border-[#DCE8F0] bg-white px-3 py-2 shadow-xs">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                 <div>
-                  <div className="font-bold text-[#0C1E30]">Maitri Station</div>
-                  <div className="text-[10px] text-[#42586E] font-mono">70°45′S · -18°C Nominal</div>
+                  <div className="font-semibold text-[#0C1E30]">Maitri Station</div>
+                  <div className="text-[10.5px] text-[#42586E] font-mono">70°45′S · -18°C Nominal</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-2 rounded-xl border border-[#DCE8F0] bg-white px-3 py-2 shadow-xs">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                 <div>
-                  <div className="font-bold text-[#0C1E30]">Bharati Station</div>
-                  <div className="text-[10px] text-[#42586E] font-mono">69°24′S · -12°C Online</div>
+                  <div className="font-semibold text-[#0C1E30]">Bharati Station</div>
+                  <div className="text-[10.5px] text-[#42586E] font-mono">69°24′S · -12°C Online</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-2 rounded-xl border border-[#DCE8F0] bg-white px-3 py-2 shadow-xs">
                 <span className="h-2 w-2 rounded-full bg-sky-500 animate-pulse" />
                 <div>
-                  <div className="font-bold text-[#0C1E30]">Himadri Base</div>
-                  <div className="text-[10px] text-[#42586E] font-mono">78°55′N · -6°C Arctic Active</div>
+                  <div className="font-semibold text-[#0C1E30]">Himadri Base</div>
+                  <div className="text-[10.5px] text-[#42586E] font-mono">78°55′N · -6°C Arctic Active</div>
                 </div>
               </div>
             </div>
@@ -261,16 +261,16 @@ export default function Login() {
                     <ShieldCheck size={20} strokeWidth={2.2} />
                   </div>
                   <div>
-                    <h2 className="text-base font-bold text-[#12263A]">
+                    <h2 className="text-[17px] font-semibold text-[#0C1E30] tracking-tight">
                       Operator Sign-In
                     </h2>
-                    <p className="text-[11px] text-[#4A6572]">
+                    <p className="text-[11.5px] text-[#42586E]">
                       Enter credentials or select a demo role
                     </p>
                   </div>
                 </div>
-                <span className="rounded-md border border-[#DDEAF0] bg-[#F7FBFD] px-2 py-0.5 font-mono text-[10px] font-semibold text-[#1597D4]">
-                  NCPOR AUTH
+                <span className="rounded-md border border-[#DDEAF0] bg-[#F7FBFD] px-2 py-0.5 font-mono text-[10.5px] font-medium text-[#0284C7]">
+                  NCPOR Auth
                 </span>
               </div>
 
@@ -278,7 +278,7 @@ export default function Login() {
               <form onSubmit={handleSubmit} className="mt-5 space-y-4">
                 {/* Operator ID Field */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-semibold text-[#12263A]">
+                  <label className="mb-1.5 block text-xs font-medium text-[#0C1E30]">
                     Operator User ID
                   </label>
                   <div className="relative">
