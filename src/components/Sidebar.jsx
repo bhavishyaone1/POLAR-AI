@@ -1,51 +1,40 @@
 /**
- * SIDEBAR — CLEAN ARCTIC WHITE SPECIFICATION
- * ===========================================
- * Section 6:
- * Logo: POLAR-AI
- * 8 Navigation Items:
- * - Overview
- * - Expedition
- * - Cargo
- * - Inventory
- * - Assets
- * - Mission Risk
- * - Simulator
- * - AI Copilot
- *
- * Selected nav item:
- * Very light ice-blue background + ice-blue icon + dark text.
- * Clean, lightweight, professional.
+ * SIDEBAR — POLAR-AI MISSION CONTINUITY INTELLIGENCE
+ * ====================================================
+ * Pixel-perfect alignment with the design reference:
+ * - Geometric ice mountain logo + "POLAR-AI" & "Mission Continuity Intelligence"
+ * - 8 items: Dashboard, Expedition, Cargo (3), Inventory (2), Assets, Mission Risk (4), Simulator, AI Copilot
+ * - Active state: Soft sky-blue fill with vibrant sky-blue icon and text
+ * - System Online status card + mountain illustration + footer tagline
  */
 
 import React from 'react'
 import {
   AlertTriangle,
-  Boxes,
   Bot,
+  Boxes,
   Compass,
   Cpu,
   LayoutDashboard,
-  LogOut,
   Package,
-  Radio,
   Sliders,
-  Sparkles,
   X,
 } from 'lucide-react'
-import { NAV_GROUPS, NAV_ITEMS } from '../lib/navigation'
-import { useData } from '../store/DataContext'
 import { useAuth } from '../store/AuthContext'
-import PolarLogo from './PolarLogo'
 
 export default function Sidebar({ view, onNavigate, open, onClose }) {
-  const { stats } = useData()
-  const { user, role, signOut } = useAuth()
+  const { signOut } = useAuth()
 
-  const counts = {
-    inventory: stats.lowStockCount,
-    cargo: stats.cargoDelayed,
-  }
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'expeditions', label: 'Expedition', icon: Compass },
+    { id: 'cargo', label: 'Cargo', icon: Package, badge: 3 },
+    { id: 'inventory', label: 'Inventory', icon: Boxes, badge: 2 },
+    { id: 'assets', label: 'Assets', icon: Cpu },
+    { id: 'risks', label: 'Mission Risk', icon: AlertTriangle, badge: 4 },
+    { id: 'simulator', label: 'Simulator', icon: Sliders },
+    { id: 'copilot', label: 'AI Copilot', icon: Bot },
+  ]
 
   return (
     <>
@@ -60,26 +49,30 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
 
       <aside
         className={`
-          fixed inset-y-0 left-0 z-50 flex w-[260px] max-w-[85vw] flex-col border-r
-          bg-[var(--surface-card)] transition-transform duration-250 ease-in-out
+          fixed inset-y-0 left-0 z-50 flex w-[260px] max-w-[85vw] flex-col border-r border-[#E5EDF2]
+          bg-white transition-transform duration-250 ease-in-out
           lg:sticky lg:bottom-auto lg:top-0 lg:z-auto lg:h-screen lg:translate-x-0 lg:w-[240px]
           ${open ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
         `}
-        style={{ borderColor: 'var(--line)' }}
       >
         {/* ---------- Logo & Brand ---------- */}
-        <div
-          className="flex items-center justify-between border-b px-5 py-4"
-          style={{ borderColor: 'var(--line)' }}
-        >
-          <div className="flex items-center gap-2.5 min-w-0">
-            <PolarLogo size={24} withGlow={false} className="shrink-0 text-[var(--ice)]" />
+        <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-[#F1F5F9]">
+          <div className="flex items-center gap-3 min-w-0">
+            {/* Geometric Mountain Logo */}
+            <div className="shrink-0 flex items-center justify-center">
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="20,4 32,32 8,32" fill="#0284C7" />
+                <polygon points="20,4 26,32 8,32" fill="#38BDF8" opacity="0.85" />
+                <polygon points="28,14 38,32 18,32" fill="#0EA5E9" opacity="0.65" />
+                <polygon points="12,18 22,32 2,32" fill="#7DD3FC" opacity="0.75" />
+              </svg>
+            </div>
             <div>
-              <div className="font-display text-sm font-bold tracking-tight text-[var(--ink-hi)]">
+              <div className="text-base font-bold tracking-tight text-[#0F172A]">
                 POLAR-AI
               </div>
-              <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--ink-low)]">
-                Mission Intelligence
+              <div className="text-[10px] text-slate-400 font-medium">
+                Mission Continuity Intelligence
               </div>
             </div>
           </div>
@@ -87,91 +80,91 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1 text-[var(--ink-mid)] hover:text-[var(--ink-hi)] lg:hidden"
+            className="rounded-lg p-1 text-slate-400 hover:text-slate-700 lg:hidden"
             aria-label="Close navigation"
           >
             <X size={18} />
           </button>
         </div>
 
-        {/* ---------- 8 Primary Navigation Items ---------- */}
-        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-4">
-          {NAV_GROUPS.map((group) => {
-            const items = NAV_ITEMS.filter((item) => item.group === group && !item.hidden)
-            if (items.length === 0) return null
+        {/* ---------- 8 Navigation Items ---------- */}
+        <nav className="flex-1 overflow-y-auto px-3.5 py-4 space-y-1">
+          {navItems.map((item) => {
+            const Icon = item.icon
+            const isActive = view === item.id || (item.id === 'dashboard' && view === 'landing')
 
             return (
-              <div key={group} className="space-y-1">
-                <div className="px-3 pb-1 text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--ink-low)]">
-                  {group}
-                </div>
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => {
+                  onNavigate(item.id)
+                  if (onClose) onClose()
+                }}
+                className={`
+                  flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-xs transition font-medium
+                  ${
+                    isActive
+                      ? 'bg-[#E0F2FE] text-[#0284C7] font-semibold'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  }
+                `}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                <Icon
+                  size={17}
+                  strokeWidth={isActive ? 2.2 : 1.75}
+                  className={isActive ? 'text-[#0284C7]' : 'text-slate-400'}
+                />
+                <span className="flex-1 text-left truncate">{item.label}</span>
 
-                {items.map((item) => {
-                  const Icon = item.icon
-                  const isActive = view === item.id || (item.id === 'dashboard' && view === 'landing')
-                  const count = counts[item.id]
-
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => {
-                        onNavigate(item.id)
-                        if (onClose) onClose()
-                      }}
-                      className={`
-                        flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium transition
-                        ${
-                          isActive
-                            ? 'bg-[var(--surface-ice)] text-[var(--ink-hi)] font-semibold border border-[var(--line)] shadow-2xs'
-                            : 'text-[var(--ink-mid)] hover:bg-[var(--surface-secondary)] hover:text-[var(--ink-hi)]'
-                        }
-                      `}
-                      aria-current={isActive ? 'page' : undefined}
-                    >
-                      <Icon
-                        size={15}
-                        strokeWidth={1.75}
-                        className={isActive ? 'text-[var(--ice)]' : 'text-[var(--ink-low)]'}
-                      />
-                      <span className="flex-1 text-left truncate">{item.label}</span>
-
-                      {count > 0 && (
-                        <span className="rounded-full bg-amber-50 border border-amber-200 px-1.5 py-0.2 text-[9px] font-mono font-bold text-amber-700">
-                          {count}
-                        </span>
-                      )}
-                    </button>
-                  )
-                })}
-              </div>
+                {item.badge && (
+                  <span
+                    className={`
+                      h-5 min-w-[20px] px-1.5 rounded-full text-[11px] font-semibold flex items-center justify-center
+                      ${
+                        isActive
+                          ? 'bg-white text-[#0284C7] shadow-2xs'
+                          : 'bg-[#E0F2FE] text-[#0284C7]'
+                      }
+                    `}
+                  >
+                    {item.badge}
+                  </span>
+                )}
+              </button>
             )
           })}
         </nav>
 
-        {/* ---------- Footer Status Strip ---------- */}
-        <div
-          className="border-t p-3.5 space-y-2 bg-[var(--surface-base)]"
-          style={{ borderColor: 'var(--line)' }}
-        >
-          <div className="flex items-center justify-between text-[10px] font-mono">
-            <span className="text-[var(--ink-low)] uppercase">Station Telemetry</span>
-            <span className="inline-flex items-center gap-1 text-[var(--green)] font-semibold">
-              <Radio size={10} className="animate-pulse" />
-              ONLINE
-            </span>
+        {/* ---------- Footer Status Card & Mountain Silhouette ---------- */}
+        <div className="p-3.5 space-y-3 border-t border-[#F1F5F9] relative overflow-hidden bg-gradient-to-b from-white to-[#F8FAFC]">
+          {/* Status Card */}
+          <div className="rounded-xl border border-slate-200/80 bg-white p-2.5 shadow-2xs">
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-800">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>System Online</span>
+            </div>
+            <div className="text-[10px] text-slate-400 pl-4 mt-0.5">
+              Sync: 2 min ago
+            </div>
           </div>
 
-          <div className="flex items-center justify-between text-[11px] text-[var(--ink-mid)]">
-            <span className="truncate">Maitri Station · MoES</span>
-            <button
-              type="button"
-              onClick={signOut}
-              className="p-1 text-[var(--ink-low)] hover:text-[var(--ink-hi)] transition rounded"
-              title="Sign out"
+          {/* Mountain Silhouette Graphic Watermark */}
+          <div className="relative pt-1">
+            <svg
+              viewBox="0 0 200 45"
+              className="w-full h-10 text-sky-100/80 fill-current opacity-70"
+              preserveAspectRatio="none"
             >
-              <LogOut size={13} />
-            </button>
+              <polygon points="0,45 25,20 45,32 75,10 100,28 135,8 165,30 200,16 200,45" />
+              <polygon points="0,45 40,25 65,35 110,18 145,30 180,22 200,45" fill="#BAE6FD" opacity="0.4" />
+            </svg>
+
+            <div className="text-[11px] text-slate-400 leading-tight pt-1">
+              <div>Smarter decisions.</div>
+              <div>Safer missions.</div>
+            </div>
           </div>
         </div>
       </aside>

@@ -274,7 +274,7 @@ export default function App() {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-[#F4F8FA]">
       <Sidebar
         view={view}
         onNavigate={goTo}
@@ -284,7 +284,7 @@ export default function App() {
 
       {/* min-w-0 matters: without it, a wide table would stretch this
           column and break the layout instead of scrolling inside it. */}
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col bg-[#F4F8FA]">
         {/* Unified sticky header container: keeps TopBar and EmergencyBanner perfectly docked with zero viewport drift */}
         <div className="sticky top-0 z-30">
           <TopBar
@@ -392,7 +392,7 @@ export default function App() {
           </div>
         )}
 
-        <main className="flex-1 px-3.5 py-4 sm:px-6 sm:py-7 lg:px-8 lg:py-8 max-w-[1440px] w-full mx-auto pb-24 lg:pb-8">
+        <main className="flex-1 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-6 max-w-[1600px] w-full mx-auto pb-24 lg:pb-8">
           {/* key={view} restarts the error boundary when you navigate, so
               one broken page does not stay broken forever. */}
           <ErrorBoundary key={view} onReset={() => goTo('dashboard')}>
