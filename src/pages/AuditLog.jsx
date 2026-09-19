@@ -75,8 +75,8 @@ export default function AuditLog({ goTo }) {
         </span>
       </div>
 
-      {/* ================= AUDIT LOG TABLE ================= */}
-      <div className="overflow-hidden rounded-2xl border border-[#DDEAF0] bg-white shadow-xs">
+      {/* ================= AUDIT LOG TABLE (DESKTOP) ================= */}
+      <div className="hidden md:block overflow-hidden rounded-2xl border border-[#DDEAF0] bg-white shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="border-b border-[#DDEAF0] bg-[#F7FBFD] font-mono text-[11px] uppercase tracking-wider text-[#8495A3]">
@@ -120,6 +120,37 @@ export default function AuditLog({ goTo }) {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* ================= AUDIT LOG CARDS (MOBILE) ================= */}
+      <div className="block md:hidden space-y-2.5">
+        {filteredLogs.map((log) => (
+          <div key={log.id} className="rounded-xl border border-[#DDEAF0] bg-white p-3.5 shadow-2xs space-y-2">
+            <div className="flex items-center justify-between gap-2 border-b border-[#F1F5F9] pb-2">
+              <span className="font-mono text-xs font-bold text-[#1597D4] bg-[#DDF3FA] px-2 py-0.5 rounded border border-[#BFDDE7]">
+                {log.id}
+              </span>
+              <span className="font-mono text-[10.5px] text-[#8495A3]">
+                #{log.hash ? log.hash.slice(0, 10) : 'sha256'}
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-semibold text-[#12263A] flex items-center gap-1.5">
+                <UserCheck size={13} className="text-[#18A878] shrink-0" />
+                {log.user}
+              </span>
+              <span className="rounded-md bg-[#DDF3FA] px-2 py-0.5 font-mono text-[10px] font-semibold text-[#1597D4]">
+                {log.action}
+              </span>
+            </div>
+            <p className="text-xs text-[#526779] leading-relaxed">
+              {log.details}
+            </p>
+            <div className="text-[10.5px] font-mono text-[#8495A3] pt-1.5 border-t border-[#F8FAFC]">
+              {new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} · {new Date(log.timestamp).toLocaleDateString()}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )
