@@ -240,28 +240,88 @@ export default function Cargo({ goTo }) {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-7">
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#DDEAF0]">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#1597D4] bg-[#DDF3FA] px-2 py-0.5 rounded-full">
+              GLOBAL FREIGHT & FLEET TRACKING
+            </span>
+            <span className="text-[11px] text-[#8495A3] font-mono">MARITIME & AIR CORRIDORS</span>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-[#12263A]">Cargo Manifest & Supply Chains</h1>
+          <p className="text-xs text-[#526779] mt-0.5">
+            Real-time status, vessel tracking, and resupply arrival timelines for Indian Antarctic Expeditions.
+          </p>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <button
+            type="button"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3.5 py-2 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
+            onClick={() => goTo('map')}
+          >
+            <Compass size={14} className="text-[#1597D4]" />
+            <span>Maritime Map</span>
+          </button>
+          {canManage && (
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white px-3.5 py-2 text-xs font-semibold shadow-xs transition"
+              onClick={() => setShowForm((prev) => !prev)}
+            >
+              <Plus size={14} />
+              <span>Log Consignment</span>
+            </button>
+          )}
+        </div>
+      </div>
+
       {/* ================= SUMMARY STRIP ================= */}
       <div className="grid grid-cols-2 gap-4 sm:gap-5 sm:grid-cols-3 lg:grid-cols-5">
         {[
-          { label: 'Consignments', value: cargo.length },
-          { label: 'In transit', value: inTransit.length, tone: 'ok' },
+          { label: 'Total Consignments', value: cargo.length, hint: 'All manifests' },
+          { label: 'In Transit', value: inTransit.length, tone: 'ok', hint: 'At sea or air corridor' },
           {
-            label: 'Delayed',
+            label: 'Delayed Shipments',
             value: cargo.filter((c) => c.status === 'DELAYED').length,
             tone: 'alert',
+            hint: 'Pack-ice & weather hold',
           },
           {
-            label: 'Critical priority',
+            label: 'Critical Priority',
             value: cargo.filter((c) => c.priority === 'CRITICAL' && c.status !== 'ARRIVED').length,
             tone: 'warn',
+            hint: 'Life-support & energy',
           },
-          { label: 'Tonnes in transit', value: tonnesInTransit.toFixed(1) },
+          {
+            label: 'Tonnes in Transit',
+            value: `${tonnesInTransit.toFixed(1)} t`,
+            hint: 'Active freight payload',
+          },
         ].map((item) => (
-          <div key={item.label} className="card-tight">
-            <div className="eyebrow">{item.label}</div>
-            <div className={`stat-value ${item.tone ? `stat-value--${item.tone}` : ''}`}>
+          <div
+            key={item.label}
+            className="rounded-2xl border border-[#DDEAF0] bg-white p-4 sm:p-5 shadow-xs transition hover:border-[#BFDDE7]"
+          >
+            <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#8495A3] mb-1">
+              {item.label}
+            </div>
+            <div
+              className={`text-2xl sm:text-3xl font-bold font-mono tracking-tight ${
+                item.tone === 'ok'
+                  ? 'text-[#18A878]'
+                  : item.tone === 'warn'
+                  ? 'text-[#E7A51A]'
+                  : item.tone === 'alert'
+                  ? 'text-[#E5484D]'
+                  : 'text-[#12263A]'
+              }`}
+            >
               {item.value}
+            </div>
+            <div className="text-[11px] text-[#526779] mt-1 truncate">
+              {item.hint}
             </div>
           </div>
         ))}
@@ -269,43 +329,40 @@ export default function Cargo({ goTo }) {
 
       {/* ================= PREDICTIVE RESUPPLY RISK BANNER ================= */}
       {cargo.some((c) => c.status === 'DELAYED' && c.category === 'Fuel') && (
-        <div
-          className="alert-strip"
-          style={{
-            borderColor: 'rgba(239, 68, 68, 0.4)',
-            backgroundColor: 'rgba(239, 68, 68, 0.05)',
-            borderLeftColor: 'var(--red)',
-          }}
-        >
-          <AlertTriangle size={17} className="mt-0.5 shrink-0 text-[var(--red)]" />
-          <div className="min-w-0 flex-1">
-            <div className="text-[13px] font-semibold text-hi flex items-center gap-2">
-              <span>Critical Resupply Deficit Detected — Consignment C-101 (Fuel)</span>
-              <span className="rounded bg-[rgba(239,68,68,0.2)] px-1.5 py-0.2 text-[10px] font-mono text-[var(--red)]">
-                5.0-DAY GAP
-              </span>
+        <div className="rounded-2xl border border-rose-200 bg-rose-50/70 p-5 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3.5 min-w-0">
+            <div className="h-9 w-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
+              <AlertTriangle size={18} />
             </div>
-            <p className="mt-1 text-[12px] text-mid">
-              Vessel delayed by fast pack-ice in Prydz Bay (ETA: 17 days). Maitri station fuel reserve depletes in 12.0 days (14,200 L @ 1,180 L/d).
-              Leaves an unhedged 5.0-day blackout window risking life-support and scientific heating systems.
-            </p>
+            <div className="min-w-0">
+              <div className="text-sm font-bold text-[#12263A] flex items-center gap-2">
+                <span>Critical Resupply Deficit Detected — Consignment C-101 (Fuel)</span>
+                <span className="rounded-md bg-rose-200/80 px-2 py-0.5 text-[10px] font-mono font-bold text-rose-800">
+                  5.0-DAY GAP
+                </span>
+              </div>
+              <p className="mt-1 text-xs text-[#526779] leading-relaxed max-w-3xl">
+                Vessel delayed by fast pack-ice in Prydz Bay (ETA: 17 days). Maitri station fuel reserve depletes in 12.0 days (14,200 L @ 1,180 L/d).
+                Leaves an unhedged 5.0-day blackout window risking life-support and scientific heating systems.
+              </p>
+            </div>
           </div>
-          <div className="flex shrink-0 flex-wrap items-center gap-2">
+          <div className="flex shrink-0 flex-wrap items-center gap-2 self-end md:self-center">
             <button
               type="button"
-              className="btn btn--sm flex items-center gap-1.5 bg-[var(--ice)] text-white hover:bg-[var(--ice-vivid)] font-semibold"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white px-3.5 py-2 text-xs font-semibold shadow-xs transition"
               onClick={() => goTo('simulator')}
             >
-              <Zap size={12} />
+              <Zap size={13} />
               <span>Simulate Scenario</span>
             </button>
             <button
               type="button"
-              className="btn btn--ghost btn--sm flex items-center gap-1"
-              onClick={() => goTo('impact')}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3.5 py-2 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
+              onClick={() => goTo('risks')}
             >
               <span>View Impact Cascade</span>
-              <ArrowRight size={12} />
+              <ArrowRight size={13} />
             </button>
           </div>
         </div>

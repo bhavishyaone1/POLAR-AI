@@ -306,57 +306,119 @@ export default function Inventory({ goTo }) {
   }
 
   return (
-    <div className="space-y-8">
-      {/* ================= SUMMARY STRIP =================
-          A note on the labels, because it is easy to get this wrong:
-          "At or below min" is the count of everything needing attention,
-          and "Out of stock" is a SUBSET of it (an item at zero is also
-          below its minimum). So Available + At-or-below-min = the total,
-          and 'At or below min' is the same number the dashboard shows. */}
+    <div className="space-y-7">
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#DDEAF0]">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#1597D4] bg-[#DDF3FA] px-2 py-0.5 rounded-full">
+              LOGISTICS & BUFFER INTELLIGENCE
+            </span>
+            <span className="text-[11px] text-[#8495A3] font-mono">STATION LEVEL L4</span>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-[#12263A]">Inventory & Consumable Reserves</h1>
+          <p className="text-xs text-[#526779] mt-0.5">
+            Continuous real-time tracking of fuel, life-support, rations, and technical reserves across polar stations.
+          </p>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <button
+            type="button"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3.5 py-2 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
+            onClick={() => goTo('simulator')}
+          >
+            <Zap size={14} className="text-[#1597D4]" />
+            <span>Simulate Outage</span>
+          </button>
+          {canManage && (
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#1597D4] hover:bg-[#1282b8] text-white px-3.5 py-2 text-xs font-semibold shadow-xs transition"
+              onClick={() => setShowForm((prev) => !prev)}
+            >
+              <Plus size={14} />
+              <span>Add Stock Item</span>
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* ================= SUMMARY STRIP ================= */}
       <div className="grid grid-cols-2 gap-4 sm:gap-5 sm:grid-cols-3 lg:grid-cols-5">
         {[
-          { label: 'Items tracked', value: stats.inventoryTotal },
+          { label: 'Items Tracked', value: stats.inventoryTotal, hint: 'Active stock records' },
           {
-            label: 'Available',
+            label: 'Available Stable',
             value: inventory.filter((i) => stockStatus(i) === 'AVAILABLE').length,
             tone: 'ok',
+            hint: 'Above minimum threshold',
           },
-          { label: 'At or below min', value: stats.lowStockCount, tone: 'warn' },
-          { label: 'Out of stock', value: stats.outOfStockCount, tone: 'alert' },
-          { label: 'Storage locations', value: stats.inventoryLocations },
+          {
+            label: 'At or Below Min',
+            value: stats.lowStockCount,
+            tone: 'warn',
+            hint: 'Requires resupply priority',
+          },
+          {
+            label: 'Out of Stock',
+            value: stats.outOfStockCount,
+            tone: 'alert',
+            hint: 'Zero station holding',
+          },
+          {
+            label: 'Storage Locations',
+            value: stats.inventoryLocations,
+            hint: 'Maitri, Bharati & shelters',
+          },
         ].map((item) => (
-          <div key={item.label} className="card-tight">
-            <div className="eyebrow">{item.label}</div>
-            <div className={`stat-value ${item.tone ? `stat-value--${item.tone}` : ''}`}>
+          <div
+            key={item.label}
+            className="rounded-2xl border border-[#DDEAF0] bg-white p-4 sm:p-5 shadow-xs transition hover:border-[#BFDDE7]"
+          >
+            <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#8495A3] mb-1">
+              {item.label}
+            </div>
+            <div
+              className={`text-2xl sm:text-3xl font-bold font-mono tracking-tight ${
+                item.tone === 'ok'
+                  ? 'text-[#18A878]'
+                  : item.tone === 'warn'
+                  ? 'text-[#E7A51A]'
+                  : item.tone === 'alert'
+                  ? 'text-[#E5484D]'
+                  : 'text-[#12263A]'
+              }`}
+            >
               {item.value}
+            </div>
+            <div className="text-[11px] text-[#526779] mt-1 truncate">
+              {item.hint}
             </div>
           </div>
         ))}
       </div>
 
-      {/* ================= LIVE LOW-STOCK WARNING =================
-          Rendered from stats.lowStockItems, which is recalculated on every
-          change. Press minus in the table below and this strip grows. */}
+      {/* ================= LIVE LOW-STOCK WARNING ================= */}
       {stats.lowStockCount > 0 && (
-        <div className="alert-strip alert-strip--warn">
-          <Package size={16} className="mt-0.5 shrink-0 text-[var(--amber)]" />
-          <div className="min-w-0">
-            <div className="text-[13px] text-hi">
-              {stats.lowStockCount} {stats.lowStockCount === 1 ? 'item is' : 'items are'} at or below
-              minimum stock
+        <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-4 flex items-start gap-3 shadow-xs">
+          <div className="h-8 w-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+            <Package size={16} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-xs font-bold text-[#12263A]">
+              {stats.lowStockCount} {stats.lowStockCount === 1 ? 'item is' : 'items are'} at or below minimum stock threshold
               {stats.outOfStockCount > 0 && (
-                <span className="text-[var(--orange)]">
-                  {' '}
-                  · {stats.outOfStockCount} completely out
+                <span className="text-[#E5484D] font-bold">
+                  {' '}· {stats.outOfStockCount} completely depleted
                 </span>
               )}
             </div>
-            <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-[11.5px] text-mid">
+            <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-xs text-[#526779]">
               {stats.lowStockItems.map((item) => (
-                <span key={item.id}>
-                  {item.item_name}{' '}
-                  <span className="mono text-low">
-                    {formatNumber(item.quantity)}/{formatNumber(item.minimum_quantity)}
+                <span key={item.id} className="inline-flex items-center gap-1 bg-white border border-amber-200/80 px-2 py-0.5 rounded-md">
+                  <span className="font-medium text-[#12263A]">{item.item_name}</span>
+                  <span className="font-mono text-[#E7A51A] font-bold">
+                    {formatNumber(item.quantity)}/{formatNumber(item.minimum_quantity)} {item.unit}
                   </span>
                 </span>
               ))}
@@ -374,19 +436,19 @@ export default function Inventory({ goTo }) {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="btn btn--sm btn--ghost flex items-center gap-1.5"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3 py-1.5 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
               onClick={() => goTo('simulator')}
             >
-              <Zap size={12} className="text-[var(--ice)]" />
-              <span>What-If Simulator</span>
+              <Zap size={13} className="text-[#1597D4]" />
+              <span>What-If Sandbox</span>
             </button>
             <button
               type="button"
-              className="btn btn--sm btn--ghost flex items-center gap-1.5"
-              onClick={() => goTo('impact')}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3 py-1.5 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
+              onClick={() => goTo('risks')}
             >
-              <ArrowRight size={12} className="text-[var(--ice)]" />
-              <span>Impact Cascade</span>
+              <ArrowRight size={13} className="text-[#1597D4]" />
+              <span>Risk Cascade</span>
             </button>
           </div>
         }
@@ -397,81 +459,81 @@ export default function Inventory({ goTo }) {
             return (
               <div
                 key={item.id}
-                className="rounded-xl border p-5 flex flex-col justify-between transition shadow-sm"
-                style={{
-                  backgroundColor: isDeficit ? 'rgba(239, 68, 68, 0.05)' : 'var(--surface-raised)',
-                  borderColor: isDeficit ? 'rgba(239, 68, 68, 0.4)' : 'var(--line)',
-                }}
+                className={`rounded-2xl border p-5 flex flex-col justify-between transition bg-white shadow-xs ${
+                  isDeficit
+                    ? 'border-rose-300 ring-1 ring-rose-200 hover:border-rose-400'
+                    : 'border-[#DDEAF0] hover:border-[#BFDDE7]'
+                }`}
               >
                 <div>
-                  <div className="flex items-center justify-between gap-2 mb-1.5">
-                    <span className="text-[10.5px] font-mono uppercase tracking-wider text-low">
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-[10.5px] font-mono font-semibold uppercase tracking-wider text-[#8495A3]">
                       {item.location?.split(' ')[0] || 'Station'} · {item.category}
                     </span>
                     <span
-                      className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
+                      className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wide ${
                         isDeficit
-                          ? 'bg-[rgba(239,68,68,0.15)] text-[var(--red)] border border-[rgba(239,68,68,0.3)]'
+                          ? 'bg-rose-50 text-rose-700 border border-rose-200'
                           : daysRemaining <= 15
-                          ? 'bg-[rgba(245,158,11,0.15)] text-[var(--amber)] border border-[rgba(245,158,11,0.3)]'
-                          : 'bg-[rgba(79,201,138,0.15)] text-[var(--green)] border border-[rgba(79,201,138,0.3)]'
+                          ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                          : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                       }`}
                     >
-                      {isDeficit && <span className="h-1.5 w-1.5 rounded-full bg-[var(--red)] animate-ping" />}
-                      {isDeficit ? 'Deficit Shortfall' : daysRemaining <= 15 ? 'Buffer Warning' : 'Stable'}
+                      {isDeficit && <span className="h-1.5 w-1.5 rounded-full bg-rose-600 animate-ping" />}
+                      {isDeficit ? 'Deficit Gap' : daysRemaining <= 15 ? 'Buffer Alert' : 'Stable'}
                     </span>
                   </div>
 
-                  <div className="text-[13.5px] font-semibold text-hi truncate" title={item.item_name}>
+                  <div className="text-[14px] font-bold text-[#12263A] truncate" title={item.item_name}>
                     {item.item_name}
                   </div>
 
-                  <div className="mt-3 flex items-baseline justify-between">
+                  <div className="mt-3.5 flex items-baseline justify-between">
                     <div>
-                      <div className="text-[20px] font-mono font-bold leading-none text-hi">
-                        {daysRemaining} <span className="text-xs font-normal text-mid">days</span>
+                      <div className={`text-2xl font-mono font-bold leading-none ${isDeficit ? 'text-rose-600' : 'text-[#12263A]'}`}>
+                        {daysRemaining} <span className="text-xs font-normal text-[#526779]">days</span>
                       </div>
-                      <div className="text-[11px] text-low mt-0.5">
-                        Stock: {formatNumber(item.quantity)} {item.unit}
+                      <div className="text-[11px] text-[#8495A3] mt-1">
+                        Stock: <span className="font-mono text-[#12263A]">{formatNumber(item.quantity)}</span> {item.unit}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-[12px] font-mono text-mid flex items-center gap-1 justify-end">
-                        <Flame size={12} className="text-[var(--orange)]" />
+                      <div className="text-xs font-mono text-[#526779] flex items-center gap-1 justify-end font-semibold">
+                        <Flame size={13} className="text-[#E7A51A]" />
                         <span>{formatNumber(item.daily_burn_rate)}</span>
                       </div>
-                      <div className="text-[10px] text-low">{item.unit}/day burn</div>
+                      <div className="text-[10.5px] text-[#8495A3]">{item.unit}/day burn</div>
                     </div>
                   </div>
 
-                  <div className="mt-2.5 h-1.5 w-full bg-[var(--surface-sunken)] rounded-full overflow-hidden">
+                  <div className="mt-3 h-2 w-full bg-[#EAF5F9] rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{
                         width: `${Math.min(100, (daysRemaining / 30) * 100)}%`,
-                        backgroundColor: isDeficit ? 'var(--red)' : daysRemaining <= 15 ? 'var(--amber)' : 'var(--green)',
+                        backgroundColor: isDeficit ? '#E5484D' : daysRemaining <= 15 ? '#E7A51A' : '#1597D4',
                       }}
                     />
                   </div>
                 </div>
 
-                <div className="mt-3 pt-2.5 border-t border-[var(--line-soft)] text-[11px]">
+                <div className="mt-4 pt-3 border-t border-[#EEF7FA] text-xs">
                   {isDeficit ? (
-                    <div className="text-[var(--red)] font-medium flex items-start gap-1.5">
-                      <AlertTriangle size={13} className="shrink-0 mt-0.5" />
+                    <div className="text-rose-700 font-medium flex items-start gap-1.5">
+                      <AlertTriangle size={14} className="shrink-0 mt-0.5 text-rose-600" />
                       <span>
-                        Resupply gap: <strong>-{resupplyGapDays}d deficit</strong> before {linkedCargo?.id || 'resupply'} arrives (ETA {etaDays}d).
+                        Resupply gap: <strong className="font-mono text-rose-700">-{resupplyGapDays}d deficit</strong> before {linkedCargo?.id || 'resupply'} arrives (ETA {etaDays}d).
                       </span>
                     </div>
                   ) : linkedCargo ? (
-                    <div className="text-mid flex items-center justify-between">
-                      <span className="text-low">Resupply: {linkedCargo.id}</span>
-                      <span className="font-mono text-hi">ETA {etaDays}d</span>
+                    <div className="text-[#526779] flex items-center justify-between">
+                      <span className="text-[#8495A3]">Resupply: <strong className="text-[#12263A] font-mono">{linkedCargo.id}</strong></span>
+                      <span className="font-mono font-semibold text-[#1597D4]">ETA {etaDays}d</span>
                     </div>
                   ) : (
-                    <div className="text-low flex items-center justify-between">
+                    <div className="text-[#8495A3] flex items-center justify-between">
                       <span>Safety buffer</span>
-                      <span className="font-mono text-mid">{item.safety_buffer_days || 3}d reserved</span>
+                      <span className="font-mono text-[#526779] font-medium">{item.safety_buffer_days || 3}d reserved</span>
                     </div>
                   )}
                 </div>
@@ -855,25 +917,23 @@ export default function Inventory({ goTo }) {
                   <div className="flex items-center gap-1.5">
                     <button
                       type="button"
-                      className="btn btn--ghost btn--sm mono"
-                      style={{ padding: '4px 7px', fontSize: 11 }}
+                      className="inline-flex items-center gap-1 rounded-md border border-[#DDEAF0] bg-white px-2 py-1 font-mono text-[11px] font-semibold text-[#12263A] hover:bg-[#F0F8FB] active:scale-95 transition disabled:opacity-30 disabled:pointer-events-none shadow-2xs"
                       disabled={!canManage || Number(r.quantity) <= 0}
                       onClick={() => adjustInventoryQuantity(r.id, -step)}
                       aria-label={`Reduce ${r.item_name} by ${step}`}
                     >
-                      <Minus size={11} />
-                      {step}
+                      <Minus size={11} className="text-[#8495A3]" />
+                      <span>{step}</span>
                     </button>
                     <button
                       type="button"
-                      className="btn btn--sm mono"
-                      style={{ padding: '4px 7px', fontSize: 11 }}
+                      className="inline-flex items-center gap-1 rounded-md bg-[#1597D4] hover:bg-[#1282b8] px-2 py-1 font-mono text-[11px] font-semibold text-white active:scale-95 transition disabled:opacity-30 disabled:pointer-events-none shadow-2xs"
                       disabled={!canManage}
                       onClick={() => adjustInventoryQuantity(r.id, step)}
                       aria-label={`Increase ${r.item_name} by ${step}`}
                     >
                       <Plus size={11} />
-                      {step}
+                      <span>{step}</span>
                     </button>
                   </div>
                 )

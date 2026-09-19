@@ -33,221 +33,140 @@
             JetBrains Mono - data: IDs, timestamps, coordinates, quantities
 */
 :root {
-  /* Surfaces — Arctic Ice / Polar White */
-  --surface-base: #F8FBFD;
+  /* Surfaces — Pure Arctic White & Ice Blue */
+  --surface-base: #F7FBFD;
   --surface-secondary: #F1F7FA;
+  --surface-section: #EAF5F9;
   --surface-card: #FFFFFF;
-  --surface-ice: #EEF7FA;
-  --surface-raised: #EEF7FA;
-  --surface-sunken: #E5F0F5;
-  --surface-hover: #F1F7FA;
-  --surface-active: #EFFAFF;
+  --surface-ice: #F0F8FB;
+  --surface-raised: #FFFFFF;
+  --surface-sunken: #EAF5F9;
+  --surface-hover: #F0F8FB;
+  --surface-active: #EEF9FC;
 
   /* Subtle ice borders */
-  --line: #DCEAF0;
+  --line: #DDEAF0;
   --line-hover: #BFDDE7;
   --line-soft: #EEF7FA;
 
-  /* Text — Crisp scientific charcoal & cool slate */
-  --ink-hi: #17232B;
-  --ink-mid: #5F707A;
-  --ink-low: #8A9AA3;
+  /* Text — Deep scientific navy charcoal & cool slate */
+  --ink-hi: #12263A;
+  --ink-mid: #526779;
+  --ink-low: #8495A3;
+  --ink-very-low: #A8B7C2;
 
-  /* Ice Blue Accent System */
-  --ice: #4BA7C5;
-  --ice-secondary: #76C7DD;
-  --ice-light: #DDF3F8;
-  --ice-very-light: #EFFAFF;
-  --ice-dim: #76C7DD;
-  --ice-vivid: #3895B3;
-  --cyan: #4BA7C5;
+  /* POLAR BLUE Accent System */
+  --ice: #1597D4;
+  --ice-secondary: #48B8DF;
+  --ice-light: #DDF3FA;
+  --ice-very-light: #EEF9FC;
+  --ice-dim: #48B8DF;
+  --ice-vivid: #1597D4;
+  --cyan: #1597D4;
 
   /* Restrained, professional status colors */
-  --green: #2E8540;
+  --green: #18A878;
   --green-soft: #EBF7EE;
   --green-border: #BEE3C8;
 
-  --amber: #D97706;
+  --amber: #E7A51A;
   --amber-soft: #FFF8EB;
   --amber-border: #FBD38D;
 
-  --red: #C53030;
+  --red: #E5484D;
   --red-soft: #FFF0F0;
   --red-border: #FED7D7;
 
-  --orange: #DD6B20;
-  --blue: #4BA7C5;
+  --orange: #E7A51A;
+  --blue: #1597D4;
   --violet: #7C3AED;
 
   /* Typography */
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
 
-  --radius: 14px;
-  --shadow-sm: 0 1px 3px rgba(23, 35, 43, 0.03), 0 1px 2px rgba(23, 35, 43, 0.02);
-  --shadow-md: 0 4px 16px -2px rgba(23, 35, 43, 0.04), 0 2px 4px -1px rgba(23, 35, 43, 0.02);
-  --shadow-lg: 0 10px 28px -4px rgba(23, 35, 43, 0.06), 0 4px 10px -2px rgba(23, 35, 43, 0.02);
+  --radius: 16px;
+  --shadow-sm: 0 1px 3px rgba(40, 100, 130, 0.03);
+  --shadow-md: 0 4px 20px rgba(40, 100, 130, 0.06);
+  --shadow-lg: 0 10px 28px rgba(40, 100, 130, 0.08);
 
-  --chart-grid: #EEF7FA;
-  --chart-label: #5F707A;
-  --chart-note: #5F707A;
-  --chart-tick: #8A9AA3;
-  --chart-cursor: rgba(75, 167, 197, 0.08);
+  --chart-grid: #EAF5F9;
+  --chart-label: #526779;
+  --chart-note: #526779;
+  --chart-tick: #8495A3;
+  --chart-cursor: rgba(21, 151, 212, 0.08);
 
   /* Legacy & component mappings */
-  --navy-950: #F8FBFD;
+  --navy-950: #F7FBFD;
+  --navy-900: #FFFFFF;
+  --navy-850: #F1F7FA;
+  --navy-800: #F0F8FB;
+  --navy-700: #DDEAF0;
+  --navy-600: #8495A3;
+  --primary: #1597D4;
+  --border: #DDEAF0;
+  --surface: #FFFFFF;
+  --text: #12263A;
+  --text-hi: #12263A;
+  --text-muted: #526779;
+}
+
+/* ---------- 2. ENFORCED ARCTIC WHITE PALETTE ----------
+   All theme states resolve to pristine Arctic White & Ice Blue. */
+[data-theme="dark"],
+[data-theme="cyan"],
+[data-theme="black"] {
+  --surface-base: #F8FBFD;
+  --surface-secondary: #F1F7FA;
+  --surface-card: #FFFFFF;
+  --surface-ice: #EEF7FA;
+  --surface-raised: #FFFFFF;
+  --surface-sunken: #E5F0F5;
+  --surface-hover: #F1F7FA;
+  --surface-active: #EFFAFF;
+
+  --navy-950: #FFFFFF;
   --navy-900: #FFFFFF;
   --navy-850: #F1F7FA;
   --navy-800: #EEF7FA;
   --navy-700: #DCEAF0;
   --navy-600: #8A9AA3;
-  --primary: #4BA7C5;
-  --border: #DCEAF0;
-  --surface: #FFFFFF;
-  --text: #17232B;
-  --text-hi: #17232B;
-  --text-muted: #5F707A;
-}
+  --line: #E2E8F0;
+  --line-soft: #F1F5F9;
+  --line-hover: #BFDDE7;
 
-/* ---------- 2. CYAN THEME (ARCTIC CYAN DARK) ----------
-   Activated by setting data-theme="cyan" (or "dark") on <html>.
-   Deep arctic cyan-to-dark command center palette with calm, crisp slate typography. */
-[data-theme="dark"],
-[data-theme="cyan"] {
-  --surface-base: #0B0F17;
-  --surface-card: #111827;
-  --surface-raised: #1E293B;
-  --surface-sunken: #070B11;
-  --surface-hover: #1E293B;
-  --surface-active: #243044;
-
-  --navy-950: #0B0F17;
-  --navy-900: #111827;
-  --navy-850: #1E293B;
-  --navy-800: #273549;
-  --navy-700: #334155;
-  --navy-600: #475569;
-  --line: rgba(255, 255, 255, 0.08);
-  --line-soft: rgba(255, 255, 255, 0.04);
-
-  --ice: #38BDF8;
+  --ice: #0284C7;
   --ice-dim: #0284C7;
-  --cyan: #06B6D4;
-  --orange: #F97316;
-  --amber: #F59E0B;
+  --cyan: #0EA5E9;
+  --orange: #DD6B20;
+  --amber: #D97706;
   --green: #10B981;
   --red: #EF4444;
-  --blue: #3B82F6;
-  --violet: #8B5CF6;
+  --blue: #0284C7;
+  --violet: #7C3AED;
 
-  --ink-hi: #F8FAFC;
-  --ink-mid: #94A3B8;
-  --ink-low: #64748B;
+  --ink-hi: #0F172A;
+  --ink-mid: #64748B;
+  --ink-low: #94A3B8;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.05);
 
-  --chart-grid: rgba(255, 255, 255, 0.05);
-  --chart-label: #94A3B8;
-  --chart-note: #94A3B8;
-  --chart-tick: #64748B;
-  --chart-cursor: rgba(56, 189, 248, 0.1);
+  --chart-grid: #E2E8F0;
+  --chart-label: #64748B;
+  --chart-note: #64748B;
+  --chart-tick: #94A3B8;
+  --chart-cursor: rgba(2, 132, 199, 0.1);
 
-  /* Compatibility aliases for provenance & research components */
-  --primary: #38BDF8;
-  --border: rgba(255, 255, 255, 0.08);
-  --surface: #111827;
-  --text: #F8FAFC;
-  --text-hi: #F8FAFC;
-  --text-muted: #94A3B8;
+  --primary: #0284C7;
+  --border: #E2E8F0;
+  --surface: #FFFFFF;
+  --text: #0F172A;
+  --text-hi: #0F172A;
+  --text-muted: #64748B;
 }
-
-/* Cyan mode body background pattern — clean, minimal dark atmosphere */
-[data-theme="dark"] body,
-[data-theme="cyan"] body {
-  background-color: var(--surface-base);
-  background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.04), transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(99, 102, 241, 0.02), transparent 50%);
-  background-repeat: no-repeat;
-}
-
-/* Cyan mode scrollbar */
-[data-theme="dark"] ::-webkit-scrollbar-track,
-[data-theme="cyan"] ::-webkit-scrollbar-track { background: #030C12; }
-[data-theme="dark"] ::-webkit-scrollbar-thumb,
-[data-theme="cyan"] ::-webkit-scrollbar-thumb { background: #153E57; border-color: #030C12; border-radius: 4px; }
-[data-theme="dark"] ::-webkit-scrollbar-thumb:hover,
-[data-theme="cyan"] ::-webkit-scrollbar-thumb:hover { background: #0891B2; }
-
-/* ---------- 3. BLACK THEME (PURE PITCH BLACK / AMOLED STEALTH) ----------
-   Activated by setting data-theme="black" on <html>.
-   Completely dark 100% black palette for high-contrast night operations. */
-[data-theme="black"] {
-  --surface-base: #000000;
-  --surface-card: #080808;
-  --surface-raised: #121212;
-  --surface-sunken: #040404;
-  --surface-hover: #181818;
-  --surface-active: #202020;
-
-  --navy-950: #000000;
-  --navy-900: #080808;
-  --navy-850: #121212;
-  --navy-800: #1A1A1A;
-  --navy-700: #262626;
-  --navy-600: #383838;
-  --line: #222222;
-  --line-soft: #141414;
-
-  --ice: #38BDF8;
-  --ice-dim: #0284C7;
-  --cyan: #22D3EE;
-  --orange: #FF6A3D;
-  --amber: #F59E0B;
-  --green: #10B981;
-  --red: #F43F5E;
-  --blue: #38BDF8;
-  --violet: #A78BFA;
-
-  --ink-hi: #FFFFFF;
-  --ink-mid: #A1A1AA;
-  --ink-low: #71717A;
-
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.9);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.95);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 1);
-
-  --chart-grid: #1A1A1A;
-  --chart-label: #A1A1AA;
-  --chart-note: #A1A1AA;
-  --chart-tick: #71717A;
-  --chart-cursor: rgba(255, 255, 255, 0.08);
-
-  --primary: #38BDF8;
-  --border: #222222;
-  --surface: #080808;
-  --text: #FFFFFF;
-  --text-hi: #FFFFFF;
-  --text-muted: #A1A1AA;
-}
-
-/* Black mode body background pattern — ultra-minimalist stealth grid */
-[data-theme="black"] body {
-  background-color: #000000;
-  background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.03), transparent 60%),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 48px),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 48px);
-  background-repeat: no-repeat, repeat, repeat;
-}
-
-/* Black mode scrollbar */
-[data-theme="black"] ::-webkit-scrollbar-track { background: #000000; }
-[data-theme="black"] ::-webkit-scrollbar-thumb { background: #222222; border-color: #000000; border-radius: 4px; }
-[data-theme="black"] ::-webkit-scrollbar-thumb:hover { background: #333333; }
 /* ---------- 2. BASE ---------- */
 @layer base {
   * {
@@ -318,29 +237,31 @@
 /* ---------- 3. COMPONENT CLASSES ---------- */
   /* --- Cards and panels --- */
   .card {
-    background-color: var(--surface-card);
+    background-color: #FFFFFF;
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 24px 28px;
-    box-shadow: 0 1px 3px rgba(23, 35, 43, 0.02), 0 1px 2px rgba(23, 35, 43, 0.01);
+    box-shadow: 0 4px 20px rgba(40, 100, 130, 0.06);
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
     min-width: 0;
   }
   .card:hover {
     border-color: var(--line-hover);
+    box-shadow: 0 6px 24px rgba(40, 100, 130, 0.08);
   }
 
   .card-tight {
-    background-color: var(--surface-card);
+    background-color: #FFFFFF;
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 16px 20px;
-    box-shadow: 0 1px 2px rgba(23, 35, 43, 0.02);
+    box-shadow: 0 2px 10px rgba(40, 100, 130, 0.04);
     min-width: 0;
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
   }
   .card-tight:hover {
     border-color: var(--line-hover);
+    box-shadow: 0 4px 14px rgba(40, 100, 130, 0.07);
   }
 
   /* Card that is itself a button/link — lifts slightly on hover. */

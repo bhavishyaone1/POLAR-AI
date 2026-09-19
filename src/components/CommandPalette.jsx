@@ -165,61 +165,61 @@ export default function CommandPalette({ isOpen, onClose, goTo }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-6 sm:pt-20 px-3 sm:px-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-cyan-500/40 bg-[#070e1c] shadow-2xl shadow-cyan-900/40">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-6 sm:pt-20 px-3 sm:px-4 bg-slate-900/30 backdrop-blur-xs animate-fade-in">
+      <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-[#DDEAF0] bg-white shadow-2xl">
         {/* Search Input */}
-        <div className="relative flex items-center border-b border-slate-800 px-4 py-3.5">
-          <Search size={18} className="text-cyan-400 shrink-0 mr-3" />
+        <div className="relative flex items-center border-b border-[#DDEAF0] px-4 py-3.5 bg-white">
+          <Search size={18} className="text-[#1597D4] shrink-0 mr-3" />
           <input
             type="text"
             placeholder="Type a command, asset, cargo, or risk..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
-            className="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none font-sans"
+            className="w-full bg-transparent text-sm text-[#12263A] placeholder-[#8495A3] focus:outline-none font-sans"
           />
           <button
             onClick={onClose}
-            className="rounded p-1 text-slate-400 hover:text-white transition ml-2"
+            className="rounded-lg p-1 text-[#8495A3] hover:text-[#12263A] hover:bg-[#F0F8FB] transition ml-2"
           >
             <X size={16} />
           </button>
         </div>
 
         {/* Results List */}
-        <div className="max-h-[65vh] sm:max-h-96 overflow-y-auto p-2 divide-y divide-slate-800/50">
+        <div className="max-h-[65vh] sm:max-h-96 overflow-y-auto p-2 divide-y divide-[#EEF7FA]">
           {!q ? (
-            <div className="p-6 text-center text-xs text-slate-400 space-y-2">
-              <p className="font-mono uppercase text-slate-500 text-[10px]">Suggested Commands</p>
+            <div className="p-6 text-center text-xs text-[#526779] space-y-2">
+              <p className="font-mono uppercase text-[#8495A3] text-[10.5px] font-semibold">Suggested Modules</p>
               <div className="flex flex-wrap justify-center gap-2 pt-1">
                 <button
                   onClick={() => handleSelect('simulator')}
-                  className="rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1 text-xs text-slate-300 hover:border-cyan-400 hover:text-white transition"
+                  className="rounded-xl border border-[#DDEAF0] bg-[#F7FBFD] px-3 py-1.5 text-xs font-semibold text-[#12263A] hover:border-[#1597D4] hover:bg-[#EEF9FC] transition shadow-2xs"
                 >
                   ⚡ What-If Simulator
                 </button>
                 <button
-                  onClick={() => handleSelect('impact')}
-                  className="rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1 text-xs text-slate-300 hover:border-cyan-400 hover:text-white transition"
+                  onClick={() => handleSelect('risks')}
+                  className="rounded-xl border border-[#DDEAF0] bg-[#F7FBFD] px-3 py-1.5 text-xs font-semibold text-[#12263A] hover:border-[#1597D4] hover:bg-[#EEF9FC] transition shadow-2xs"
                 >
                   🔗 Dependency Graph
                 </button>
                 <button
                   onClick={() => handleSelect('assets')}
-                  className="rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1 text-xs text-slate-300 hover:border-cyan-400 hover:text-white transition"
+                  className="rounded-xl border border-[#DDEAF0] bg-[#F7FBFD] px-3 py-1.5 text-xs font-semibold text-[#12263A] hover:border-[#1597D4] hover:bg-[#EEF9FC] transition shadow-2xs"
                 >
                   ⚙️ Asset Fleet
                 </button>
                 <button
                   onClick={() => handleSelect('reports')}
-                  className="rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1 text-xs text-slate-300 hover:border-cyan-400 hover:text-white transition"
+                  className="rounded-xl border border-[#DDEAF0] bg-[#F7FBFD] px-3 py-1.5 text-xs font-semibold text-[#12263A] hover:border-[#1597D4] hover:bg-[#EEF9FC] transition shadow-2xs"
                 >
-                  📊 PPT Comparison
+                  📊 PPT Presentation
                 </button>
               </div>
             </div>
           ) : results.length === 0 ? (
-            <div className="p-8 text-center text-xs text-slate-500">
+            <div className="p-8 text-center text-xs text-[#8495A3]">
               No matching polar entities found for "{query}".
             </div>
           ) : (
@@ -229,22 +229,22 @@ export default function CommandPalette({ isOpen, onClose, goTo }) {
                 <div
                   key={r.id}
                   onClick={() => handleSelect(r.view)}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-800/60 cursor-pointer transition group"
+                  className="flex items-center justify-between p-3 rounded-xl hover:bg-[#F0F8FB] cursor-pointer transition group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="rounded-md bg-slate-900 p-2 text-cyan-400 group-hover:bg-cyan-950 group-hover:text-cyan-300 transition">
+                    <div className="rounded-lg bg-[#DDF3FA] p-2 text-[#1597D4] group-hover:bg-[#1597D4] group-hover:text-white transition">
                       <Icon size={16} />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-white group-hover:text-cyan-300 transition">
+                      <p className="text-sm font-bold text-[#12263A] group-hover:text-[#1597D4] transition">
                         {r.title}
                       </p>
-                      <span className="text-[10px] font-mono text-slate-400 uppercase">
+                      <span className="text-[10px] font-mono text-[#8495A3] uppercase">
                         {r.category}
                       </span>
                     </div>
                   </div>
-                  <ArrowRight size={14} className="text-slate-600 group-hover:text-cyan-400 transition" />
+                  <ArrowRight size={14} className="text-[#8495A3] group-hover:text-[#1597D4] transition" />
                 </div>
               )
             })
@@ -252,7 +252,7 @@ export default function CommandPalette({ isOpen, onClose, goTo }) {
         </div>
 
         {/* Footer info */}
-        <div className="flex items-center justify-between border-t border-slate-800 bg-slate-950/60 px-4 py-2 text-[10px] font-mono text-slate-500">
+        <div className="flex items-center justify-between border-t border-[#DDEAF0] bg-[#F7FBFD] px-4 py-2.5 text-[10px] font-mono text-[#8495A3]">
           <span>Navigate with mouse or Esc to close</span>
           <span>POLAR-AI Search</span>
         </div>

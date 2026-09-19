@@ -33,81 +33,86 @@ export default function AuditLog({ goTo }) {
   })
 
   return (
-    <div className="space-y-6">
-      {/* Top Header */}
-      <div className="rounded-xl border border-slate-800 bg-[#081020] p-5 flex flex-wrap items-center justify-between gap-4">
+    <div className="space-y-7">
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#DDEAF0]">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <ShieldCheck size={20} className="text-emerald-400" />
-            Immutable Audit Trail & Governance Log
-          </h2>
-          <p className="text-xs text-slate-300 mt-1">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#18A878] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              IMMUTABLE AUDIT TRAIL
+            </span>
+            <span className="text-[11px] text-[#8495A3] font-mono">CRYPTOGRAPHIC LEDGER</span>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-[#12263A]">Governance & Cryptographic Audit Trail</h1>
+          <p className="text-xs text-[#526779] mt-0.5">
             Tamper-evident verification of all AI recommendation approvals and human operational decisions.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="rounded-full border border-emerald-500/40 bg-emerald-950/50 px-3 py-1 text-xs font-mono text-emerald-300 flex items-center gap-1.5">
-            <Lock size={12} />
-            Ledger Integrity: VERIFIED
+          <span className="rounded-xl border border-emerald-200 bg-emerald-50/80 px-3 py-1.5 text-xs font-mono text-emerald-800 flex items-center gap-1.5 font-semibold shadow-2xs">
+            <Lock size={13} className="text-emerald-600" />
+            <span>Ledger Integrity: VERIFIED</span>
           </span>
         </div>
       </div>
 
-      {/* Filter / Search Bar */}
-      <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-800 bg-[#091122] p-3 text-xs">
+      {/* ================= FILTER / SEARCH BAR ================= */}
+      <div className="flex items-center justify-between gap-3 rounded-2xl border border-[#DDEAF0] bg-white p-3.5 shadow-xs text-xs">
         <div className="relative flex-1 max-w-md">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8495A3]" />
           <input
             type="text"
             placeholder="Search officer decisions, audit IDs, recommendation approvals..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-lg border border-slate-700 bg-slate-900/90 pl-9 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
+            className="w-full rounded-xl border border-[#DDEAF0] bg-[#F7FBFD] pl-9 pr-3 py-1.5 text-xs text-[#12263A] placeholder-[#8495A3] focus:border-[#1597D4] focus:bg-white focus:outline-none transition"
           />
         </div>
 
-        <span className="text-xs font-mono text-slate-400">
-          Total Entries: <strong>{filteredLogs.length}</strong>
+        <span className="text-xs font-mono text-[#526779]">
+          Total Entries: <strong className="text-[#12263A]">{filteredLogs.length}</strong>
         </span>
       </div>
 
-      {/* Audit Log Table */}
-      <div className="overflow-hidden rounded-xl border border-slate-800 bg-[#091122] shadow-xl">
+      {/* ================= AUDIT LOG TABLE ================= */}
+      <div className="overflow-hidden rounded-2xl border border-[#DDEAF0] bg-white shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-slate-800 bg-slate-900/80 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+            <thead className="border-b border-[#DDEAF0] bg-[#F7FBFD] font-mono text-[11px] uppercase tracking-wider text-[#8495A3]">
               <tr>
-                <th className="p-3.5">Log ID</th>
-                <th className="p-3.5">Timestamp</th>
-                <th className="p-3.5">Officer / Actor</th>
-                <th className="p-3.5">Action Type</th>
-                <th className="p-3.5">Operational Details</th>
-                <th className="p-3.5 text-right">Verification Hash</th>
+                <th className="p-4">Log ID</th>
+                <th className="p-4">Timestamp</th>
+                <th className="p-4">Officer / Actor</th>
+                <th className="p-4">Action Type</th>
+                <th className="p-4">Operational Details</th>
+                <th className="p-4 text-right">Verification Hash</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80 font-sans">
+            <tbody className="divide-y divide-[#EEF7FA] font-sans">
               {filteredLogs.map((log) => (
-                <tr key={log.id} className="hover:bg-slate-800/30 transition">
-                  <td className="p-3.5 font-mono font-bold text-cyan-400 whitespace-nowrap">
+                <tr key={log.id} className="hover:bg-[#F0F8FB] transition">
+                  <td className="p-4 font-mono font-bold text-[#1597D4] whitespace-nowrap">
                     {log.id}
                   </td>
-                  <td className="p-3.5 text-slate-400 whitespace-nowrap font-mono text-[11px]">
+                  <td className="p-4 text-[#526779] whitespace-nowrap font-mono text-[11px]">
                     {new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })} · {new Date(log.timestamp).toLocaleDateString()}
                   </td>
-                  <td className="p-3.5 font-medium text-slate-200 whitespace-nowrap flex items-center gap-1.5">
-                    <UserCheck size={13} className="text-emerald-400 shrink-0" />
-                    {log.user}
+                  <td className="p-4 font-semibold text-[#12263A] whitespace-nowrap">
+                    <div className="flex items-center gap-1.5">
+                      <UserCheck size={13} className="text-[#18A878] shrink-0" />
+                      <span>{log.user}</span>
+                    </div>
                   </td>
-                  <td className="p-3.5 whitespace-nowrap">
-                    <span className="rounded bg-slate-800 px-2 py-0.5 font-mono text-[10px] text-slate-300 border border-slate-700">
+                  <td className="p-4 whitespace-nowrap">
+                    <span className="rounded-md bg-[#DDF3FA] px-2 py-0.5 font-mono text-[10.5px] font-semibold text-[#1597D4] border border-[#BFDDE7]">
                       {log.action}
                     </span>
                   </td>
-                  <td className="p-3.5 text-slate-300 max-w-md">
+                  <td className="p-4 text-[#526779] max-w-md">
                     {log.details}
                   </td>
-                  <td className="p-3.5 text-right font-mono text-[11px] text-slate-500 whitespace-nowrap">
+                  <td className="p-4 text-right font-mono text-[11px] text-[#8495A3] whitespace-nowrap">
                     #{log.hash || 'sha256'}
                   </td>
                 </tr>

@@ -60,35 +60,35 @@ export default function EmergencyBanner({
     }
   }
 
-  // MINIMIZED MODE: Sleek, compact 30px tactical ribbon
+  // MINIMIZED MODE: Sleek, compact 32px Arctic alert ribbon
   if (minimized) {
     return (
       <div
         id="global-emergency-banner-min"
-        className="flex items-center justify-between border-b border-red-500/25 bg-[#140608]/92 px-3 py-1 text-xs text-red-200 shadow-sm backdrop-blur-md transition-all sm:px-4"
+        className="flex items-center justify-between border-b border-rose-200 bg-rose-50 px-3 py-1.5 text-xs text-rose-900 shadow-2xs backdrop-blur-md transition-all sm:px-5"
       >
         <div className="flex min-w-0 items-center gap-2">
           {/* Pulsing red tactical beacon */}
           <span className="relative flex h-2 w-2 shrink-0">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-600" />
           </span>
 
-          <span className="shrink-0 rounded border border-red-500/40 bg-red-950/80 px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-red-300">
+          <span className="shrink-0 rounded border border-rose-300 bg-white px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-rose-700 shadow-2xs">
             {topIncident.id}
           </span>
 
-          <span className="truncate text-[11px] font-semibold text-white/90">
+          <span className="truncate text-[11px] font-bold text-rose-950">
             {topIncident.type || 'POLAR DISTRESS'}:
           </span>
 
-          <span className="hidden truncate text-[11px] text-white/70 sm:inline">
+          <span className="hidden truncate text-[11px] text-rose-800 sm:inline">
             {affectedLabel ? `${affectedLabel} · ` : ''}
             {topIncident.location || topIncident.detail || 'Field Outpost'}
           </span>
 
           {activeEmergencies.length > 1 && (
-            <span className="hidden rounded-full bg-red-950 px-1.5 py-0.2 text-[9.5px] font-bold text-red-400 border border-red-500/30 md:inline">
+            <span className="hidden rounded-full bg-rose-100 px-1.5 py-0.2 text-[9.5px] font-bold text-rose-700 border border-rose-200 md:inline">
               +{activeEmergencies.length - 1} more
             </span>
           )}
@@ -100,7 +100,7 @@ export default function EmergencyBanner({
               type="button"
               id={`ack-banner-btn-${topIncident.id}`}
               onClick={handleAcknowledge}
-              className="rounded border border-red-500/40 bg-red-950/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red-200 transition hover:bg-red-900/60 hover:text-white"
+              className="rounded border border-rose-300 bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700 transition hover:bg-rose-100 shadow-2xs"
             >
               Ack
             </button>
@@ -110,7 +110,7 @@ export default function EmergencyBanner({
             type="button"
             id="open-emergency-room-btn"
             onClick={() => onOpenEmergencyRoom?.(topIncident.id)}
-            className="flex items-center gap-1 rounded border border-red-400/40 bg-red-900/50 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red-100 shadow-sm transition hover:bg-red-800/70 hover:text-white"
+            className="flex items-center gap-1 rounded bg-rose-600 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-2xs transition hover:bg-rose-700"
           >
             <span>Open Room</span>
             <ChevronRight size={11} />
@@ -119,7 +119,7 @@ export default function EmergencyBanner({
           <button
             type="button"
             onClick={() => setMinimized(false)}
-            className="rounded p-0.5 text-white/60 transition hover:bg-white/10 hover:text-white"
+            className="rounded p-0.5 text-rose-500 transition hover:bg-rose-100 hover:text-rose-800"
             title="Expand alert details"
             aria-label="Expand alert details"
           >
@@ -129,7 +129,7 @@ export default function EmergencyBanner({
           <button
             type="button"
             onClick={() => setDismissed(true)}
-            className="ml-0.5 rounded p-0.5 text-white/60 transition hover:bg-white/10 hover:text-white"
+            className="ml-0.5 rounded p-0.5 text-rose-500 transition hover:bg-rose-100 hover:text-rose-800"
             title="Dismiss alert banner"
             aria-label="Dismiss alert banner"
           >
@@ -140,48 +140,48 @@ export default function EmergencyBanner({
     )
   }
 
-  // EXPANDED MODE: Refined, elegant dark-crimson glass container
+  // EXPANDED MODE: Refined, elegant light-crimson glass container
   return (
     <div
       id="global-emergency-banner"
-      className="flex flex-wrap items-center justify-between gap-2 border-b border-red-500/30 bg-[#160609]/95 px-3 py-1.5 text-xs text-red-200 shadow-md backdrop-blur-md transition-all sm:px-4"
+      className="flex flex-wrap items-center justify-between gap-2 border-b border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-900 shadow-2xs backdrop-blur-md transition-all sm:px-5"
     >
       <div className="flex flex-wrap items-center gap-2 text-[11px]">
-        <div className="flex items-center gap-1.5 rounded border border-red-500/40 bg-red-950/80 px-2 py-0.5 font-bold uppercase tracking-wider text-red-300">
-          <AlertTriangle size={12} className="animate-pulse text-red-400" />
+        <div className="flex items-center gap-1.5 rounded border border-rose-300 bg-white px-2 py-0.5 font-bold uppercase tracking-wider text-rose-700 shadow-2xs">
+          <AlertTriangle size={12} className="animate-pulse text-rose-600" />
           <span>EMERGENCY ALERT · {topIncident.id}</span>
         </div>
 
-        <span className="font-bold text-white">{topIncident.type || 'POLAR DISTRESS'}</span>
-        <span className="text-white/30">·</span>
+        <span className="font-bold text-rose-950">{topIncident.type || 'POLAR DISTRESS'}</span>
+        <span className="text-rose-300">·</span>
 
         {topIncident.personnel_id && (
           <>
-            <span className="inline-flex items-center gap-1 text-white/90">
-              <span className="text-white/60">Affected:</span>
-              <strong className="rounded bg-red-950/70 px-1.5 py-0.5 font-bold text-white border border-red-500/20">
+            <span className="inline-flex items-center gap-1 text-rose-900">
+              <span className="text-rose-600">Affected:</span>
+              <strong className="rounded bg-white px-1.5 py-0.5 font-bold text-rose-950 border border-rose-200 shadow-2xs">
                 {affectedLabel}
               </strong>
             </span>
-            <span className="text-white/30">·</span>
+            <span className="text-rose-300">·</span>
           </>
         )}
 
-        <span className="flex items-center gap-1 text-white/80">
-          <MapPin size={11} className="shrink-0 text-red-400" />
+        <span className="flex items-center gap-1 text-rose-800">
+          <MapPin size={11} className="shrink-0 text-rose-600" />
           <span>{topIncident.detail || topIncident.location_name || 'Field Outpost'}</span>
         </span>
 
         {topIncident.description && (
           <>
-            <span className="text-white/30">·</span>
-            <span className="max-w-[260px] truncate italic text-white/80 sm:max-w-[360px]">
+            <span className="text-rose-300">·</span>
+            <span className="max-w-[260px] truncate italic text-rose-700 sm:max-w-[360px]">
               "{topIncident.description}"
             </span>
           </>
         )}
 
-        <span className="rounded bg-black/40 px-1.5 py-0.5 text-[10px] text-white/60">
+        <span className="rounded bg-rose-100 border border-rose-200 px-1.5 py-0.5 text-[10px] text-rose-700">
           {timeAgo(topIncident.reported_at || topIncident.created_at || topIncident.timestamp)}
         </span>
       </div>
@@ -192,7 +192,7 @@ export default function EmergencyBanner({
             type="button"
             id={`ack-banner-btn-${topIncident.id}`}
             onClick={handleAcknowledge}
-            className="flex items-center gap-1 rounded border border-red-500/40 bg-red-950/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red-200 transition hover:bg-red-900/60 hover:text-white"
+            className="flex items-center gap-1 rounded border border-rose-300 bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700 transition hover:bg-rose-100 shadow-2xs"
           >
             <CheckCircle2 size={11} />
             <span>Acknowledge</span>
@@ -203,7 +203,7 @@ export default function EmergencyBanner({
           type="button"
           id="open-emergency-room-btn"
           onClick={() => onOpenEmergencyRoom?.(topIncident.id)}
-          className="flex items-center gap-1 rounded border border-red-400/50 bg-red-900/60 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm transition hover:bg-red-800/80"
+          className="flex items-center gap-1 rounded bg-rose-600 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-2xs transition hover:bg-rose-700"
         >
           <span>Emergency Room</span>
           <ChevronRight size={11} />
@@ -212,9 +212,9 @@ export default function EmergencyBanner({
         <button
           type="button"
           onClick={() => setMinimized(true)}
-          className="rounded p-0.5 text-white/60 transition hover:bg-white/10 hover:text-white"
-          title="Minimize banner"
-          aria-label="Minimize banner"
+          className="rounded p-0.5 text-rose-500 transition hover:bg-rose-100 hover:text-rose-800"
+          title="Minimize alert banner"
+          aria-label="Minimize alert banner"
         >
           <ChevronUp size={13} />
         </button>
@@ -222,9 +222,9 @@ export default function EmergencyBanner({
         <button
           type="button"
           onClick={() => setDismissed(true)}
-          className="rounded p-0.5 text-white/60 transition hover:bg-white/10 hover:text-white"
-          title="Dismiss banner"
-          aria-label="Dismiss banner"
+          className="ml-0.5 rounded p-0.5 text-rose-500 transition hover:bg-rose-100 hover:text-rose-800"
+          title="Dismiss alert banner"
+          aria-label="Dismiss alert banner"
         >
           <X size={13} />
         </button>
