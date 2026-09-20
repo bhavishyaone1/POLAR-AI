@@ -17,6 +17,7 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import {
   Bell,
   Check,
@@ -35,6 +36,7 @@ import {
   Sparkles,
   User,
   Users,
+  X,
 } from 'lucide-react'
 import { useAuth } from '../store/AuthContext'
 import { useData } from '../store/DataContext'
@@ -195,11 +197,45 @@ export default function TopBar({
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  // Close all mobile sheets on Escape key
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.key === 'Escape') {
+        setMobileSearchOpen(false)
+        setMobileStationOpen(false)
+        setMobileAiOpen(false)
+        setMobileProfileOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  // Lock body scroll when any mobile modal sheet is open
+  useEffect(() => {
+    const anyOpen = mobileSearchOpen || mobileStationOpen || mobileAiOpen || mobileProfileOpen
+    if (anyOpen && typeof document !== 'undefined') {
+      const prev = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = prev
+      }
+    }
+  }, [mobileSearchOpen, mobileStationOpen, mobileAiOpen, mobileProfileOpen])
+
   // Quick switch to a demo role
   const handleQuickSwitchRole = (userId, password) => {
     setProfileOpen(false)
     setMobileProfileOpen(false)
     signIn({ userId, password })
+  }
+
+  // Safe Portal renderer for mobile overlay drawers
+  const renderInPortal = (content) => {
+    if (typeof document !== 'undefined' && document.body) {
+      return createPortal(content, document.body)
+    }
+    return content
   }
 
   return (
@@ -759,8 +795,8 @@ export default function TopBar({
         FULL-SCREEN EXPANDABLE MOBILE SEARCH (< 768px)
         "Search cargo, inventory, people, assets…"
         ============================================================ */}
-    {mobileSearchOpen && (
-      <div className="fixed inset-0 z-50 md:hidden bg-white flex flex-col animate-in fade-in duration-200">
+    {mobileSearchOpen && renderInPortal(
+      <div className="fixed inset-0 z-[90] md:hidden bg-white flex flex-col animate-in fade-in duration-200">
         {/* Search Header Bar */}
         <div className="flex items-center gap-2 border-b border-[#DCE8F0] p-3 pt-4">
           <div className="relative flex-1 flex items-center">
@@ -777,10 +813,10 @@ export default function TopBar({
               <button
                 type="button"
                 onClick={() => setMobileSearchQuery('')}
-                className="absolute right-2.5 p-1 text-slate-400 hover:text-slate-600"
+                className="absolute right-2.5 p-1 text-slate-400 hover:text-slate-600 min-h-[44px] min-w-[44px] flex items-center justify-center"
                 aria-label="Clear search"
               >
-                <X size={14} />
+                <X size={16} />
               </button>
             )}
           </div>
@@ -797,7 +833,7 @@ export default function TopBar({
         </div>
 
         {/* Search Content / Quick Results */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-[max(2rem,env(safe-area-inset-bottom))]">
           {/* Quick Shortcuts */}
           <div>
             <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400 block mb-2">
@@ -833,7 +869,7 @@ export default function TopBar({
             <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400 block mb-2">
               Key Telemetry Items
             </span>
-            <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden bg-white">
+            <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
               {[
                 { title: 'Consignment C-101', cat: 'Cargo · 12,000L Arctic Diesel', view: 'cargo' },
                 { title: 'Diesel Reserve (14,200 L)', cat: 'Inventory · 12.0d Safe Runway', view: 'inventory' },
@@ -860,7 +896,7 @@ export default function TopBar({
                       <div className="text-xs font-semibold text-[#0C1E30]">{result.title}</div>
                       <div className="text-[11px] text-slate-500">{result.cat}</div>
                     </div>
-                    <span className="text-xs text-[#0284C7]">Jump →</span>
+                    <span className="text-xs font-medium text-[#0284C7]">Jump →</span>
                   </button>
                 ))}
             </div>
@@ -872,24 +908,30 @@ export default function TopBar({
     {/* ============================================================
         MOBILE STATION SELECTOR BOTTOM SHEET (< 768px)
         ============================================================ */}
-    {mobileStationOpen && (
-      <div className="fixed inset-0 z-50 md:hidden flex flex-col justify-end">
+    {mobileStationOpen && renderInPortal(
+      <div className="fixed inset-0 z-[90] md:hidden flex flex-col justify-end animate-in fade-in duration-150">
         <div
-          className="fixed inset-0 bg-[#0A1926]/40 backdrop-blur-xs transition-opacity"
+          className="fixed inset-0 bg-[#0A1926]/50 backdrop-blur-sm transition-opacity"
           onClick={() => setMobileStationOpen(false)}
           aria-hidden="true"
         />
-        <div className="relative z-10 w-full max-h-[80vh] overflow-y-auto rounded-t-3xl border-t border-[#DCE8F0] bg-white p-5 pb-8 shadow-2xl animate-in slide-in-from-bottom duration-250">
+        <div className="relative z-10 w-full max-h-[85vh] overflow-y-auto rounded-t-3xl border-t border-[#DCE8F0] bg-white p-5 pb-[max(2rem,env(safe-area-inset-bottom))] shadow-2xl animate-in slide-in-from-bottom duration-250">
           <div className="mx-auto -mt-1 mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
           <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
-            <div>
-              <h3 className="text-base font-semibold text-[#0C1E30]">Select Polar Station</h3>
-              <p className="text-xs text-[#6E8294]">Operational Theatres &amp; Field Bases</p>
+            <div className="flex items-center gap-2.5">
+              <div className="h-9 w-9 rounded-xl bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0">
+                <MapPin size={18} strokeWidth={2.2} />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-[#0C1E30]">Select Polar Station</h3>
+                <p className="text-xs text-[#6E8294]">Operational Theatres &amp; Field Bases</p>
+              </div>
             </div>
             <button
               type="button"
               onClick={() => setMobileStationOpen(false)}
-              className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 transition"
+              className="rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="Close station menu"
             >
               <X size={18} />
             </button>
@@ -903,18 +945,35 @@ export default function TopBar({
                   key={station.id}
                   type="button"
                   onClick={() => handleSelectStation(station.id)}
-                  className={`w-full flex items-center justify-between p-3 rounded-xl border transition text-left min-h-[48px] ${
+                  className={`w-full flex items-center justify-between p-3.5 rounded-2xl border transition text-left min-h-[52px] ${
                     isSelected
-                      ? 'bg-[#E0F2FE] border-[#BAE6FD] text-[#0284C7]'
-                      : 'bg-[#F8FAFC] border-[#E8F0F5] text-[#0C1E30]'
+                      ? 'bg-[#E0F2FE] border-[#BAE6FD] text-[#0284C7] ring-1 ring-[#0284C7]/30 shadow-xs'
+                      : 'bg-[#F8FAFC] border-[#E8F0F5] text-[#0C1E30] hover:bg-white'
                   }`}
                 >
-                  <div>
-                    <div className="text-xs font-semibold">{station.name}</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5">{station.region}</div>
-                    <div className="text-[10px] font-mono text-slate-400">{station.coords}</div>
+                  <div className="min-w-0 pr-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold truncate">{station.name}</span>
+                      <span className="text-[10px] font-mono font-medium px-1.5 py-0.5 rounded bg-white/70 text-slate-600 border border-slate-200 shrink-0">
+                        {station.tag}
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-500 mt-0.5 truncate">{station.region}</div>
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 mt-1">
+                      <span>{station.coords}</span>
+                      <span>·</span>
+                      <span className="text-sky-700 font-semibold">{station.temp}</span>
+                      <span>·</span>
+                      <span>{station.crew} crew</span>
+                    </div>
                   </div>
-                  {isSelected && <Check size={16} className="text-[#0284C7] shrink-0" />}
+                  {isSelected ? (
+                    <div className="h-6 w-6 rounded-full bg-[#0284C7] text-white flex items-center justify-center shrink-0">
+                      <Check size={14} strokeWidth={2.5} />
+                    </div>
+                  ) : (
+                    <span className="text-xs text-slate-400 shrink-0">Switch →</span>
+                  )}
                 </button>
               )
             })}
@@ -926,56 +985,84 @@ export default function TopBar({
     {/* ============================================================
         MOBILE AI MONITORING BOTTOM SHEET (< 768px)
         ============================================================ */}
-    {mobileAiOpen && (
-      <div className="fixed inset-0 z-50 md:hidden flex flex-col justify-end">
+    {mobileAiOpen && renderInPortal(
+      <div className="fixed inset-0 z-[90] md:hidden flex flex-col justify-end animate-in fade-in duration-150">
         <div
-          className="fixed inset-0 bg-[#0A1926]/40 backdrop-blur-xs transition-opacity"
+          className="fixed inset-0 bg-[#0A1926]/50 backdrop-blur-sm transition-opacity"
           onClick={() => setMobileAiOpen(false)}
           aria-hidden="true"
         />
-        <div className="relative z-10 w-full max-h-[85vh] overflow-y-auto rounded-t-3xl border-t border-[#DCE8F0] bg-white p-5 pb-8 shadow-2xl animate-in slide-in-from-bottom duration-250">
+        <div className="relative z-10 w-full max-h-[85vh] overflow-y-auto rounded-t-3xl border-t border-[#DCE8F0] bg-white p-5 pb-[max(2rem,env(safe-area-inset-bottom))] shadow-2xl animate-in slide-in-from-bottom duration-250">
           <div className="mx-auto -mt-1 mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
           <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
-                <Sparkles size={16} />
+            <div className="flex items-center gap-2.5">
+              <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-[#0284C7] to-[#38BDF8] text-white flex items-center justify-center shrink-0 shadow-xs">
+                <Sparkles size={18} />
               </div>
               <div>
-                <h3 className="text-base font-semibold text-[#0C1E30]">AI Mission Monitoring</h3>
-                <p className="text-xs text-[#6E8294]">Real-time subsystem telemetry</p>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base font-bold text-[#0C1E30]">POLAR-AI Mission Engine</h3>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    ONLINE
+                  </span>
+                </div>
+                <p className="text-xs text-[#6E8294]">Real-time autonomous subsystem monitoring</p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => setMobileAiOpen(false)}
-              className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 transition"
+              className="rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="Close AI panel"
             >
               <X size={18} />
             </button>
           </div>
 
           {/* Subsystem status */}
-          <div className="space-y-2 py-2 divide-y divide-slate-100 text-xs">
+          <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400 mb-2">
+            Subsystem Telemetry
+          </div>
+          <div className="space-y-2 divide-y divide-slate-100 text-xs">
             {[
-              { name: 'Cargo Pipeline', desc: '1 maritime delay flagged', warn: true },
-              { name: 'Station Diesel', desc: '12.0d runway vs 17.0d ETA', alert: true },
-              { name: 'Primary Power', desc: 'Gen G-01 60h to overhaul', warn: true },
-              { name: 'Life Support / SOS', desc: '0 unacknowledged distress', ok: true },
+              { name: 'Cargo Pipeline', desc: '1 maritime delay flagged (MV Vasiliy Golovnin)', warn: true, badge: '⚡ WARN' },
+              { name: 'Station Diesel Reserve', desc: '12.0d runway vs 17.0d ETA (5.0d gap)', alert: true, badge: '⚠ CRITICAL' },
+              { name: 'Primary Power Grid', desc: 'Gen G-01 at 60h overhaul threshold', warn: true, badge: '⚡ OVERDUE' },
+              { name: 'Life Support & SOS Hub', desc: '0 unacknowledged distress events', ok: true, badge: '✓ NOMINAL' },
             ].map((sub) => (
-              <div key={sub.name} className="pt-2 flex items-center justify-between">
-                <div>
+              <div key={sub.name} className="pt-2.5 flex items-center justify-between">
+                <div className="min-w-0 pr-2">
                   <span className="font-semibold text-[#0C1E30]">{sub.name}</span>
-                  <p className="text-[11px] text-slate-500">{sub.desc}</p>
+                  <p className="text-[11px] text-slate-500 mt-0.5">{sub.desc}</p>
                 </div>
-                <span className={`font-mono text-xs font-bold ${
-                  sub.alert ? 'text-rose-700' : sub.warn ? 'text-amber-700' : 'text-emerald-700'
-                }`}>
-                  {sub.alert ? '⚠ GAP' : sub.warn ? '⚡ WARN' : '✓ OK'}
+                <span
+                  className={`font-mono text-[10.5px] font-bold px-2 py-0.5 rounded shrink-0 ${
+                    sub.alert
+                      ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                      : sub.warn
+                      ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                      : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                  }`}
+                >
+                  {sub.badge}
                 </span>
               </div>
             ))}
           </div>
 
+          {/* Active AI Recommendation Preview */}
+          <div className="mt-4 rounded-xl border border-sky-200 bg-sky-50/70 p-3">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-[#0284C7]">
+              <Sparkles size={13} />
+              <span>Top AI Recommendation · REC-001</span>
+            </div>
+            <p className="text-[11.5px] text-[#0C1E30] mt-1 leading-relaxed">
+              Transfer 6,200L Arctic Diesel from Reserve Tank B to Day Tank 1 and engage Level-1 non-critical load shedding. Extends runway to +16.8 days.
+            </p>
+          </div>
+
+          {/* Action Buttons */}
           <div className="mt-4 pt-3 border-t border-slate-100 flex gap-2">
             <button
               type="button"
@@ -983,9 +1070,10 @@ export default function TopBar({
                 setMobileAiOpen(false)
                 goTo('copilot')
               }}
-              className="flex-1 rounded-xl bg-[#0284C7] text-white py-3 text-xs font-semibold shadow-xs min-h-[44px]"
+              className="flex-1 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white py-3 text-xs font-bold shadow-xs min-h-[46px] flex items-center justify-center gap-1.5 active:scale-95 transition"
             >
-              Ask AI Copilot
+              <Sparkles size={14} />
+              <span>Ask AI Copilot</span>
             </button>
             <button
               type="button"
@@ -993,9 +1081,9 @@ export default function TopBar({
                 setMobileAiOpen(false)
                 goTo('risks')
               }}
-              className="flex-1 rounded-xl border border-slate-200 bg-white text-[#0C1E30] py-3 text-xs font-semibold min-h-[44px]"
+              className="flex-1 rounded-xl border border-slate-200 bg-white text-[#0C1E30] hover:bg-slate-50 py-3 text-xs font-semibold min-h-[46px] flex items-center justify-center gap-1.5 active:scale-95 transition"
             >
-              View Risk Matrix
+              <span>Risk Matrix →</span>
             </button>
           </div>
         </div>
@@ -1005,61 +1093,166 @@ export default function TopBar({
     {/* ============================================================
         MOBILE PROFILE & OPERATOR SWITCHER BOTTOM SHEET (< 768px)
         ============================================================ */}
-    {mobileProfileOpen && (
-      <div className="fixed inset-0 z-50 md:hidden flex flex-col justify-end">
+    {mobileProfileOpen && renderInPortal(
+      <div className="fixed inset-0 z-[90] md:hidden flex flex-col justify-end animate-in fade-in duration-150">
         <div
-          className="fixed inset-0 bg-[#0A1926]/40 backdrop-blur-xs transition-opacity"
+          className="fixed inset-0 bg-[#0A1926]/50 backdrop-blur-sm transition-opacity"
           onClick={() => setMobileProfileOpen(false)}
           aria-hidden="true"
         />
-        <div className="relative z-10 w-full max-h-[85vh] overflow-y-auto rounded-t-3xl border-t border-[#DCE8F0] bg-white p-5 pb-8 shadow-2xl animate-in slide-in-from-bottom duration-250">
+        <div className="relative z-10 w-full max-h-[85vh] overflow-y-auto rounded-t-3xl border-t border-[#DCE8F0] bg-white p-5 pb-[max(2rem,env(safe-area-inset-bottom))] shadow-2xl animate-in slide-in-from-bottom duration-250">
           <div className="mx-auto -mt-1 mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
           <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
-            <div>
-              <h3 className="text-base font-semibold text-[#0C1E30]">Operator Profile</h3>
-              <p className="text-xs text-[#6E8294]">{user?.name || 'Cdr. Anjali Kulkarni'}</p>
+            <div className="flex items-center gap-2.5">
+              <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-[#0284C7] to-[#1597D4] text-white flex items-center justify-center font-bold text-sm shrink-0">
+                {initials}
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-[#0C1E30]">Operator Profile</h3>
+                <p className="text-xs text-[#6E8294]">Identity, role &amp; authorization</p>
+              </div>
             </div>
             <button
               type="button"
               onClick={() => setMobileProfileOpen(false)}
-              className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 transition"
+              className="rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="Close profile drawer"
             >
               <X size={18} />
             </button>
           </div>
 
+          {/* Active Profile Summary Card */}
+          <div className="rounded-2xl border border-[#DCE8F0] bg-[#F8FAFC] p-3.5 mb-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm font-bold text-[#0C1E30]">{user?.name || 'Cdr. Anjali Kulkarni'}</div>
+                <div className="text-xs text-slate-500 mt-0.5">{selectedStation.name}</div>
+              </div>
+              <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#E0F2FE] text-[#0284C7] border border-[#BAE6FD]">
+                {user?.role || roleLabel || 'COMMANDER'}
+              </span>
+            </div>
+            <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 flex items-center justify-between text-[11px] text-slate-600">
+              <span className="flex items-center gap-1">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 inline-block" />
+                Active Polar Session
+              </span>
+              <span className="font-mono text-slate-400">Authenticated</span>
+            </div>
+          </div>
+
+          {/* 1-Click Role Switcher */}
           <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400 mb-2">
-            Switch Operator Role
+            Quick Switch Operator
           </div>
           <div className="grid grid-cols-2 gap-2">
             {[
-              { id: 'commander', label: 'Commander', name: 'Cdr. Anjali', pass: 'expedition@cmd' },
-              { id: 'logistics', label: 'Logistics', name: 'Vikram Mehta', pass: 'cargo@manage' },
-              { id: 'medical', label: 'Medical', name: 'Dr. Priya', pass: 'doctor@care' },
-              { id: 'station', label: 'Engineer', name: 'Rajesh Nair', pass: 'station@maint' },
-            ].map((op) => (
-              <button
-                key={op.id}
-                type="button"
-                onClick={() => handleQuickSwitchRole(op.id, op.pass)}
-                className="p-2.5 rounded-xl border border-slate-200 bg-[#F8FAFC] text-left hover:bg-white active:scale-95 transition min-h-[48px]"
-              >
-                <div className="text-xs font-semibold text-[#0C1E30]">{op.label}</div>
-                <div className="text-[10.5px] text-slate-500">{op.name}</div>
-              </button>
-            ))}
+              {
+                id: 'commander',
+                label: 'Commander',
+                name: 'Cdr. Anjali',
+                icon: '⭐',
+                pass: 'expedition@cmd',
+                roleName: 'COMMANDER',
+              },
+              {
+                id: 'logistics',
+                label: 'Logistics',
+                name: 'Devendra Joshi',
+                icon: '📦',
+                pass: 'cargo@supply',
+                roleName: 'LOGISTICS',
+              },
+              {
+                id: 'scientist',
+                label: 'Scientist',
+                name: 'Dr. Farah',
+                icon: '🔬',
+                pass: 'research@field',
+                roleName: 'SCIENTIST',
+              },
+              {
+                id: 'admin',
+                label: 'Admin',
+                name: 'Nikhil Raut',
+                icon: '⚙️',
+                pass: 'polar@2025',
+                roleName: 'ADMIN',
+              },
+            ].map((op) => {
+              const isActive = user?.role === op.roleName
+              return (
+                <button
+                  key={op.id}
+                  type="button"
+                  onClick={() => handleQuickSwitchRole(op.id, op.pass)}
+                  className={`p-3 rounded-xl border text-left active:scale-95 transition min-h-[50px] relative ${
+                    isActive
+                      ? 'bg-[#E0F2FE] border-[#BAE6FD] text-[#0284C7] ring-1 ring-[#0284C7]/30'
+                      : 'bg-[#F8FAFC] border-slate-200 hover:bg-white text-[#0C1E30]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold flex items-center gap-1.5">
+                      <span>{op.icon}</span>
+                      <span>{op.label}</span>
+                    </span>
+                    {isActive && <Check size={13} className="text-[#0284C7]" />}
+                  </div>
+                  <div className="text-[10.5px] text-slate-500 mt-0.5 truncate">{op.name}</div>
+                </button>
+              )
+            })}
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-100">
+          {/* Quick Navigation Shortcuts */}
+          <div className="mt-4 border-t border-slate-100 pt-3 space-y-1">
+            {goTo && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileProfileOpen(false)
+                    goTo('audit')
+                  }}
+                  className="flex w-full items-center justify-between rounded-xl p-2.5 text-xs font-medium text-[#42586E] hover:bg-slate-50 hover:text-[#0C1E30] transition min-h-[44px]"
+                >
+                  <span className="flex items-center gap-2">
+                    <FileText size={15} className="text-slate-400" />
+                    <span>Cryptographic Audit Ledger</span>
+                  </span>
+                  <span className="text-xs text-[#0284C7]">View →</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileProfileOpen(false)
+                    goTo('sources')
+                  }}
+                  className="flex w-full items-center justify-between rounded-xl p-2.5 text-xs font-medium text-[#42586E] hover:bg-slate-50 hover:text-[#0C1E30] transition min-h-[44px]"
+                >
+                  <span className="flex items-center gap-2">
+                    <Shield size={15} className="text-slate-400" />
+                    <span>Role Permissions &amp; Provenance</span>
+                  </span>
+                  <span className="text-xs text-[#0284C7]">View →</span>
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Sign Out Button */}
+          <div className="mt-3 pt-3 border-t border-slate-100">
             <button
               type="button"
               onClick={() => {
                 setMobileProfileOpen(false)
                 signOut()
               }}
-              className="w-full rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700 flex items-center justify-center gap-2 min-h-[44px]"
+              className="w-full rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-100/80 p-3 text-xs font-bold text-rose-700 flex items-center justify-center gap-2 min-h-[46px] active:scale-95 transition"
             >
-              <LogOut size={14} />
+              <LogOut size={15} />
               <span>Sign Out to Welcome Login</span>
             </button>
           </div>

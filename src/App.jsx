@@ -285,18 +285,20 @@ export default function App() {
           column and break the layout instead of scrolling inside it. */}
       <div className="flex min-w-0 flex-1 flex-col bg-[#F4F8FA]">
         {/* Unified sticky header container */}
-        <div className="sticky top-0 z-30">
-          <TopBar
-            title={nav.title}
-            blurb={nav.blurb}
-            goTo={goTo}
-            onMenuClick={() => setNavOpen(true)}
-            onAlertClick={() => goTo('emergency')}
-            onSosClick={() => setSosModalOpen(true)}
-            onHelpClick={() => goTo('sources')}
-            onOpenSearch={() => setCommandPaletteOpen(true)}
-            onStartGuidedDemo={() => setGuidedDemoOpen(true)}
-          />
+        <div className="sticky top-0 z-40">
+          <ErrorBoundary onReset={() => goTo('dashboard')}>
+            <TopBar
+              title={nav.title}
+              blurb={nav.blurb}
+              goTo={goTo}
+              onMenuClick={() => setNavOpen(true)}
+              onAlertClick={() => goTo('emergency')}
+              onSosClick={() => setSosModalOpen(true)}
+              onHelpClick={() => goTo('sources')}
+              onOpenSearch={() => setCommandPaletteOpen(true)}
+              onStartGuidedDemo={() => setGuidedDemoOpen(true)}
+            />
+          </ErrorBoundary>
         </div>
 
         {/* ---------- READ-ONLY NOTICE ----------
