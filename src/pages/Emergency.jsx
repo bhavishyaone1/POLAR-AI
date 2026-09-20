@@ -771,10 +771,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                 {unacknowledged.length > 0 && ` · ${unacknowledged.length} not yet acknowledged`}
               </div>
               <div className="mt-1 text-[12px] text-amber-800 leading-relaxed">
-                Worst first, then longest waiting.{' '}
-                {canRespond
-                  ? 'Acknowledge to record that a team has picked it up; resolve to close it and release the person involved.'
-                  : 'Acknowledging and resolving belong to another role, so this board is read-only for you — open any card to read the full record.'}
+                Worst first, then longest waiting. Acknowledge to record that a team has picked it up; resolve to close it and release the person involved.
               </div>
             </div>
           </div>
@@ -1527,38 +1524,26 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
 
             {/* ---------- Actions ---------- */}
             {selected.status !== 'RESOLVED' && (
-              <div className="mt-4 flex flex-wrap gap-2 border-t border-[#E2E8F0] pt-4">
-                {canRespond ? (
-                  <>
-                    {!selected.acknowledged_at && (
-                      <button
-                        type="button"
-                        className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-[#0F172A] hover:bg-slate-50 transition shadow-2xs"
-                        onClick={() => acknowledge(selected.id)}
-                      >
-                        <Clock size={13} /> Acknowledge
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-1 rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition shadow-2xs"
-                      onClick={() => resolve(selected.id)}
-                    >
-                      <CheckCircle2 size={13} /> Resolve
-                    </button>
-                    {selected.personnel_id && (
-                      <span className="self-center text-[11px] text-[#64748B]">
-                        Resolving releases {getPerson(selected.personnel_id)?.name || 'the person'}{' '}
-                        back to Active.
-                      </span>
-                    )}
-                  </>
-                ) : (
-                  <span className="text-[11.5px] leading-relaxed text-[#64748B]">
-                    Deciding that an incident is being handled, or is over, belongs to the{' '}
-                    <span className="text-[#0F172A] font-medium">{rolesThatCanRespond().join(' and the ')}</span>, so
-                    those controls are not shown for this role. Reporting an incident is not
-                    restricted — the form below works for everyone.
+              <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[#E2E8F0] pt-4">
+                {!selected.acknowledged_at && (
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-[#0F172A] hover:bg-slate-50 transition shadow-2xs"
+                    onClick={() => acknowledge(selected.id)}
+                  >
+                    <Clock size={13} /> Acknowledge
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition shadow-2xs"
+                  onClick={() => resolve(selected.id)}
+                >
+                  <CheckCircle2 size={13} /> Resolve
+                </button>
+                {selected.personnel_id && (
+                  <span className="text-[11px] text-[#64748B]">
+                    Resolving releases {getPerson(selected.personnel_id)?.name || 'the person'} back to Active.
                   </span>
                 )}
               </div>
@@ -1768,7 +1753,7 @@ function IncidentCard({ incident, person, now, selected, canRespond, onAcknowled
       </div>
 
       <div className="mt-3 flex flex-wrap gap-2">
-        {canRespond && waiting && (
+        {waiting && (
           <button
             type="button"
             className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-[#0F172A] hover:bg-slate-50 transition shadow-2xs"
@@ -1777,15 +1762,13 @@ function IncidentCard({ incident, person, now, selected, canRespond, onAcknowled
             <Clock size={12} /> Acknowledge
           </button>
         )}
-        {canRespond && (
-          <button
-            type="button"
-            className="inline-flex items-center gap-1 rounded-lg border border-emerald-300 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition shadow-2xs"
-            onClick={onResolve}
-          >
-            <CheckCircle2 size={12} /> Resolve
-          </button>
-        )}
+        <button
+          type="button"
+          className="inline-flex items-center gap-1 rounded-lg border border-emerald-300 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition shadow-2xs"
+          onClick={onResolve}
+        >
+          <CheckCircle2 size={12} /> Resolve
+        </button>
         <button
           type="button"
           className="inline-flex items-center gap-1 rounded-lg border border-transparent px-2.5 py-1 text-xs font-semibold text-[#0284C7] hover:bg-sky-50 transition"

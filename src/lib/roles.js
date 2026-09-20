@@ -78,23 +78,20 @@ export const ROLES = {
     label: 'Logistics Officer',
     tone: 'blue',
     icon: Truck,
-    /* The difference between this role and the Commander is the one worth
-       demonstrating: a stores officer keeps the supply chain correct, but
-       deciding that a medical emergency is over is not their call. */
-    remit: 'Keeps cargo and station stock correct. Cannot close incidents.',
+    remit: 'Manages cargo, inventory, supply chain, and emergency logistics triage.',
     operator: 'Devendra Joshi',
     canManage: true,
-    canRespond: false,
+    canRespond: true,
   },
 
   SCIENTIST: {
     label: 'Field Scientist',
     tone: 'ok',
     icon: Microscope,
-    remit: 'Reads the situation, and can raise an emergency. Changes nothing else.',
+    remit: 'Reads operational telemetry, files emergency alerts, and logs field triage.',
     operator: 'Dr. Farah Siddiqui',
     canManage: false,
-    canRespond: false,
+    canRespond: true,
   },
 }
 

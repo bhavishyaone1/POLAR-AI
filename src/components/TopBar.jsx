@@ -213,26 +213,26 @@ export default function TopBar({
               setLocationOpen(!locationOpen)
               setProfileOpen(false)
             }}
-            className="flex items-center gap-2.5 rounded-xl p-1 sm:p-1.5 hover:bg-slate-50 border border-transparent hover:border-slate-200 transition text-left group"
+            className="h-10 flex items-center gap-2 rounded-xl px-2.5 bg-slate-50/80 hover:bg-slate-100/90 border border-slate-200/90 transition text-left group shrink-0"
             title="Click to switch active polar station or view theatre details"
           >
-            <div className="h-9 w-9 rounded-xl bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0 group-hover:bg-[#BAE6FD] transition">
-              <MapPin size={17} strokeWidth={2.2} />
+            <div className="h-7 w-7 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0 group-hover:bg-[#BAE6FD] transition">
+              <MapPin size={15} strokeWidth={2.2} />
             </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-1.5 text-sm font-bold text-[#0F172A] truncate">
-                <span>{selectedStation.name}</span>
+            <div className="min-w-0 pr-0.5">
+              <div className="flex items-center gap-1 text-xs font-bold text-[#0F172A] leading-tight">
+                <span className="truncate max-w-[150px] lg:max-w-[190px]">{selectedStation.name}</span>
                 <ChevronDown
-                  size={13}
-                  className={`text-slate-400 group-hover:text-slate-700 transition-transform ${
+                  size={12}
+                  className={`text-slate-400 group-hover:text-slate-700 transition-transform shrink-0 ${
                     locationOpen ? 'rotate-180' : ''
                   }`}
                 />
               </div>
-              <div className="text-[11px] text-slate-500 truncate hidden xs:block flex items-center gap-1.5">
+              <div className="text-[10.5px] text-slate-500 truncate leading-tight mt-0.5">
                 {isOffline ? (
                   <span className="inline-flex items-center gap-1 text-amber-600 font-semibold">
-                    <WifiOff size={10} />
+                    <WifiOff size={9} />
                     Field Mode · Offline
                   </span>
                 ) : (
@@ -341,14 +341,14 @@ export default function TopBar({
       {/* ============================================================
           CENTER: Command Search Bar (⌘ K)
           ============================================================ */}
-      <div className="hidden md:flex flex-1 max-w-md mx-6">
+      <div className="hidden md:flex flex-1 min-w-[160px] max-w-sm xl:max-w-md mx-2 lg:mx-4">
         <div
           onClick={onOpenSearch}
-          className="w-full flex items-center justify-between gap-3 rounded-xl border border-slate-200/90 bg-[#F8FAFC] px-3.5 py-2 text-xs text-slate-400 hover:border-slate-300 hover:bg-white transition cursor-pointer shadow-2xs"
+          className="h-10 w-full flex items-center justify-between gap-2.5 rounded-xl border border-slate-200/90 bg-[#F8FAFC] px-3 text-xs text-slate-400 hover:border-slate-300 hover:bg-white transition cursor-pointer shadow-2xs"
           title="Open global tactical command palette"
         >
           <div className="flex items-center gap-2 min-w-0 flex-1">
-            <Search size={15} className="text-slate-400 shrink-0" />
+            <Search size={14} className="text-slate-400 shrink-0" />
             <span className="truncate text-slate-400">
               Search cargo, inventory, people, assets...
             </span>
@@ -362,7 +362,7 @@ export default function TopBar({
       {/* ============================================================
           RIGHT: Notifications, Profile Dropdown, RUN DEMO
           ============================================================ */}
-      <div className="flex items-center gap-3 shrink-0">
+      <div className="flex items-center gap-2 lg:gap-2.5 shrink-0">
         {/* AI Monitoring Center Popover (Matching Master Prompt) */}
         <div className="relative" ref={aiMonitoringRef}>
           <button
@@ -372,7 +372,7 @@ export default function TopBar({
               setLocationOpen(false)
               setProfileOpen(false)
             }}
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-[#BAE6FD] bg-[#E0F2FE]/90 hover:bg-[#BAE6FD]/60 px-2.5 py-1 text-xs font-medium text-[#0284C7] transition shadow-2xs"
+            className="h-10 hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-[#BAE6FD] bg-[#E0F2FE]/90 hover:bg-[#BAE6FD]/60 px-3 text-xs font-semibold text-[#0284C7] transition shadow-2xs"
             title="Click to view AI Mission Monitoring Subsystem Telemetry"
           >
             <Sparkles size={13} className="text-[#0284C7]" />
@@ -466,7 +466,7 @@ export default function TopBar({
         </div>
 
         {/* System Online Status Pill (Matching Screenshot) */}
-        <div className="hidden lg:flex items-center gap-1.5 px-2 py-1 text-xs font-semibold text-slate-700">
+        <div className="h-10 hidden xl:inline-flex items-center gap-1.5 rounded-xl border border-slate-200/60 bg-slate-50/70 px-2.5 text-xs font-semibold text-slate-700">
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>System Online</span>
         </div>
@@ -475,7 +475,7 @@ export default function TopBar({
         <button
           type="button"
           onClick={onAlertClick}
-          className="relative rounded-xl border border-slate-200/80 bg-white p-2 text-slate-500 hover:bg-slate-50 hover:text-slate-800 transition shadow-2xs"
+          className="h-10 w-10 relative flex items-center justify-center rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-600 transition shadow-2xs"
           title="Active emergency incidents"
         >
           <Bell size={16} />
@@ -492,24 +492,24 @@ export default function TopBar({
               setProfileOpen(!profileOpen)
               setLocationOpen(false)
             }}
-            className="flex items-center gap-2.5 rounded-xl p-1 sm:p-1.5 hover:bg-slate-50 transition border border-transparent hover:border-slate-200 text-left group"
+            className="h-10 flex items-center gap-2 rounded-xl px-2.5 bg-slate-50/80 hover:bg-slate-100/90 border border-slate-200/90 transition text-left group"
             title="Click to switch operator profile or sign out"
           >
             {/* Circular Avatar */}
-            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-[#0284C7] to-[#1597D4] text-white flex items-center justify-center font-bold text-xs shrink-0 ring-2 ring-white shadow-2xs group-hover:scale-105 transition-transform">
+            <div className="h-7 w-7 rounded-full bg-gradient-to-tr from-[#0284C7] to-[#1597D4] text-white flex items-center justify-center font-bold text-xs shrink-0 ring-1 ring-white shadow-2xs group-hover:scale-105 transition-transform">
               {initials}
             </div>
             <div className="text-left hidden sm:block">
-              <div className="text-xs font-bold text-slate-900 leading-tight truncate max-w-[140px]">
+              <div className="text-xs font-bold text-slate-900 leading-tight truncate max-w-[130px]">
                 {user?.name || 'Cdr. Anjali Kulkarni'}
               </div>
-              <div className="text-[11px] text-slate-500 leading-tight flex items-center gap-1">
-                <span className="truncate max-w-[120px]">
+              <div className="text-[10.5px] text-slate-500 leading-tight flex items-center gap-1 mt-0.5">
+                <span className="truncate max-w-[110px]">
                   {roleLabel || user?.role || 'Expedition Commander'}
                 </span>
                 <ChevronDown
                   size={11}
-                  className={`text-slate-400 group-hover:text-slate-700 transition-transform ${
+                  className={`text-slate-400 group-hover:text-slate-700 transition-transform shrink-0 ${
                     profileOpen ? 'rotate-180' : ''
                   }`}
                 />
@@ -655,7 +655,7 @@ export default function TopBar({
           <button
             type="button"
             onClick={onStartGuidedDemo}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white font-medium px-3.5 py-2 text-xs shadow-xs transition active:scale-95"
+            className="h-10 inline-flex items-center gap-1.5 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white font-semibold px-3.5 text-xs shadow-xs transition active:scale-95"
             title="Start step-by-step guided demonstration"
           >
             <Play size={12} className="fill-white" />
