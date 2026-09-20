@@ -466,6 +466,16 @@ export function DataProvider({ children }) {
     setLoading(false)
   }, [loadFromDatabase])
 
+  /** Background revalidation: refreshes data silently without setting full-page loading to true */
+  const revalidate = useCallback(async () => {
+    if (!isSupabaseConfigured()) return { ok: true }
+    const result = await loadFromDatabase()
+    if (result.ok) {
+      setSource(DATA_SOURCE.SUPABASE)
+    }
+    return result
+  }, [loadFromDatabase])
+
   /* ---------- WRITING TO THE DATABASE ----------
      THE SINGLE MOST IMPORTANT LINE IN THIS FILE IS THE ONE THAT IS MISSING:
      nothing ever `await`s this function. It is called and forgotten.
@@ -1145,6 +1155,7 @@ export function DataProvider({ children }) {
       dbNotice,
       dismissDbNotice,
       reload,
+      revalidate,
       databaseConfigured: isSupabaseConfigured(),
       databaseMessage: supabaseConfig.message,
 
@@ -1208,6 +1219,7 @@ export function DataProvider({ children }) {
       dbNotice,
       dismissDbNotice,
       reload,
+      revalidate,
       stats,
       continuityMetrics,
       getExpedition,

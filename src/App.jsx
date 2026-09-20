@@ -96,6 +96,7 @@ export default function App() {
     dbNotice,
     dismissDbNotice,
     reload,
+    revalidate,
     emergencies,
     personnel,
     expeditions,
@@ -166,23 +167,36 @@ export default function App() {
   /* Used when one page wants to send you to another — e.g. clicking the
      "Low Stock" card on the dashboard takes you to Inventory. Pushes history
      so browser Back (<-) and Forward (->) buttons work seamlessly. */
-  const goTo = useCallback((nextView, options = {}) => {
-    const { replace = false } = options
-    setView(nextView)
-    try {
-      sessionStorage.setItem('polar.activeView', nextView)
-      const targetHash = `#${nextView}`
-      if (window.location.hash !== targetHash) {
-        if (replace) {
-          window.history.replaceState({ view: nextView }, '', targetHash)
-        } else {
-          window.history.pushState({ view: nextView }, '', targetHash)
+  const goTo = useCallback(
+    (nextView, options = {}) => {
+      const { replace = false } = options
+      if (nextView === 'dashboard' && view === 'dashboard') {
+        // Revalidate in background and signal dashboard refresh
+        window.dispatchEvent(new CustomEvent('polar:dashboard-refresh'))
+        if (typeof revalidate === 'function') {
+          revalidate()
         }
+        setNavOpen(false)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        return
       }
-    } catch {}
-    setNavOpen(false)
-    window.scrollTo({ top: 0 })
-  }, [])
+      setView(nextView)
+      try {
+        sessionStorage.setItem('polar.activeView', nextView)
+        const targetHash = `#${nextView}`
+        if (window.location.hash !== targetHash) {
+          if (replace) {
+            window.history.replaceState({ view: nextView }, '', targetHash)
+          } else {
+            window.history.pushState({ view: nextView }, '', targetHash)
+          }
+        }
+      } catch {}
+      setNavOpen(false)
+      window.scrollTo({ top: 0 })
+    },
+    [view, revalidate]
+  )
 
   const handleSosSubmit = (payload) => {
     let mappedType = 'OTHER'

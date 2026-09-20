@@ -261,6 +261,29 @@ export default function TopBar({
           )}
         </button>
 
+        {/* Tablet (< lg) Home / Dashboard Button */}
+        <button
+          type="button"
+          onClick={() => {
+            if (goTo) goTo('dashboard')
+          }}
+          className="lg:hidden flex items-center gap-2 rounded-xl p-1.5 hover:bg-slate-100/80 transition cursor-pointer text-left shrink-0 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/40"
+          aria-label="Go to Dashboard"
+          title="Go to Dashboard"
+        >
+          <div className="shrink-0 flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <polygon points="20,4 32,32 8,32" fill="#0284C7" />
+              <polygon points="20,4 26,32 8,32" fill="#38BDF8" opacity="0.85" />
+              <polygon points="28,14 38,32 18,32" fill="#0EA5E9" opacity="0.65" />
+              <polygon points="12,18 22,32 2,32" fill="#7DD3FC" opacity="0.75" />
+            </svg>
+          </div>
+          <span className="font-semibold text-sm text-[#0C1E30] tracking-tight hidden sm:inline">
+            POLAR-AI
+          </span>
+        </button>
+
         {/* Interactive Location Switcher */}
         <div className="relative" ref={locationRef}>
           <button
@@ -719,28 +742,47 @@ export default function TopBar({
         Clean · Compact · Non-squeezed · 44px+ touch targets
         ============================================================ */}
     <header className="sticky top-0 z-30 flex md:hidden h-14 items-center justify-between border-b border-[#DCE8F0] bg-white/95 px-3 backdrop-blur-md">
-      {/* Left: POLAR-AI · Current Station (tap to switch base) */}
-      <button
-        type="button"
-        onClick={() => setMobileStationOpen(true)}
-        className="flex items-center gap-2 rounded-lg py-1 px-1.5 hover:bg-slate-50 transition text-left min-w-0 min-h-[44px] active:scale-95"
-        aria-label="Switch active polar station"
-      >
-        <div className="shrink-0 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
-            <polygon points="20,4 32,32 8,32" fill="#0284C7" />
-            <polygon points="20,4 26,32 8,32" fill="#38BDF8" opacity="0.85" />
-          </svg>
-        </div>
-        <div className="min-w-0 flex items-center gap-1">
-          <span className="font-semibold text-[13px] text-[#0C1E30] tracking-tight">POLAR-AI</span>
-          <span className="text-slate-300 text-xs">·</span>
-          <span className="text-xs font-medium text-[#42586E] truncate max-w-[100px]">
+      {/* Left: POLAR-AI Logo/Brand (Home/Dashboard) + Current Station */}
+      <div className="flex items-center gap-1 min-w-0">
+        {/* POLAR-AI Home / Dashboard Button */}
+        <button
+          type="button"
+          onClick={() => {
+            if (goTo) goTo('dashboard')
+          }}
+          className="flex items-center gap-1.5 rounded-lg py-1 px-1.5 hover:bg-slate-100/80 transition text-left shrink-0 min-h-[44px] active:scale-95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0284C7]/40"
+          aria-label="Go to Dashboard"
+          title="Go to Dashboard"
+        >
+          <div className="shrink-0 flex items-center justify-center">
+            <svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <polygon points="20,4 32,32 8,32" fill="#0284C7" />
+              <polygon points="20,4 26,32 8,32" fill="#38BDF8" opacity="0.85" />
+              <polygon points="28,14 38,32 18,32" fill="#0EA5E9" opacity="0.65" />
+              <polygon points="12,18 22,32 2,32" fill="#7DD3FC" opacity="0.75" />
+            </svg>
+          </div>
+          <span className="font-semibold text-[13.5px] text-[#0C1E30] tracking-tight">
+            POLAR-AI
+          </span>
+        </button>
+
+        <span className="text-slate-300 text-xs select-none">·</span>
+
+        {/* Current Station Selector (opens station switch modal) */}
+        <button
+          type="button"
+          onClick={() => setMobileStationOpen(true)}
+          className="flex items-center gap-1 rounded-lg py-1 px-1.5 hover:bg-slate-100/80 transition text-left min-w-0 min-h-[44px] active:scale-95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0284C7]/40"
+          aria-label="Switch active polar station"
+          title="Switch active polar station"
+        >
+          <span className="text-xs font-medium text-[#42586E] truncate max-w-[85px] xs:max-w-[110px]">
             {selectedStation.name.replace(' Station', '').replace(' Operations Room', '')}
           </span>
           <ChevronDown size={12} className="text-slate-400 shrink-0" />
-        </div>
-      </button>
+        </button>
+      </div>
 
       {/* Right: Search, AI Status, Notifications, Profile */}
       <div className="flex items-center gap-1 shrink-0">

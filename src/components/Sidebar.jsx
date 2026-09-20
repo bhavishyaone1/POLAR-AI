@@ -90,10 +90,19 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
       >
         {/* ---------- Logo & Brand ---------- */}
         <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-[#DCE8F0]">
-          <div className="flex items-center gap-3 min-w-0">
+          <button
+            type="button"
+            onClick={() => {
+              if (onClose) onClose()
+              if (onNavigate) onNavigate('dashboard')
+            }}
+            className="group flex items-center gap-3 min-w-0 text-left rounded-xl p-1.5 -m-1.5 hover:bg-[#F4F8FA] focus:outline-none focus:ring-2 focus:ring-[#0284C7]/40 transition cursor-pointer active:scale-95"
+            aria-label="Go to Dashboard"
+            title="Go to Dashboard"
+          >
             {/* Geometric Mountain Logo */}
-            <div className="shrink-0 flex items-center justify-center">
-              <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="shrink-0 flex items-center justify-center transition-transform group-hover:scale-105 group-active:scale-95">
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <polygon points="20,4 32,32 8,32" fill="#0284C7" />
                 <polygon points="20,4 26,32 8,32" fill="#38BDF8" opacity="0.85" />
                 <polygon points="28,14 38,32 18,32" fill="#0EA5E9" opacity="0.65" />
@@ -101,14 +110,14 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
               </svg>
             </div>
             <div>
-              <div className="text-[15px] font-semibold tracking-tight text-[#0C1E30]">
+              <div className="text-[15px] font-semibold tracking-tight text-[#0C1E30] group-hover:text-[#0284C7] transition-colors">
                 POLAR-AI
               </div>
-              <div className="text-[11px] text-[#6E8294] font-normal leading-tight">
+              <div className="text-[11px] text-[#6E8294] font-normal leading-tight group-hover:text-[#42586E] transition-colors">
                 Mission Continuity
               </div>
             </div>
-          </div>
+          </button>
 
           <button
             type="button"

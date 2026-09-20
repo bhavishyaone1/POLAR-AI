@@ -14,7 +14,7 @@
  * Click any module to open contextual slide-over detail drawer.
  */
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   AlertTriangle,
   ArrowDownRight,
@@ -41,6 +41,22 @@ export default function Dashboard({ goTo }) {
 
   // Active detail sheet state: null | 'fuel' | 'generator' | 'cargo' | 'changes' | 'ai' | 'health' | 'systems'
   const [activeDetail, setActiveDetail] = useState(null)
+  const [revalidating, setRevalidating] = useState(false)
+
+  // Handle Dashboard Revalidation / Refresh when POLAR-AI logo is clicked while already on Dashboard
+  useEffect(() => {
+    const handleRefresh = () => {
+      // Close any open detail slide-over
+      setActiveDetail(null)
+      // Visual revalidation feedback without full page reload or layout shift
+      setRevalidating(true)
+      const t = setTimeout(() => setRevalidating(false), 800)
+      return () => clearTimeout(t)
+    }
+
+    window.addEventListener('polar:dashboard-refresh', handleRefresh)
+    return () => window.removeEventListener('polar:dashboard-refresh', handleRefresh)
+  }, [])
 
   const score = continuityMetrics?.score
     ? continuityMetrics.score === 68
@@ -82,9 +98,9 @@ export default function Dashboard({ goTo }) {
             Maitri Station
           </h1>
           <span className="text-[#CBD5E1]">·</span>
-          <div className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Operational</span>
+          <div className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full transition-all">
+            <span className={`h-1.5 w-1.5 rounded-full ${revalidating ? 'bg-[#0284C7] animate-ping' : 'bg-emerald-500 animate-pulse'}`} />
+            <span>{revalidating ? 'Revalidating Telemetry…' : 'Operational'}</span>
           </div>
           <span className="text-[#CBD5E1] hidden sm:inline">·</span>
           <span className="hidden sm:inline text-xs text-[#64748B] font-medium">
