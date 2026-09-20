@@ -460,6 +460,38 @@ export default function Dashboard({ goTo }) {
       </div>
 
       {/* ============================================================
+          MISSION MEMORY — HISTORY SAYS SIGNAL
+          ============================================================ */}
+      <div
+        className="mt-5 rounded-2xl border border-[#BAE6FD] bg-[#E0F2FE]/40 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer hover:bg-[#E0F2FE]/70 transition"
+        onClick={() => goTo('memory')}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => e.key === 'Enter' && goTo('memory')}
+      >
+        <div className="flex items-start sm:items-center gap-3">
+          <div className="h-8 w-8 rounded-xl bg-[#0284C7] text-white flex items-center justify-center shrink-0">
+            <Sparkles size={15} />
+          </div>
+          <div>
+            <div className="text-[10.5px] font-mono font-bold uppercase tracking-wider text-[#0284C7]">
+              Mission Memory · Historical Intelligence
+            </div>
+            <p className="text-sm font-semibold text-[#0C1E30] mt-0.5">
+              History says: Fuel at 12-day runway with a 5-day cargo delay matches conditions in 4 past expeditions — 3 of which led to a critical shortage.
+            </p>
+            <p className="text-xs text-[#42586E] mt-1">
+              Most similar: <strong>Maitri-8 (2022)</strong> · Continuity score hit 34%. Pattern confidence: <strong className="text-rose-600">78%</strong>
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 text-xs font-semibold text-[#0284C7] shrink-0 sm:ml-4">
+          <span>View Full Analysis</span>
+          <ArrowRight size={13} />
+        </div>
+      </div>
+
+      {/* ============================================================
           PROGRESSIVE DISCLOSURE DETAIL SHEET (SLIDE-OVER DRAWER)
           ============================================================ */}
       {activeDetail && (

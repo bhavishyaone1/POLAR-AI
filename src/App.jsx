@@ -82,6 +82,7 @@ const AiCopilot = lazyWithRetry(() => import('./pages/AiCopilot'))
 const Reports = lazyWithRetry(() => import('./pages/Reports'))
 const AuditLog = lazyWithRetry(() => import('./pages/AuditLog'))
 const ResearchSources = lazyWithRetry(() => import('./pages/ResearchSources'))
+const MissionMemory = lazyWithRetry(() => import('./pages/MissionMemory'))
 import CommandPalette from './components/CommandPalette'
 import GuidedDemoTour from './components/GuidedDemoTour'
 import MobileBottomNav from './components/MobileBottomNav'
@@ -322,6 +323,8 @@ export default function App() {
         )
       case 'copilot':
         return <AiCopilot goTo={goTo} />
+      case 'memory':
+        return <MissionMemory goTo={goTo} />
       case 'reports':
         return <Reports goTo={goTo} />
       case 'audit':

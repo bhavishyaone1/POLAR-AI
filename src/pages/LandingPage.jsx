@@ -417,6 +417,77 @@ export default function LandingPage({ goTo, onStartGuidedDemo }) {
       </section>
 
       {/* ============================================================
+          POLAR-AI LEARNS — MISSION MEMORY USP SECTION
+          ============================================================ */}
+      <section className="rounded-2xl border border-[#BAE6FD] bg-gradient-to-br from-[#E0F2FE] to-[#F0F9FF] p-6 sm:p-10 shadow-xs space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+          <div className="space-y-2 max-w-xl">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#0284C7] px-3.5 py-1 text-xs font-mono font-bold text-white">
+              <Sparkles size={12} />
+              <span>NEW USP · Adaptive Historical Intelligence</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#0C1E30] tracking-tight">
+              POLAR-AI remembers. <br />
+              <span className="text-[#0284C7]">Every past expedition makes your current mission safer.</span>
+            </h2>
+            <p className="text-sm text-[#42586E] leading-relaxed">
+              Unlike static dashboards, POLAR-AI studies every Antarctic and Arctic expedition since 2018.
+              When it sees your current fuel level, cargo delay, and temperature — it already knows what tends to happen next.
+              Because it happened before.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => goTo('memory')}
+            className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white font-semibold px-5 py-2.5 text-xs shadow-xs transition active:scale-95 self-start"
+          >
+            <span>Explore Mission Memory</span>
+            <ArrowRight size={13} />
+          </button>
+        </div>
+
+        {/* How it works — 3-step visual */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="rounded-xl bg-white border border-[#DCE8F0] p-4 space-y-2">
+            <div className="h-7 w-7 rounded-lg bg-[#0284C7] text-white flex items-center justify-center text-xs font-bold">01</div>
+            <h3 className="text-sm font-bold text-[#0C1E30]">Study Past Expeditions</h3>
+            <p className="text-xs text-[#42586E] leading-relaxed">
+              6 documented expeditions (2018–2024) with full incident logs: fuel crises, generator failures, medical emergencies, cargo delays.
+            </p>
+          </div>
+          <div className="rounded-xl bg-white border border-[#DCE8F0] p-4 space-y-2">
+            <div className="h-7 w-7 rounded-lg bg-[#0284C7] text-white flex items-center justify-center text-xs font-bold">02</div>
+            <h3 className="text-sm font-bold text-[#0C1E30]">Match Current Conditions</h3>
+            <p className="text-xs text-[#42586E] leading-relaxed">
+              Real-time pattern matching against preconditions that historically preceded each incident — fuel runway, delay days, season, temperature.
+            </p>
+          </div>
+          <div className="rounded-xl bg-white border border-[#DCE8F0] p-4 space-y-2">
+            <div className="h-7 w-7 rounded-lg bg-[#0284C7] text-white flex items-center justify-center text-xs font-bold">03</div>
+            <h3 className="text-sm font-bold text-[#0C1E30]">Predict &amp; Guide</h3>
+            <p className="text-xs text-[#42586E] leading-relaxed">
+              Surfaces ranked risk predictions with confidence %, historical evidence, and proven resolutions — before the commander needs to ask.
+            </p>
+          </div>
+        </div>
+
+        {/* Example alert preview */}
+        <div className="rounded-xl bg-white border border-rose-200 p-4 sm:p-5 space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-mono font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-full">PATTERN MATCH · 78% CONFIDENCE</span>
+          </div>
+          <p className="text-sm font-semibold text-[#0C1E30]">
+            "Fuel at 12-day runway with a 5-day cargo delay matches conditions in 4 past expeditions — 3 of which led to a critical shortage."
+          </p>
+          <p className="text-xs text-[#42586E]">
+            Most similar: <strong>Maitri-8 (2022)</strong> — Continuity score fell to 34%. Generator failure cascaded into cryogenic vault loss and cold-stress medical incidents.
+            <strong className="text-[#0284C7]"> Recommended: Execute Protocol REC-001 within 48 hours.</strong>
+          </p>
+        </div>
+      </section>
+
+      {/* ============================================================
           FINAL TAGLINE
           ============================================================ */}
       <footer className="rounded-2xl border border-[#DCE8F0] bg-[#F4F8FA] p-8 text-center space-y-3">

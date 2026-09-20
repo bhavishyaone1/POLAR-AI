@@ -7,6 +7,7 @@
 
 import {
   AlertTriangle,
+  BookMarked,
   BookOpen,
   Bot,
   Boxes,
@@ -107,6 +108,14 @@ export const NAV_ITEMS = [
     title: 'ASK POLAR — Mission Continuity AI',
     blurb: 'Grounded mission intelligence assistant with verified operational numbers.',
     icon: Bot,
+    group: 'Continuity Intelligence',
+  },
+  {
+    id: 'memory',
+    label: 'Mission Memory',
+    title: 'Mission Memory & Historical Intelligence',
+    blurb: 'Pattern-matched predictions from 6 past polar expeditions. POLAR-AI learns from history.',
+    icon: BookMarked,
     group: 'Continuity Intelligence',
   },
 

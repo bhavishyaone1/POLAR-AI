@@ -116,6 +116,34 @@ const COPILOT_KNOWLEDGE = {
     actionLabel: 'Open What-If Simulator',
     actionTarget: 'simulator',
   },
+  'What happened in similar past missions?': {
+    analysis:
+      'Mission Memory has matched current conditions against 6 historical expeditions. Two are highly similar: Maitri-8 (2022, 78% match) and Maitri-6 (2019, 64% match). Both were winter missions with fuel runway below 14 days and cargo delays exceeding 4 days.',
+    impact:
+      'In Maitri-8, this exact combination caused a continuity score collapse from 72% to 34%. Generator B failed under load, cryogenic vaults lost thermal integrity, and 3 science experiments were permanently lost. In Maitri-6, emergency bladder reserves had to be fully drawn down to prevent life-support failure.',
+    prediction:
+      'Pattern confidence: 78%. Based on 4 of 6 past expeditions experiencing a critical fuel shortage under these conditions, the probability of escalation without active mitigation is high.',
+    options:
+      'Option A: Pre-authorize bladder reserve draw-down NOW — as Maitri-8 did too late. Option B: Begin circuit shedding on Day 10 to extend runway by 3.2 days.',
+    recommendation:
+      'Execute Protocol REC-001 within 48 hours. Historical evidence from Maitri-8 shows that delays past Day 8 reduce viable mitigation options from 3 to 1.',
+    actionLabel: 'View Mission Memory',
+    actionTarget: 'memory',
+  },
+  'Has POLAR-AI seen this fuel risk before?': {
+    analysis:
+      'Yes. POLAR-AI has recorded fuel shortage incidents in 5 of 6 past polar expeditions. The current scenario — 12-day runway against a 17-day cargo ETA — precisely matches the preconditions observed in Maitri-8 (2022), Maitri-6 (2019), and Himadri-3 (2021).',
+    impact:
+      'Across these 3 matched incidents, average resolution time was 94 hours. Average continuity score drop was -27 points. In all 3 cases, the root cause was a combination of elevated heating demand and cargo delay exceeding 4 days — exactly the current state.',
+    prediction:
+      'The Maitri-8 precedent is the most severe: continuity fell to 34% before ground convoy resupply was authorized. Lesson learned: do not wait past Day 8 to authorize mitigation.',
+    options:
+      'Option A: Apply Maitri-9 solution — begin load shedding immediately and pre-authorize air-drop from Novo. Option B: Apply Maitri-8 solution — emergency bladder reserve draw-down 3,500 L.',
+    recommendation:
+      'POLAR-AI recommends the Maitri-9 approach: earlier load shedding prevents the need for full reserve draw-down. Authorize Protocol REC-001 and open the Lessons Library for full history.',
+    actionLabel: 'View Mission Memory',
+    actionTarget: 'memory',
+  },
 }
 
 export default function AiCopilot({ goTo }) {
@@ -198,6 +226,8 @@ export default function AiCopilot({ goTo }) {
               'What should I review?',
               'Explain the impact',
               'Compare REC-001 vs REC-002',
+              'What happened in similar past missions?',
+              'Has POLAR-AI seen this fuel risk before?',
             ].map((q) => {
               const isSelected = activeQuestion === q
               return (

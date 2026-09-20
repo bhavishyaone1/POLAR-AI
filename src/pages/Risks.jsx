@@ -301,10 +301,24 @@ export default function Risks({ goTo }) {
 
         {/* Footer Navigation Strip (WHAT NEXT) */}
         <footer className="rounded-2xl border border-[#DCE8F0] bg-[#F8FAFC] p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4 text-xs">
-          <span className="text-[#42586E]">
-            Causal link confirmed: A logistics shipping delay directly impacts life support &amp; science missions.
-          </span>
+          <div className="space-y-1">
+            <span className="text-[#42586E]">
+              Causal link confirmed: A logistics shipping delay directly impacts life support &amp; science missions.
+            </span>
+            <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#0284C7]">
+              <span className="text-[#6E8294]">📖 Mission Memory:</span>
+              <span className="font-semibold">Fuel risk seen in 5 of 6 past expeditions · Cargo delay seen in 4 of 6</span>
+            </div>
+          </div>
           <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => goTo('memory')}
+              className="inline-flex items-center gap-1.5 font-bold text-[#0284C7] hover:underline"
+            >
+              <span>View Historical Patterns</span>
+              <ArrowRight size={13} />
+            </button>
             <button
               type="button"
               onClick={() => goTo('simulator')}
