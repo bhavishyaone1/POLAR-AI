@@ -15,7 +15,7 @@
  */
 
 import { Component } from 'react'
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, RefreshCw } from 'lucide-react'
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -33,35 +33,62 @@ export default class ErrorBoundary extends Component {
     console.error('[POLAR COMMAND CENTER] A page failed to render:', error, info)
   }
 
+  handleReload = () => {
+    sessionStorage.removeItem('polar.chunk_reload')
+    window.location.reload()
+  }
+
   render() {
     if (!this.state.error) return this.props.children
+
+    const errorMessage = String(this.state.error?.message || this.state.error)
+    const isChunkError =
+      errorMessage.includes('dynamically imported module') ||
+      errorMessage.includes('Failed to fetch') ||
+      errorMessage.includes('ChunkLoadError') ||
+      errorMessage.includes('Importing a module script failed')
 
     return (
       <div className="card mx-auto mt-10 max-w-lg">
         <AlertTriangle size={22} strokeWidth={1.75} className="mb-3 text-[var(--red)]" />
-        <h2 className="panel-title">This module could not be displayed</h2>
+        <h2 className="panel-title">
+          {isChunkError ? 'Console Update Available' : 'This module could not be displayed'}
+        </h2>
         <p className="panel-subtitle mb-4">
-          The rest of the console is unaffected. Open the browser console (F12) to see the
-          technical cause.
+          {isChunkError
+            ? 'A new version of this operational module has been deployed. Reloading will fetch the latest assets from the station server.'
+            : 'The rest of the console is unaffected. Open the browser console (F12) to see the technical cause.'}
         </p>
 
         <pre
           className="mono mb-4 overflow-x-auto rounded border p-3 text-[11px] text-[var(--red)]"
           style={{ borderColor: 'var(--line)', background: 'var(--navy-950)' }}
         >
-          {String(this.state.error)}
+          {errorMessage}
         </pre>
 
-        <button
-          type="button"
-          className="btn"
-          onClick={() => {
-            this.setState({ error: null })
-            this.props.onReset?.()
-          }}
-        >
-          Back to dashboard
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          {isChunkError && (
+            <button
+              type="button"
+              className="btn btn-primary inline-flex items-center gap-1.5"
+              onClick={this.handleReload}
+            >
+              <RefreshCw size={14} />
+              Update & Reload Console
+            </button>
+          )}
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              this.setState({ error: null })
+              this.props.onReset?.()
+            }}
+          >
+            Back to dashboard
+          </button>
+        </div>
       </div>
     )
   }

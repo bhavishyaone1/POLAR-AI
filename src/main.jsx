@@ -18,6 +18,17 @@ import { registerSW } from 'virtual:pwa-register'
 
 registerSW({ immediate: true })
 
+// Handle dynamic chunk import errors gracefully (e.g. after a new production deployment)
+window.addEventListener('vite:preloadError', (event) => {
+  event?.preventDefault?.()
+  const lastReload = sessionStorage.getItem('polar.chunk_reload')
+  const now = Date.now()
+  if (!lastReload || now - parseInt(lastReload, 10) > 10000) {
+    sessionStorage.setItem('polar.chunk_reload', String(now))
+    window.location.reload()
+  }
+})
+
 /* THREE PROVIDERS, AND THE ORDER MATTERS.
    <ThemeProvider> is outermost so the theme is available everywhere,
    including the sign-in screen.

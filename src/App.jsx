@@ -34,24 +34,54 @@ import { useData } from './store/DataContext'
 import { playAcknowledgeChirp } from './services/audioAlert'
 import { saveMessage } from './services/emergencyStorage'
 
-const Login = lazy(() => import('./pages/Login'))
-const LandingPage = lazy(() => import('./pages/LandingPage'))
-const Dashboard = lazy(() => import('./pages/Dashboard'))
-const Expeditions = lazy(() => import('./pages/Expeditions'))
-const Personnel = lazy(() => import('./pages/Personnel'))
-const Assets = lazy(() => import('./pages/Assets'))
-const ImpactAnalysis = lazy(() => import('./pages/ImpactAnalysis'))
-const MissionSimulator = lazy(() => import('./pages/MissionSimulator'))
-const Risks = lazy(() => import('./pages/Risks'))
-const Cargo = lazy(() => import('./pages/Cargo'))
-const Inventory = lazy(() => import('./pages/Inventory'))
-const MapView = lazy(() => import('./pages/MapView'))
-const Weather = lazy(() => import('./pages/Weather'))
-const Emergency = lazy(() => import('./pages/Emergency'))
-const AiCopilot = lazy(() => import('./pages/AiCopilot'))
-const Reports = lazy(() => import('./pages/Reports'))
-const AuditLog = lazy(() => import('./pages/AuditLog'))
-const ResearchSources = lazy(() => import('./pages/ResearchSources'))
+/**
+ * Dynamic import wrapper with automatic retry and reload resilience.
+ * When a new deployment is pushed to production, old chunk hashes 404.
+ * This automatically reloads the page once to pull fresh chunks seamlessly.
+ */
+function lazyWithRetry(componentImport) {
+  return lazy(async () => {
+    try {
+      return await componentImport()
+    } catch (error) {
+      const isChunkError =
+        error?.name === 'ChunkLoadError' ||
+        error?.message?.includes('dynamically imported module') ||
+        error?.message?.includes('Failed to fetch') ||
+        error?.message?.includes('Importing a module script failed')
+
+      const lastReload = sessionStorage.getItem('polar.chunk_reload')
+      const now = Date.now()
+      const recentlyReloaded = lastReload && now - parseInt(lastReload, 10) < 10000
+
+      if (isChunkError && !recentlyReloaded) {
+        sessionStorage.setItem('polar.chunk_reload', String(now))
+        window.location.reload()
+        return new Promise(() => {}) // Prevent rendering an error state while reload happens
+      }
+      throw error
+    }
+  })
+}
+
+const Login = lazyWithRetry(() => import('./pages/Login'))
+const LandingPage = lazyWithRetry(() => import('./pages/LandingPage'))
+const Dashboard = lazyWithRetry(() => import('./pages/Dashboard'))
+const Expeditions = lazyWithRetry(() => import('./pages/Expeditions'))
+const Personnel = lazyWithRetry(() => import('./pages/Personnel'))
+const Assets = lazyWithRetry(() => import('./pages/Assets'))
+const ImpactAnalysis = lazyWithRetry(() => import('./pages/ImpactAnalysis'))
+const MissionSimulator = lazyWithRetry(() => import('./pages/MissionSimulator'))
+const Risks = lazyWithRetry(() => import('./pages/Risks'))
+const Cargo = lazyWithRetry(() => import('./pages/Cargo'))
+const Inventory = lazyWithRetry(() => import('./pages/Inventory'))
+const MapView = lazyWithRetry(() => import('./pages/MapView'))
+const Weather = lazyWithRetry(() => import('./pages/Weather'))
+const Emergency = lazyWithRetry(() => import('./pages/Emergency'))
+const AiCopilot = lazyWithRetry(() => import('./pages/AiCopilot'))
+const Reports = lazyWithRetry(() => import('./pages/Reports'))
+const AuditLog = lazyWithRetry(() => import('./pages/AuditLog'))
+const ResearchSources = lazyWithRetry(() => import('./pages/ResearchSources'))
 import CommandPalette from './components/CommandPalette'
 import GuidedDemoTour from './components/GuidedDemoTour'
 import MobileBottomNav from './components/MobileBottomNav'

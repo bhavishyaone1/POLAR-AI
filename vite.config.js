@@ -45,6 +45,9 @@ export default defineConfig(({ command }) => ({
       },
       workbox: {
         sourcemap: false,
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,jpg,woff,woff2}'],
         runtimeCaching: [
           {
@@ -79,7 +82,7 @@ export default defineConfig(({ command }) => ({
       },
     }),
   ],
-  esbuild: command === 'build' ? { drop: ['console', 'debugger'] } : undefined,
+  oxc: command === 'build' ? { drop: ['console', 'debugger'] } : undefined,
   server: {
     port: 5173,
     open: true, // automatically opens your browser when you run `npm run dev`
