@@ -4,21 +4,26 @@
 > **MoES & NCPOR Aligned Decision-Support Platform**  
 > Serving the *44th Indian Scientific Expedition to Antarctica (ISEA-44)* across **Maitri Station**, **Bharati Station**, and **Himadri (Arctic)**.
 
-[![Live Deployment](https://img.shields.io/badge/Live_Deployment-polar--ai--psi.vercel.app-0284C7?style=for-the-badge&logo=vercel&logoColor=white)](https://polar-ai-psi.vercel.app/)
-[![Vite](https://img.shields.io/badge/Vite-8.2.2-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Netlify](https://img.shields.io/badge/Netlify-polarxai.netlify.app-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://polarxai.netlify.app/)
+[![Vercel](https://img.shields.io/badge/Vercel-polarxai1.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://polarxai1.vercel.app/)
+[![SIH 2026](https://img.shields.io/badge/SIH_2026-SIH26062-0284C7?style=for-the-badge)](https://sih.gov.in/)
+[![Team](https://img.shields.io/badge/Team-CompileX-102A43?style=for-the-badge)](https://github.com/bhavishyaone1/POLAR-AI)
 [![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4.17-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Three.js](https://img.shields.io/badge/Three.js-WebGL_Globe-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+[![Vite](https://img.shields.io/badge/Vite-8.2.2-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
 ---
 
-## 🌐 Live Production Application
+## 🌐 Live Production Deployments & Official Submission
 
-- **Live URL**: **[https://polar-ai-psi.vercel.app/](https://polar-ai-psi.vercel.app/)**
+- **Primary Vercel Production**: **[https://polarxai1.vercel.app/](https://polarxai1.vercel.app/)**
+- **Mirror Netlify Production**: **[https://polarxai.netlify.app/](https://polarxai.netlify.app/)**
 - **GitHub Repositories**:
-  - Primary: [https://github.com/bhavishyaone1/POLAR-AI](https://github.com/bhavishyaone1/POLAR-AI)
-  - Mirror: [https://github.com/bhavishyaone1/Polar_Command_Center](https://github.com/bhavishyaone1/Polar_Command_Center)
+  - Primary: **[https://github.com/bhavishyaone1/POLAR-AI](https://github.com/bhavishyaone1/POLAR-AI)**
+  - Mirror: **[https://github.com/bhavishyaone1/Polar_Command_Center](https://github.com/bhavishyaone1/Polar_Command_Center)**
+- **Official SIH 2026 Presentation**:
+  - PowerPoint Deck: [`POLAR_AI_SIH_2026_IDEA_PRESENTATION_FINAL.pptx`](./POLAR_AI_SIH_2026_IDEA_PRESENTATION_FINAL.pptx)
+  - PDF Document: [`POLAR_AI_SIH_2026_IDEA_PRESENTATION_FINAL.pdf`](./POLAR_AI_SIH_2026_IDEA_PRESENTATION_FINAL.pdf)
 
 ---
 
