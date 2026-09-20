@@ -26,7 +26,6 @@ import { useState, useMemo, useCallback, useEffect } from 'react'
 import { CloudOff, Eye, X } from 'lucide-react'
 import Sidebar from './components/Sidebar'
 import TopBar from './components/TopBar'
-import EmergencyBanner from './components/EmergencyBanner'
 import EmergencyModal from './components/EmergencyModal'
 import ErrorBoundary from './components/ErrorBoundary'
 import { findNavItem } from './lib/navigation'
@@ -285,7 +284,7 @@ export default function App() {
       {/* min-w-0 matters: without it, a wide table would stretch this
           column and break the layout instead of scrolling inside it. */}
       <div className="flex min-w-0 flex-1 flex-col bg-[#F4F8FA]">
-        {/* Unified sticky header container: keeps TopBar and EmergencyBanner perfectly docked with zero viewport drift */}
+        {/* Unified sticky header container */}
         <div className="sticky top-0 z-30">
           <TopBar
             title={nav.title}
@@ -297,18 +296,6 @@ export default function App() {
             onHelpClick={() => goTo('sources')}
             onOpenSearch={() => setCommandPaletteOpen(true)}
             onStartGuidedDemo={() => setGuidedDemoOpen(true)}
-          />
-
-          {/* Global Real-Time Emergency Banner */}
-          <EmergencyBanner
-            emergencies={emergencies}
-            personnel={personnel}
-            canRespond={canRespond}
-            onOpenEmergencyRoom={(id) => {
-              setFocusedIncidentId(id)
-              goTo('emergency')
-            }}
-            onAcknowledge={handleAcknowledge}
           />
         </div>
 

@@ -37,6 +37,7 @@ import {
   Users,
 } from 'lucide-react'
 import { useAuth } from '../store/AuthContext'
+import { useData } from '../store/DataContext'
 import { USERS } from '../lib/credentials'
 
 /* Polar Stations & Operational Bases Directory */
@@ -121,6 +122,10 @@ export default function TopBar({
   goTo,
 }) {
   const { user, signIn, signOut, roleLabel } = useAuth()
+  const { emergencies } = useData()
+  const hasAlert = (emergencies || []).some(
+    (e) => e.status !== 'RESOLVED' && e.status !== 'Resolved'
+  )
 
   // Location Dropdown State
   const [selectedStationId, setSelectedStationId] = useState(() => {
@@ -208,10 +213,16 @@ export default function TopBar({
         <button
           type="button"
           onClick={onMenuClick}
-          className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 lg:hidden transition shrink-0 active:scale-95"
+          className="relative flex h-10 w-10 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 lg:hidden transition shrink-0 active:scale-95"
           aria-label="Open navigation menu"
         >
           <Menu size={19} />
+          {hasAlert && (
+            <span className="absolute top-2 right-2 flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-600" />
+            </span>
+          )}
         </button>
 
         {/* Interactive Location Switcher */}

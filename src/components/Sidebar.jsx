@@ -1,18 +1,18 @@
 /**
  * SIDEBAR — POLAR-AI MISSION CONTINUITY INTELLIGENCE
  * ====================================================
- * Pixel-perfect alignment with the design reference:
+ * Function bar at left providing:
  * - Geometric ice mountain logo + "POLAR-AI" & "Mission Continuity Intelligence"
- * - 8 items: Dashboard, Expedition, Cargo (3), Inventory (2), Assets, Mission Risk (4), Simulator, AI Copilot
- * - Active state: Soft sky-blue fill with vibrant sky-blue icon and text
+ * - Active Emergency/Notification Alert card when incidents are active
+ * - Navigation items with dynamic real-time badge counts
  * - System Online status card + mountain illustration + footer tagline
  */
 
 import React from 'react'
 import {
   AlertTriangle,
-  Bot,
   Boxes,
+  ChevronRight,
   Compass,
   Cpu,
   LayoutDashboard,
@@ -25,10 +25,36 @@ import {
 } from 'lucide-react'
 import { useAuth } from '../store/AuthContext'
 import { useData } from '../store/DataContext'
+import { playAcknowledgeChirp } from '../services/audioAlert'
 
 export default function Sidebar({ view, onNavigate, open, onClose }) {
-  const { signOut } = useAuth()
-  const { stats } = useData()
+  const { user } = useAuth()
+  const { stats, emergencies, personnel, updateEmergency } = useData()
+
+  // Unresolved emergencies for notification alert
+  const activeEmergencies = (emergencies || []).filter(
+    (e) => e.status !== 'RESOLVED' && e.status !== 'Resolved'
+  )
+  const hasAlert = activeEmergencies.length > 0
+  const topIncident = activeEmergencies[0]
+
+  const affectedPerson = personnel?.find(
+    (p) => p.id === topIncident?.personnel_id
+  )
+  const affectedName = topIncident?.personnel_name || affectedPerson?.name
+  const affectedLabel = affectedName
+    ? `${affectedName} (${topIncident.personnel_id})`
+    : topIncident?.personnel_id
+
+  const canRespond = user?.role === 'COMMANDER' || user?.role === 'ADMIN'
+
+  const handleAcknowledge = (id) => {
+    updateEmergency(id, {
+      status: 'RESPONDING',
+      assigned_team: user?.name || 'Response Team Alpha',
+    })
+    playAcknowledgeChirp()
+  }
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -40,7 +66,7 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
     { id: 'simulator', label: 'Simulator', icon: Sliders },
     { id: 'copilot', label: 'AI Copilot', icon: Sparkles },
     { id: 'personnel', label: 'Personnel', icon: Users, badge: stats?.personnelTotal || 50, subtle: true },
-    { id: 'emergency', label: 'Emergency', icon: Siren, isAlert: true, alertCount: stats?.openEmergenciesCount || 1, subtle: true },
+    { id: 'emergency', label: 'Emergency', icon: Siren, isAlert: true, alertCount: activeEmergencies.length, subtle: true },
   ]
 
   return (
@@ -94,8 +120,60 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
           </button>
         </div>
 
-        {/* ---------- 8 Navigation Items ---------- */}
-        <nav className="flex-1 overflow-y-auto px-3.5 py-4 space-y-1">
+        {/* ---------- Active Notification / Emergency in Left Function Bar ---------- */}
+        {hasAlert && topIncident && (
+          <div className="mx-3.5 mt-3 mb-1 rounded-xl border border-rose-200 bg-rose-50/95 p-3 shadow-xs animate-fade-in">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-600" />
+                </span>
+                <span className="font-mono text-[10.5px] font-bold text-rose-700 uppercase tracking-wider">
+                  {topIncident.id}
+                </span>
+              </div>
+              <span className="rounded-full bg-rose-100 px-1.5 py-0.5 text-[9.5px] font-bold font-mono text-rose-700 border border-rose-200">
+                {activeEmergencies.length} ACTIVE
+              </span>
+            </div>
+
+            <div className="mt-1.5 text-xs font-semibold text-rose-950 truncate">
+              {topIncident.type || 'POLAR DISTRESS'}
+            </div>
+
+            <div className="text-[11px] text-rose-800 truncate mt-0.5">
+              {affectedLabel || topIncident.location || 'Maitri Sector B'}
+            </div>
+
+            <div className="mt-2.5 flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => {
+                  onNavigate('emergency')
+                  if (onClose) onClose()
+                }}
+                className="flex-1 flex items-center justify-center gap-1 rounded-lg bg-rose-600 hover:bg-rose-700 py-1.5 text-[11px] font-semibold text-white shadow-2xs transition active:scale-95"
+              >
+                <span>View Alert</span>
+                <ChevronRight size={12} />
+              </button>
+              {canRespond && !topIncident.acknowledged_at && (
+                <button
+                  type="button"
+                  onClick={() => handleAcknowledge(topIncident.id)}
+                  className="rounded-lg border border-rose-300 bg-white hover:bg-rose-100 px-2 py-1.5 text-[11px] font-semibold text-rose-700 shadow-2xs transition active:scale-95"
+                  title="Acknowledge incident"
+                >
+                  Ack
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ---------- 10 Navigation Items ---------- */}
+        <nav className="flex-1 overflow-y-auto px-3.5 py-3 space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon
             const isActive = view === item.id || (item.id === 'dashboard' && view === 'landing')
@@ -121,12 +199,12 @@ export default function Sidebar({ view, onNavigate, open, onClose }) {
                 <Icon
                   size={16}
                   strokeWidth={isActive ? 2.2 : 1.75}
-                  className={isActive ? 'text-[#0284C7]' : 'text-[#6E8294]'}
+                  className={isActive ? 'text-[#0284C7]' : item.isAlert && item.alertCount > 0 ? 'text-rose-600' : 'text-[#6E8294]'}
                 />
                 <span className="flex-1 text-left truncate">{item.label}</span>
 
                 {item.isAlert && item.alertCount > 0 ? (
-                  <span className="h-5 min-w-[20px] px-1.5 rounded-full text-[11px] font-mono font-medium flex items-center justify-center bg-rose-50 text-rose-700 border border-rose-200 animate-pulse">
+                  <span className="h-5 min-w-[20px] px-1.5 rounded-full text-[10.5px] font-mono font-bold flex items-center justify-center bg-rose-600 text-white animate-pulse shadow-xs">
                     {item.alertCount}
                   </span>
                 ) : item.badge ? (
