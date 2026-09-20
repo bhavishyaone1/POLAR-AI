@@ -243,7 +243,8 @@ POLAR-AI is configured for zero-configuration continuous deployment on **Vercel*
 
 ---
 
-## 9. License & Attribution
+## 9. License & Intellectual Property Notice
 
-- **License**: Released under the [MIT License](LICENSE).
-- **Institution**: Developed for demonstration and architectural evaluation in alignment with the **Ministry of Earth Sciences (MoES)** and the **National Centre for Polar and Ocean Research (NCPOR)**, Government of India.
+- **License**: **Proprietary & Patented**. All Rights Strictly Reserved. Unauthorized copying, distribution, decompilation, cloning, reproduction, or commercial use is strictly prohibited. See [`LICENSE`](LICENSE) for complete legal terms.
+- **Intellectual Property**: Core algorithms, Mission Memory adaptive pattern engines, cascading dependency graphs, and mission continuity heuristics are protected by copyright laws and proprietary patents.
+- **Institution**: Developed for operational mission control in alignment with the **Ministry of Earth Sciences (MoES)** and the **National Centre for Polar and Ocean Research (NCPOR)**, Government of India.

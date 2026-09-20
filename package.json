@@ -4,6 +4,7 @@
   "version": "2.0.0",
   "type": "module",
   "description": "POLAR COMMAND CENTER — Integrated Polar Expedition Logistics & Asset Management System for the Ministry of Earth Sciences (MoES) and NCPOR",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
