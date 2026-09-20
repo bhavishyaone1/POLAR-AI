@@ -1,46 +1,40 @@
 /**
  * POLAR-AI — EXPEDITION MISSION COMMAND LOGIN
  * ===========================================
- * Arctic White + Polar Ice High-Trust Authentication Gateway.
+ * Clean, simplified Arctic White authentication gateway.
  *
- * Fully aligned with the 5 Core Operational Pillars:
- * 1. Expedition Planning (Field traverses & research campaigns)
- * 2. Cargo Tracking (Southern Ocean & DROMLAN air bridge logistics)
- * 3. Inventory Management (Fuel runway, life support, consumable reserves)
- * 4. Personnel Movement (Station rosters, field tracking, medical readiness)
- * 5. Emergency Response (Autonomous incident triage & 406 MHz SOS beacons)
- *
- * Includes interactive Demo Operator Roster with instant 1-click login
- * across all 8 scientific and operational roles.
+ * Streamlined layout focusing on direct operator access:
+ * - Operator Sign-In form with zero-trust validation
+ * - Curated demo operator profiles with instant 1-click access
  */
 
 import React, { useState } from 'react'
 import {
   AlertTriangle,
   ArrowRight,
-  Boxes,
   CheckCircle2,
-  Compass,
   Eye,
   EyeOff,
   HelpCircle,
-  Info,
-  KeyRound,
   Lock,
   MapPin,
-  Package,
   Radio,
-  ShieldAlert,
   ShieldCheck,
-  Sparkles,
   User,
   Users as UsersIcon,
   X,
-  Zap,
 } from 'lucide-react'
 import PolarLogo from '../components/PolarLogo'
 import { useAuth } from '../store/AuthContext'
 import { validateCredentials, USERS } from '../lib/credentials'
+
+// Curated set of key demo operator profiles across core mission roles
+const DEMO_OPERATORS = [
+  USERS.find((u) => u.id === 'commander') || USERS[0],
+  USERS.find((u) => u.id === 'admin') || USERS[2],
+  USERS.find((u) => u.id === 'logistics') || USERS[4],
+  USERS.find((u) => u.id === 'scientist') || USERS[6],
+].filter(Boolean)
 
 export default function Login() {
   const { signIn, signingIn, authError, clearAuthError } = useAuth()
@@ -51,7 +45,6 @@ export default function Login() {
   const [rememberMe, setRememberMe] = useState(true)
   const [capsLockActive, setCapsLockActive] = useState(false)
   const [localError, setLocalError] = useState(null)
-  const [activeRoleTab, setActiveRoleTab] = useState('ALL')
   const [modalContent, setModalContent] = useState(null)
 
   // Detect Caps Lock state
@@ -103,23 +96,17 @@ export default function Login() {
     signIn({ userId: u.id, password: u.password })
   }
 
-  // Filter demo operators based on active tab
-  const filteredUsers =
-    activeRoleTab === 'ALL'
-      ? USERS
-      : USERS.filter((u) => u.role === activeRoleTab)
-
   return (
-    <div className="relative min-h-screen w-full select-none overflow-x-hidden bg-[#F7FBFD] font-sans text-[#12263A]">
+    <div className="relative min-h-screen w-full select-none overflow-x-hidden bg-[#F8FAFC] font-sans text-[#0C1E30] flex flex-col justify-between">
       {/* Background Subtle Polar Ice Accents */}
       <div className="pointer-events-none fixed inset-0">
-        <div className="absolute -top-40 right-0 h-96 w-96 rounded-full bg-[#1597D4]/5 blur-3xl" />
-        <div className="absolute bottom-0 -left-20 h-96 w-96 rounded-full bg-[#1597D4]/4 blur-3xl" />
+        <div className="absolute -top-40 right-0 h-96 w-96 rounded-full bg-[#0284C7]/5 blur-3xl" />
+        <div className="absolute bottom-0 -left-20 h-96 w-96 rounded-full bg-[#0284C7]/4 blur-3xl" />
         <div
           className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage:
-              'radial-gradient(#1597D4 1px, transparent 1px), radial-gradient(#12263A 1px, transparent 1px)',
+              'radial-gradient(#0284C7 1px, transparent 1px), radial-gradient(#0C1E30 1px, transparent 1px)',
             backgroundSize: '32px 32px',
             backgroundPosition: '0 0, 16px 16px',
           }}
@@ -127,10 +114,10 @@ export default function Login() {
       </div>
 
       {/* ============================================================
-          1. TOP INSTITUTIONAL HEADER BAR
+          1. CLEAN INSTITUTIONAL HEADER
           ============================================================ */}
-      <header className="relative z-20 border-b border-[#DCE8F0] bg-white/95 px-4 py-3 backdrop-blur-md sm:px-8">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
+      <header className="relative z-20 border-b border-[#DCE8F0] bg-white/90 px-4 py-3.5 backdrop-blur-md sm:px-8">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
           {/* Brand Identity */}
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E0F2FE] text-[#0284C7] shadow-xs">
@@ -138,139 +125,71 @@ export default function Login() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[15px] font-semibold tracking-tight text-[#0C1E30]">
+                <span className="text-[16px] font-semibold tracking-tight text-[#0C1E30]">
                   POLAR-AI
                 </span>
                 <span className="rounded-full bg-[#E0F2FE] px-2 py-0.5 text-[10.5px] font-mono font-medium text-[#0284C7]">
-                  v2.4 Operations Gateway
+                  v2.4
                 </span>
               </div>
-              <div className="text-[11px] text-[#42586E]">
-                National Centre for Polar and Ocean Research · Ministry of Earth Sciences
+              <div className="text-[11.5px] text-[#42586E]">
+                Expedition Operations Gateway · NCPOR &amp; MoES
               </div>
             </div>
           </div>
 
-          {/* Quick Info & Direct Navigation */}
-          <div className="flex items-center gap-2 sm:gap-4 text-xs font-medium text-[#42586E]">
-            <button
-              type="button"
-              onClick={() => setModalContent('pillars')}
-              className="flex items-center gap-1 hover:text-[#0284C7] transition"
-            >
-              <Compass size={14} className="text-[#0284C7]" />
-              <span className="hidden sm:inline">Operational Architecture</span>
-            </button>
-            <span className="text-[#DCE8F0]">|</span>
-            <button
-              type="button"
-              onClick={() => setModalContent('governance')}
-              className="hover:text-[#0284C7] transition"
-            >
-              Mission Governance
-            </button>
-            <span className="text-[#DDEAF0]">|</span>
+          {/* Security & Support Status */}
+          <div className="flex items-center gap-3 text-xs">
+            <div className="flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-mono font-medium text-emerald-800">
+              <Lock size={11} className="text-emerald-700" />
+              <span>TLS 1.3 Encrypted</span>
+            </div>
             <button
               type="button"
               onClick={() => setModalContent('support')}
-              className="hover:text-[#0284C7] transition"
+              className="text-[#42586E] hover:text-[#0284C7] transition hidden sm:inline-flex items-center gap-1 text-[11.5px] font-medium"
             >
-              Support
+              <HelpCircle size={13} />
+              <span>Support</span>
             </button>
-
-            {/* Security Pill */}
-            <div className="ml-2 hidden items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-mono font-medium text-emerald-800 md:flex">
-              <Lock size={11} className="text-emerald-700" />
-              <span>TLS 1.3 · 256-bit Encrypted</span>
-            </div>
           </div>
         </div>
       </header>
 
       {/* ============================================================
-          2. WELCOME BANNER & LIVE STATION TELEMETRY
+          2. MAIN STAGE: LOGIN CARD (LEFT) + DEMO OPERATORS (RIGHT)
           ============================================================ */}
-      <section className="relative z-10 border-b border-[#DCE8F0] bg-gradient-to-b from-white to-[#F4F8FA] px-4 py-8 sm:px-8">
-        <div className="mx-auto max-w-7xl">
-          {/* Eyebrow Pill */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#BAE6FD] bg-[#E0F2FE] px-3 py-1 text-[11.5px] font-medium text-[#0284C7] shadow-xs">
-              <Sparkles size={12} />
-              Expedition Intelligence &amp; Mission Continuity Platform
-            </span>
-            <span className="text-[11.5px] text-[#6E8294] hidden sm:inline">
-              Authoritative Operations Console for Antarctic &amp; Arctic Field Bases
-            </span>
-          </div>
-
-          <div className="mt-3 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight text-[#0C1E30] sm:text-3xl lg:text-4xl">
-                Centralized Expedition Command &amp; Logistics
-              </h1>
-              <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-[#42586E]">
-                A unified operational operating system connecting <strong>Expedition Planning</strong>,{' '}
-                <strong>Cargo Tracking</strong>, <strong>Inventory Management</strong>,{' '}
-                <strong>Personnel Movement</strong>, and <strong>Emergency Response</strong> across
-                India&apos;s polar stations.
-              </p>
-            </div>
-
-            {/* Live Station Status Pills */}
-            <div className="flex flex-wrap items-center gap-2 text-xs">
-              <div className="flex items-center gap-2 rounded-xl border border-[#DCE8F0] bg-white px-3 py-2 shadow-xs">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                <div>
-                  <div className="font-semibold text-[#0C1E30]">Maitri Station</div>
-                  <div className="text-[10.5px] text-[#42586E] font-mono">70°45′S · -18°C Nominal</div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 rounded-xl border border-[#DCE8F0] bg-white px-3 py-2 shadow-xs">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                <div>
-                  <div className="font-semibold text-[#0C1E30]">Bharati Station</div>
-                  <div className="text-[10.5px] text-[#42586E] font-mono">69°24′S · -12°C Online</div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 rounded-xl border border-[#DCE8F0] bg-white px-3 py-2 shadow-xs">
-                <span className="h-2 w-2 rounded-full bg-sky-500 animate-pulse" />
-                <div>
-                  <div className="font-semibold text-[#0C1E30]">Himadri Base</div>
-                  <div className="text-[10.5px] text-[#42586E] font-mono">78°55′N · -6°C Arctic Active</div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <main className="relative z-10 mx-auto w-full max-w-6xl px-4 py-8 sm:px-8 lg:py-12 my-auto">
+        <div className="mb-6 text-center sm:text-left">
+          <h1 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#0C1E30]">
+            Mission Command Access
+          </h1>
+          <p className="mt-1 text-sm text-[#42586E]">
+            Sign in to access real-time polar telemetry, cargo tracking, and field logistics.
+          </p>
         </div>
-      </section>
 
-      {/* ============================================================
-          3. MAIN STAGE: LOGIN FORM (LEFT) + DEMO OPERATORS ROSTER (RIGHT)
-          ============================================================ */}
-      <main className="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-8">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-start">
           {/* ================= LEFT: SECURE OPERATOR SIGN-IN ================= */}
           <div className="lg:col-span-5 flex flex-col justify-start">
-            <div className="rounded-2xl border border-[#DDEAF0] bg-white p-6 shadow-sm transition hover:shadow-md sm:p-7">
+            <div className="rounded-2xl border border-[#DCE8F0] bg-white p-6 shadow-xs sm:p-7">
               {/* Card Header */}
-              <div className="flex items-center justify-between border-b border-[#DDEAF0] pb-4">
+              <div className="flex items-center justify-between border-b border-[#DCE8F0] pb-4">
                 <div className="flex items-center gap-2.5">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#EBF5FA] text-[#1597D4]">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#E0F2FE] text-[#0284C7]">
                     <ShieldCheck size={20} strokeWidth={2.2} />
                   </div>
                   <div>
-                    <h2 className="text-[17px] font-semibold text-[#0C1E30] tracking-tight">
+                    <h2 className="text-[16px] font-semibold text-[#0C1E30] tracking-tight">
                       Operator Sign-In
                     </h2>
                     <p className="text-[11.5px] text-[#42586E]">
-                      Enter credentials or select a demo role
+                      Enter credentials or select a demo profile
                     </p>
                   </div>
                 </div>
-                <span className="rounded-md border border-[#DDEAF0] bg-[#F7FBFD] px-2 py-0.5 font-mono text-[10.5px] font-medium text-[#0284C7]">
-                  NCPOR Auth
+                <span className="rounded-md border border-[#DCE8F0] bg-[#F8FAFC] px-2 py-0.5 font-mono text-[10.5px] font-medium text-[#0284C7]">
+                  Auth Gate
                 </span>
               </div>
 
@@ -296,7 +215,7 @@ export default function Login() {
                       }}
                       placeholder="e.g. commander, admin, logistics, scientist"
                       autoComplete="username"
-                      className="w-full rounded-xl border border-[#DDEAF0] bg-[#F7FBFD] py-2.5 pl-10 pr-3.5 text-xs text-[#12263A] placeholder-[#8FA6B2] transition focus:border-[#1597D4] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1597D4]/15"
+                      className="w-full rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] py-2.5 pl-10 pr-3.5 text-xs text-[#0C1E30] placeholder-[#8FA6B2] transition focus:border-[#0284C7] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0284C7]/15 font-mono"
                     />
                   </div>
                 </div>
@@ -304,7 +223,7 @@ export default function Login() {
                 {/* Password Field */}
                 <div>
                   <div className="mb-1.5 flex items-center justify-between">
-                    <label className="text-xs font-semibold text-[#12263A]">
+                    <label className="text-xs font-medium text-[#0C1E30]">
                       Security Passcode
                     </label>
                     {capsLockActive && (
@@ -331,13 +250,13 @@ export default function Login() {
                       }}
                       placeholder="Enter password (default: polar123)"
                       autoComplete="current-password"
-                      className="w-full rounded-xl border border-[#DDEAF0] bg-[#F7FBFD] py-2.5 pl-10 pr-10 text-xs text-[#12263A] placeholder-[#8FA6B2] transition focus:border-[#1597D4] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1597D4]/15"
+                      className="w-full rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] py-2.5 pl-10 pr-10 text-xs text-[#0C1E30] placeholder-[#8FA6B2] transition focus:border-[#0284C7] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0284C7]/15 font-mono"
                     />
                     <button
                       type="button"
                       tabIndex={-1}
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8FA6B2] hover:text-[#12263A] transition"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8FA6B2] hover:text-[#0C1E30] transition"
                       aria-label={showPassword ? 'Hide password' : 'Show password'}
                     >
                       {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -346,18 +265,18 @@ export default function Login() {
                 </div>
 
                 {/* Remember Me & Universal Password Note */}
-                <div className="flex items-center justify-between text-xs text-[#4A6572]">
+                <div className="flex items-center justify-between text-xs text-[#42586E]">
                   <label className="flex cursor-pointer items-center gap-2">
                     <input
                       type="checkbox"
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
-                      className="h-4 w-4 rounded border-[#DDEAF0] text-[#1597D4] accent-[#1597D4]"
+                      className="h-4 w-4 rounded border-[#DCE8F0] text-[#0284C7] accent-[#0284C7]"
                     />
                     <span>Remember terminal</span>
                   </label>
-                  <span className="font-mono text-[10.5px] text-[#1597D4]">
-                    Master Pass: <code className="font-bold">polar123</code>
+                  <span className="font-mono text-[10.5px] text-[#0284C7]">
+                    Master Pass: <code className="font-semibold">polar123</code>
                   </span>
                 </div>
 
@@ -373,7 +292,7 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={signingIn}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1597D4] hover:bg-[#0284C7] py-3 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition active:scale-[0.99] disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] py-2.5 text-xs font-semibold text-white shadow-xs transition active:scale-[0.99] disabled:opacity-50"
                 >
                   {signingIn ? (
                     <>
@@ -390,65 +309,37 @@ export default function Login() {
               </form>
 
               {/* Zero-Trust Notice */}
-              <div className="mt-5 border-t border-[#DDEAF0] pt-4 text-[11px] text-[#8FA6B2] flex items-start gap-2">
-                <Lock size={12} className="mt-0.5 shrink-0 text-[#1597D4]" />
-                <p>
-                  Zero data leakage pre-auth. Station records, emergency distress frequencies, and
-                  cryptographic logs decrypt upon verified session establishment.
-                </p>
+              <div className="mt-4 border-t border-[#DCE8F0] pt-3.5 text-[11px] text-[#64748B] flex items-center gap-2">
+                <Lock size={12} className="shrink-0 text-[#0284C7]" />
+                <span>Authorized expedition personnel only. All access is cryptographically audited.</span>
               </div>
             </div>
           </div>
 
-          {/* ================= RIGHT: INTERACTIVE DEMO OPERATORS ROSTER ================= */}
+          {/* ================= RIGHT: CURATED DEMO OPERATORS ================= */}
           <div className="lg:col-span-7 flex flex-col justify-start">
-            <div className="rounded-2xl border border-[#DDEAF0] bg-white p-6 shadow-sm sm:p-7">
-              {/* Roster Header with Title and Tabs */}
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-[#DDEAF0] pb-4">
+            <div className="rounded-2xl border border-[#DCE8F0] bg-white p-6 shadow-xs sm:p-7">
+              {/* Roster Header */}
+              <div className="flex items-center justify-between border-b border-[#DCE8F0] pb-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <UsersIcon size={18} className="text-[#1597D4]" />
-                    <h2 className="text-base font-bold text-[#12263A]">
+                    <UsersIcon size={18} className="text-[#0284C7]" />
+                    <h2 className="text-[16px] font-semibold text-[#0C1E30]">
                       Demo Operator Profiles
                     </h2>
-                    <span className="rounded-full bg-[#EBF5FA] px-2 py-0.5 text-[10px] font-mono font-bold text-[#1597D4]">
-                      8 READY
+                    <span className="rounded-full bg-[#E0F2FE] px-2 py-0.5 text-[10.5px] font-mono font-medium text-[#0284C7]">
+                      {DEMO_OPERATORS.length} Ready
                     </span>
                   </div>
-                  <p className="mt-0.5 text-xs text-[#4A6572]">
-                    Click <strong>1-Click Login</strong> on any profile to test role permissions
-                    immediately.
+                  <p className="mt-0.5 text-xs text-[#42586E]">
+                    Click <strong>1-Click Login</strong> on any profile to test role permissions immediately.
                   </p>
-                </div>
-
-                {/* Role Tabs */}
-                <div className="flex flex-wrap items-center gap-1 rounded-xl border border-[#DDEAF0] bg-[#F7FBFD] p-1">
-                  {[
-                    { id: 'ALL', label: 'All (8)' },
-                    { id: 'COMMANDER', label: 'Command' },
-                    { id: 'LOGISTICS', label: 'Logistics' },
-                    { id: 'SCIENTIST', label: 'Science' },
-                    { id: 'ADMIN', label: 'Admin' },
-                  ].map((tab) => (
-                    <button
-                      key={tab.id}
-                      type="button"
-                      onClick={() => setActiveRoleTab(tab.id)}
-                      className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold transition ${
-                        activeRoleTab === tab.id
-                          ? 'bg-white text-[#12263A] shadow-xs'
-                          : 'text-[#4A6572] hover:text-[#12263A]'
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
                 </div>
               </div>
 
-              {/* Roster Grid */}
+              {/* Curated Profiles Grid (2x2) */}
               <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {filteredUsers.map((u) => {
+                {DEMO_OPERATORS.map((u) => {
                   const isSelected = userId.toLowerCase() === u.id.toLowerCase()
 
                   return (
@@ -456,8 +347,8 @@ export default function Login() {
                       key={u.id}
                       className={`group relative rounded-xl border p-3.5 transition-all ${
                         isSelected
-                          ? 'border-[#1597D4] bg-[#F0F8FD] shadow-xs'
-                          : 'border-[#DDEAF0] bg-white hover:border-[#1597D4]/50 hover:bg-[#FAFDFE]'
+                          ? 'border-[#0284C7] bg-[#F0F9FF] shadow-xs'
+                          : 'border-[#DCE8F0] bg-white hover:border-[#0284C7]/50 hover:bg-[#F8FAFC]'
                       }`}
                     >
                       {/* Operator Identity & Role Badge */}
@@ -477,15 +368,15 @@ export default function Login() {
                             {u.avatar}
                           </div>
                           <div>
-                            <div className="font-bold text-xs text-[#12263A] group-hover:text-[#1597D4] transition">
+                            <div className="font-medium text-xs text-[#0C1E30] group-hover:text-[#0284C7] transition">
                               {u.name}
                             </div>
-                            <div className="text-[10px] text-[#4A6572]">{u.title}</div>
+                            <div className="text-[10.5px] text-[#42586E]">{u.title}</div>
                           </div>
                         </div>
 
                         <span
-                          className={`rounded px-1.5 py-0.5 text-[9.5px] font-mono font-bold tracking-tight uppercase ${
+                          className={`rounded px-1.5 py-0.5 text-[9.5px] font-mono font-medium uppercase ${
                             u.badgeTone === 'amber'
                               ? 'bg-amber-50 text-amber-700 border border-amber-200'
                               : u.badgeTone === 'sky'
@@ -499,25 +390,19 @@ export default function Login() {
                         </span>
                       </div>
 
-                      {/* Station & Responsibility */}
-                      <div className="mt-2.5 space-y-1 text-[10.5px]">
-                        <div className="flex items-center gap-1.5 text-[#4A6572]">
-                          <MapPin size={11} className="text-[#1597D4] shrink-0" />
-                          <span className="truncate">{u.station}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 text-[#8FA6B2]">
-                          <Zap size={11} className="text-amber-500 shrink-0" />
-                          <span className="truncate">{u.accessLevel}</span>
-                        </div>
+                      {/* Station Assignment */}
+                      <div className="mt-2.5 flex items-center gap-1.5 text-[11px] text-[#42586E]">
+                        <MapPin size={11} className="text-[#0284C7] shrink-0" />
+                        <span className="truncate">{u.station}</span>
                       </div>
 
                       {/* Credentials Code Strip */}
-                      <div className="mt-2.5 flex items-center justify-between rounded-lg bg-[#F7FBFD] px-2.5 py-1 text-[10px] font-mono border border-[#DDEAF0]/80">
-                        <span className="text-[#4A6572]">
-                          ID: <strong className="text-[#12263A]">{u.id}</strong>
+                      <div className="mt-2.5 flex items-center justify-between rounded-lg bg-[#F8FAFC] px-2.5 py-1 text-[10.5px] font-mono border border-[#DCE8F0]">
+                        <span className="text-[#42586E]">
+                          ID: <strong className="text-[#0C1E30]">{u.id}</strong>
                         </span>
-                        <span className="text-[#8FA6B2]">
-                          Pass: <code className="text-[#1597D4]">{u.password}</code>
+                        <span className="text-[#64748B]">
+                          Pass: <code className="text-[#0284C7]">{u.password}</code>
                         </span>
                       </div>
 
@@ -527,7 +412,7 @@ export default function Login() {
                           type="button"
                           onClick={() => handleInstantLogin(u)}
                           disabled={signingIn}
-                          className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-[#1597D4] hover:bg-[#0284C7] py-1.5 text-[11px] font-bold text-white shadow-2xs transition active:scale-95 disabled:opacity-50"
+                          className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] py-1.5 text-[11px] font-medium text-white shadow-xs transition active:scale-95 disabled:opacity-50"
                         >
                           <CheckCircle2 size={12} />
                           <span>1-Click Login</span>
@@ -535,8 +420,8 @@ export default function Login() {
                         <button
                           type="button"
                           onClick={() => handleAutoFill(u)}
-                          className="rounded-lg border border-[#DDEAF0] bg-white hover:bg-[#F7FBFD] px-2.5 py-1.5 text-[11px] font-semibold text-[#4A6572] hover:text-[#12263A] transition"
-                          title="Pre-populate form inputs with these credentials"
+                          className="rounded-lg border border-[#DCE8F0] bg-white hover:bg-[#F8FAFC] px-2.5 py-1.5 text-[11px] font-medium text-[#42586E] hover:text-[#0C1E30] transition"
+                          title="Pre-populate form inputs"
                         >
                           Auto-Fill
                         </button>
@@ -548,173 +433,54 @@ export default function Login() {
             </div>
           </div>
         </div>
-
-        {/* ================= 4. THE 5 CORE OPERATIONAL PILLARS SHOWCASE ================= */}
-        <div className="mt-8 rounded-2xl border border-[#DDEAF0] bg-white p-6 shadow-sm">
-          <div className="flex items-center justify-between border-b border-[#DDEAF0] pb-3">
-            <div className="flex items-center gap-2">
-              <Sparkles size={16} className="text-[#1597D4]" />
-              <h3 className="text-sm font-bold text-[#12263A]">
-                The 5 Core Operational Pillars of POLAR-AI
-              </h3>
-            </div>
-            <span className="text-[11px] text-[#8FA6B2]">
-              National Polar Mission Architecture
-            </span>
-          </div>
-
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {[
-              {
-                step: '01',
-                title: 'Expedition Planning',
-                icon: Compass,
-                desc: 'Strategic route planning, field traverses, milestone logging, and multi-station campaign tracking.',
-              },
-              {
-                step: '02',
-                title: 'Cargo Tracking',
-                icon: Package,
-                desc: 'Southern Ocean maritime manifests, DROMLAN aviation air-bridge corridors, and resupply gap alerts.',
-              },
-              {
-                step: '03',
-                title: 'Inventory Reserves',
-                icon: Boxes,
-                desc: 'Real-time consumable monitoring, station diesel fuel runway, daily burn rates, and buffer alerts.',
-              },
-              {
-                step: '04',
-                title: 'Personnel Movement',
-                icon: UsersIcon,
-                desc: 'Station headcounts, field camp check-ins, medical clearances, and live satellite GPS fix telemetry.',
-              },
-              {
-                step: '05',
-                title: 'Emergency Response',
-                icon: ShieldAlert,
-                desc: '406 MHz COSPAS-SARSAT beacons, autonomous spatial triage matrix, and armed SOS incident dispatch.',
-              },
-            ].map((p) => {
-              const Icon = p.icon
-              return (
-                <div
-                  key={p.step}
-                  className="rounded-xl border border-[#DDEAF0] bg-[#F7FBFD] p-3.5 transition hover:bg-white hover:shadow-xs"
-                >
-                  <div className="flex items-center justify-between text-[#1597D4]">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white shadow-2xs">
-                      <Icon size={15} />
-                    </div>
-                    <span className="font-mono text-[10px] font-bold text-[#8FA6B2]">
-                      {p.step}
-                    </span>
-                  </div>
-                  <h4 className="mt-2 text-xs font-bold text-[#12263A]">
-                    {p.title}
-                  </h4>
-                  <p className="mt-1 text-[11px] leading-relaxed text-[#4A6572]">
-                    {p.desc}
-                  </p>
-                </div>
-              )
-            })}
-          </div>
-        </div>
       </main>
 
       {/* ============================================================
-          5. STATUS FOOTER
+          3. MINIMAL CLEAN FOOTER
           ============================================================ */}
-      <footer className="relative z-10 border-t border-[#DDEAF0] bg-white px-4 py-4 text-xs text-[#8FA6B2] sm:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 sm:flex-row">
+      <footer className="relative z-10 border-t border-[#DCE8F0] bg-white/80 px-4 py-3.5 text-xs text-[#64748B] sm:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 sm:flex-row">
           <div>
-            <strong>POLAR-AI Mission Command v2.4</strong> · Ministry of Earth Sciences (MoES) &amp;
-            NCPOR
+            <strong>POLAR-AI Mission Command</strong> · National Centre for Polar and Ocean Research (NCPOR)
           </div>
-          <div className="flex items-center gap-4 text-[11px] font-mono">
-            <span>MAITRI: 70.76°S, 11.73°E</span>
-            <span className="text-[#DDEAF0]">|</span>
-            <span>BHARATI: 69.40°S, 76.18°E</span>
-            <span className="text-[#DDEAF0]">|</span>
-            <span>HIMADRI: 78.92°N, 11.93°E</span>
+          <div className="flex items-center gap-3 text-[11px] font-mono text-[#64748B]">
+            <span>MAITRI</span>
+            <span className="text-[#DCE8F0]">·</span>
+            <span>BHARATI</span>
+            <span className="text-[#DCE8F0]">·</span>
+            <span>HIMADRI</span>
+            <span className="text-[#DCE8F0]">·</span>
+            <span className="text-emerald-700 font-medium">SESSION ACTIVE</span>
           </div>
         </div>
       </footer>
 
       {/* ============================================================
-          6. INFORMATIVE POPUP MODALS
+          4. SUPPORT POPUP MODAL
           ============================================================ */}
-      {modalContent && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#12263A]/40 backdrop-blur-xs animate-fade-in">
-          <div className="relative w-full max-w-md rounded-2xl border border-[#DDEAF0] bg-white p-6 shadow-2xl text-xs text-[#12263A]">
+      {modalContent === 'support' && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0C1E30]/40 backdrop-blur-xs animate-fade-in">
+          <div className="relative w-full max-w-md rounded-2xl border border-[#DCE8F0] bg-white p-6 shadow-2xl text-xs text-[#0C1E30]">
             <button
               type="button"
               onClick={() => setModalContent(null)}
-              className="absolute right-4 top-4 rounded-lg p-1 text-[#8FA6B2] hover:bg-[#F7FBFD] hover:text-[#12263A] transition"
+              className="absolute right-4 top-4 rounded-lg p-1 text-[#64748B] hover:bg-[#F8FAFC] hover:text-[#0C1E30] transition"
             >
               <X size={18} />
             </button>
 
-            {modalContent === 'pillars' && (
-              <div>
-                <div className="flex items-center gap-2 text-sm font-bold text-[#12263A]">
-                  <Compass size={18} className="text-[#1597D4]" />
-                  <span>The 5 Core Operational Pillars</span>
-                </div>
-                <p className="mt-2.5 leading-relaxed text-[#4A6572]">
-                  POLAR-AI directly answers the national expedition challenge:
-                </p>
-                <div className="mt-3 space-y-2 font-mono text-[11px]">
-                  <div className="p-2 rounded-lg bg-[#F7FBFD] border border-[#DDEAF0]">
-                    1. <strong>Expedition Planning</strong>: Route schedules and campaign management.
-                  </div>
-                  <div className="p-2 rounded-lg bg-[#F7FBFD] border border-[#DDEAF0]">
-                    2. <strong>Cargo Tracking</strong>: Southern Ocean supply corridors &amp; resupply ETAs.
-                  </div>
-                  <div className="p-2 rounded-lg bg-[#F7FBFD] border border-[#DDEAF0]">
-                    3. <strong>Inventory Management</strong>: Diesel runway, buffers, and consumption.
-                  </div>
-                  <div className="p-2 rounded-lg bg-[#F7FBFD] border border-[#DDEAF0]">
-                    4. <strong>Personnel Movement</strong>: Station headcounts, GPS fixes, and rosters.
-                  </div>
-                  <div className="p-2 rounded-lg bg-[#F7FBFD] border border-[#DDEAF0]">
-                    5. <strong>Emergency Response</strong>: Triage matrix &amp; armed SOS distress.
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {modalContent === 'governance' && (
-              <div>
-                <div className="flex items-center gap-2 text-sm font-bold text-[#12263A]">
-                  <ShieldCheck size={18} className="text-[#1597D4]" />
-                  <span>Mission Governance &amp; Security</span>
-                </div>
-                <p className="mt-2.5 leading-relaxed text-[#4A6572]">
-                  Authorized under the <strong>Indian Antarctic Act</strong> and the Ministry of Earth
-                  Sciences (MoES). All operational decisions and emergency broadcasts are
-                  cryptographically recorded to the immutable audit ledger.
-                </p>
-              </div>
-            )}
-
-            {modalContent === 'support' && (
-              <div>
-                <div className="flex items-center gap-2 text-sm font-bold text-[#12263A]">
-                  <HelpCircle size={18} className="text-[#1597D4]" />
-                  <span>Polar Operations Room Support</span>
-                </div>
-                <p className="mt-2.5 leading-relaxed text-[#4A6572]">
-                  24/7 communications support via Iridium satellite link and NCPOR Goa Ops Room.
-                </p>
-                <div className="mt-3 rounded-xl border border-[#DDEAF0] bg-[#F7FBFD] p-3 font-mono text-[11px] space-y-1.5">
-                  <div>HQ Relay: NCPOR Goa (+91 832 252 5600)</div>
-                  <div>HF USB Relay: 8.845 MHz USB</div>
-                  <div>Distress Frequency: 406.025 MHz COSPAS-SARSAT</div>
-                </div>
-              </div>
-            )}
+            <div className="flex items-center gap-2 text-sm font-semibold text-[#0C1E30]">
+              <HelpCircle size={18} className="text-[#0284C7]" />
+              <span>Polar Operations Room Support</span>
+            </div>
+            <p className="mt-2.5 leading-relaxed text-[#42586E]">
+              24/7 communications support via Iridium satellite link and NCPOR Goa Operations Room.
+            </p>
+            <div className="mt-3 rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-3 font-mono text-[11px] space-y-1.5">
+              <div>HQ Relay: NCPOR Goa (+91 832 252 5600)</div>
+              <div>HF USB Relay: 8.845 MHz USB</div>
+              <div>Distress Frequency: 406.025 MHz COSPAS-SARSAT</div>
+            </div>
           </div>
         </div>
       )}
