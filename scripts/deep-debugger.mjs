@@ -40,7 +40,7 @@ console.log('[TEST 1] Validating all goTo("...") view targets against App.jsx ro
 const VALID_VIEWS = new Set([
   'landing', 'dashboard', 'expeditions', 'personnel', 'assets',
   'impact', 'simulator', 'risks', 'cargo', 'inventory',
-  'map', 'weather', 'emergency', 'copilot', 'reports', 'audit', 'sources'
+  'map', 'weather', 'emergency', 'copilot', 'reports', 'audit', 'sources', 'memory'
 ]);
 
 for (const file of allSrcFiles) {
@@ -160,22 +160,28 @@ async function testUrl(pathUrl) {
   });
 }
 
+const serverLive = await testUrl('/');
 let serverTested = 0;
-for (const file of allSrcFiles) {
-  const relPath = path.relative(rootDir, file).replace(/\\/g, '/');
-  const url = `/${relPath}`;
-  const res = await testUrl(url);
-  if (res.statusCode !== 200) {
-    console.error(`[ERROR: Server Module Fail] Failed to compile ${url}: HTTP ${res.statusCode}`);
-    if (res.body && res.body.includes('error')) {
-      console.error(res.body.slice(0, 300));
+
+if (serverLive.statusCode === 0) {
+  console.log(`[TEST 3 INFO] Local dev server (http://localhost:5173) is not currently running. Skipping live HMR module ping test.\n`);
+} else {
+  for (const file of allSrcFiles) {
+    const relPath = path.relative(rootDir, file).replace(/\\/g, '/');
+    const url = `/${relPath}`;
+    const res = await testUrl(url);
+    if (res.statusCode !== 200) {
+      console.error(`[ERROR: Server Module Fail] Failed to compile ${url}: HTTP ${res.statusCode}`);
+      if (res.body && res.body.includes('error')) {
+        console.error(res.body.slice(0, 300));
+      }
+      totalErrors++;
+    } else {
+      serverTested++;
     }
-    totalErrors++;
-  } else {
-    serverTested++;
   }
+  console.log(`[TEST 3 COMPLETE] Successfully compiled and served ${serverTested}/${allSrcFiles.length} modules via Vite dev server.\n`);
 }
-console.log(`[TEST 3 COMPLETE] Successfully compiled and served ${serverTested}/${allSrcFiles.length} modules via Vite dev server.\n`);
 
 // ==========================================
 // TEST 4: Missing Asset Files Verification

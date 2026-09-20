@@ -42,7 +42,7 @@ const NODE_BUILTINS = new Set([
 ]);
 
 function resolveFile(baseDir, importPath) {
-  if (NODE_BUILTINS.has(importPath)) return true;
+  if (NODE_BUILTINS.has(importPath) || importPath.startsWith('virtual:')) return true;
 
   if (!importPath.startsWith('.') && !importPath.startsWith('/')) {
     // node_modules package - check if package.json exists in node_modules or package is in dependencies
@@ -81,11 +81,11 @@ for (const file of allSrcFiles) {
   const fileDir = path.dirname(file);
   const relFile = path.relative(rootDir, file);
 
-  // Match: import ... from '...'
-  const importRegex = /import\s+(?:(?:(?:\w+|\{[^}]*\}|\*\s+as\s+\w+)\s*,?\s*)*(?:from\s+)?['"]([^'"]+)['"])/g;
+  // Match: from '...' or import '...'
+  const importRegex = /(?:from\s+['"]([^'"]+)['"]|import\s+['"]([^'"]+)['"])/g;
   let match;
   while ((match = importRegex.exec(content)) !== null) {
-    const importPath = match[1];
+    const importPath = match[1] || match[2];
     if (!resolveFile(fileDir, importPath)) {
       console.error(`[ERROR: Broken Import] In ${relFile}: Cannot resolve "${importPath}"`);
       totalErrors++;
