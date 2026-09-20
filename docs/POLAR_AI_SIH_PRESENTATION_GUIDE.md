@@ -3,28 +3,23 @@
 **Theme:** Smart Automation (Software Edition)  
 **Nodal Authority:** Ministry of Earth Sciences (MoES) / National Centre for Polar & Ocean Research (NCPOR)  
 **Registered Team:** CompileX  
-**Deliverable Files:**
-- `POLAR_AI_SIH_2026_FINAL.pptx` (16:9 Widescreen Presentation Deck)
-- `POLAR_AI_SIH_2026_FINAL.pdf` (High-Resolution Presentation Document)
+**Official Deliverable Files:**
+- `POLAR_AI_SIH_2026_IDEA_PRESENTATION_FINAL.pptx` (16:9 Widescreen Presentation Deck)
+- `POLAR_AI_SIH_2026_IDEA_PRESENTATION_FINAL.pdf` (Official 6-Slide High-Resolution PDF)
+- `assets/presentation/final_slides/` (`slide_1.png` through `slide_6.png` 1080p slide preview images)
 
 ---
 
-## 1. Complete Presentation Structure (12 Slides)
+## 1. Official SIH 6-Slide Presentation Structure
 
-| Slide | Title & Focus | Visual & Strategic Element |
+| Slide | Official SIH Stage | Focus & Architecture |
 |---|---|---|
-| **01** | **Title & Identification**<br>`POLAR-AI: Mission Continuity Intelligence for Extreme Polar Environments` | Hero imagery of Antarctic Bharati / Maitri station, MoES / NCPOR authority metadata, CompileX identity. |
-| **02** | **The Extreme Operating Environment (The Polar Reality)**<br>`Why Conventional Logistics Fails at 78°N & 70°S` | 3 Station Profiles (Maitri 70°S, Bharati 69°S, Himadri 78°N), 8-9 month zero resupply window, -40°C thermal stress, satellite blackout reality. |
-| **03** | **Problem Breakdown: The Mission Failure Chain**<br>`From Minor Delay to Life-Support Emergency` | Conventional ERP vs Polar Logistics contrast, 4-stage failure cascade (Siloed Records $\rightarrow$ Hidden Coupling $\rightarrow$ Thermal Deficit $\rightarrow$ Zero Lead Time). |
-| **04** | **Core Innovation: Mission Continuity Intelligence (The USP)**<br>`Transforming Telemetry into Proactive Survival Synthesis` | 10-step autonomous intelligence closed loop, real live benchmark (63% Composite Health: Fuel 58%, Power 74%, Heat 68%, Science 52%), live UI capture. |
-| **05** | **The Cascading Failure Engine (Real Case Study)**<br>`5-Day Cargo Delay Failure Propagation` | 5-step horizontal cascade sequence (Cargo Delay $\rightarrow$ Day 12 Buffer Breach $\rightarrow$ Gen #2 Overload $\rightarrow$ Habitat Heat Deficit $\rightarrow$ Science Abort). |
-| **06** | **What-If Scenario Simulator**<br>`Stress-Testing Hypotheses in Real-Time` | Configurable multi-variable parameters (vessel delay, blizzard, fuel loss, generator trip), real reaction (63% $\rightarrow$ 51%, 18d $\rightarrow$ 11d), dynamic recommendations (REC-001, REC-002), embedded product screenshot. |
-| **07** | **Mission Memory Engine: Cross-Expedition Intelligence**<br>`Learning from 6 Historical Expeditions` | Encoding IND-EXP-38 through IND-EXP-43 post-mortems, deterministic incident pattern matching (fuel line freeze at -36°C, bladder puncture, cold chain), automated preventative checklists. |
-| **08** | **Human-in-the-Loop Autonomous Decision Support**<br>`AI Proposes, Commander Disposes` | 3-tier confidence hierarchy (>85% SOP, 60-85% Tradeoff, <60% Advisory), interactive tradeoff matrix (fuel conserved vs science delayed), Commander 1-click authorization, immutable cryptographic audit trail. |
-| **09** | **Field-First Offline Resilience & Deployment Architecture**<br>`Zero-Connectivity Operational Guarantee` | Service Worker cache-first proxy, Local-First storage (LocalStorage + IndexedDB), opportunistic bi-directional sync with conflict resolution, zero external API dependency for survival loop. |
-| **10** | **Technical Architecture & Verified Stack**<br>`4-Layer Resilient Polar Stack` | Layer 1 Presentation (React 18, Vite, Tailwind CSS, Lucide, Leaflet, Recharts), Layer 2 Engines (Deterministic Rule & Cascade, Simulator, Memory), Layer 3 Persistence (LocalStorage, IndexedDB, Service Worker, Supabase Gateway), Layer 4 Telemetry (LAN Bridge, CSV/JSON import/export, opportunistic sync). |
-| **11** | **Feasibility, Validation & Measurable Operational Impact**<br>`Validated Codebase & Performance Delivery` | <50ms engine computation, 100% test pass rate across 18 implemented views, 72+ hours early warning, 100% elimination of duplicate manifests, 18-24% fuel waste reduction. |
-| **12** | **Vision, Scalability & SIH 2026 Roadmap**<br>`From Station Prototype to National Polar Grid` | Phase 1 (Working Single-Station PWA), Phase 2 (Ruggedized LoRaWAN IoT sensor mesh), Phase 3 (NCPOR Central Command in Goa, federated polar fleet sync). |
+| **01** | **Team Details & Identification** | PS ID SIH26062, Team CompileX, Dual-Theatre Architecture (Maitri & Bharati in Antarctica; Himadri in Arctic), Core Mission Statement. |
+| **02** | **Problem Statement + Solution + USP** | 5 Polar Challenges (Data Silos, Resupply, Visibility, Cascading Coupling, Blackouts) $\rightarrow$ 5-Stage Continuity Solution $\rightarrow$ Core USP. |
+| **03** | **Technical Approach (Diagram-First)** | 5-Layer End-to-End Pipeline (Data $\to$ State $\to$ Continuity Engine $\to$ Decision $\to$ Audit), Offline PWA Sync, Verified Codebase Stack. |
+| **04** | **Feasibility & Viability** | 4-Quadrant Matrix: Working Codebase Features, Extreme-Environment Fit, Challenges vs Mitigations, Scalability Roadmap. |
+| **05** | **Impact & Benefits** | 4 Resilience Pillars: Operational Visibility, Early Risk Detection, Defensible Decision Support, Life/Budget Protection. |
+| **06** | **Research & References** | Academic Citations: NCPOR Mandates, Ministry of Earth Sciences, Antarctic Treaty System Madrid Protocol, COMNAP, Project Repo. |
 
 ---
 
