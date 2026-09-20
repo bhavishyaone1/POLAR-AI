@@ -28,8 +28,10 @@ import Sidebar from './components/Sidebar'
 import TopBar from './components/TopBar'
 import EmergencyModal from './components/EmergencyModal'
 import ErrorBoundary from './components/ErrorBoundary'
+import OfflineBanner from './components/OfflineBanner'
 import { findNavItem } from './lib/navigation'
 import { useAuth } from './store/AuthContext'
+import { useOffline } from './hooks/useOffline'
 import { useData } from './store/DataContext'
 import { playAcknowledgeChirp } from './services/audioAlert'
 import { saveMessage } from './services/emergencyStorage'
@@ -119,6 +121,9 @@ function getInitialView() {
 export default function App() {
   /* Who is signed in, and what they may change. */
   const { user, canManage, canRespond } = useAuth()
+
+  /* Network connectivity for field mode indicator */
+  const { isOffline } = useOffline()
 
   /* Whether the database is keeping up. `dbNotice` is null unless a database
      is configured AND something went wrong with it, so on demo data — the
@@ -337,7 +342,11 @@ export default function App() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#F4F8FA]">
+    <div className="flex flex-col min-h-screen bg-[#F4F8FA]">
+      {/* Offline / Install banner — shown above everything */}
+      <OfflineBanner isOffline={isOffline} />
+
+      <div className="flex flex-1 min-h-0">
       <Sidebar
         view={view}
         onNavigate={goTo}
@@ -487,6 +496,7 @@ export default function App() {
         onNavigate={goTo}
         onOpenMenu={() => setNavOpen(true)}
       />
+      </div>{/* end flex-1 main area */}
     </div>
   )
 }

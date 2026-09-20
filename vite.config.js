@@ -48,20 +48,25 @@ export default defineConfig(({ command }) => ({
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         skipWaiting: true,
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,jpg,woff,woff2}'],
+        // Pre-cache all app assets so the full console works without internet
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,jpg,woff,woff2,json}'],
+        // Serve the app shell from cache for all navigation requests (SPA offline)
+        navigateFallback: '/index.html',
+        // Only use cache fallback for same-origin navigation, not external URLs
+        navigateFallbackDenylist: [/^\/api\//, /^\/supabase\//],
+        // Pre-cache the offline fallback page too
+        additionalManifestEntries: [
+          { url: '/offline.html', revision: '1' },
+        ],
         runtimeCaching: [
+          // Google Fonts — cache first, 1 year
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365,
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
           {
@@ -69,13 +74,30 @@ export default defineConfig(({ command }) => ({
             handler: 'CacheFirst',
             options: {
               cacheName: 'gstatic-fonts-cache',
-              expiration: {
-                maxEntries: 15,
-                maxAgeSeconds: 60 * 60 * 24 * 365,
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
+              expiration: { maxEntries: 15, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          // Supabase API — network first with 5s timeout, fallback to cache
+          // Allows the app to read last-known data when offline
+          {
+            urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'supabase-api-cache',
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 7 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          // Tile maps (OpenStreetMap) — stale while revalidate, cached for 30d
+          {
+            urlPattern: /^https:\/\/tile\.openstreetmap\.org\/.*/i,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'map-tiles-cache',
+              expiration: { maxEntries: 500, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
         ],

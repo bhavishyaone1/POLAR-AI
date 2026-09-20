@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POLAR-AI — Field Mode</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        background: #F4F8FA;
+        color: #0C1E30;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 2rem;
+        text-align: center;
+      }
+      .card {
+        background: white;
+        border: 1px solid #DCE8F0;
+        border-radius: 20px;
+        padding: 2.5rem 2rem;
+        max-width: 480px;
+        width: 100%;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      }
+      .icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .badge {
+        display: inline-block;
+        background: #E0F2FE;
+        border: 1px solid #BAE6FD;
+        color: #0284C7;
+        font-size: 11px;
+        font-weight: 700;
+        font-family: monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 4px 12px;
+        border-radius: 999px;
+        margin-bottom: 1.25rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      p {
+        font-size: 0.875rem;
+        color: #42586E;
+        line-height: 1.65;
+        margin-bottom: 1.5rem;
+      }
+      .info {
+        background: #F4F8FA;
+        border: 1px solid #DCE8F0;
+        border-radius: 12px;
+        padding: 1rem;
+        font-size: 0.75rem;
+        color: #42586E;
+        margin-bottom: 1.25rem;
+        text-align: left;
+      }
+      .info-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 4px 0;
+      }
+      .dot { color: #10B981; }
+      .btn {
+        display: inline-block;
+        background: #0284C7;
+        color: white;
+        font-weight: 700;
+        font-size: 0.8125rem;
+        padding: 10px 24px;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.15s;
+        text-decoration: none;
+      }
+      .btn:hover { background: #0369A1; }
+      .footer {
+        margin-top: 1.5rem;
+        font-size: 11px;
+        font-family: monospace;
+        color: #6E8294;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="icon">📡</div>
+      <div class="badge">POLAR-AI · Field Mode</div>
+      <h1>No Network Connection</h1>
+      <p>
+        You are operating in the field without internet access.
+        POLAR-AI is designed for this — all mission data, maps, and tools
+        are available offline from the cached installation.
+      </p>
+
+      <div class="info">
+        <div class="info-row"><span class="dot">✓</span> Mission data — fully available offline</div>
+        <div class="info-row"><span class="dot">✓</span> Maps and tactical view — cached</div>
+        <div class="info-row"><span class="dot">✓</span> Emergency protocols — accessible</div>
+        <div class="info-row"><span class="dot">✓</span> Mission Memory archive — cached</div>
+        <div class="info-row"><span class="dot">✓</span> Changes sync automatically on reconnect</div>
+      </div>
+
+      <button class="btn" onclick="window.location.reload()">
+        Retry Connection
+      </button>
+      <div class="footer">
+        NCPOR · Ministry of Earth Sciences · POLAR-AI v2.0
+      </div>
+    </div>
+  </body>
+</html>

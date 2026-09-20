@@ -86,6 +86,7 @@ import { evaluateMissionContinuity } from '../services/continuityEngine'
 import { runWhatIfSimulation } from '../services/simulationEngine'
 import { traceImpactCascade } from '../services/dependencyGraph'
 import { triageEmergencyOffline } from '../services/offlineEmergencyService'
+import { POLAR_STATIONS, getStationProfile, getStationMeta } from '../data/stationProfiles'
 
 /* The context object itself. Components never touch this directly —
    they call the useData() hook at the bottom of this file. */
@@ -190,6 +191,35 @@ export function DataProvider({ children }) {
   const [auditLogs, setAuditLogs] = useState(() =>
     loadSessionArray(SESSION_STORAGE_KEYS.AUDIT_LOGS, demoData.auditLogs || [])
   )
+
+  /* Active Polar Station Selection (synced across TopBar, Dashboard, and all components) */
+  const [activeStationId, setActiveStationId] = useState(() => {
+    try {
+      if (typeof window !== 'undefined' && window.sessionStorage) {
+        return window.sessionStorage.getItem('polar.activeStation') || 'maitri'
+      }
+      return 'maitri'
+    } catch {
+      return 'maitri'
+    }
+  })
+
+  const selectStation = useCallback((stationId) => {
+    setActiveStationId(stationId)
+    try {
+      if (typeof window !== 'undefined' && window.sessionStorage) {
+        window.sessionStorage.setItem('polar.activeStation', stationId)
+      }
+    } catch {
+      // Storage unavailable
+    }
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('polar:station-change', { detail: { stationId } }))
+    }
+  }, [])
+
+  const activeStation = useMemo(() => getStationMeta(activeStationId), [activeStationId])
+  const activeStationCockpit = useMemo(() => getStationProfile(activeStationId), [activeStationId])
 
   /* Synchronize each table to sessionStorage whenever it changes */
   useEffect(() => {
@@ -1163,6 +1193,13 @@ export function DataProvider({ children }) {
       stats,
       continuityMetrics,
 
+      /* active polar station */
+      activeStationId,
+      activeStation,
+      activeStationCockpit,
+      selectStation,
+      polarStations: POLAR_STATIONS,
+
       /* lookups */
       getExpedition,
       getLocation,
@@ -1222,6 +1259,10 @@ export function DataProvider({ children }) {
       revalidate,
       stats,
       continuityMetrics,
+      activeStationId,
+      activeStation,
+      activeStationCockpit,
+      selectStation,
       getExpedition,
       getLocation,
       getPerson,

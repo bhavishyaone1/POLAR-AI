@@ -16,7 +16,25 @@ import { ThemeProvider } from './store/ThemeContext'
 import './index.css'
 import { registerSW } from 'virtual:pwa-register'
 
-registerSW({ immediate: true })
+// Register the Service Worker for offline capability
+// onNeedRefresh: a new SW version is waiting — reload to apply it
+// onOfflineReady: all assets have been pre-cached, app works offline
+registerSW({
+  immediate: true,
+  onNeedRefresh() {
+    // New version deployed — auto-reload once to pick up fresh chunks
+    const lastPrompt = sessionStorage.getItem('polar.sw_refresh')
+    const now = Date.now()
+    if (!lastPrompt || now - parseInt(lastPrompt, 10) > 30000) {
+      sessionStorage.setItem('polar.sw_refresh', String(now))
+      window.location.reload()
+    }
+  },
+  onOfflineReady() {
+    // All assets cached — app is fully available offline
+    // (no UI notification needed; OfflineBanner handles the UX)
+  },
+})
 
 // Handle dynamic chunk import errors gracefully (e.g. after a new production deployment)
 window.addEventListener('vite:preloadError', (event) => {

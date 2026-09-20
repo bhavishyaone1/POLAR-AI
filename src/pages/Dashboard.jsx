@@ -35,9 +35,10 @@ import {
   Zap,
 } from 'lucide-react'
 import { useData } from '../store/DataContext'
+import { getStationProfile } from '../data/stationProfiles'
 
 export default function Dashboard({ goTo }) {
-  const { continuityMetrics } = useData()
+  const { continuityMetrics, activeStation, activeStationCockpit } = useData()
 
   // Active detail sheet state: null | 'fuel' | 'generator' | 'cargo' | 'changes' | 'ai' | 'health' | 'systems'
   const [activeDetail, setActiveDetail] = useState(null)
@@ -58,11 +59,10 @@ export default function Dashboard({ goTo }) {
     return () => window.removeEventListener('polar:dashboard-refresh', handleRefresh)
   }, [])
 
-  const score = continuityMetrics?.score
-    ? continuityMetrics.score === 68
-      ? 63
-      : continuityMetrics.score
-    : 63
+  // Active Station Cockpit Data (updates dynamically when user selects Himadri, Bharati, Maitri, Goa, Cape Town)
+  const cockpit = activeStationCockpit || getStationProfile(activeStation?.id || 'maitri')
+
+  const score = cockpit.score
 
   // Clean Circular Progress calculation (Scaled ~18%)
   const radius = 46
@@ -70,22 +70,11 @@ export default function Dashboard({ goTo }) {
   const circumference = 2 * Math.PI * radius
   const strokeDashoffset = circumference - (score / 100) * circumference
 
-  // 4 Core Mission Systems data
-  const systems = [
-    { name: 'Fuel', value: 68, color: '#F59E0B' },
-    { name: 'Cargo', value: 72, color: '#0284C7' },
-    { name: 'Power', value: 88, color: '#10B981' },
-    { name: 'Assets', value: 91, color: '#10B981' },
-  ]
+  // Core Mission Systems data for this station
+  const systems = cockpit.systems
 
-  // Recent Mission Trend data points
-  const trendPoints = [
-    { label: 'D-4', score: 68 },
-    { label: 'D-3', score: 66 },
-    { label: 'D-2', score: 65 },
-    { label: 'D-1', score: 64 },
-    { label: 'Now', score: 63 },
-  ]
+  // Recent Mission Trend data points for this station
+  const trendPoints = cockpit.trendPoints
 
   return (
     <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 py-5 text-[#0C1E30]">
@@ -95,21 +84,21 @@ export default function Dashboard({ goTo }) {
       <header className="mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-[#DCE8F0] pb-3">
         <div className="flex items-center gap-2.5 sm:gap-3">
           <h1 className="text-lg sm:text-xl font-semibold tracking-tight text-[#0C1E30]">
-            Maitri Station
+            {activeStation?.name || 'Maitri Station'}
           </h1>
           <span className="text-[#CBD5E1]">·</span>
           <div className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full transition-all">
             <span className={`h-1.5 w-1.5 rounded-full ${revalidating ? 'bg-[#0284C7] animate-ping' : 'bg-emerald-500 animate-pulse'}`} />
-            <span>{revalidating ? 'Revalidating Telemetry…' : 'Operational'}</span>
+            <span>{revalidating ? 'Revalidating Telemetry…' : (activeStation?.status || 'Operational')}</span>
           </div>
           <span className="text-[#CBD5E1] hidden sm:inline">·</span>
           <span className="hidden sm:inline text-xs text-[#64748B] font-medium">
-            Austral Summer Campaign ISEA-44
+            {activeStation?.campaign || activeStation?.sub || 'Austral Summer Campaign ISEA-44'}
           </span>
         </div>
 
         <div className="text-xs text-[#64748B] font-mono flex items-center gap-2">
-          <span>70°45′S, 11°44′E</span>
+          <span>{activeStation?.coords || '70°45′S, 11°44′E'}</span>
         </div>
       </header>
 
@@ -172,17 +161,23 @@ export default function Dashboard({ goTo }) {
             <div className="space-y-1.5">
               <div className="inline-flex items-center gap-1.5 rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 border border-emerald-200">
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                Stable
+                {cockpit.scoreStatus}
               </div>
               <div className="text-xs text-[#64748B] font-mono flex items-center gap-1.5 pt-0.5">
-                <TrendingDown size={13} className="text-amber-500" />
-                <span>↓ 3 pts since review</span>
+                {cockpit.scoreDiffDir === 'up' ? (
+                  <ArrowUpRight size={13} className="text-emerald-500" />
+                ) : cockpit.scoreDiffDir === 'down' ? (
+                  <TrendingDown size={13} className="text-amber-500" />
+                ) : (
+                  <Minus size={13} className="text-sky-500" />
+                )}
+                <span>{cockpit.scoreDiff}</span>
               </div>
             </div>
           </div>
 
           <div className="pt-2.5 border-t border-[#F1F5F9] text-xs text-[#64748B] truncate">
-            Primary drivers: Fuel burn ↑ · Cargo delay
+            {cockpit.drivers}
           </div>
         </div>
 
@@ -195,65 +190,33 @@ export default function Dashboard({ goTo }) {
               Needs Attention
             </h2>
             <span className="text-[11px] font-mono text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200 font-semibold">
-              3 Active
+              {cockpit.activeFlagsCount}
             </span>
           </div>
 
           <div className="space-y-2.5 my-auto">
-            {/* Item 1: Fuel */}
-            <button
-              type="button"
-              onClick={() => setActiveDetail('fuel')}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-rose-200/80 bg-rose-50/40 hover:bg-rose-50 transition text-left group"
-            >
-              <div className="flex items-center gap-2.5 min-w-0">
-                <span className="h-2.5 w-2.5 rounded-full bg-rose-600 shrink-0" />
-                <span className="text-xs sm:text-[13px] font-semibold text-[#0C1E30] truncate group-hover:text-rose-700">
-                  Fuel resupply
+            {cockpit.attentionItems.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActiveDetail(item.id === 'fuel' || item.id === 'generator' || item.id === 'cargo' ? item.id : 'ai')}
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border ${item.borderColor} ${item.bgColor} transition text-left group`}
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className={`h-2.5 w-2.5 rounded-full ${item.dotColor} shrink-0`} />
+                  <span className={`text-xs sm:text-[13px] font-semibold text-[#0C1E30] truncate group-hover:${item.textColor}`}>
+                    {item.label}
+                  </span>
+                </div>
+                <span className={`font-mono text-xs font-bold ${item.textColor} shrink-0 flex items-center gap-1`}>
+                  {item.badge} <ChevronRight size={13} />
                 </span>
-              </div>
-              <span className="font-mono text-xs font-bold text-rose-700 shrink-0 flex items-center gap-1">
-                5-day gap <ChevronRight size={13} />
-              </span>
-            </button>
-
-            {/* Item 2: Generator */}
-            <button
-              type="button"
-              onClick={() => setActiveDetail('generator')}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-amber-200/80 bg-amber-50/40 hover:bg-amber-50 transition text-left group"
-            >
-              <div className="flex items-center gap-2.5 min-w-0">
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-500 shrink-0" />
-                <span className="text-xs sm:text-[13px] font-semibold text-[#0C1E30] truncate group-hover:text-amber-700">
-                  Generator
-                </span>
-              </div>
-              <span className="font-mono text-xs font-bold text-amber-700 shrink-0 flex items-center gap-1">
-                Review (60h) <ChevronRight size={13} />
-              </span>
-            </button>
-
-            {/* Item 3: Cargo */}
-            <button
-              type="button"
-              onClick={() => setActiveDetail('cargo')}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-emerald-200/80 bg-emerald-50/40 hover:bg-emerald-50 transition text-left group"
-            >
-              <div className="flex items-center gap-2.5 min-w-0">
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 shrink-0" />
-                <span className="text-xs sm:text-[13px] font-semibold text-[#0C1E30] truncate group-hover:text-emerald-700">
-                  Cargo C-104
-                </span>
-              </div>
-              <span className="font-mono text-xs font-bold text-emerald-700 shrink-0 flex items-center gap-1">
-                Day 17 <ChevronRight size={13} />
-              </span>
-            </button>
+              </button>
+            ))}
           </div>
 
           <div className="pt-2.5 border-t border-[#F1F5F9] flex items-center justify-between text-xs text-[#64748B]">
-            <span>3 active flags</span>
+            <span>{cockpit.activeFlagsLabel}</span>
             <button
               type="button"
               onClick={() => goTo('risks')}
@@ -300,7 +263,7 @@ export default function Dashboard({ goTo }) {
           </div>
 
           <div className="pt-2.5 border-t border-[#F1F5F9] flex items-center justify-between text-xs text-[#64748B]">
-            <span>Baseline 75%</span>
+            <span>{cockpit.systemsBaseline}</span>
             <button
               type="button"
               onClick={() => goTo('inventory')}
@@ -325,31 +288,19 @@ export default function Dashboard({ goTo }) {
           </div>
 
           <div className="divide-y divide-[#F1F5F9] text-xs sm:text-[13px] my-auto">
-            <div className="py-2.5 flex items-center justify-between">
-              <span className="text-[#334155] font-medium">Fuel consumption</span>
-              <span className="font-mono font-bold text-rose-600 flex items-center gap-1">
-                <ArrowUpRight size={14} />
-                ↑ 8%
-              </span>
-            </div>
-
-            <div className="py-2.5 flex items-center justify-between">
-              <span className="text-[#334155] font-medium">Cargo ETA</span>
-              <span className="font-mono font-bold text-amber-600">
-                +3 days
-              </span>
-            </div>
-
-            <div className="py-2.5 flex items-center justify-between">
-              <span className="text-[#334155] font-medium">Generator Output</span>
-              <span className="font-mono font-semibold text-emerald-600">
-                Stable
-              </span>
-            </div>
+            {cockpit.whatChanged.map((ch, idx) => (
+              <div key={idx} className="py-2.5 flex items-center justify-between">
+                <span className="text-[#334155] font-medium">{ch.label}</span>
+                <span className={`font-mono font-bold ${ch.color} flex items-center gap-1`}>
+                  {ch.hasArrow && <ArrowUpRight size={14} />}
+                  {ch.val}
+                </span>
+              </div>
+            ))}
           </div>
 
           <div className="pt-2.5 border-t border-[#F1F5F9] flex items-center justify-between text-xs">
-            <span className="text-[#64748B]">3 events logged</span>
+            <span className="text-[#64748B]">{cockpit.eventsLogged}</span>
             <button
               type="button"
               onClick={() => setActiveDetail('changes')}
@@ -417,7 +368,7 @@ export default function Dashboard({ goTo }) {
           </div>
 
           <div className="pt-2.5 border-t border-[#F1F5F9] text-xs text-[#64748B] truncate">
-            Trajectory: 68 → 66 → 65 → 64 → 63
+            {cockpit.trendTrajectory}
           </div>
         </div>
 
@@ -431,22 +382,23 @@ export default function Dashboard({ goTo }) {
               <span>POLAR-AI Insight</span>
             </div>
             <span className="text-[11px] font-mono bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded font-semibold">
-              Actionable
+              {cockpit.insight.badge}
             </span>
           </div>
 
           <div className="my-auto space-y-1.5">
             <div className="text-sm sm:text-[15px] font-semibold text-[#0C1E30]">
-              Fuel risk increasing.
+              {cockpit.insight.title}
             </div>
             <div className="font-mono text-xs sm:text-[13px] text-[#42586E] space-y-1">
-              <div>Consumption ↑ 8%</div>
-              <div>Cargo ETA +3 days</div>
+              {cockpit.insight.points.map((pt, idx) => (
+                <div key={idx}>{pt}</div>
+              ))}
             </div>
           </div>
 
           <div className="pt-2.5 border-t border-[#F1F5F9] flex items-center justify-between">
-            <span className="text-xs text-[#64748B]">Deep reasoning ready</span>
+            <span className="text-xs text-[#64748B]">{cockpit.insight.subtext}</span>
             <button
               type="button"
               onClick={() => setActiveDetail('ai')}
@@ -478,10 +430,10 @@ export default function Dashboard({ goTo }) {
               Mission Memory · Historical Intelligence
             </div>
             <p className="text-sm font-semibold text-[#0C1E30] mt-0.5">
-              History says: Fuel at 12-day runway with a 5-day cargo delay matches conditions in 4 past expeditions — 3 of which led to a critical shortage.
+              {cockpit.historySays?.title}
             </p>
             <p className="text-xs text-[#42586E] mt-1">
-              Most similar: <strong>Maitri-8 (2022)</strong> · Continuity score hit 34%. Pattern confidence: <strong className="text-rose-600">78%</strong>
+              {cockpit.historySays?.sub}
             </p>
           </div>
         </div>
@@ -526,37 +478,37 @@ export default function Dashboard({ goTo }) {
                 <div className="mt-5 space-y-6">
                   <div>
                     <span className="text-[10.5px] font-mono font-bold uppercase text-rose-600 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
-                      High Priority Vulnerability
+                      {cockpit.detailFuel?.priority || 'High Priority Vulnerability'}
                     </span>
                     <h3 className="mt-2 text-xl font-bold text-[#0C1E30]">
-                      FUEL RESUPPLY
+                      {cockpit.detailFuel?.title || 'FUEL RESUPPLY'}
                     </h3>
                     <p className="text-sm font-semibold text-rose-600 mt-0.5 font-mono">
-                      5-day potential gap
+                      {cockpit.detailFuel?.subtitle || '5-day potential gap'}
                     </p>
                   </div>
 
                   <div className="grid grid-cols-3 gap-2.5 text-center">
                     <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-2.5">
                       <div className="text-[10px] text-[#64748B] uppercase font-mono">Current stock</div>
-                      <div className="text-sm font-bold font-mono text-[#0C1E30] mt-0.5">4.2k L</div>
+                      <div className="text-sm font-bold font-mono text-[#0C1E30] mt-0.5">{cockpit.detailFuel?.stock || '4.2k L'}</div>
                     </div>
                     <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-2.5">
                       <div className="text-[10px] text-[#64748B] uppercase font-mono">Safe runway</div>
-                      <div className="text-sm font-bold font-mono text-amber-600 mt-0.5">Day 12</div>
+                      <div className="text-sm font-bold font-mono text-amber-600 mt-0.5">{cockpit.detailFuel?.runway || 'Day 12'}</div>
                     </div>
                     <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-2.5">
                       <div className="text-[10px] text-[#64748B] uppercase font-mono">Cargo ETA</div>
-                      <div className="text-sm font-bold font-mono text-[#0284C7] mt-0.5">Day 17</div>
+                      <div className="text-sm font-bold font-mono text-[#0284C7] mt-0.5">{cockpit.detailFuel?.eta || 'Day 17'}</div>
                     </div>
                   </div>
 
                   <div>
                     <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0C1E30]">
-                      Why?
+                      Operational Context
                     </h4>
                     <p className="mt-1.5 text-xs text-[#42586E] leading-relaxed bg-[#F8FAFC] p-3 rounded-xl border border-[#DCE8F0]">
-                      Consumption is <strong>above baseline by +8%</strong> due to sub-zero blizzards (-38°C). Combined with a 3-day transit slip for vessel MV Vasiliy Golovnin, reserve depletion precedes vessel berth by 120 hours.
+                      {cockpit.detailFuel?.why}
                     </p>
                   </div>
 
@@ -571,7 +523,7 @@ export default function Dashboard({ goTo }) {
                       <span className="text-[#64748B]">→</span>
                       <span className="rounded-lg bg-sky-50 border border-sky-200 px-2.5 py-1.5 font-bold text-sky-700">Power</span>
                       <span className="text-[#64748B]">→</span>
-                      <span className="rounded-lg bg-indigo-50 border border-indigo-200 px-2.5 py-1.5 font-bold text-indigo-700">Heating</span>
+                      <span className="rounded-lg bg-indigo-50 border border-indigo-200 px-2.5 py-1.5 font-bold text-indigo-700">Operations</span>
                     </div>
                   </div>
                 </div>
@@ -582,31 +534,31 @@ export default function Dashboard({ goTo }) {
                 <div className="mt-5 space-y-6">
                   <div>
                     <span className="text-[10.5px] font-mono font-bold uppercase text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">
-                      Preventive Maintenance
+                      {cockpit.detailGenerator?.priority || 'Preventive Maintenance'}
                     </span>
                     <h3 className="mt-2 text-xl font-bold text-[#0C1E30]">
-                      GENERATOR G-021
+                      {cockpit.detailGenerator?.title || 'GENERATOR STATUS'}
                     </h3>
                     <p className="text-sm font-semibold text-amber-700 mt-0.5 font-mono">
-                      60-hour scheduled service window
+                      {cockpit.detailGenerator?.subtitle || 'Scheduled maintenance'}
                     </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2.5 text-center">
                     <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-3">
-                      <div className="text-[10px] text-[#64748B] uppercase font-mono">Operating Hours</div>
-                      <div className="text-sm font-bold font-mono text-[#0C1E30] mt-0.5">4,940 / 5,000h</div>
+                      <div className="text-[10px] text-[#64748B] uppercase font-mono">Operating Status</div>
+                      <div className="text-sm font-bold font-mono text-[#0C1E30] mt-0.5">{cockpit.detailGenerator?.hours}</div>
                     </div>
                     <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-3">
-                      <div className="text-[10px] text-[#64748B] uppercase font-mono">Time Remaining</div>
-                      <div className="text-sm font-bold font-mono text-amber-600 mt-0.5">60 hours</div>
+                      <div className="text-[10px] text-[#64748B] uppercase font-mono">Redundancy</div>
+                      <div className="text-sm font-bold font-mono text-amber-600 mt-0.5">{cockpit.detailGenerator?.redundancy}</div>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0C1E30]">Why?</h4>
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0C1E30]">Operational Context</h4>
                     <p className="mt-1.5 text-xs text-[#42586E] leading-relaxed bg-[#F8FAFC] p-3 rounded-xl border border-[#DCE8F0]">
-                      Scheduled 250-hour oil and filter cycle must be completed before Day 14 to avoid auxiliary turbine trip.
+                      {cockpit.detailGenerator?.why}
                     </p>
                   </div>
                 </div>
@@ -617,31 +569,31 @@ export default function Dashboard({ goTo }) {
                 <div className="mt-5 space-y-6">
                   <div>
                     <span className="text-[10.5px] font-mono font-bold uppercase text-[#0284C7] bg-sky-50 border border-sky-200 px-2 py-0.5 rounded">
-                      Inbound Consignment
+                      {cockpit.detailCargo?.priority || 'Inbound Consignment'}
                     </span>
                     <h3 className="mt-2 text-xl font-bold text-[#0C1E30]">
-                      CARGO C-104 &amp; C-101
+                      {cockpit.detailCargo?.title || 'CARGO CONSIGNMENT'}
                     </h3>
                     <p className="text-sm font-semibold text-[#0284C7] mt-0.5 font-mono">
-                      Estimated Arrival: Day 17
+                      {cockpit.detailCargo?.subtitle || 'Inbound Tracking'}
                     </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2.5 text-center">
                     <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-3">
-                      <div className="text-[10px] text-[#64748B] uppercase font-mono">Vessel</div>
-                      <div className="text-sm font-bold text-[#0C1E30] mt-0.5">MV Vasiliy</div>
+                      <div className="text-[10px] text-[#64748B] uppercase font-mono">Vessel / Carrier</div>
+                      <div className="text-sm font-bold text-[#0C1E30] mt-0.5">{cockpit.detailCargo?.carrier}</div>
                     </div>
                     <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-3">
-                      <div className="text-[10px] text-[#64748B] uppercase font-mono">Current Corridor</div>
-                      <div className="text-sm font-bold text-[#0C1E30] mt-0.5">Prydz Bay Drift</div>
+                      <div className="text-[10px] text-[#64748B] uppercase font-mono">Berth Schedule</div>
+                      <div className="text-sm font-bold text-[#0C1E30] mt-0.5">{cockpit.detailCargo?.berth}</div>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0C1E30]">Why?</h4>
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0C1E30]">Operational Context</h4>
                     <p className="mt-1.5 text-xs text-[#42586E] leading-relaxed bg-[#F8FAFC] p-3 rounded-xl border border-[#DCE8F0]">
-                      Fast sea-ice pack holds in the Southern Ocean delayed departure from Cape Town by 3 days. Vessel currently en-route under nominal icebreaker escort.
+                      {cockpit.detailCargo?.why}
                     </p>
                   </div>
                 </div>

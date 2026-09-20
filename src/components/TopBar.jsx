@@ -36,85 +36,16 @@ import {
   Sparkles,
   User,
   Users,
+  WifiOff,
   X,
 } from 'lucide-react'
 import { useAuth } from '../store/AuthContext'
 import { useData } from '../store/DataContext'
 import { USERS } from '../lib/credentials'
+import { useOffline } from '../hooks/useOffline'
 
-/* Polar Stations & Operational Bases Directory */
-export const POLAR_STATIONS = [
-  {
-    id: 'maitri',
-    name: 'Maitri Station',
-    sub: 'Antarctic Research Expedition 2027',
-    region: 'Queen Maud Land · Antarctica',
-    coords: '70°45′58″ S, 11°44′09″ E',
-    lat: -70.7667,
-    lng: 11.7333,
-    temp: '-18°C',
-    weatherCondition: 'Blizzard Alert (32 kts)',
-    crew: 25,
-    status: 'Nominal Operations',
-    tag: 'Year-Round Base',
-  },
-  {
-    id: 'bharati',
-    name: 'Bharati Station',
-    sub: 'Larsemann Hills Coastal Base',
-    region: 'East Antarctica',
-    coords: '69°24′28″ S, 76°11′14″ E',
-    lat: -69.4067,
-    lng: 76.1867,
-    temp: '-12°C',
-    weatherCondition: 'Partly Cloudy (14 kts)',
-    crew: 23,
-    status: 'Cargo Resupply En Route',
-    tag: 'Coastal Base',
-  },
-  {
-    id: 'himadri',
-    name: 'Himadri Station',
-    sub: 'Arctic Atmospheric Campaign',
-    region: 'Ny-Ålesund, Svalbard · Arctic',
-    coords: '78°55′00″ N, 11°56′00″ E',
-    lat: 78.92,
-    lng: 11.93,
-    temp: '-6°C',
-    weatherCondition: 'Overcast (8 kts)',
-    crew: 2,
-    status: 'Active Field Campaign',
-    tag: 'Arctic Observatory',
-  },
-  {
-    id: 'goa',
-    name: 'NCPOR Goa Operations Room',
-    sub: 'Strategic Mission Headquarters',
-    region: 'Headland Sada, Vasco da Gama, India',
-    coords: '15°24′32″ N, 73°48′18″ E',
-    lat: 15.3833,
-    lng: 73.8167,
-    temp: '28°C',
-    weatherCondition: 'Clear (6 kts)',
-    crew: 42,
-    status: 'HQ Command & Control',
-    tag: 'Strategic HQ',
-  },
-  {
-    id: 'capetown',
-    name: 'Cape Town Staging Gateway',
-    sub: 'Southern Ocean Logistics Corridor',
-    region: 'Western Cape · South Africa',
-    coords: '33°55′29″ S, 18°25′26″ E',
-    lat: -33.9249,
-    lng: 18.4241,
-    temp: '19°C',
-    weatherCondition: 'Maritime Fair (12 kts)',
-    crew: 8,
-    status: 'Vessel Staging & DROMLAN Link',
-    tag: 'Aviation & Port',
-  },
-]
+export { POLAR_STATIONS } from '../data/stationProfiles'
+import { POLAR_STATIONS } from '../data/stationProfiles'
 
 export default function TopBar({
   onMenuClick,
@@ -124,19 +55,15 @@ export default function TopBar({
   goTo,
 }) {
   const { user, signIn, signOut, roleLabel } = useAuth()
-  const { emergencies } = useData()
+  const { emergencies, activeStationId, activeStation, selectStation } = useData()
+  const { isOffline } = useOffline()
   const hasAlert = (emergencies || []).some(
     (e) => e.status !== 'RESOLVED' && e.status !== 'Resolved'
   )
 
   // Location Dropdown State
-  const [selectedStationId, setSelectedStationId] = useState(() => {
-    try {
-      return sessionStorage.getItem('polar.activeStation') || 'maitri'
-    } catch {
-      return 'maitri'
-    }
-  })
+  const selectedStationId = activeStationId || 'maitri'
+  const selectedStation = activeStation || POLAR_STATIONS[0]
   const [locationOpen, setLocationOpen] = useState(false)
   const locationRef = useRef(null)
 
@@ -147,9 +74,6 @@ export default function TopBar({
   // AI Monitoring Center Popover State
   const [aiMonitoringOpen, setAiMonitoringOpen] = useState(false)
   const aiMonitoringRef = useRef(null)
-
-  const selectedStation =
-    POLAR_STATIONS.find((s) => s.id === selectedStationId) || POLAR_STATIONS[0]
 
   // Compute initials from user name
   const initials = user?.name
@@ -170,11 +94,8 @@ export default function TopBar({
 
   // Persist selected station
   const handleSelectStation = (stationId) => {
-    setSelectedStationId(stationId)
-    try {
-      sessionStorage.setItem('polar.activeStation', stationId)
-    } catch {
-      // Storage unavailable
+    if (selectStation) {
+      selectStation(stationId)
     }
     setLocationOpen(false)
     setMobileStationOpen(false)
@@ -308,8 +229,15 @@ export default function TopBar({
                   }`}
                 />
               </div>
-              <div className="text-[11px] text-slate-500 truncate hidden xs:block">
-                {selectedStation.sub}
+              <div className="text-[11px] text-slate-500 truncate hidden xs:block flex items-center gap-1.5">
+                {isOffline ? (
+                  <span className="inline-flex items-center gap-1 text-amber-600 font-semibold">
+                    <WifiOff size={10} />
+                    Field Mode · Offline
+                  </span>
+                ) : (
+                  selectedStation.sub
+                )}
               </div>
             </div>
           </button>
