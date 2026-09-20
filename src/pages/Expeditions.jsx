@@ -38,6 +38,7 @@ import Badge from '../components/Badge'
 import DataTable from '../components/DataTable'
 import Panel from '../components/Panel'
 import StateBlock from '../components/StateBlock'
+import NaturalExpeditionPlanner from '../components/NaturalExpeditionPlanner'
 import { useData } from '../store/DataContext'
 import { useAuth } from '../store/AuthContext'
 import { clampPercent, formatDate, formatNumber } from '../lib/format'
@@ -52,16 +53,7 @@ import {
   statusLabel,
 } from '../lib/statuses'
 
-/* The blank form, kept here so "reset the form" is one line. */
-const EMPTY_FORM = {
-  name: '',
-  destination: '',
-  leader: '',
-  start_date: '',
-  end_date: '',
-  team_size: '',
-  objective: '',
-}
+
 
 export default function Expeditions({ goTo }) {
   const {
@@ -89,61 +81,12 @@ export default function Expeditions({ goTo }) {
 
   /* Form state for adding a new expedition. */
   const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState(EMPTY_FORM)
   const [formError, setFormError] = useState(null)
   const [formSuccess, setFormSuccess] = useState(null)
 
   const selected = expeditions.find((e) => e.id === selectedId) || null
   const team = selected ? personnelForExpedition(selected.id) : []
   const consignments = selected ? cargoForExpedition(selected.id) : []
-
-  /* One handler for every text field, using the input's own name. */
-  const setField = (event) => {
-    setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }))
-    setFormError(null)
-  }
-
-  /**
-   * VALIDATION (master prompt section 21 — validate user input).
-   * We check before saving, and we say exactly what is wrong.
-   */
-  function handleSubmit(event) {
-    event.preventDefault()
-    setFormSuccess(null)
-
-    if (!form.name.trim()) return setFormError('Expedition name is required.')
-    if (!form.destination.trim()) return setFormError('Destination is required.')
-    if (!form.start_date) return setFormError('Start date is required.')
-    if (!form.end_date) return setFormError('End date is required.')
-    if (new Date(form.end_date) < new Date(form.start_date))
-      return setFormError('End date cannot be before the start date.')
-
-    const size = Number(form.team_size)
-    if (form.team_size && (!Number.isInteger(size) || size < 0))
-      return setFormError('Team size must be a whole number.')
-
-    try {
-      const created = addExpedition({
-        name: form.name.trim(),
-        destination: form.destination.trim(),
-        leader: form.leader.trim() || 'To be assigned',
-        start_date: form.start_date,
-        end_date: form.end_date,
-        team_size: size || 0,
-        objective: form.objective.trim() || 'Objective to be confirmed.',
-        location_id: null,
-      })
-
-      setForm(EMPTY_FORM)
-      setFormError(null)
-      setFormSuccess(`${created.id} created and added to the register.`)
-      setSelectedId(created.id)
-      setShowForm(false)
-    } catch (err) {
-      /* If saving ever fails, say so instead of silently doing nothing. */
-      setFormError(`Could not save: ${err.message}`)
-    }
-  }
 
   return (
     <div className="space-y-7">
@@ -238,139 +181,23 @@ export default function Expeditions({ goTo }) {
       )}
 
       {showForm && (
-        <Panel
-          eyebrow="New record"
-          title="Register Expedition"
-          subtitle="It will be created with PLANNING status and 0% progress."
-          action={
-            <button
-              type="button"
-              className="btn btn--ghost btn--sm"
-              onClick={() => {
-                setShowForm(false)
-                setFormError(null)
-              }}
-            >
-              <X size={13} /> Cancel
-            </button>
-          }
-        >
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <div>
-                <label className="field-label" htmlFor="exp-name">
-                  Expedition name *
-                </label>
-                <input
-                  id="exp-name"
-                  name="name"
-                  className="input"
-                  value={form.name}
-                  onChange={setField}
-                  placeholder="e.g. Bharati Ice Core Survey"
-                />
-              </div>
-              <div>
-                <label className="field-label" htmlFor="exp-dest">
-                  Destination *
-                </label>
-                <input
-                  id="exp-dest"
-                  name="destination"
-                  className="input"
-                  value={form.destination}
-                  onChange={setField}
-                  placeholder="e.g. Bharati Station, Larsemann Hills"
-                  list="known-locations"
-                />
-                {/* A datalist gives suggestions without forcing a choice. */}
-                <datalist id="known-locations">
-                  {locations.map((loc) => (
-                    <option key={loc.id} value={loc.name} />
-                  ))}
-                </datalist>
-              </div>
-              <div>
-                <label className="field-label" htmlFor="exp-leader">
-                  Expedition leader
-                </label>
-                <input
-                  id="exp-leader"
-                  name="leader"
-                  className="input"
-                  value={form.leader}
-                  onChange={setField}
-                  placeholder="e.g. Dr. Arjun Sharma"
-                />
-              </div>
-              <div>
-                <label className="field-label" htmlFor="exp-start">
-                  Start date *
-                </label>
-                <input
-                  id="exp-start"
-                  name="start_date"
-                  type="date"
-                  className="input"
-                  value={form.start_date}
-                  onChange={setField}
-                />
-              </div>
-              <div>
-                <label className="field-label" htmlFor="exp-end">
-                  End date *
-                </label>
-                <input
-                  id="exp-end"
-                  name="end_date"
-                  type="date"
-                  className="input"
-                  value={form.end_date}
-                  onChange={setField}
-                />
-              </div>
-              <div>
-                <label className="field-label" htmlFor="exp-team">
-                  Team size
-                </label>
-                <input
-                  id="exp-team"
-                  name="team_size"
-                  type="number"
-                  min="0"
-                  className="input"
-                  value={form.team_size}
-                  onChange={setField}
-                  placeholder="e.g. 18"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="field-label" htmlFor="exp-obj">
-                Objective
-              </label>
-              <input
-                id="exp-obj"
-                name="objective"
-                className="input"
-                value={form.objective}
-                onChange={setField}
-                placeholder="What is this expedition for?"
-              />
-            </div>
-
-            {formError && (
-              <div className="alert-strip">
-                <div className="text-[12.5px] text-hi">{formError}</div>
-              </div>
-            )}
-
-            <button type="submit" className="btn">
-              <Plus size={14} /> Create expedition
-            </button>
-          </form>
-        </Panel>
+        <NaturalExpeditionPlanner
+          onExpeditionCreated={(expData) => {
+            try {
+              const created = addExpedition(expData)
+              setFormSuccess(`${created.id} (${created.name}) created and registered into mission active tracking.`)
+              setSelectedId(created.id)
+              setShowForm(false)
+              setFormError(null)
+            } catch (err) {
+              setFormError(`Could not save expedition: ${err.message}`)
+            }
+          }}
+          onCancel={() => {
+            setShowForm(false)
+            setFormError(null)
+          }}
+        />
       )}
 
       {/* ---------- EXPEDITION SELECTION TABS & VIEW SWITCHER ---------- */}
