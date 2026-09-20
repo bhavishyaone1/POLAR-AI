@@ -175,8 +175,9 @@ export default function Expeditions({ goTo }) {
 
       {/* ---------- Add form (hidden until asked for) ---------- */}
       {formSuccess && (
-        <div className="alert-strip" style={{ borderLeftColor: 'var(--green)', borderColor: 'rgba(79,201,138,0.4)', background: 'rgba(79,201,138,0.07)' }}>
-          <div className="text-[12.5px] text-mid">{formSuccess}</div>
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 text-emerald-900 text-xs flex items-center gap-2">
+          <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+          <div>{formSuccess}</div>
         </div>
       )}
 
@@ -201,19 +202,19 @@ export default function Expeditions({ goTo }) {
       )}
 
       {/* ---------- EXPEDITION SELECTION TABS & VIEW SWITCHER ---------- */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[var(--line)] bg-[var(--surface-card)] p-3 shadow-sm">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#DDEAF0] bg-white p-3 shadow-xs">
         <div className="flex flex-wrap items-center gap-1.5">
-          <div className="mr-1 flex items-center gap-1 text-[11px] font-mono font-bold uppercase tracking-wider text-mid">
-            <Compass size={13} className="text-[var(--ice)]" />
+          <div className="mr-1 flex items-center gap-1 text-[11px] font-mono font-bold uppercase tracking-wider text-[#64748B]">
+            <Compass size={13} className="text-[#0284C7]" />
             <span>Expedition:</span>
           </div>
           <button
             type="button"
             onClick={() => setFilterExpedition('ALL')}
-            className={`rounded px-2.5 py-1 text-xs font-mono transition-all ${
+            className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-all ${
               filterExpedition === 'ALL'
-                ? 'bg-[var(--ice)] font-semibold text-white shadow-sm'
-                : 'bg-[var(--surface-sunken)] text-mid hover:bg-[var(--surface-hover)] hover:text-hi'
+                ? 'bg-[#0284C7] font-semibold text-white shadow-2xs'
+                : 'bg-[#F1F5F9] text-[#475569] hover:bg-[#E2E8F0] hover:text-[#0F172A]'
             }`}
           >
             All Expeditions ({expeditions.length})
@@ -232,14 +233,14 @@ export default function Expeditions({ goTo }) {
                   setFilterExpedition(isSelected ? 'ALL' : exp.id)
                   setSelectedId(exp.id)
                 }}
-                className={`flex items-center gap-1.5 rounded px-2.5 py-1 text-xs font-mono transition-all ${
+                className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-mono transition-all ${
                   isSelected
-                    ? 'bg-[var(--ice)] font-semibold text-white shadow-sm'
-                    : 'bg-[var(--surface-sunken)] text-mid hover:bg-[var(--surface-hover)] hover:text-hi'
+                    ? 'bg-[#0284C7] font-semibold text-white shadow-2xs'
+                    : 'bg-[#F1F5F9] text-[#475569] hover:bg-[#E2E8F0] hover:text-[#0F172A]'
                 }`}
               >
                 {hasEmergency && (
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--red)]" />
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-rose-500" />
                 )}
                 <span>{exp.id}</span>
                 <span className="text-[10px] opacity-70">({expTeam.length})</span>
@@ -250,18 +251,22 @@ export default function Expeditions({ goTo }) {
 
         <div className="flex items-center gap-2">
           {canManage && !showForm && (
-            <button type="button" className="btn btn--sm" onClick={() => setShowForm(true)}>
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 rounded-lg bg-[#0284C7] text-white px-2.5 py-1 text-xs font-semibold hover:bg-[#0369a1] transition shadow-2xs"
+              onClick={() => setShowForm(true)}
+            >
               <Plus size={13} /> New Expedition
             </button>
           )}
-          <div className="flex items-center rounded border border-[var(--line)] bg-[var(--surface-sunken)] p-0.5 text-xs">
+          <div className="flex items-center rounded-lg border border-[#DDEAF0] bg-[#F8FAFC] p-0.5 text-xs">
             <button
               type="button"
               onClick={() => setViewMode('sections')}
-              className={`flex items-center gap-1 rounded px-2 py-0.5 font-mono text-[11px] transition ${
+              className={`flex items-center gap-1 rounded-md px-2 py-0.5 font-mono text-[11px] transition ${
                 viewMode === 'sections'
-                  ? 'bg-[var(--surface-card)] font-semibold text-hi shadow-sm'
-                  : 'text-mid hover:text-hi'
+                  ? 'bg-white font-semibold text-[#0F172A] shadow-2xs'
+                  : 'text-[#64748B] hover:text-[#0F172A]'
               }`}
               title="View separate sections for each expedition"
             >
@@ -271,10 +276,10 @@ export default function Expeditions({ goTo }) {
             <button
               type="button"
               onClick={() => setViewMode('detail')}
-              className={`flex items-center gap-1 rounded px-2 py-0.5 font-mono text-[11px] transition ${
+              className={`flex items-center gap-1 rounded-md px-2 py-0.5 font-mono text-[11px] transition ${
                 viewMode === 'detail'
-                  ? 'bg-[var(--surface-card)] font-semibold text-hi shadow-sm'
-                  : 'text-mid hover:text-hi'
+                  ? 'bg-white font-semibold text-[#0F172A] shadow-2xs'
+                  : 'text-[#64748B] hover:text-[#0F172A]'
               }`}
               title="View register and detail inspection panel"
             >
@@ -305,24 +310,24 @@ export default function Expeditions({ goTo }) {
             return (
               <div
                 key={exp.id}
-                className="overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface-card)] shadow-md"
+                className="overflow-hidden rounded-2xl border border-[#DDEAF0] bg-white shadow-xs"
               >
                 {/* Expedition Section Header */}
-                <div className="border-b border-[var(--line)] bg-[var(--surface-raised)] p-5">
+                <div className="border-b border-[#E2E8F0] bg-[#F8FAFC] p-5">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="flex items-start gap-3.5">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[var(--surface-card)] border border-[var(--line)] text-[var(--ice)] shadow-sm">
-                        <Compass size={24} />
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white border border-[#DDEAF0] text-[#0284C7] shadow-2xs">
+                        <Compass size={22} />
                       </div>
                       <div>
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="mono text-xs font-bold text-[var(--ice)]">{exp.id}</span>
-                          <span className="text-low">·</span>
+                          <span className="mono text-xs font-bold text-[#0284C7]">{exp.id}</span>
+                          <span className="text-[#94A3B8]">·</span>
                           <Badge map={EXPEDITION_STATUS} value={exp.status} dot />
-                          <span className="text-xs text-low">· {exp.destination}</span>
+                          <span className="text-xs text-[#64748B]">· {exp.destination}</span>
                         </div>
-                        <h3 className="mt-0.5 font-display text-xl font-bold text-hi">{exp.name}</h3>
-                        <p className="mt-1 text-xs text-mid max-w-3xl leading-relaxed">
+                        <h3 className="mt-0.5 text-lg font-bold text-[#0F172A]">{exp.name}</h3>
+                        <p className="mt-1 text-xs text-[#475569] max-w-3xl leading-relaxed">
                           {exp.objective}
                         </p>
                       </div>
@@ -343,65 +348,65 @@ export default function Expeditions({ goTo }) {
                           ))}
                         </select>
                       ) : (
-                        <span className="text-xs text-mid font-mono">Leader: {exp.leader}</span>
+                        <span className="text-xs text-[#475569] font-mono">Leader: {exp.leader}</span>
                       )}
-                      <div className="text-[11.5px] font-mono text-low">
+                      <div className="text-[11.5px] font-mono text-[#64748B]">
                         {formatDate(exp.start_date)} → {formatDate(exp.end_date)}
                       </div>
                     </div>
                   </div>
 
                   {/* Progress & Quick Stats Bar */}
-                  <div className="mt-4 grid grid-cols-2 gap-3 border-t border-[var(--line-soft)] pt-3.5 sm:grid-cols-4">
+                  <div className="mt-4 grid grid-cols-2 gap-3 border-t border-[#E2E8F0] pt-3.5 sm:grid-cols-4">
                     <div>
-                      <div className="text-[10.5px] font-mono uppercase tracking-wider text-low">
+                      <div className="text-[10.5px] font-mono uppercase tracking-wider text-[#64748B]">
                         Mission Progress
                       </div>
                       <div className="mt-1 flex items-center gap-2">
-                        <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--surface-sunken)]">
+                        <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#E2E8F0]">
                           <div
-                            className="h-full bg-[var(--ice)] transition-all"
+                            className="h-full bg-[#0284C7] transition-all"
                             style={{ width: `${clampPercent(exp.progress)}%` }}
                           />
                         </div>
-                        <span className="font-mono text-xs font-bold text-hi">
+                        <span className="font-mono text-xs font-bold text-[#0F172A]">
                           {clampPercent(exp.progress)}%
                         </span>
                       </div>
                     </div>
 
                     <div>
-                      <div className="text-[10.5px] font-mono uppercase tracking-wider text-low">
+                      <div className="text-[10.5px] font-mono uppercase tracking-wider text-[#64748B]">
                         Personnel Assigned
                       </div>
-                      <div className="mt-0.5 font-mono text-sm font-bold text-hi">
-                        {expTeam.length} <span className="text-xs font-normal text-low">/ {exp.team_size} planned</span>
+                      <div className="mt-0.5 font-mono text-sm font-bold text-[#0F172A]">
+                        {expTeam.length} <span className="text-xs font-normal text-[#64748B]">/ {exp.team_size} planned</span>
                       </div>
                     </div>
 
                     <div>
-                      <div className="text-[10.5px] font-mono uppercase tracking-wider text-low">
+                      <div className="text-[10.5px] font-mono uppercase tracking-wider text-[#64748B]">
                         Cargo Consignments
                       </div>
-                      <div className="mt-0.5 font-mono text-sm font-bold text-hi">
+                      <div className="mt-0.5 font-mono text-sm font-bold text-[#0F172A]">
                         {expCargo.length} items{' '}
-                        <span className="text-xs font-normal text-low">
+                        <span className="text-xs font-normal text-[#64748B]">
                           ({formatNumber(totalCargoWeight)} kg)
                         </span>
                       </div>
                     </div>
 
                     <div>
-                      <div className="text-[10.5px] font-mono uppercase tracking-wider text-low">
+                      <div className="text-[10.5px] font-mono uppercase tracking-wider text-[#64748B]">
                         Incident Status
                       </div>
                       <div className="mt-0.5">
                         {expEmergencies.length > 0 ? (
-                          <span className="inline-flex items-center gap-1 rounded bg-[rgba(239,68,68,0.15)] px-2 py-0.5 font-mono text-xs font-bold text-[var(--red)] animate-pulse">
+                          <span className="inline-flex items-center gap-1 rounded bg-rose-50 border border-rose-200 px-2 py-0.5 font-mono text-xs font-bold text-rose-700 animate-pulse">
                             <Siren size={11} /> {expEmergencies.length} Open Alert
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 rounded bg-[rgba(34,197,94,0.12)] px-2 py-0.5 font-mono text-xs font-bold text-[var(--green)]">
+                          <span className="inline-flex items-center gap-1 rounded bg-emerald-50 border border-emerald-200 px-2 py-0.5 font-mono text-xs font-bold text-emerald-700">
                             <CheckCircle2 size={11} /> All Clear
                           </span>
                         )}
@@ -412,17 +417,19 @@ export default function Expeditions({ goTo }) {
 
                 {/* Emergency Notice if open incident */}
                 {expEmergencies.length > 0 && (
-                  <div className="alert-strip m-4">
-                    <Siren size={16} className="animate-pulse text-[var(--red)] shrink-0" />
-                    <div className="flex-1 text-xs text-mid">
-                      <strong className="text-[var(--red)] font-semibold">
-                        Emergency in {exp.name}:
-                      </strong>{' '}
-                      {expEmergencies.map((em) => `${em.id} (${statusLabel(EMERGENCY_TYPE, em.type)}) - ${em.description}`).join('; ')}
+                  <div className="m-4 flex items-center justify-between gap-3 rounded-xl border border-rose-200 bg-rose-50/80 p-3.5 text-xs text-rose-900">
+                    <div className="flex items-center gap-2">
+                      <Siren size={16} className="animate-pulse text-rose-600 shrink-0" />
+                      <div>
+                        <strong className="text-rose-700 font-semibold">
+                          Emergency in {exp.name}:
+                        </strong>{' '}
+                        {expEmergencies.map((em) => `${em.id} (${statusLabel(EMERGENCY_TYPE, em.type)}) - ${em.description}`).join('; ')}
+                      </div>
                     </div>
                     <button
                       type="button"
-                      className="btn btn--alert btn--sm"
+                      className="inline-flex items-center gap-1 rounded-lg bg-rose-600 text-white px-3 py-1.5 font-semibold hover:bg-rose-700 transition shrink-0"
                       onClick={() => goTo('emergency')}
                     >
                       Respond
@@ -433,17 +440,17 @@ export default function Expeditions({ goTo }) {
                 {/* Sub-sections: Assigned Team & Assigned Cargo */}
                 <div className="grid gap-4 p-5 lg:grid-cols-2">
                   {/* Sub-section 1: Assigned Team */}
-                  <div className="rounded-lg border border-[var(--line)] bg-[var(--surface-base)] p-4">
-                    <div className="mb-3 flex items-center justify-between border-b border-[var(--line-soft)] pb-2">
+                  <div className="rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-4">
+                    <div className="mb-3 flex items-center justify-between border-b border-[#E2E8F0] pb-2">
                       <div className="flex items-center gap-2">
-                        <Users size={15} className="text-[var(--ice)]" />
-                        <span className="font-display text-sm font-bold text-hi uppercase tracking-wide">
+                        <Users size={15} className="text-[#0284C7]" />
+                        <span className="text-xs font-bold text-[#0F172A] uppercase tracking-wide">
                           Assigned Team ({expTeam.length})
                         </span>
                       </div>
                       <button
                         type="button"
-                        className="btn btn--ghost btn--sm text-[11px]"
+                        className="text-xs font-semibold text-[#0284C7] hover:underline"
                         onClick={() => goTo('personnel')}
                       >
                         Open Roster
@@ -451,7 +458,7 @@ export default function Expeditions({ goTo }) {
                     </div>
 
                     {expTeam.length === 0 ? (
-                      <div className="py-4 text-center text-xs text-low">
+                      <div className="py-4 text-center text-xs text-[#64748B]">
                         No team members currently assigned to {exp.id}.
                       </div>
                     ) : (
@@ -459,11 +466,11 @@ export default function Expeditions({ goTo }) {
                         {expTeam.map((member) => (
                           <div
                             key={member.id}
-                            className="flex items-center justify-between rounded border border-[var(--line-soft)] bg-[var(--surface-card)] px-3 py-2 text-xs"
+                            className="flex items-center justify-between rounded-lg border border-[#E2E8F0] bg-white px-3 py-2 text-xs shadow-2xs"
                           >
                             <div>
-                              <div className="font-medium text-hi">{member.name}</div>
-                              <div className="text-[11px] text-low">
+                              <div className="font-semibold text-[#0F172A]">{member.name}</div>
+                              <div className="text-[11px] text-[#64748B]">
                                 <span className="mono">{member.id}</span> · {member.role}
                               </div>
                             </div>
@@ -475,17 +482,17 @@ export default function Expeditions({ goTo }) {
                   </div>
 
                   {/* Sub-section 2: Assigned Cargo */}
-                  <div className="rounded-lg border border-[var(--line)] bg-[var(--surface-base)] p-4">
-                    <div className="mb-3 flex items-center justify-between border-b border-[var(--line-soft)] pb-2">
+                  <div className="rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-4">
+                    <div className="mb-3 flex items-center justify-between border-b border-[#E2E8F0] pb-2">
                       <div className="flex items-center gap-2">
-                        <Package size={15} className="text-[var(--ice)]" />
-                        <span className="font-display text-sm font-bold text-hi uppercase tracking-wide">
+                        <Package size={15} className="text-[#0284C7]" />
+                        <span className="text-xs font-bold text-[#0F172A] uppercase tracking-wide">
                           Assigned Cargo ({expCargo.length})
                         </span>
                       </div>
                       <button
                         type="button"
-                        className="btn btn--ghost btn--sm text-[11px]"
+                        className="text-xs font-semibold text-[#0284C7] hover:underline"
                         onClick={() => goTo('cargo')}
                       >
                         Open Cargo
@@ -493,7 +500,7 @@ export default function Expeditions({ goTo }) {
                     </div>
 
                     {expCargo.length === 0 ? (
-                      <div className="py-4 text-center text-xs text-low">
+                      <div className="py-4 text-center text-xs text-[#64748B]">
                         No consignments assigned to {exp.id}.
                       </div>
                     ) : (
@@ -501,11 +508,11 @@ export default function Expeditions({ goTo }) {
                         {expCargo.map((item) => (
                           <div
                             key={item.id}
-                            className="flex items-center justify-between rounded border border-[var(--line-soft)] bg-[var(--surface-card)] px-3 py-2 text-xs"
+                            className="flex items-center justify-between rounded-lg border border-[#E2E8F0] bg-white px-3 py-2 text-xs shadow-2xs"
                           >
                             <div className="min-w-0 flex-1 pr-2">
-                              <div className="truncate font-medium text-hi">{item.item_name}</div>
-                              <div className="text-[11px] text-low">
+                              <div className="truncate font-semibold text-[#0F172A]">{item.item_name}</div>
+                              <div className="text-[11px] text-[#64748B]">
                                 <span className="mono">{item.id}</span> · {item.quantity} {item.unit} · {item.weight_kg ? `${formatNumber(item.weight_kg)} kg` : ''} · {statusLabel(CARGO_STATUS, item.status)}
                               </div>
                             </div>
@@ -554,11 +561,11 @@ export default function Expeditions({ goTo }) {
                   cell: (r) => (
                     <div className="flex items-center gap-1.5">
                       <div>
-                        <div>{r.name}</div>
-                        <div className="text-[11px] font-normal text-low">{r.destination}</div>
+                        <div className="font-semibold text-[#0F172A]">{r.name}</div>
+                        <div className="text-[11px] font-normal text-[#64748B]">{r.destination}</div>
                       </div>
                       {r.id === selectedId && (
-                        <ChevronRight size={14} className="shrink-0 text-[var(--ice)]" />
+                        <ChevronRight size={14} className="shrink-0 text-[#0284C7]" />
                       )}
                     </div>
                   ),
@@ -568,7 +575,7 @@ export default function Expeditions({ goTo }) {
                   width: '116px',
                   mono: true,
                   cell: (r) => (
-                    <span className="text-[11px] text-mid">
+                    <span className="text-[11px] text-[#475569]">
                       {formatDate(r.start_date)}
                       <br />
                       {formatDate(r.end_date)}
@@ -580,7 +587,7 @@ export default function Expeditions({ goTo }) {
                   width: '110px',
                   cell: (r) => (
                     <div>
-                      <div className="mono mb-1 text-right text-[11px] text-mid">
+                      <div className="mono mb-1 text-right text-[11px] font-semibold text-[#0F172A]">
                         {clampPercent(r.progress)}%
                       </div>
                       <div
@@ -677,10 +684,10 @@ export default function Expeditions({ goTo }) {
                   action={
                     <button
                       type="button"
-                      className="btn btn--ghost btn--sm"
+                      className="text-xs font-semibold text-[#0284C7] hover:underline"
                       onClick={() => goTo('personnel')}
                     >
-                      <Users size={13} /> Open
+                      <Users size={13} className="inline mr-1" /> Open
                     </button>
                   }
                 >
@@ -693,10 +700,10 @@ export default function Expeditions({ goTo }) {
                   ) : (
                     <ul className="space-y-2.5">
                       {team.map((person) => (
-                        <li key={person.id} className="flex items-center justify-between gap-3">
+                        <li key={person.id} className="flex items-center justify-between gap-3 rounded-lg border border-[#E2E8F0] bg-white p-2.5 shadow-2xs">
                           <div className="min-w-0">
-                            <div className="truncate text-[13px] text-hi">{person.name}</div>
-                            <div className="truncate text-[11px] text-low">
+                            <div className="truncate text-[13px] font-semibold text-[#0F172A]">{person.name}</div>
+                            <div className="truncate text-[11px] text-[#64748B]">
                               <span className="mono">{person.id}</span> · {person.role}
                             </div>
                           </div>
@@ -715,10 +722,10 @@ export default function Expeditions({ goTo }) {
                   action={
                     <button
                       type="button"
-                      className="btn btn--ghost btn--sm"
+                      className="text-xs font-semibold text-[#0284C7] hover:underline"
                       onClick={() => goTo('cargo')}
                     >
-                      <Package size={13} /> Open
+                      <Package size={13} className="inline mr-1" /> Open
                     </button>
                   }
                 >
@@ -731,10 +738,10 @@ export default function Expeditions({ goTo }) {
                   ) : (
                     <ul className="space-y-2.5">
                       {consignments.map((item) => (
-                        <li key={item.id} className="flex items-start justify-between gap-3">
+                        <li key={item.id} className="flex items-start justify-between gap-3 rounded-lg border border-[#E2E8F0] bg-white p-2.5 shadow-2xs">
                           <div className="min-w-0">
-                            <div className="truncate text-[13px] text-hi">{item.item_name}</div>
-                            <div className="truncate text-[11px] text-low">
+                            <div className="truncate text-[13px] font-semibold text-[#0F172A]">{item.item_name}</div>
+                            <div className="truncate text-[11px] text-[#64748B]">
                               <span className="mono">{item.id}</span> · {item.quantity} {item.unit} ·{' '}
                               {statusLabel(CARGO_STATUS, item.status)}
                             </div>

@@ -26,6 +26,7 @@
 
 import { useState } from 'react'
 import {
+  CheckCircle2,
   Compass,
   LayoutGrid,
   List,
@@ -88,10 +89,10 @@ const NO_FILTERS = {
  */
 function checkinClass(iso) {
   const mins = (Date.now() - new Date(iso).getTime()) / 60000
-  if (!Number.isFinite(mins)) return 'text-low'
-  if (mins > 720) return 'text-[var(--orange)]' // over 12 hours
-  if (mins > 120) return 'text-[var(--amber)]' // over 2 hours
-  return 'text-mid'
+  if (!Number.isFinite(mins)) return 'text-[#64748B]'
+  if (mins > 720) return 'text-rose-700 font-semibold' // over 12 hours
+  if (mins > 120) return 'text-amber-700 font-semibold' // over 2 hours
+  return 'text-[#475569]'
 }
 
 export default function Personnel({ goTo }) {
@@ -469,15 +470,9 @@ export default function Personnel({ goTo }) {
           3. ADD PERSON
           ============================================================ */}
       {formSuccess && (
-        <div
-          className="alert-strip"
-          style={{
-            borderLeftColor: 'var(--green)',
-            borderColor: 'rgba(79,201,138,0.4)',
-            background: 'rgba(79,201,138,0.07)',
-          }}
-        >
-          <div className="text-[12.5px] text-mid">{formSuccess}</div>
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 text-emerald-900 text-xs flex items-center gap-2">
+          <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+          <div className="text-[12.5px]">{formSuccess}</div>
         </div>
       )}
 
@@ -489,7 +484,7 @@ export default function Personnel({ goTo }) {
           action={
             <button
               type="button"
-              className="btn btn--ghost btn--sm"
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-[#0F172A] hover:bg-slate-50 transition"
               onClick={() => {
                 setShowForm(false)
                 setFormError(null)
@@ -560,16 +555,16 @@ export default function Personnel({ goTo }) {
                           location_mode: prev.location_mode === 'custom' ? 'select' : 'custom',
                         }))
                       }
-                      className="text-[var(--ice)] hover:underline font-mono"
+                      className="text-[#0284C7] hover:underline font-mono font-medium"
                     >
                       {form.location_mode === 'custom' ? '← Stations' : '+ Custom Location'}
                     </button>
-                    <span className="text-low">·</span>
+                    <span className="text-[#94A3B8]">·</span>
                     <button
                       type="button"
                       onClick={handleGetLiveGps}
                       disabled={gpsLoading}
-                      className="text-[var(--accent)] hover:underline flex items-center gap-0.5"
+                      className="text-[#0284C7] hover:underline flex items-center gap-0.5 font-medium"
                       title="Use your real device browser GPS position"
                     >
                       {gpsLoading ? <Loader2 size={11} className="animate-spin" /> : <LocateFixed size={11} />}
@@ -579,7 +574,7 @@ export default function Personnel({ goTo }) {
                 </div>
 
                 {form.location_mode === 'custom' ? (
-                  <div className="space-y-2 rounded-lg border border-[var(--ice)]/30 bg-[var(--surface-sunken)] p-2.5">
+                  <div className="space-y-2 rounded-xl border border-sky-200 bg-sky-50/50 p-2.5">
                     <div>
                       <input
                         name="custom_location_name"
@@ -613,13 +608,13 @@ export default function Personnel({ goTo }) {
                         placeholder="Longitude (°E e.g. 11.73)"
                       />
                     </div>
-                    <div className="flex items-center justify-between text-[10.5px] text-low">
+                    <div className="flex items-center justify-between text-[10.5px] text-[#64748B]">
                       <span>Coordinates optional (defaults to Antarctica)</span>
                       <button
                         type="button"
                         onClick={handleGetLiveGps}
                         disabled={gpsLoading}
-                        className="text-[var(--ice)] hover:underline flex items-center gap-1"
+                        className="text-[#0284C7] hover:underline flex items-center gap-1 font-medium"
                       >
                         {gpsLoading ? <Loader2 size={10} className="animate-spin" /> : <LocateFixed size={10} />}
                         Auto-fill GPS
@@ -721,8 +716,8 @@ export default function Personnel({ goTo }) {
             </div>
 
             {formError && (
-              <div className="alert-strip flex items-center justify-between gap-3">
-                <div className="text-[12.5px] text-hi flex-1">{formError}</div>
+              <div className="rounded-xl border border-rose-200 bg-rose-50/80 p-3 flex items-center justify-between gap-3 text-rose-900">
+                <div className="text-[12.5px] font-medium flex-1">{formError}</div>
                 <div className="flex items-center gap-2 shrink-0">
                   {(formError.includes('permission') || formError.includes('GPS')) && (
                     <button
@@ -738,7 +733,7 @@ export default function Personnel({ goTo }) {
                         }))
                         setFormError(null)
                       }}
-                      className="btn btn--sm text-[11px] py-0.5 px-2 bg-[var(--surface-raised)] border border-[var(--line)]"
+                      className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-[#0F172A] hover:bg-slate-50 transition"
                     >
                       Use Field Coordinates
                     </button>
@@ -746,7 +741,7 @@ export default function Personnel({ goTo }) {
                   <button
                     type="button"
                     onClick={() => setFormError(null)}
-                    className="text-mid hover:text-hi p-1 cursor-pointer transition-colors"
+                    className="text-[#64748B] hover:text-[#0F172A] p-1 cursor-pointer transition-colors"
                     title="Dismiss alert"
                   >
                     <X size={14} />
@@ -788,19 +783,19 @@ export default function Personnel({ goTo }) {
           }
         >
           {/* ---------- EXPEDITION SELECTION TABS ---------- */}
-          <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line-soft)] pb-3">
+          <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-[#E2E8F0] pb-3">
             <div className="flex flex-wrap items-center gap-1.5">
-              <div className="mr-1 flex items-center gap-1 text-[11px] font-mono font-bold uppercase tracking-wider text-mid">
-                <Compass size={13} className="text-[var(--ice)]" />
+              <div className="mr-1 flex items-center gap-1 text-[11px] font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                <Compass size={13} className="text-[#0284C7]" />
                 <span>Expedition:</span>
               </div>
               <button
                 type="button"
                 onClick={() => setFilter('expedition', 'ALL')}
-                className={`rounded px-2.5 py-1 text-xs font-mono transition-all ${
+                className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-all ${
                   filters.expedition === 'ALL'
-                    ? 'bg-[var(--ice)] font-semibold text-white shadow-sm'
-                    : 'bg-[var(--surface-sunken)] text-mid hover:bg-[var(--surface-hover)] hover:text-hi'
+                    ? 'bg-[#0284C7] font-semibold text-white shadow-2xs'
+                    : 'bg-[#F1F5F9] text-[#475569] hover:bg-[#E2E8F0] hover:text-[#0F172A]'
                 }`}
               >
                 All Expeditions ({personnel.length})
@@ -816,14 +811,14 @@ export default function Personnel({ goTo }) {
                     key={exp.id}
                     type="button"
                     onClick={() => setFilter('expedition', isSelected ? 'ALL' : exp.id)}
-                    className={`flex items-center gap-1.5 rounded px-2.5 py-1 text-xs font-mono transition-all ${
+                    className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-mono transition-all ${
                       isSelected
-                        ? 'bg-[var(--ice)] font-semibold text-white shadow-sm'
-                        : 'bg-[var(--surface-sunken)] text-mid hover:bg-[var(--surface-hover)] hover:text-hi'
+                        ? 'bg-[#0284C7] font-semibold text-white shadow-2xs'
+                        : 'bg-[#F1F5F9] text-[#475569] hover:bg-[#E2E8F0] hover:text-[#0F172A]'
                     }`}
                   >
                     {hasEmergency && (
-                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--red)]" />
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-rose-500" />
                     )}
                     <span>{exp.id}</span>
                     <span className="text-[10px] opacity-70">({count})</span>
@@ -833,14 +828,14 @@ export default function Personnel({ goTo }) {
             </div>
 
             {/* View Mode Toggle: Separate Sections vs Unified Table */}
-            <div className="flex items-center rounded border border-[var(--line)] bg-[var(--surface-sunken)] p-0.5 text-xs">
+            <div className="flex items-center rounded-lg border border-[#DDEAF0] bg-[#F8FAFC] p-0.5 text-xs">
               <button
                 type="button"
                 onClick={() => setViewMode('sections')}
-                className={`flex items-center gap-1 rounded px-2 py-0.5 font-mono text-[11px] transition ${
+                className={`flex items-center gap-1 rounded-md px-2 py-0.5 font-mono text-[11px] transition ${
                   viewMode === 'sections'
-                    ? 'bg-[var(--surface-card)] font-semibold text-hi shadow-sm'
-                    : 'text-mid hover:text-hi'
+                    ? 'bg-white font-semibold text-[#0F172A] shadow-2xs'
+                    : 'text-[#64748B] hover:text-[#0F172A]'
                 }`}
                 title="View by separate expedition sections"
               >
@@ -850,10 +845,10 @@ export default function Personnel({ goTo }) {
               <button
                 type="button"
                 onClick={() => setViewMode('table')}
-                className={`flex items-center gap-1 rounded px-2 py-0.5 font-mono text-[11px] transition ${
+                className={`flex items-center gap-1 rounded-md px-2 py-0.5 font-mono text-[11px] transition ${
                   viewMode === 'table'
-                    ? 'bg-[var(--surface-card)] font-semibold text-hi shadow-sm'
-                    : 'text-mid hover:text-hi'
+                    ? 'bg-white font-semibold text-[#0F172A] shadow-2xs'
+                    : 'text-[#64748B] hover:text-[#0F172A]'
                 }`}
                 title="View unified table"
               >
@@ -868,7 +863,7 @@ export default function Personnel({ goTo }) {
             <div className="relative">
               <Search
                 size={13}
-                className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--ink-low)]"
+                className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[#94A3B8]"
               />
               <input
                 className="input pl-8"
@@ -949,9 +944,9 @@ export default function Personnel({ goTo }) {
                 return (
                   <div
                     key={exp.id}
-                    className="overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--surface-card)] shadow-sm"
+                    className="overflow-hidden rounded-2xl border border-[#DDEAF0] bg-white shadow-xs"
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] bg-[var(--surface-raised)] px-4 py-2.5">
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E2E8F0] bg-[#F8FAFC] px-4 py-2.5">
                       <div className="flex items-center gap-2.5">
                         <Badge
                           tone={
@@ -966,29 +961,29 @@ export default function Personnel({ goTo }) {
                         </Badge>
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-display text-sm font-bold text-hi">{exp.name}</span>
-                            <span className="text-xs text-low">· {exp.destination}</span>
+                            <span className="text-sm font-bold text-[#0F172A]">{exp.name}</span>
+                            <span className="text-xs text-[#64748B]">· {exp.destination}</span>
                           </div>
-                          <div className="text-[11px] text-mid">
-                            Leader: <span className="font-medium text-hi">{exp.leader}</span>
+                          <div className="text-[11px] text-[#64748B]">
+                            Leader: <span className="font-semibold text-[#0F172A]">{exp.leader}</span>
                           </div>
                         </div>
                       </div>
 
                       <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono">
-                        <span className="rounded bg-[var(--surface-sunken)] px-2 py-0.5 text-mid">
+                        <span className="rounded bg-[#F1F5F9] px-2 py-0.5 text-[#475569] font-medium">
                           {expPersonnel.length} / {expAll.length} team
                         </span>
-                        <span className="rounded bg-[rgba(34,197,94,0.12)] px-2 py-0.5 text-[var(--green)]">
+                        <span className="rounded bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-emerald-700 font-semibold">
                           {activeCount} active
                         </span>
                         {inTransitCount > 0 && (
-                          <span className="rounded bg-[rgba(14,165,233,0.12)] px-2 py-0.5 text-[var(--ice)]">
+                          <span className="rounded bg-sky-50 border border-sky-200 px-2 py-0.5 text-sky-700 font-semibold">
                             {inTransitCount} transit
                           </span>
                         )}
                         {emergencyCount > 0 && (
-                          <span className="flex items-center gap-1 rounded bg-[rgba(239,68,68,0.15)] px-2 py-0.5 font-bold text-[var(--red)] animate-pulse">
+                          <span className="flex items-center gap-1 rounded bg-rose-50 border border-rose-200 px-2 py-0.5 font-bold text-rose-700 animate-pulse">
                             <Siren size={11} />
                             {emergencyCount} EMERGENCY
                           </span>
@@ -1028,10 +1023,10 @@ export default function Personnel({ goTo }) {
                           strong: true,
                           cell: (r) => (
                             <div>
-                              <div className={r.id === selectedId ? 'text-[var(--ice)]' : undefined}>
+                              <div className={r.id === selectedId ? 'text-[#0284C7] font-semibold' : 'text-[#0F172A] font-medium'}>
                                 {r.name}
                               </div>
-                              <div className="text-[11px] font-normal text-low">{r.role}</div>
+                              <div className="text-[11px] font-normal text-[#64748B]">{r.role}</div>
                             </div>
                           ),
                         },
@@ -1039,13 +1034,13 @@ export default function Personnel({ goTo }) {
                           header: 'Location',
                           cell: (r) => {
                             const loc = getLocation(r.location_id)
-                            if (!loc) return <span className="text-low">—</span>
+                            if (!loc) return <span className="text-[#64748B]">—</span>
                             return (
                               <div style={{ maxWidth: 140 }}>
-                                <div className="truncate text-[12px]" title={loc.name}>
+                                <div className="truncate text-[12px] font-medium text-[#334155]" title={loc.name}>
                                   {loc.name}
                                 </div>
-                                <div className="truncate text-[10.5px] text-low">
+                                <div className="truncate text-[10.5px] text-[#64748B]">
                                   {statusLabel(LOCATION_TYPE, loc.type)}
                                 </div>
                               </div>
@@ -1112,10 +1107,10 @@ export default function Personnel({ goTo }) {
                   strong: true,
                   cell: (r) => (
                     <div>
-                      <div className={r.id === selectedId ? 'text-[var(--ice)]' : undefined}>
+                      <div className={r.id === selectedId ? 'text-[#0284C7] font-semibold' : 'text-[#0F172A] font-medium'}>
                         {r.name}
                       </div>
-                      <div className="text-[11px] font-normal text-low">{r.role}</div>
+                      <div className="text-[11px] font-normal text-[#64748B]">{r.role}</div>
                     </div>
                   ),
                 },
@@ -1123,13 +1118,13 @@ export default function Personnel({ goTo }) {
                   header: 'Expedition',
                   cell: (r) => {
                     const exp = getExpedition(r.expedition_id)
-                    if (!exp) return <span className="text-low">Unassigned</span>
+                    if (!exp) return <span className="text-[#64748B]">Unassigned</span>
                     return (
                       <div style={{ maxWidth: 150 }}>
-                        <div className="truncate text-[12px]" title={exp.name}>
+                        <div className="truncate text-[12px] font-medium text-[#334155]" title={exp.name}>
                           {exp.name}
                         </div>
-                        <div className="mono text-[10.5px] text-low">{exp.id}</div>
+                        <div className="mono text-[10.5px] text-[#64748B]">{exp.id}</div>
                       </div>
                     )
                   },
@@ -1138,13 +1133,13 @@ export default function Personnel({ goTo }) {
                   header: 'Location',
                   cell: (r) => {
                     const loc = getLocation(r.location_id)
-                    if (!loc) return <span className="text-low">—</span>
+                    if (!loc) return <span className="text-[#64748B]">—</span>
                     return (
                       <div style={{ maxWidth: 128 }}>
-                        <div className="truncate text-[12px]" title={loc.name}>
+                        <div className="truncate text-[12px] font-medium text-[#334155]" title={loc.name}>
                           {loc.name}
                         </div>
-                        <div className="truncate text-[10.5px] text-low">
+                        <div className="truncate text-[10.5px] text-[#64748B]">
                           {statusLabel(LOCATION_TYPE, loc.type)}
                         </div>
                       </div>
@@ -1206,19 +1201,19 @@ export default function Personnel({ goTo }) {
                 action={<Badge map={PERSONNEL_STATUS} value={selected.status} dot />}
               >
                 <dl className="space-y-0">
-                  <div className="kv">
+                    <div className="kv">
                     <dt>Expedition</dt>
                     <dd>
                       {selectedExpedition ? (
                         <button
                           type="button"
-                          className="text-[var(--ice)] hover:underline"
+                          className="text-[#0284C7] hover:underline font-semibold"
                           onClick={() => goTo('expeditions')}
                         >
                           {selectedExpedition.name}
                         </button>
                       ) : (
-                        <span className="text-low">Unassigned</span>
+                        <span className="text-[#64748B]">Unassigned</span>
                       )}
                     </dd>
                   </div>
@@ -1234,7 +1229,7 @@ export default function Personnel({ goTo }) {
                   </div>
                   <div className="kv">
                     <dt>Blood group</dt>
-                    <dd className="mono">{selected.blood_group}</dd>
+                    <dd className="mono font-semibold">{selected.blood_group}</dd>
                   </div>
                   <div className="kv">
                     <dt>Sat phone</dt>
@@ -1243,8 +1238,8 @@ export default function Personnel({ goTo }) {
                   <div className="kv">
                     <dt>Last check-in</dt>
                     <dd>
-                      <span className="mono text-[12px]">{timeAgo(selected.last_updated)}</span>
-                      <span className="block text-[10.5px] text-low">
+                      <span className="mono text-[12px] font-medium">{timeAgo(selected.last_updated)}</span>
+                      <span className="block text-[10.5px] text-[#64748B]">
                         {formatDateTime(selected.last_updated)}
                       </span>
                     </dd>
@@ -1254,14 +1249,11 @@ export default function Personnel({ goTo }) {
                 {/* Field telemetry status */}
                 <div className="mt-3 flex items-center gap-2">
                   <Badge label="Field Telemetry" tone="info" />
-                  <span className="text-[10.5px] text-low">Position tracked via VHF beacon</span>
+                  <span className="text-[10.5px] text-[#64748B]">Position tracked via VHF beacon</span>
                 </div>
 
-                {/* --- Two controls that reach into other modules ---
-                    Side by side on a tablet, stacked again at xl where this
-                    column is only a third of the width — two selects in
-                    390px would clip the longer location names. */}
-                <div className="mt-4 grid gap-2.5 border-t border-[var(--line-soft)] pt-4 sm:grid-cols-2 xl:grid-cols-1">
+                {/* --- Two controls that reach into other modules --- */}
+                <div className="mt-4 grid gap-2.5 border-t border-[#E2E8F0] pt-4 sm:grid-cols-2 xl:grid-cols-1">
                   <div>
                     <label className="field-label" htmlFor="detail-status">
                       Duty status
@@ -1300,12 +1292,12 @@ export default function Personnel({ goTo }) {
                                 if (created) updatePerson(selected.id, { location_id: created.id })
                               }
                             }}
-                            className="text-[var(--ice)] hover:underline"
+                            className="text-[#0284C7] hover:underline font-medium"
                             title="Register a new custom location"
                           >
                             + Custom
                           </button>
-                          <span className="text-low">·</span>
+                          <span className="text-[#94A3B8]">·</span>
                           <button
                             type="button"
                             onClick={async () => {
@@ -1348,7 +1340,7 @@ export default function Personnel({ goTo }) {
                                 }
                               }
                             }}
-                            className="text-[var(--accent)] hover:underline flex items-center gap-0.5"
+                            className="text-[#0284C7] hover:underline flex items-center gap-0.5 font-medium"
                             title="Use your real device GPS position or polar telemetry fallback"
                           >
                             <LocateFixed size={10} /> <span>Live GPS</span>
@@ -1414,10 +1406,10 @@ export default function Personnel({ goTo }) {
                 action={
                   <button
                     type="button"
-                    className="btn btn--ghost btn--sm"
+                    className="text-xs font-semibold text-[#0284C7] hover:underline"
                     onClick={() => goTo('emergency')}
                   >
-                    <Siren size={13} /> Response
+                    <Siren size={13} className="inline mr-1 text-rose-600" /> Response
                   </button>
                 }
               >
@@ -1430,18 +1422,18 @@ export default function Personnel({ goTo }) {
                 ) : (
                   <ul className="space-y-2.5">
                     {personIncidents.map((incident) => (
-                      <li key={incident.id} className="card-tight">
+                      <li key={incident.id} className="rounded-xl border border-slate-100 bg-white p-3 shadow-2xs">
                         <div className="flex items-start justify-between gap-2">
-                          <span className="mono text-[11px] text-low">{incident.id}</span>
+                          <span className="mono text-[11px] text-[#64748B]">{incident.id}</span>
                           <Badge map={EMERGENCY_STATUS} value={incident.status} />
                         </div>
-                        <div className="mt-1.5 text-[13px] font-medium text-hi">
+                        <div className="mt-1.5 text-[13px] font-semibold text-[#0F172A]">
                           {statusLabel(EMERGENCY_TYPE, incident.type)}
                         </div>
-                        <div className="text-[11.5px] text-mid">{incident.location}</div>
+                        <div className="text-[11.5px] text-[#475569]">{incident.location}</div>
                         <div className="mt-2 flex items-center justify-between gap-2">
                           <Badge map={SEVERITY} value={incident.severity} />
-                          <span className="mono text-[10.5px] text-low">
+                          <span className="mono text-[10.5px] text-[#64748B]">
                             {timeAgo(incident.reported_at)}
                           </span>
                         </div>
@@ -1463,10 +1455,10 @@ export default function Personnel({ goTo }) {
                 action={
                   <button
                     type="button"
-                    className="btn btn--ghost btn--sm"
+                    className="text-xs font-semibold text-[#0284C7] hover:underline"
                     onClick={() => goTo('expeditions')}
                   >
-                    <Users size={13} /> Expedition
+                    <Users size={13} className="inline mr-1" /> Expedition
                   </button>
                 }
               >
@@ -1479,14 +1471,14 @@ export default function Personnel({ goTo }) {
                 ) : (
                   <ul className="space-y-2">
                     {teammates.map((mate) => (
-                      <li key={mate.id} className="flex items-center justify-between gap-3">
+                      <li key={mate.id} className="flex items-center justify-between gap-3 rounded-lg border border-slate-100 bg-white p-2.5 shadow-2xs hover:border-sky-200 transition">
                         <button
                           type="button"
                           className="min-w-0 flex-1 text-left"
                           onClick={() => setSelectedId(mate.id)}
                         >
-                          <div className="truncate text-[13px] text-hi">{mate.name}</div>
-                          <div className="truncate text-[11px] text-low">
+                          <div className="truncate text-[13px] font-semibold text-[#0F172A]">{mate.name}</div>
+                          <div className="truncate text-[11px] text-[#64748B]">
                             <span className="mono">{mate.id}</span> · {mate.role}
                           </div>
                         </button>
@@ -1504,10 +1496,10 @@ export default function Personnel({ goTo }) {
       {/* ============================================================
           5. OPERATIONAL READINESS NOTE
           ============================================================ */}
-      <div className="alert-strip alert-strip--info">
-        <MapPin size={16} strokeWidth={1.75} className="mt-0.5 shrink-0 text-[var(--ice)]" />
-        <div className="text-[12px] leading-relaxed text-mid">
-          <strong className="text-hi">Personnel Deployment Roster.</strong> Team assignments, duty designations, and field check-ins are managed under Ministry of Earth Sciences (MoES) and AFMC Pune operational readiness standards. In-field telemetry status is updated on synoptic schedules.
+      <div className="rounded-xl border border-sky-200 bg-sky-50/60 p-4 flex items-center gap-3 text-[#0F172A]">
+        <MapPin size={18} className="shrink-0 text-[#0284C7]" />
+        <div className="text-[12px] leading-relaxed text-[#475569]">
+          <strong className="font-semibold text-[#0F172A]">Personnel Deployment Roster.</strong> Team assignments, duty designations, and field check-ins are managed under Ministry of Earth Sciences (MoES) and AFMC Pune operational readiness standards. In-field telemetry status is updated on synoptic schedules.
         </div>
       </div>
     </div>

@@ -155,202 +155,204 @@ export default function AiCopilot({ goTo }) {
             AI MISSION COPILOT
             Context: Analyzing: Fuel Resupply Risk
             ============================================================ */}
-        <header className="border-b border-[var(--line)] pb-5 space-y-2">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-[var(--surface-ice)] border border-[var(--line)] text-[var(--ice)] flex items-center justify-center">
-              <Bot size={18} />
+        <header className="border-b border-slate-200 pb-5 space-y-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-lg bg-sky-50 border border-sky-200 text-sky-600 flex items-center justify-center">
+                <Bot size={18} />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                  AI MISSION COPILOT
+                </h1>
+                <span className="text-xs text-slate-500 font-medium">
+                  Decision-Support Assistant · Grounded Station Telemetry
+                </span>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight text-[var(--ink-hi)]">
-                AI MISSION COPILOT
-              </h1>
-              <span className="text-xs text-[var(--ink-mid)] font-medium">
-                Decision-Support Assistant · Grounded Station Telemetry
+
+            <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 flex items-center gap-2 text-xs">
+              <span className="text-slate-400 font-mono uppercase text-[10px]">Context:</span>
+              <span className="font-semibold text-slate-900">Analyzing: Fuel Resupply Risk</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-sky-500 animate-pulse" />
+            </div>
+          </div>
+        </header>
+
+        {/* ============================================================
+            SUGGESTED QUESTIONS
+            Why is this a risk?
+            What happens if the shipment is delayed?
+            What should the officer review?
+            ============================================================ */}
+        <section className="space-y-3">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
+            Suggested Questions
+          </span>
+
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-2.5">
+            {[
+              'Why is this a risk?',
+              'What changed?',
+              'What happens if the shipment is delayed?',
+              'What should I review?',
+              'Explain the impact',
+              'Compare REC-001 vs REC-002',
+            ].map((q) => {
+              const isSelected = activeQuestion === q
+              return (
+                <button
+                  key={q}
+                  type="button"
+                  onClick={() => handleSelectQuestion(q)}
+                  className={`rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-2 text-xs font-semibold transition text-left shadow-2xs ${
+                    isSelected
+                      ? 'bg-sky-600 text-white shadow-xs'
+                      : 'bg-white border border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
+                  }`}
+                >
+                  {q}
+                </button>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* ============================================================
+            STRUCTURED AI RESPONSE PANEL
+            ANALYSIS · IMPACT · RECOMMENDATION · ACTION
+            ============================================================ */}
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 md:p-9 shadow-xs space-y-5 sm:space-y-6">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div className="flex items-center gap-2">
+              <Sparkles size={14} className="text-sky-600" />
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-sky-600">
+                Structured Officer Briefing
               </span>
             </div>
+            <span className="text-xs font-mono text-slate-400">Confidence: 94%</span>
           </div>
 
-          <div className="rounded-xl border border-[var(--line)] bg-[var(--surface-base)] px-3 py-1.5 flex items-center gap-2 text-xs">
-            <span className="text-[var(--ink-low)] font-mono uppercase text-[10px]">Context:</span>
-            <span className="font-semibold text-[var(--ink-hi)]">Analyzing: Fuel Resupply Risk</span>
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--ice)] animate-pulse" />
-          </div>
-        </div>
-      </header>
-
-      {/* ============================================================
-          SUGGESTED QUESTIONS
-          Why is this a risk?
-          What happens if the shipment is delayed?
-          What should the officer review?
-          ============================================================ */}
-      <section className="space-y-3">
-        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-low)]">
-          Suggested Questions
-        </span>
-
-        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-2.5">
-          {[
-            'Why is this a risk?',
-            'What happens if the shipment is delayed?',
-            'What should the officer review?',
-            'Compare REC-001 vs REC-002',
-          ].map((q) => {
-            const isSelected = activeQuestion === q
-            return (
-              <button
-                key={q}
-                type="button"
-                onClick={() => handleSelectQuestion(q)}
-                className={`rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-2 text-xs font-semibold transition text-left shadow-2xs ${
-                  isSelected
-                    ? 'bg-[var(--ice)] text-white shadow-xs'
-                    : 'bg-white border border-[var(--line)] text-[var(--ink-hi)] hover:border-[var(--line-hover)] hover:bg-[var(--surface-secondary)]'
-                }`}
-              >
-                {q}
-              </button>
-            )
-          })}
-        </div>
-      </section>
-
-      {/* ============================================================
-          STRUCTURED AI RESPONSE PANEL
-          ANALYSIS · IMPACT · RECOMMENDATION · ACTION
-          ============================================================ */}
-      <section className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-8 md:p-9 shadow-xs space-y-5 sm:space-y-6">
-        <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
-          <div className="flex items-center gap-2">
-            <Sparkles size={14} className="text-[var(--ice)]" />
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ice)]">
-              Structured Officer Briefing
+          {/* 1. ANALYSIS */}
+          <div className="space-y-1.5">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
+              ANALYSIS
             </span>
+            <p className="text-sm text-slate-900 leading-relaxed font-medium">
+              {activeResponse.analysis}
+            </p>
           </div>
-          <span className="text-xs font-mono text-[var(--ink-low)]">Confidence: 94%</span>
-        </div>
 
-        {/* 1. ANALYSIS */}
-        <div className="space-y-1.5">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-low)]">
-            ANALYSIS
-          </span>
-          <p className="text-sm text-[var(--ink-hi)] leading-relaxed font-medium">
-            {activeResponse.analysis}
-          </p>
-        </div>
-
-        {/* 2. IMPACT */}
-        <div className="space-y-1.5 rounded-xl bg-[var(--surface-base)] border border-[var(--line)] p-4">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-rose-700">
-            IMPACT
-          </span>
-          <p className="text-xs sm:text-sm text-[var(--ink-hi)] leading-relaxed">
-            {activeResponse.impact}
-          </p>
-        </div>
-
-        {/* 3. PREDICTION */}
-        {activeResponse.prediction && (
-          <div className="space-y-1.5 rounded-xl bg-amber-50/70 border border-amber-200 p-4">
+          {/* 2. IMPACT */}
+          <div className="space-y-1.5 rounded-xl bg-amber-50/50 border border-amber-200/80 p-4">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-800">
-              PREDICTION
+              IMPACT
             </span>
-            <p className="text-xs sm:text-sm text-amber-950 leading-relaxed font-medium">
-              {activeResponse.prediction}
+            <p className="text-xs sm:text-sm text-amber-950 leading-relaxed">
+              {activeResponse.impact}
             </p>
           </div>
-        )}
 
-        {/* 4. OPTIONS */}
-        {activeResponse.options && (
-          <div className="space-y-1.5 rounded-xl bg-slate-50 border border-slate-200 p-4">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-700">
-              OPTIONS
-            </span>
-            <p className="text-xs sm:text-sm text-[#0C1E30] leading-relaxed">
-              {activeResponse.options}
-            </p>
-          </div>
-        )}
-
-        {/* 5. RECOMMENDED REVIEW */}
-        <div className="space-y-1.5 rounded-xl bg-[var(--surface-ice)] border border-[var(--line)] p-4">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ice)]">
-            RECOMMENDED REVIEW
-          </span>
-          <p className="text-xs sm:text-sm text-[var(--ink-hi)] leading-relaxed">
-            {activeResponse.recommendation}
-          </p>
-        </div>
-
-        {/* 4. ACTION */}
-        <div className="pt-2 border-t border-[var(--line)] flex flex-wrap items-center justify-between gap-3">
-          <button
-            type="button"
-            onClick={() => goTo(activeResponse.actionTarget || 'simulator')}
-            className="inline-flex items-center gap-2 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-4 py-2 text-xs shadow-xs transition active:scale-95"
-          >
-            <span>[{activeResponse.actionLabel || 'Review Simulation'}]</span>
-            <ArrowRight size={13} />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              approveRecommendation('REC-001', 'Operations Officer')
-              setAuthorized(true)
-            }}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] bg-white hover:bg-[var(--surface-secondary)] text-[var(--ink-hi)] font-semibold px-3.5 py-2 text-xs shadow-xs transition"
-          >
-            <CheckCircle2 size={13} className="text-[var(--green)]" />
-            <span>Authorize Mitigation REC-001</span>
-          </button>
-        </div>
-
-        {authorized && (
-          <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3.5 flex items-center justify-between gap-2 text-xs text-emerald-800">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-              <span>Protocol REC-001 authorized by Operations Officer. Stamped in cryptographic audit log.</span>
+          {/* 3. PREDICTION */}
+          {activeResponse.prediction && (
+            <div className="space-y-1.5 rounded-xl bg-amber-50/70 border border-amber-200 p-4">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-800">
+                PREDICTION
+              </span>
+              <p className="text-xs sm:text-sm text-amber-950 leading-relaxed font-medium">
+                {activeResponse.prediction}
+              </p>
             </div>
+          )}
+
+          {/* 4. OPTIONS */}
+          {activeResponse.options && (
+            <div className="space-y-1.5 rounded-xl bg-slate-50 border border-slate-200 p-4">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-700">
+                OPTIONS
+              </span>
+              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                {activeResponse.options}
+              </p>
+            </div>
+          )}
+
+          {/* 5. RECOMMENDED REVIEW */}
+          <div className="space-y-1.5 rounded-xl bg-sky-50/60 border border-sky-200 p-4">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-sky-700">
+              RECOMMENDED REVIEW
+            </span>
+            <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
+              {activeResponse.recommendation}
+            </p>
+          </div>
+
+          {/* 4. ACTION */}
+          <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
             <button
               type="button"
-              onClick={() => goTo('audit')}
-              className="inline-flex items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-900 underline"
+              onClick={() => goTo(activeResponse.actionTarget || 'simulator')}
+              className="inline-flex items-center gap-2 rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-semibold px-4 py-2 text-xs shadow-xs transition active:scale-95"
             >
-              <span>View Audit Ledger</span>
-              <ArrowRight size={12} />
+              <span>{activeResponse.actionLabel || 'Review Simulation'}</span>
+              <ArrowRight size={13} />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                approveRecommendation('REC-001', 'Operations Officer')
+                setAuthorized(true)
+              }}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold px-3.5 py-2 text-xs shadow-xs transition"
+            >
+              <CheckCircle2 size={13} className="text-emerald-600" />
+              <span>Authorize Mitigation REC-001</span>
             </button>
           </div>
-        )}
-      </section>
 
-      {/* Query Bar */}
-      <form onSubmit={handleSubmitCustom} className="space-y-2">
-        <label className="text-xs font-mono font-bold uppercase text-[var(--ink-low)] block">
-          Ask Mission Question
-        </label>
-        <div className="relative flex items-center">
-          <input
-            type="text"
-            value={customQuery}
-            onChange={(e) => setCustomQuery(e.target.value)}
-            placeholder="Type your operational question about fuel buffers, cargo ETAs, or generator health..."
-            className="w-full rounded-lg border border-[var(--line)] bg-white px-4 py-2.5 pr-20 text-xs text-[var(--ink-hi)] shadow-xs focus:border-[var(--ice)] focus:outline-none"
-          />
-          <button
-            type="submit"
-            disabled={!customQuery.trim()}
-            className="absolute right-1.5 inline-flex items-center gap-1 rounded-md bg-[var(--ice)] hover:bg-[#3F96B2] disabled:opacity-40 text-white px-3 py-1.5 text-xs font-semibold shadow-xs transition"
-          >
-            <Send size={13} />
-            <span>Send</span>
-          </button>
-        </div>
-      </form>
-    </div>
+          {authorized && (
+            <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3.5 flex items-center justify-between gap-2 text-xs text-emerald-800">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                <span>Protocol REC-001 authorized by Operations Officer. Stamped in cryptographic audit log.</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => goTo('audit')}
+                className="inline-flex items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-900 underline"
+              >
+                <span>View Audit Ledger</span>
+                <ArrowRight size={12} />
+              </button>
+            </div>
+          )}
+        </section>
+
+        {/* Query Bar */}
+        <form onSubmit={handleSubmitCustom} className="space-y-2">
+          <label className="text-xs font-mono font-bold uppercase text-slate-400 block">
+            Ask Mission Question
+          </label>
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              value={customQuery}
+              onChange={(e) => setCustomQuery(e.target.value)}
+              placeholder="Type your operational question about fuel buffers, cargo ETAs, or generator health..."
+              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 pr-20 text-xs text-slate-900 shadow-xs focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none placeholder-slate-400"
+            />
+            <button
+              type="submit"
+              disabled={!customQuery.trim()}
+              className="absolute right-1.5 inline-flex items-center gap-1 rounded-md bg-sky-600 hover:bg-sky-700 disabled:opacity-40 text-white px-3 py-1.5 text-xs font-semibold shadow-xs transition"
+            >
+              <Send size={13} />
+              <span>Send</span>
+            </button>
+          </div>
+        </form>
+      </div>
 
       {/* ============================================================
           PURPOSE-BUILT MOBILE AI COPILOT (< 768px / md:hidden)

@@ -74,13 +74,13 @@ export default function ImpactAnalysis({ goTo }) {
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-12">
       {/* Header */}
-      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-5">
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
           <div className="flex items-center gap-2">
-            <GitFork size={18} className="text-[var(--ice)]" />
-            <h1 className="text-xl font-bold text-[var(--ink-hi)]">Cascading Impact Analysis</h1>
+            <GitFork size={18} className="text-sky-600" />
+            <h1 className="text-xl font-bold text-slate-900">Cascading Impact Analysis</h1>
           </div>
-          <p className="mt-1 text-xs text-[var(--ink-mid)]">
+          <p className="mt-1 text-xs text-slate-500">
             Causal propagation from root logistics deficit to science mission viability.
           </p>
         </div>
@@ -89,7 +89,7 @@ export default function ImpactAnalysis({ goTo }) {
           <button
             type="button"
             onClick={() => goTo('simulator')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-4 py-2 text-xs shadow-xs transition"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-semibold px-4 py-2 text-xs shadow-xs transition active:scale-95"
           >
             <Sliders size={13} />
             <span>Simulate In What-If Sandbox</span>
@@ -103,10 +103,10 @@ export default function ImpactAnalysis({ goTo }) {
           ============================================================ */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-mid)]">
+          <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500">
             4-Stage Cascading Propagation
           </h2>
-          <span className="text-xs text-[var(--ink-mid)]">Click any stage to inspect details</span>
+          <span className="text-xs text-slate-400">Click any stage to inspect details</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -120,29 +120,29 @@ export default function ImpactAnalysis({ goTo }) {
                 onClick={() => setActiveStage(st.id)}
                 className={`cursor-pointer rounded-2xl border p-4 sm:p-5 transition space-y-3 ${
                   isSelected
-                    ? 'border-[var(--ice)] bg-[var(--surface-ice)]/30 ring-2 ring-[var(--ice)]/20 shadow-xs'
-                    : 'border-[var(--line)] bg-white hover:border-[var(--line-hover)]'
+                    ? 'border-sky-500 bg-sky-50/50 ring-2 ring-sky-500/20 shadow-xs'
+                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/50'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <div className="h-8 w-8 rounded-xl bg-[var(--surface-ice)] flex items-center justify-center text-[var(--ice)]">
+                  <div className="h-8 w-8 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600">
                     <Icon size={16} />
                   </div>
-                  <span className="font-mono text-[10px] font-bold text-[var(--ink-low)]">
+                  <span className="font-mono text-[10px] font-bold text-slate-400">
                     0{st.id}
                   </span>
                 </div>
 
                 <div>
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--ink-mid)] block">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
                     {st.step}
                   </span>
-                  <h3 className="text-sm font-bold text-[var(--ink-hi)] mt-0.5">
+                  <h3 className="text-sm font-bold text-slate-900 mt-0.5">
                     {st.title}
                   </h3>
                 </div>
 
-                <p className="text-xs text-[var(--ink-mid)] leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed">
                   {st.summary}
                 </p>
               </div>
@@ -157,42 +157,42 @@ export default function ImpactAnalysis({ goTo }) {
         const CurrentIcon = current.icon
 
         return (
-          <section className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-7 md:p-8 shadow-xs space-y-6">
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] pb-4">
+          <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 md:p-8 shadow-xs space-y-6">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-[var(--surface-ice)] border border-[var(--line)] text-[var(--ice)] flex items-center justify-center">
+                <div className="h-10 w-10 rounded-xl bg-sky-50 border border-sky-200 text-sky-600 flex items-center justify-center">
                   <CurrentIcon size={20} />
                 </div>
                 <div>
-                  <span className="text-xs font-mono font-bold uppercase text-[var(--ice)]">
+                  <span className="text-xs font-mono font-bold uppercase text-sky-600">
                     Stage {current.id}: {current.step}
                   </span>
-                  <h2 className="text-lg font-bold text-[var(--ink-hi)]">{current.title}</h2>
+                  <h2 className="text-lg font-bold text-slate-900">{current.title}</h2>
                 </div>
               </div>
 
-              <span className="font-mono text-xs font-bold text-[var(--ink-mid)] bg-[var(--surface-base)] border border-[var(--line)] px-3 py-1 rounded-full">
+              <span className="font-mono text-xs font-semibold text-slate-700 bg-slate-50 border border-slate-200 px-3 py-1 rounded-full">
                 {current.telemetry}
               </span>
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-xs font-mono font-bold uppercase text-[var(--ink-low)]">
+              <h3 className="text-xs font-mono font-bold uppercase text-slate-400">
                 Detailed Transmission Analysis
               </h3>
-              <p className="text-sm text-[var(--ink-mid)] leading-relaxed max-w-3xl">
+              <p className="text-sm text-slate-700 leading-relaxed max-w-3xl">
                 {current.detail}
               </p>
             </div>
 
-            <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--line)] text-xs">
-              <span className="text-[var(--ink-mid)]">
+            <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 text-xs">
+              <span className="text-slate-600">
                 Actionable Next Step: Test mitigation protocols in What-If Sandbox.
               </span>
               <button
                 type="button"
                 onClick={() => goTo('simulator')}
-                className="inline-flex items-center gap-1 font-bold text-[var(--ice)] hover:underline"
+                className="inline-flex items-center gap-1 font-semibold text-sky-600 hover:text-sky-700 hover:underline"
               >
                 <span>Open What-If Simulator</span>
                 <ArrowRight size={13} />

@@ -666,10 +666,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
       )}
 
       {/* ================= TACTICAL SUB-NAVIGATION & ACTIONS ================= */}
-      <div
-        className="flex flex-wrap items-center justify-between gap-3 border-b pb-3"
-        style={{ borderColor: 'var(--line)' }}
-      >
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#DDEAF0] pb-3">
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -698,8 +695,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
           <button
             type="button"
             onClick={() => onOpenSos?.()}
-            className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow transition active:scale-95"
-            style={{ backgroundColor: 'var(--red)' }}
+            className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white bg-rose-600 hover:bg-rose-700 shadow-2xs transition active:scale-95"
           >
             <ShieldAlert size={14} className="animate-pulse" />
             <span>ACTIVATE ARMED SOS</span>
@@ -708,7 +704,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
           {!showForm && (
             <button
               type="button"
-              className="btn btn--alert btn--sm flex items-center gap-1"
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-[#0F172A] hover:bg-slate-50 transition shadow-2xs"
               onClick={() => {
                 setShowForm(true)
                 setActiveSubTab('board')
@@ -724,18 +720,12 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
       {/* ================= RADIO COMMS SUB-TAB ================= */}
       {activeSubTab === 'radio' && (
         <div className="fade-up space-y-4">
-          <div
-            className="rounded border p-3"
-            style={{
-              borderColor: 'var(--line)',
-              backgroundColor: 'var(--surface-raised)',
-            }}
-          >
-            <div className="flex items-center gap-2 text-xs font-bold uppercase text-hi">
-              <Radio size={14} className="text-[var(--ice)] animate-pulse" />
+          <div className="rounded-xl border border-[#DDEAF0] bg-white p-4 shadow-xs">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase text-[#0F172A]">
+              <Radio size={14} className="text-[#0284C7] animate-pulse" />
               <span>Direct Polar Satellite / HF Emergency Transceiver</span>
             </div>
-            <p className="mt-1 text-[11.5px] text-mid">
+            <p className="mt-1 text-[11.5px] text-[#475569]">
               Encrypted tactical field channel. Messages broadcast to all mobile teams, stations,
               and command consoles. Toggle the comms link to simulate offline satellite dropouts and
               test queue resilience.
@@ -755,19 +745,14 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
         <div className="space-y-8">
           {/* ================= 2. SUCCESS MESSAGE ================= */}
           {formSuccess && (
-            <div
-              className="alert-strip"
-              style={{
-                borderLeftColor: 'var(--green)',
-                borderColor: 'rgba(34,197,94,0.25)',
-                background: 'rgba(34,197,94,0.05)',
-              }}
-            >
-              <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-[var(--green)]" />
-              <div className="flex-1 text-[12.5px] text-mid">{formSuccess}</div>
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 text-emerald-900 text-xs flex items-center justify-between gap-3 shadow-2xs">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                <div className="text-[12.5px] font-medium">{formSuccess}</div>
+              </div>
               <button
                 type="button"
-                className="btn btn--ghost btn--sm shrink-0"
+                className="text-xs font-semibold text-emerald-800 hover:underline shrink-0"
                 onClick={() => setFormSuccess(null)}
               >
                 Dismiss
@@ -775,23 +760,17 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
             </div>
           )}
 
-      {/* ================= 3. THE RESPONSE BOARD =================
-          Master prompt section 5 asks for a PROMINENT alert section, and
-          this is it: every open incident, worst first, with the two
-          actions that move it along on the card itself.
-
-          Only rendered when something is genuinely open. An always-on red
-          board trains people to ignore red boards. */}
+      {/* ================= 3. THE RESPONSE BOARD ================= */}
       {openIncidents.length > 0 && (
         <div className="space-y-3">
-          <div className="alert-strip">
-            <Siren size={18} strokeWidth={2} className="pulse mt-0.5 shrink-0 text-[var(--red)]" />
+          <div className="rounded-xl border border-amber-200 bg-amber-50/80 p-4 flex items-start gap-3.5 shadow-2xs">
+            <Siren size={18} className="mt-0.5 shrink-0 text-amber-600 animate-pulse" />
             <div className="min-w-0 flex-1">
-              <div className="font-display text-[13px] font-semibold uppercase tracking-[0.08em] text-[var(--red)]">
+              <div className="text-[13px] font-bold uppercase tracking-wider text-amber-900">
                 {openIncidents.length} open incident{openIncidents.length === 1 ? '' : 's'}
                 {unacknowledged.length > 0 && ` · ${unacknowledged.length} not yet acknowledged`}
               </div>
-              <div className="mt-1 text-[12.5px] text-mid">
+              <div className="mt-1 text-[12px] text-amber-800 leading-relaxed">
                 Worst first, then longest waiting.{' '}
                 {canRespond
                   ? 'Acknowledge to record that a team has picked it up; resolve to close it and release the person involved.'
@@ -989,11 +968,11 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
             </div>
 
             {/* The derived link, shown before the operator commits. */}
-            <p className="text-[11.5px] text-low">
+            <p className="text-[11.5px] text-[#64748B]">
               {previewExpedition ? (
                 <>
                   Will be filed against{' '}
-                  <span className="text-[var(--ice)]">
+                  <span className="text-[#0284C7] font-semibold">
                     {previewExpedition.id} {previewExpedition.name}
                   </span>
                   , worked out from the person and location above.
@@ -1004,13 +983,13 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
             </p>
 
             {formError && (
-              <div className="alert-strip">
-                <AlertTriangle size={15} className="mt-0.5 shrink-0 text-[var(--red)]" />
-                <div className="text-[12.5px] text-hi">{formError}</div>
+              <div className="rounded-xl border border-rose-200 bg-rose-50/80 p-3 text-rose-900 flex items-center gap-2">
+                <AlertTriangle size={15} className="shrink-0 text-rose-600" />
+                <div className="text-[12.5px] font-medium">{formError}</div>
               </div>
             )}
 
-            <button type="submit" className="btn btn--alert">
+            <button type="submit" className="inline-flex items-center gap-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 text-xs font-semibold shadow-2xs transition">
               <Siren size={14} /> File incident report
             </button>
           </form>
@@ -1046,19 +1025,19 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
         }
       >
         {/* ---------- EXPEDITION SELECTION TABS ---------- */}
-        <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line-soft)] pb-3">
+        <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-[#E2E8F0] pb-3">
           <div className="flex flex-wrap items-center gap-1.5">
-            <div className="mr-1 flex items-center gap-1 text-[11px] font-mono font-bold uppercase tracking-wider text-mid">
-              <Compass size={13} className="text-[var(--ice)]" />
+            <div className="mr-1 flex items-center gap-1 text-[11px] font-mono font-bold uppercase tracking-wider text-[#64748B]">
+              <Compass size={13} className="text-[#0284C7]" />
               <span>Expedition:</span>
             </div>
             <button
               type="button"
               onClick={() => setFilter('expedition', 'ALL')}
-              className={`rounded px-2.5 py-1 text-xs font-mono transition-all ${
+              className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-all ${
                 filters.expedition === 'ALL'
-                  ? 'bg-[var(--ice)] font-semibold text-white shadow-sm'
-                  : 'bg-[var(--surface-sunken)] text-mid hover:bg-[var(--surface-hover)] hover:text-hi'
+                  ? 'bg-[#0284C7] font-semibold text-white shadow-2xs'
+                  : 'bg-[#F1F5F9] text-[#475569] hover:bg-[#E2E8F0] hover:text-[#0F172A]'
               }`}
             >
               All Expeditions ({emergencies.length})
@@ -1074,14 +1053,14 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                   key={exp.id}
                   type="button"
                   onClick={() => setFilter('expedition', isSelected ? 'ALL' : exp.id)}
-                  className={`flex items-center gap-1.5 rounded px-2.5 py-1 text-xs font-mono transition-all ${
+                  className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-mono transition-all ${
                     isSelected
-                      ? 'bg-[var(--ice)] font-semibold text-white shadow-sm'
-                      : 'bg-[var(--surface-sunken)] text-mid hover:bg-[var(--surface-hover)] hover:text-hi'
+                      ? 'bg-[#0284C7] font-semibold text-white shadow-2xs'
+                      : 'bg-[#F1F5F9] text-[#475569] hover:bg-[#E2E8F0] hover:text-[#0F172A]'
                   }`}
                 >
                   {hasActiveAlert && (
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--red)]" />
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-rose-500" />
                   )}
                   <span>{exp.id}</span>
                   <span className="text-[10px] opacity-70">({count})</span>
@@ -1196,12 +1175,12 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
               cell: (r) => (
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span>{statusLabel(EMERGENCY_TYPE, r.type)}</span>
+                    <span className="font-semibold text-[#0F172A]">{statusLabel(EMERGENCY_TYPE, r.type)}</span>
                     {r.id === selectedId && (
-                      <ChevronRight size={14} className="shrink-0 text-[var(--ice)]" />
+                      <ChevronRight size={14} className="shrink-0 text-[#0284C7]" />
                     )}
                   </div>
-                  <div className="truncate text-[11px] font-normal text-low" style={{ maxWidth: 260 }}>
+                  <div className="truncate text-[11px] font-normal text-[#64748B]" style={{ maxWidth: 260 }}>
                     {r.location}
                   </div>
                 </div>
@@ -1213,11 +1192,11 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
               cell: (r) => {
                 const exp = getExpedition(r.expedition_id)
                 return exp ? (
-                  <span className="mono text-[11px] text-[var(--ice)]" title={exp.name}>
+                  <span className="mono text-[11px] text-[#0284C7] font-semibold" title={exp.name}>
                     {exp.id}
                   </span>
                 ) : (
-                  <span className="text-[11px] text-low">—</span>
+                  <span className="text-[11px] text-[#64748B]">—</span>
                 )
               },
             },
@@ -1236,7 +1215,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
               width: '96px',
               align: 'right',
               mono: true,
-              cell: (r) => <span className="text-[12px] text-mid">{timeAgo(r.reported_at)}</span>,
+              cell: (r) => <span className="text-[12px] text-[#475569]">{timeAgo(r.reported_at)}</span>,
             },
             {
               /* One column that answers a different question depending on
@@ -1248,9 +1227,9 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
               mono: true,
               cell: (r) =>
                 r.status === 'RESOLVED' ? (
-                  <span className="text-[12px] text-low">{gap(r.reported_at, r.resolved_at)}</span>
+                  <span className="text-[12px] text-[#64748B]">{gap(r.reported_at, r.resolved_at)}</span>
                 ) : (
-                  <span className="text-[12px] text-[var(--orange)]">
+                  <span className="text-[12px] text-amber-700 font-semibold">
                     {duration(r.reported_at, now)}
                   </span>
                 ),
@@ -1283,7 +1262,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
               </div>
             }
           >
-            <p className="mb-4 text-[12.5px] leading-relaxed text-mid">{selected.description}</p>
+            <p className="mb-4 text-[12.5px] leading-relaxed text-[#475569]">{selected.description}</p>
 
             <dl className="space-y-0">
               <div className="kv">
@@ -1296,11 +1275,11 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                 <dt>Acknowledged</dt>
                 <dd className="mono text-[12px]">
                   {selected.acknowledged_at ? (
-                    <span className="text-[var(--green)]">
-                      {gap(selected.reported_at, selected.acknowledged_at)} after the report
+                    <span className="text-emerald-700 font-semibold">
+                      {gap(selected.reported_at, selected.acknowledged_at)} after report
                     </span>
                   ) : (
-                    <span className="text-[var(--orange)]">Not yet</span>
+                    <span className="text-amber-700 font-semibold">Not yet</span>
                   )}
                 </dd>
               </div>
@@ -1325,13 +1304,13 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                   {selected.expedition_id ? (
                     <button
                       type="button"
-                      className="text-[12.5px] text-[var(--ice)] underline decoration-dotted"
+                      className="text-[12.5px] text-[#0284C7] hover:underline font-semibold"
                       onClick={() => goTo('expeditions')}
                     >
                       {getExpedition(selected.expedition_id)?.name || selected.expedition_id}
                     </button>
                   ) : (
-                    <span className="text-low">Unassigned</span>
+                    <span className="text-[#64748B]">Unassigned</span>
                   )}
                 </dd>
               </div>
@@ -1342,48 +1321,48 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                 is the same status the Personnel page and the map show.
                 Blood group and satellite phone are on the card because
                 those are the two facts a responder actually needs. */}
-            <div className="mt-4 border-t border-[var(--line-soft)] pt-4">
+            <div className="mt-4 border-t border-[#E2E8F0] pt-4">
               <div className="eyebrow mb-2">Person involved</div>
               {(() => {
                 const person = selected.personnel_id ? getPerson(selected.personnel_id) : null
                 if (!person) {
                   return (
-                    <p className="text-[12px] text-low">
+                    <p className="text-[12px] text-[#64748B]">
                       Nobody is named on this incident. Naming someone is what flips their status to
                       EMERGENCY across Personnel and the Live Map.
                     </p>
                   )
                 }
                 return (
-                  <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-slate-100 bg-white p-3 shadow-2xs">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <User size={13} className="shrink-0 text-low" />
-                        <span className="text-[13px] text-hi">{person.name}</span>
+                        <User size={13} className="shrink-0 text-[#64748B]" />
+                        <span className="text-[13px] font-semibold text-[#0F172A]">{person.name}</span>
                         <Badge map={PERSONNEL_STATUS} value={person.status} />
                       </div>
-                      <div className="mt-1 text-[11.5px] text-low">
+                      <div className="mt-1 text-[11.5px] text-[#64748B]">
                         <span className="mono">{person.id}</span> · {person.role}
                       </div>
-                      <div className="mono mt-1 text-[11.5px] text-mid">
-                        Blood group {person.blood_group || '—'} · Satphone{' '}
+                      <div className="mono mt-1 text-[11.5px] text-[#475569]">
+                        Blood group <span className="font-semibold">{person.blood_group || '—'}</span> · Satphone{' '}
                         {person.satphone || '—'}
                       </div>
                     </div>
                     <div className="flex shrink-0 gap-2">
                       <button
                         type="button"
-                        className="btn btn--ghost btn--sm"
+                        className="text-xs font-semibold text-[#0284C7] hover:underline"
                         onClick={() => goTo('personnel')}
                       >
-                        <Users size={13} /> Roster
+                        <Users size={13} className="inline mr-1" /> Roster
                       </button>
                       <button
                         type="button"
-                        className="btn btn--ghost btn--sm"
+                        className="text-xs font-semibold text-[#0284C7] hover:underline"
                         onClick={() => goTo('map')}
                       >
-                        <MapPin size={13} /> Map
+                        <MapPin size={13} className="inline mr-1" /> Map
                       </button>
                     </div>
                   </div>
@@ -1393,27 +1372,21 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
 
             {/* ---------- 100% OFFLINE AUTONOMOUS SPATIAL TRIAGE INTELLIGENCE ---------- */}
             {triageDossier && selected.status !== 'RESOLVED' && (
-              <div
-                className="mt-4 rounded-lg border p-3.5 space-y-3"
-                style={{
-                  backgroundColor: 'rgba(56, 189, 248, 0.04)',
-                  borderColor: 'rgba(56, 189, 248, 0.3)',
-                }}
-              >
+              <div className="mt-4 rounded-xl border border-sky-200 bg-sky-50/50 p-4 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <ShieldAlert size={15} className="text-[var(--ice)]" />
-                    <span className="font-display text-[12px] font-bold uppercase tracking-wider text-hi">
-                      Autonomous Spatial Triage & Rescue Protocol
+                    <ShieldAlert size={15} className="text-[#0284C7]" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+                      Autonomous Spatial Triage &amp; Rescue Protocol
                     </span>
-                    <span className="rounded bg-[var(--surface-sunken)] px-1.5 py-0.5 text-[10px] font-mono text-[var(--ice)] border border-[var(--ice-soft)]">
+                    <span className="rounded bg-sky-100/80 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-sky-800 border border-sky-200">
                       100% OFFLINE COMPUTED
                     </span>
                   </div>
                   {canRespond && (
                     <button
                       type="button"
-                      className="btn btn--sm flex items-center gap-1.5 bg-[var(--ice)] text-white hover:bg-[var(--ice-vivid)] font-semibold shadow"
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-[#0284C7] hover:bg-[#0369a1] text-white px-3 py-1 text-xs font-semibold shadow-2xs transition"
                       onClick={handleApplyTriagePlan}
                     >
                       <Zap size={13} />
@@ -1424,62 +1397,62 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
 
                 {/* Dispatch Plan Highlights */}
                 <div className="grid gap-2.5 text-xs sm:grid-cols-2 lg:grid-cols-4 pt-1">
-                  <div className="rounded bg-[var(--surface-raised)] p-2.5 border border-[var(--line-soft)]">
-                    <div className="text-[10px] font-mono uppercase text-low flex items-center gap-1">
-                      <Truck size={11} className="text-[var(--ice)]" />
+                  <div className="rounded-lg bg-white p-2.5 border border-sky-100 shadow-2xs">
+                    <div className="text-[10px] font-mono uppercase text-[#64748B] flex items-center gap-1">
+                      <Truck size={11} className="text-[#0284C7]" />
                       <span>Recommended Vehicle</span>
                     </div>
-                    <div className="mt-1 font-semibold text-hi truncate">
+                    <div className="mt-1 font-semibold text-[#0F172A] truncate">
                       {triageDossier.tacticalPlan.dispatchVehicle}
                     </div>
-                    <div className="mt-0.5 text-[11px] font-mono text-[var(--green)]">
+                    <div className="mt-0.5 text-[11px] font-mono text-emerald-700 font-semibold">
                       ETA ~{triageDossier.tacticalPlan.vehicleEtaMinutes} mins
                     </div>
                   </div>
 
-                  <div className="rounded bg-[var(--surface-raised)] p-2.5 border border-[var(--line-soft)]">
-                    <div className="text-[10px] font-mono uppercase text-low flex items-center gap-1">
-                      <HeartPulse size={11} className="text-[var(--red)]" />
+                  <div className="rounded-lg bg-white p-2.5 border border-sky-100 shadow-2xs">
+                    <div className="text-[10px] font-mono uppercase text-[#64748B] flex items-center gap-1">
+                      <HeartPulse size={11} className="text-rose-600" />
                       <span>Medical Escort</span>
                     </div>
-                    <div className="mt-1 font-semibold text-hi truncate">
+                    <div className="mt-1 font-semibold text-[#0F172A] truncate">
                       {triageDossier.tacticalPlan.medicalEscort}
                     </div>
-                    <div className="mt-0.5 text-[11px] text-mid truncate">
+                    <div className="mt-0.5 text-[11px] text-[#64748B] truncate">
                       Lead: {triageDossier.tacticalPlan.assignedLeader}
                     </div>
                   </div>
 
-                  <div className="rounded bg-[var(--surface-raised)] p-2.5 border border-[var(--line-soft)]">
-                    <div className="text-[10px] font-mono uppercase text-low flex items-center gap-1">
-                      <Radio size={11} className="text-[var(--amber)]" />
+                  <div className="rounded-lg bg-white p-2.5 border border-sky-100 shadow-2xs">
+                    <div className="text-[10px] font-mono uppercase text-[#64748B] flex items-center gap-1">
+                      <Radio size={11} className="text-amber-600" />
                       <span>Tactical Radio Channel</span>
                     </div>
-                    <div className="mt-1 font-semibold text-hi truncate">
+                    <div className="mt-1 font-semibold text-[#0F172A] truncate">
                       CODAN HF Ch 4
                     </div>
-                    <div className="mt-0.5 text-[11px] font-mono text-mid">
+                    <div className="mt-0.5 text-[11px] font-mono text-[#64748B]">
                       Freq: 8,291 kHz
                     </div>
                   </div>
 
-                  <div className="rounded bg-[var(--surface-raised)] p-2.5 border border-[var(--line-soft)]">
-                    <div className="text-[10px] font-mono uppercase text-low flex items-center gap-1">
-                      <Boxes size={11} className="text-[var(--ice)]" />
+                  <div className="rounded-lg bg-white p-2.5 border border-sky-100 shadow-2xs">
+                    <div className="text-[10px] font-mono uppercase text-[#64748B] flex items-center gap-1">
+                      <Boxes size={11} className="text-[#0284C7]" />
                       <span>Required Stores</span>
                     </div>
-                    <div className="mt-1 font-semibold text-hi truncate" title={triageDossier.tacticalPlan.recommendedSupplies.join(', ')}>
+                    <div className="mt-1 font-semibold text-[#0F172A] truncate" title={triageDossier.tacticalPlan.recommendedSupplies.join(', ')}>
                       {triageDossier.tacticalPlan.recommendedSupplies[0]}
                     </div>
-                    <div className="mt-0.5 text-[11px] text-low truncate">
+                    <div className="mt-0.5 text-[11px] text-[#64748B] truncate">
                       +{triageDossier.tacticalPlan.recommendedSupplies.length - 1} more items
                     </div>
                   </div>
                 </div>
 
                 {/* Nearest responders list */}
-                <div className="border-t border-[var(--line-soft)] pt-2.5">
-                  <div className="text-[11px] font-mono text-low uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                <div className="border-t border-sky-100 pt-2.5">
+                  <div className="text-[11px] font-mono text-[#64748B] uppercase tracking-wider mb-1.5 flex items-center justify-between">
                     <span>Nearest Responders (Haversine Spatial Proximity)</span>
                     <span className="text-[10px] font-normal">Walking @ 3.5 km/h · Snowmobile @ 25 km/h</span>
                   </div>
@@ -1487,24 +1460,24 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                     {triageDossier.nearbyPersonnel.slice(0, 3).map((p) => (
                       <div
                         key={p.id}
-                        className="flex items-center justify-between rounded p-2 text-xs border border-[var(--line-soft)] bg-[var(--surface-sunken)]"
+                        className="flex items-center justify-between rounded-lg p-2.5 text-xs border border-sky-100 bg-white shadow-2xs"
                       >
                         <div className="min-w-0">
-                          <div className="font-semibold text-hi truncate flex items-center gap-1.5">
+                          <div className="font-semibold text-[#0F172A] truncate flex items-center gap-1.5">
                             <span>{p.name}</span>
                             {p.isQualifiedMedic && (
-                              <span className="rounded bg-[rgba(239,68,68,0.15)] px-1 py-0.2 text-[9px] font-bold text-[var(--red)] border border-[rgba(239,68,68,0.3)]">
+                              <span className="rounded bg-rose-50 px-1.5 py-0.5 text-[9px] font-bold text-rose-700 border border-rose-200">
                                 MEDIC
                               </span>
                             )}
                           </div>
-                          <div className="text-[10.5px] text-low truncate">
+                          <div className="text-[10.5px] text-[#64748B] truncate">
                             {p.role} · Blood {p.blood_group || '—'}
                           </div>
                         </div>
                         <div className="text-right shrink-0 font-mono">
-                          <div className="text-[11.5px] font-bold text-[var(--ice)]">{p.distanceKm} km</div>
-                          <div className="text-[10px] text-mid">~{p.estFootMinutes}m foot</div>
+                          <div className="text-[11.5px] font-bold text-[#0284C7]">{p.distanceKm} km</div>
+                          <div className="text-[10px] text-[#64748B]">~{p.estFootMinutes}m foot</div>
                         </div>
                       </div>
                     ))}
@@ -1513,11 +1486,8 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
               </div>
             )}
 
-            {/* ---------- Team + running log ----------
-                Typing writes straight into the shared store on every
-                keystroke, the same way the cargo delay reason does, so
-                there is no separate "save" step to explain. */}
-            <div className="mt-4 grid gap-4 border-t border-[var(--line-soft)] pt-4 sm:grid-cols-2">
+            {/* ---------- Team + running log ---------- */}
+            <div className="mt-4 grid gap-4 border-t border-[#E2E8F0] pt-4 sm:grid-cols-2">
               <div>
                 <label className="field-label" htmlFor="em-assign">
                   Responding team
@@ -1547,23 +1517,23 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
             </div>
 
             {/* ---------- DISPATCH LOG ---------- */}
-            <div className="mt-3 flex items-start gap-2 text-[11.5px] text-low">
-              <Radio size={13} className="mt-0.5 shrink-0" />
+            <div className="mt-3 flex items-start gap-2 text-[11.5px] text-[#64748B]">
+              <Radio size={13} className="mt-0.5 shrink-0 text-[#0284C7]" />
               <span>
-                Assigning a team <strong className="text-mid">logs the dispatch order</strong>.
+                Assigning a team <strong className="text-[#0F172A] font-semibold">logs the dispatch order</strong>.
                 Field coordination proceeds over dedicated VHF/HF polar emergency frequencies.
               </span>
             </div>
 
             {/* ---------- Actions ---------- */}
             {selected.status !== 'RESOLVED' && (
-              <div className="mt-4 flex flex-wrap gap-2 border-t border-[var(--line-soft)] pt-4">
+              <div className="mt-4 flex flex-wrap gap-2 border-t border-[#E2E8F0] pt-4">
                 {canRespond ? (
                   <>
                     {!selected.acknowledged_at && (
                       <button
                         type="button"
-                        className="btn btn--sm"
+                        className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-[#0F172A] hover:bg-slate-50 transition shadow-2xs"
                         onClick={() => acknowledge(selected.id)}
                       >
                         <Clock size={13} /> Acknowledge
@@ -1571,26 +1541,22 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                     )}
                     <button
                       type="button"
-                      className="btn btn--sm"
+                      className="inline-flex items-center gap-1 rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition shadow-2xs"
                       onClick={() => resolve(selected.id)}
-                      style={{ borderColor: 'rgba(79,201,138,0.45)', color: 'var(--green)' }}
                     >
                       <CheckCircle2 size={13} /> Resolve
                     </button>
                     {selected.personnel_id && (
-                      <span className="self-center text-[11px] text-low">
+                      <span className="self-center text-[11px] text-[#64748B]">
                         Resolving releases {getPerson(selected.personnel_id)?.name || 'the person'}{' '}
                         back to Active.
                       </span>
                     )}
                   </>
                 ) : (
-                  /* The role names in this sentence are DERIVED from the
-                     table in src/lib/roles.js, not typed here, so the page
-                     cannot end up naming the wrong roles. */
-                  <span className="text-[11.5px] leading-relaxed text-low">
+                  <span className="text-[11.5px] leading-relaxed text-[#64748B]">
                     Deciding that an incident is being handled, or is over, belongs to the{' '}
-                    <span className="text-mid">{rolesThatCanRespond().join(' and the ')}</span>, so
+                    <span className="text-[#0F172A] font-medium">{rolesThatCanRespond().join(' and the ')}</span>, so
                     those controls are not shown for this role. Reporting an incident is not
                     restricted — the form below works for everyone.
                   </span>
@@ -1614,7 +1580,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
               <div>
                 <div className="eyebrow mb-2">Medical staff on roster</div>
                 {medics.length === 0 ? (
-                  <p className="text-[12px] text-low">
+                  <p className="text-[12px] text-[#64748B]">
                     No medical role on the roster. Worth flagging on its own.
                   </p>
                 ) : (
@@ -1622,13 +1588,13 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                     {medics.map((p) => {
                       const atSite = p.location_id === selected.location_id
                       return (
-                        <li key={p.id} className="flex items-start justify-between gap-3">
+                        <li key={p.id} className="flex items-start justify-between gap-3 rounded-lg border border-slate-100 bg-white p-2.5 shadow-2xs">
                           <div className="min-w-0">
-                            <div className="truncate text-[12.5px] text-hi">{p.name}</div>
-                            <div className="truncate text-[11px] text-low">
+                            <div className="truncate text-[12.5px] font-semibold text-[#0F172A]">{p.name}</div>
+                            <div className="truncate text-[11px] text-[#64748B]">
                               {getLocation(p.location_id)?.name || '—'}
                               {atSite && (
-                                <span className="text-[var(--green)]"> · at the incident site</span>
+                                <span className="text-emerald-700 font-semibold"> · at incident site</span>
                               )}
                             </div>
                           </div>
@@ -1638,39 +1604,39 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                     })}
                   </ul>
                 )}
-                <p className="mt-2 text-[11px] text-low">
+                <p className="mt-2 text-[11px] text-[#64748B]">
                   {medics.length} of {personnel.length} on the roster hold a medical role.
                 </p>
               </div>
 
               {/* --- Relevant stores --- */}
-              <div className="border-t border-[var(--line-soft)] pt-4">
+              <div className="border-t border-[#E2E8F0] pt-4">
                 <div className="eyebrow mb-2">
                   Stores for a {statusLabel(EMERGENCY_TYPE, selected.type).toLowerCase()} call
                 </div>
 
                 {!supply ? (
-                  <p className="text-[12px] text-low">
+                  <p className="text-[12px] text-[#64748B]">
                     No stores are recorded at this site, and no expedition links it to a base
                     station. Nothing to show rather than another station&apos;s stock.
                   </p>
                 ) : (
                   <>
-                    <p className="mb-2.5 text-[11.5px] text-low">
-                      At <span className="text-mid">{supply.name}</span>
+                    <p className="mb-2.5 text-[11.5px] text-[#64748B]">
+                      At <span className="text-[#0F172A] font-semibold">{supply.name}</span>
                       {supply.via && (
                         <>
                           {' '}
                           — the incident site holds no stores of its own, so this is the base station
                           of{' '}
-                          <span className="text-[var(--ice)]">{supply.via.id}</span>, where its
+                          <span className="text-[#0284C7] font-semibold">{supply.via.id}</span>, where its
                           resupply comes from.
                         </>
                       )}
                     </p>
 
                     {relevantStock.length === 0 ? (
-                      <p className="text-[12px] text-low">
+                      <p className="text-[12px] text-[#64748B]">
                         Nothing in the{' '}
                         {(RELEVANT_STOCK[selected.type] || RELEVANT_STOCK.OTHER).join(' or ')}{' '}
                         categories is held at {supply.name}.
@@ -1678,10 +1644,10 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
                     ) : (
                       <ul className="space-y-2.5">
                         {relevantStock.map((item) => (
-                          <li key={item.id} className="flex items-start justify-between gap-3">
+                          <li key={item.id} className="flex items-start justify-between gap-3 rounded-lg border border-slate-100 bg-white p-2.5 shadow-2xs">
                             <div className="min-w-0">
-                              <div className="truncate text-[12.5px] text-hi">{item.item_name}</div>
-                              <div className="mono truncate text-[11px] text-low">
+                              <div className="truncate text-[12.5px] font-semibold text-[#0F172A]">{item.item_name}</div>
+                              <div className="mono truncate text-[11px] text-[#64748B]">
                                 {formatQuantity(item.quantity, item.unit)} · minimum{' '}
                                 {item.minimum_quantity}
                               </div>
@@ -1694,7 +1660,7 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
 
                     <button
                       type="button"
-                      className="btn btn--ghost btn--sm mt-3"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-[#0284C7] hover:underline mt-3"
                       onClick={() => goTo('inventory')}
                     >
                       <Boxes size={13} /> Open inventory
@@ -1708,11 +1674,11 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
       </div>
 
       {/* ================= OPERATIONAL EMERGENCY PROTOCOL ================= */}
-      <div className="alert-strip alert-strip--info">
-        <Radio size={15} className="mt-0.5 shrink-0 text-[var(--accent)]" />
-        <div className="text-[12px] text-mid">
-          <strong className="text-hi">
-            Emergency Dispatch & Triage Matrix.
+      <div className="rounded-xl border border-sky-200 bg-sky-50/60 p-4 flex items-center gap-3 text-[#0F172A]">
+        <Radio size={18} className="shrink-0 text-[#0284C7]" />
+        <div className="text-[12px] text-[#475569] leading-relaxed">
+          <strong className="font-semibold text-[#0F172A]">
+            Emergency Dispatch &amp; Triage Matrix.
           </strong>{' '}
           Logging an incident synchronizes response teams, alerts medical bay, and updates station status. Severity levels adhere to COMNAP Antarctic incident management guidelines. Field telemetry and distress radio protocols maintain offline persistence across satellite blackouts.
         </div>
@@ -1725,39 +1691,30 @@ export default function Emergency({ goTo, focusedIncidentId, onClearFocus, onOpe
 
 /* ============================================================
    ONE CARD ON THE RESPONSE BOARD
-   ============================================================
-   Split out for the same reason the weather station card is: the page
-   body stays readable, and one incident's layout lives in one place.
    ============================================================ */
 function IncidentCard({ incident, person, now, selected, canRespond, onAcknowledge, onResolve, onOpen }) {
   const waiting = !incident.acknowledged_at
 
   return (
     <div
-      className="incident"
-      /* THE SEVERITY COLOUR ON THE LEFT EDGE, taken from the same tone the
-         badge beside it uses. An SVG fill and a CSS variable cannot meet,
-         which is why statusColour() exists — this is the same problem: a
-         colour chosen from data at runtime. Because both the stripe and
-         the badge read one tone, they can never disagree. */
+      className="incident rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition hover:shadow-md"
       style={{
+        borderLeftWidth: 4,
         borderLeftColor: statusColour(SEVERITY, incident.severity),
-        /* The selected card is outlined so the board and the detail panel
-           below visibly refer to the same incident. */
-        boxShadow: selected ? 'inset 0 0 0 1px var(--ice-dim)' : undefined,
+        boxShadow: selected ? '0 0 0 2px #0284C7' : undefined,
       }}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="mono text-[12px] text-mid">{incident.id}</span>
-            <span className="text-[13.5px] text-hi">
+            <span className="mono text-[12px] font-semibold text-[#64748B]">{incident.id}</span>
+            <span className="text-[13.5px] font-bold text-[#0F172A]">
               {statusLabel(EMERGENCY_TYPE, incident.type)}
             </span>
             <Badge map={SEVERITY} value={incident.severity} />
             <Badge map={EMERGENCY_STATUS} value={incident.status} dot />
           </div>
-          <div className="mt-1 flex items-start gap-1.5 text-[11.5px] text-low">
+          <div className="mt-1 flex items-start gap-1.5 text-[11.5px] text-[#64748B]">
             <MapPin size={11} className="mt-0.5 shrink-0" />
             <span className="min-w-0">
               {incident.location}
@@ -1769,45 +1726,41 @@ function IncidentCard({ incident, person, now, selected, canRespond, onAcknowled
           </div>
         </div>
 
-        {/* The clock. Red while nobody has picked it up, amber once a team
-            has — the number a duty officer is looking for either way. */}
+        {/* The clock */}
         <div className="shrink-0 text-right">
           <div
-            className="incident-clock"
-            style={{ color: waiting ? 'var(--red)' : 'var(--amber)' }}
+            className={`mono text-base font-bold ${waiting ? 'text-rose-600' : 'text-amber-700'}`}
           >
             {duration(incident.reported_at, now)}
           </div>
-          <div className="text-[10px] uppercase tracking-[0.07em] text-low">
+          <div className="text-[10px] uppercase tracking-[0.07em] text-[#64748B] font-semibold">
             {waiting ? 'unacknowledged' : 'open'}
           </div>
         </div>
       </div>
 
-      <p className="mt-2.5 text-[12px] leading-relaxed text-mid">{incident.description}</p>
+      <p className="mt-2.5 text-[12px] leading-relaxed text-[#475569]">{incident.description}</p>
 
       <div className="mt-2.5 space-y-1 text-[11.5px]">
         {person && (
-          <div className="flex items-center gap-1.5 text-mid">
-            <User size={11} className="shrink-0 text-low" />
+          <div className="flex items-center gap-1.5 text-[#475569]">
+            <User size={11} className="shrink-0 text-[#64748B]" />
             <span className="truncate">
-              {person.name} · {person.role}
-              <span className="mono text-low"> · {person.blood_group || '—'}</span>
+              <strong className="text-[#0F172A] font-semibold">{person.name}</strong> · {person.role}
+              <span className="mono text-[#64748B]"> · {person.blood_group || '—'}</span>
             </span>
           </div>
         )}
         <div className="flex items-center gap-1.5">
-          <Users size={11} className="shrink-0 text-low" />
+          <Users size={11} className="shrink-0 text-[#64748B]" />
           {incident.assigned_team ? (
-            <span className="truncate text-mid">{incident.assigned_team}</span>
+            <span className="truncate text-[#475569] font-medium">{incident.assigned_team}</span>
           ) : (
-            /* An unassigned incident is a real state worth shouting about,
-               not a blank field. */
-            <span className="text-[var(--orange)]">No team assigned</span>
+            <span className="text-amber-700 font-semibold">No team assigned</span>
           )}
         </div>
         {incident.response_note && (
-          <div className="flex items-start gap-1.5 text-low">
+          <div className="flex items-start gap-1.5 text-[#64748B]">
             <Clock size={11} className="mt-0.5 shrink-0" />
             <span>{incident.response_note}</span>
           </div>
@@ -1815,25 +1768,29 @@ function IncidentCard({ incident, person, now, selected, canRespond, onAcknowled
       </div>
 
       <div className="mt-3 flex flex-wrap gap-2">
-        {/* Acknowledge and Resolve belong to the roles that may respond.
-            Detail is always there, so a read-only session can still open the
-            incident and read everything about it. */}
         {canRespond && waiting && (
-          <button type="button" className="btn btn--sm" onClick={onAcknowledge}>
+          <button
+            type="button"
+            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-[#0F172A] hover:bg-slate-50 transition shadow-2xs"
+            onClick={onAcknowledge}
+          >
             <Clock size={12} /> Acknowledge
           </button>
         )}
         {canRespond && (
           <button
             type="button"
-            className="btn btn--sm"
+            className="inline-flex items-center gap-1 rounded-lg border border-emerald-300 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition shadow-2xs"
             onClick={onResolve}
-            style={{ borderColor: 'rgba(79,201,138,0.45)', color: 'var(--green)' }}
           >
             <CheckCircle2 size={12} /> Resolve
           </button>
         )}
-        <button type="button" className="btn btn--ghost btn--sm" onClick={onOpen}>
+        <button
+          type="button"
+          className="inline-flex items-center gap-1 rounded-lg border border-transparent px-2.5 py-1 text-xs font-semibold text-[#0284C7] hover:bg-sky-50 transition"
+          onClick={onOpen}
+        >
           Detail
         </button>
       </div>

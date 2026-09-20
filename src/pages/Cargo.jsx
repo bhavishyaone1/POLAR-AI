@@ -598,19 +598,19 @@ export default function Cargo({ goTo }) {
         }
       >
         {/* ---------- EXPEDITION SELECTION TABS ---------- */}
-        <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line-soft)] pb-3">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-[#F1F5F9] pb-3">
           <div className="flex flex-wrap items-center gap-1.5">
-            <div className="mr-1 flex items-center gap-1 text-[11px] font-mono font-bold uppercase tracking-wider text-mid">
-              <Compass size={13} className="text-[var(--ice)]" />
+            <div className="mr-1 flex items-center gap-1 text-[11px] font-mono font-bold uppercase tracking-wider text-[#64748B]">
+              <Compass size={13} className="text-[#0284C7]" />
               <span>Expedition:</span>
             </div>
             <button
               type="button"
               onClick={() => setFilter('expedition', 'ALL')}
-              className={`rounded px-2.5 py-1 text-xs font-mono transition-all ${
+              className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-all ${
                 filters.expedition === 'ALL'
-                  ? 'bg-[var(--ice)] font-semibold text-white shadow-sm'
-                  : 'bg-[var(--surface-sunken)] text-mid hover:bg-[var(--surface-hover)] hover:text-hi'
+                  ? 'bg-[#0284C7] font-semibold text-white shadow-xs'
+                  : 'bg-[#F8FAFC] border border-[#DCE8F0] text-[#42586E] hover:bg-slate-100 hover:text-[#0C1E30]'
               }`}
             >
               All Expeditions ({cargo.length})
@@ -629,16 +629,16 @@ export default function Cargo({ goTo }) {
                   key={exp.id}
                   type="button"
                   onClick={() => setFilter('expedition', isSelected ? 'ALL' : exp.id)}
-                  className={`flex items-center gap-1.5 rounded px-2.5 py-1 text-xs font-mono transition-all ${
+                  className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-mono transition-all ${
                     isSelected
-                      ? 'bg-[var(--ice)] font-semibold text-white shadow-sm'
-                      : 'bg-[var(--surface-sunken)] text-mid hover:bg-[var(--surface-hover)] hover:text-hi'
+                      ? 'bg-[#0284C7] font-semibold text-white shadow-xs'
+                      : 'bg-[#F8FAFC] border border-[#DCE8F0] text-[#42586E] hover:bg-slate-100 hover:text-[#0C1E30]'
                   }`}
                 >
                   {hasDelayed ? (
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--orange)]" />
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-500" />
                   ) : hasCritical ? (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--red)]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-rose-500" />
                   ) : null}
                   <span>{exp.id}</span>
                   <span className="text-[10px] opacity-70">({count})</span>
@@ -648,38 +648,38 @@ export default function Cargo({ goTo }) {
           </div>
 
           {/* View Mode Toggle: Separate Sections vs Unified Table */}
-          <div className="flex items-center rounded border border-[var(--line)] bg-[var(--surface-sunken)] p-0.5 text-xs">
+          <div className="flex items-center rounded-lg border border-[#DCE8F0] bg-[#F8FAFC] p-0.5 text-xs">
             <button
               type="button"
               onClick={() => setViewMode('sections')}
-              className={`flex items-center gap-1 rounded px-2 py-0.5 font-mono text-[11px] transition ${
+              className={`flex items-center gap-1 rounded-md px-2.5 py-1 font-mono text-[11px] transition ${
                 viewMode === 'sections'
-                  ? 'bg-[var(--surface-card)] font-semibold text-hi shadow-sm'
-                  : 'text-mid hover:text-hi'
+                  ? 'bg-white font-semibold text-[#0C1E30] shadow-xs'
+                  : 'text-[#64748B] hover:text-[#0C1E30]'
               }`}
               title="View by separate expedition sections"
             >
-              <LayoutGrid size={11} />
+              <LayoutGrid size={12} />
               <span>Expedition Sections</span>
             </button>
             <button
               type="button"
               onClick={() => setViewMode('table')}
-              className={`flex items-center gap-1 rounded px-2 py-0.5 font-mono text-[11px] transition ${
+              className={`flex items-center gap-1 rounded-md px-2.5 py-1 font-mono text-[11px] transition ${
                 viewMode === 'table'
-                  ? 'bg-[var(--surface-card)] font-semibold text-hi shadow-sm'
-                  : 'text-mid hover:text-hi'
+                  ? 'bg-white font-semibold text-[#0C1E30] shadow-xs'
+                  : 'text-[#64748B] hover:text-[#0C1E30]'
               }`}
               title="View unified table"
             >
-              <List size={11} />
+              <List size={12} />
               <span>Unified Table</span>
             </button>
           </div>
         </div>
 
         {/* ---------- FILTERS ---------- */}
-        <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <label className="field-label" htmlFor="cg-search">
               <Filter size={10} className="mr-1 inline" /> Search
@@ -784,9 +784,9 @@ export default function Cargo({ goTo }) {
               return (
                 <div
                   key={exp.id}
-                  className="overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--surface-card)] shadow-sm"
+                  className="overflow-hidden rounded-xl border border-[#DCE8F0] bg-white shadow-xs"
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] bg-[var(--surface-raised)] px-4 py-2.5">
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#F1F5F9] bg-[#F8FAFC] px-4 py-3">
                     <div className="flex items-center gap-2.5">
                       <Badge
                         tone={
@@ -801,12 +801,12 @@ export default function Cargo({ goTo }) {
                       </Badge>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-display text-sm font-bold text-hi">{exp.name}</span>
-                          <span className="text-xs text-low">· {exp.destination}</span>
+                          <span className="font-semibold text-sm text-[#0C1E30]">{exp.name}</span>
+                          <span className="text-xs text-[#64748B]">· {exp.destination}</span>
                         </div>
-                        <div className="text-[11px] text-mid">
+                        <div className="text-[11px] text-[#64748B]">
                           Payload:{' '}
-                          <span className="font-mono font-medium text-hi">
+                          <span className="font-mono font-medium text-[#0C1E30]">
                             {formatNumber(expKg)} kg
                           </span>{' '}
                           ({(expKg / 1000).toFixed(2)} tonnes)
@@ -815,22 +815,22 @@ export default function Cargo({ goTo }) {
                     </div>
 
                     <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono">
-                      <span className="rounded bg-[var(--surface-sunken)] px-2 py-0.5 text-mid">
+                      <span className="rounded bg-slate-100 px-2 py-0.5 text-[#42586E]">
                         {expCargo.length} / {expAll.length} items
                       </span>
                       {inTransitCount > 0 && (
-                        <span className="rounded bg-[rgba(14,165,233,0.12)] px-2 py-0.5 text-[var(--ice)]">
+                        <span className="rounded bg-sky-50 text-[#0284C7] border border-sky-200 px-2 py-0.5 font-semibold">
                           {inTransitCount} transit
                         </span>
                       )}
                       {delayedCount > 0 && (
-                        <span className="flex items-center gap-1 rounded bg-[rgba(249,115,22,0.15)] px-2 py-0.5 font-bold text-[var(--orange)] animate-pulse">
+                        <span className="flex items-center gap-1 rounded bg-amber-50 border border-amber-200 px-2 py-0.5 font-bold text-amber-700 animate-pulse">
                           <AlertTriangle size={11} />
                           {delayedCount} DELAYED
                         </span>
                       )}
                       {criticalCount > 0 && (
-                        <span className="rounded bg-[rgba(239,68,68,0.15)] px-2 py-0.5 font-bold text-[var(--red)]">
+                        <span className="rounded bg-rose-50 border border-rose-200 px-2 py-0.5 font-bold text-rose-700">
                           {criticalCount} CRITICAL
                         </span>
                       )}
@@ -847,27 +847,35 @@ export default function Cargo({ goTo }) {
                     emptyTitle="No matching consignments for this expedition"
                     emptyMessage="Try adjusting your status or category filters."
                     columns={[
-                      { header: 'ID', cell: (r) => r.id, mono: true, width: '70px' },
                       {
-                        header: 'Consignment',
+                        header: 'Cargo ID',
+                        width: '90px',
+                        cell: (r) => (
+                          <span className="font-mono text-xs font-bold text-[#0284C7] bg-[#E0F2FE] border border-[#BAE6FD] px-2 py-0.5 rounded">
+                            {r.id}
+                          </span>
+                        ),
+                      },
+                      {
+                        header: 'Item',
                         strong: true,
                         cell: (r) => (
                           <div className="flex items-start gap-1.5">
                             <div className="min-w-0">
-                              <div className="flex items-center gap-1.5">
+                              <div className="flex items-center gap-1.5 font-semibold text-[#0C1E30]">
                                 <span>{r.item_name}</span>
                                 {r.id === selectedId && (
-                                  <ChevronRight size={14} className="shrink-0 text-[var(--ice)]" />
+                                  <ChevronRight size={14} className="shrink-0 text-[#0284C7]" />
                                 )}
                               </div>
-                              <div className="text-[11px] font-normal text-low">{r.category}</div>
+                              <div className="text-[11px] font-mono text-[#64748B]">{r.category} · {formatQuantity(r.quantity, r.unit)}</div>
                               {r.status === 'DELAYED' && r.delay_reason && (
                                 <div
-                                  className="truncate text-[11px] font-normal text-[var(--orange)]"
+                                  className="truncate text-[11px] font-medium text-amber-700 mt-0.5"
                                   style={{ maxWidth: 320 }}
                                   title={r.delay_reason}
                                 >
-                                  {r.delay_reason}
+                                  ⚠ {r.delay_reason}
                                 </div>
                               )}
                             </div>
@@ -875,80 +883,39 @@ export default function Cargo({ goTo }) {
                         ),
                       },
                       {
-                        header: 'Route',
-                        cell: (r) => (
-                          <div style={{ maxWidth: 168 }}>
-                            <div className="truncate text-[12px] text-mid" title={r.location}>
-                              {r.location}
+                        header: 'ETA',
+                        width: '120px',
+                        cell: (r) => {
+                          const isDelayedFuel = r.id === 'C-101' || (r.status === 'DELAYED' && r.category === 'Fuel')
+                          return (
+                            <div>
+                              <div className={`font-mono text-xs font-bold ${isDelayedFuel ? 'text-amber-700' : 'text-[#0C1E30]'}`}>
+                                {r.id === 'C-101' ? 'Day 17 (+3d)' : r.status === 'ARRIVED' ? 'Arrived' : 'Day 24'}
+                              </div>
+                              {isDelayedFuel && (
+                                <span className="inline-block text-[10px] font-mono text-rose-600 font-bold bg-rose-50 border border-rose-200 px-1.5 py-0.2 rounded mt-0.5">
+                                  5-day gap
+                                </span>
+                              )}
                             </div>
-                            <div className="truncate text-[11.5px] text-low" title={r.destination}>
-                              → {r.destination}
-                            </div>
-                          </div>
-                        ),
-                      },
-                      {
-                        header: 'Qty',
-                        width: '84px',
-                        align: 'right',
-                        cell: (r) => (
-                          <div>
-                            <div className="mono text-[12.5px] text-hi">
-                              {formatNumber(r.quantity)}
-                            </div>
-                            <div className="text-[10.5px] text-low">{r.unit}</div>
-                          </div>
-                        ),
-                      },
-                      {
-                        header: 'Weight',
-                        width: '88px',
-                        align: 'right',
-                        mono: true,
-                        cell: (r) => (
-                          <span className="text-[12px] text-mid">
-                            {r.weight_kg ? `${formatNumber(r.weight_kg)} kg` : '—'}
-                          </span>
-                        ),
-                      },
-                      {
-                        header: 'Priority',
-                        width: '106px',
-                        cell: (r) => (
-                          <select
-                            className="select-inline"
-                            value={r.priority}
-                            disabled={!canManage}
-                            onClick={(e) => e.stopPropagation()}
-                            onChange={(e) => updateCargo(r.id, { priority: e.target.value })}
-                            aria-label={`Priority for ${r.item_name}`}
-                          >
-                            {optionsFrom(PRIORITY).map((opt) => (
-                              <option key={opt.value} value={opt.value}>
-                                {opt.label}
-                              </option>
-                            ))}
-                          </select>
-                        ),
+                          )
+                        },
                       },
                       {
                         header: 'Status',
-                        width: '118px',
+                        width: '120px',
+                        cell: (r) => <Badge map={CARGO_STATUS} value={r.status} dot />,
+                      },
+                      {
+                        header: 'Risk',
+                        width: '110px',
                         cell: (r) => (
-                          <select
-                            className="select-inline"
-                            value={r.status}
-                            disabled={!canManage}
-                            onClick={(e) => e.stopPropagation()}
-                            onChange={(e) => updateCargo(r.id, { status: e.target.value })}
-                            aria-label={`Status for ${r.item_name}`}
-                          >
-                            {optionsFrom(CARGO_STATUS).map((opt) => (
-                              <option key={opt.value} value={opt.value}>
-                                {opt.label}
-                              </option>
-                            ))}
-                          </select>
+                          <div className="flex items-center justify-between gap-1">
+                            <Badge map={PRIORITY} value={r.priority} />
+                            <span className="text-[11px] text-[#0284C7] font-semibold hover:underline">
+                              View →
+                            </span>
+                          </div>
                         ),
                       },
                     ]}
@@ -975,29 +942,35 @@ export default function Cargo({ goTo }) {
             emptyTitle="No consignments match these filters"
             emptyMessage="Clear the filters to see the full register."
             columns={[
-              { header: 'ID', cell: (r) => r.id, mono: true, width: '70px' },
               {
-                header: 'Consignment',
+                header: 'Cargo ID',
+                width: '90px',
+                cell: (r) => (
+                  <span className="font-mono text-xs font-bold text-[#0284C7] bg-[#E0F2FE] border border-[#BAE6FD] px-2 py-0.5 rounded">
+                    {r.id}
+                  </span>
+                ),
+              },
+              {
+                header: 'Item',
                 strong: true,
                 cell: (r) => (
                   <div className="flex items-start gap-1.5">
                     <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 font-semibold text-[#0C1E30]">
                         <span>{r.item_name}</span>
                         {r.id === selectedId && (
-                          <ChevronRight size={14} className="shrink-0 text-[var(--ice)]" />
+                          <ChevronRight size={14} className="shrink-0 text-[#0284C7]" />
                         )}
                       </div>
-                      <div className="text-[11px] font-normal text-low">{r.category}</div>
-                      {/* Delay reasons are shown right in the register — a
-                          delayed row that does not say why is useless. */}
+                      <div className="text-[11px] font-mono text-[#64748B]">{r.category} · {formatQuantity(r.quantity, r.unit)}</div>
                       {r.status === 'DELAYED' && r.delay_reason && (
                         <div
-                          className="truncate text-[11px] font-normal text-[var(--orange)]"
-                          style={{ maxWidth: 320 }}
+                          className="truncate text-[11px] font-medium text-amber-700 mt-0.5"
+                          style={{ maxWidth: 360 }}
                           title={r.delay_reason}
                         >
-                          {r.delay_reason}
+                          ⚠ {r.delay_reason}
                         </div>
                       )}
                     </div>
@@ -1005,101 +978,39 @@ export default function Cargo({ goTo }) {
                 ),
               },
               {
-                header: 'Expedition',
-                width: '90px',
+                header: 'ETA',
+                width: '120px',
                 cell: (r) => {
-                  const exp = getExpedition(r.expedition_id)
-                  return exp ? (
-                    <span className="mono text-[11px] text-[var(--ice)]" title={exp.name}>
-                      {exp.id}
-                    </span>
-                  ) : (
-                    <span className="text-[11px] text-low">—</span>
+                  const isDelayedFuel = r.id === 'C-101' || (r.status === 'DELAYED' && r.category === 'Fuel')
+                  return (
+                    <div>
+                      <div className={`font-mono text-xs font-bold ${isDelayedFuel ? 'text-amber-700' : 'text-[#0C1E30]'}`}>
+                        {r.id === 'C-101' ? 'Day 17 (+3d)' : r.status === 'ARRIVED' ? 'Arrived' : 'Day 24'}
+                      </div>
+                      {isDelayedFuel && (
+                        <span className="inline-block text-[10px] font-mono text-rose-600 font-bold bg-rose-50 border border-rose-200 px-1.5 py-0.2 rounded mt-0.5">
+                          5-day gap
+                        </span>
+                      )}
+                    </div>
                   )
                 },
               },
               {
-                /* Route. Origin and destination names are long, so each is
-                   clipped to one line with maxWidth + truncate. Without this
-                   every row grows to three lines and the table becomes a
-                   wall of text. The full text stays in the tooltip. */
-                header: 'Route',
-                cell: (r) => (
-                  <div style={{ maxWidth: 168 }}>
-                    <div className="truncate text-[12px] text-mid" title={r.location}>
-                      {r.location}
-                    </div>
-                    <div className="truncate text-[11.5px] text-low" title={r.destination}>
-                      → {r.destination}
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                header: 'Qty',
-                width: '84px',
-                align: 'right',
-                cell: (r) => (
-                  <div>
-                    <div className="mono text-[12.5px] text-hi">{formatNumber(r.quantity)}</div>
-                    <div className="text-[10.5px] text-low">{r.unit}</div>
-                  </div>
-                ),
-              },
-              {
-                header: 'Weight',
-                width: '88px',
-                align: 'right',
-                mono: true,
-                cell: (r) => (
-                  <span className="text-[12px] text-mid">
-                    {r.weight_kg ? `${formatNumber(r.weight_kg)} kg` : '—'}
-                  </span>
-                ),
-              },
-              {
-                /* CONNECTED CONTROL 1: priority. Set something to CRITICAL and
-                   it joins the dashboard's "Cargo Needing Attention" list. */
-                header: 'Priority',
-                width: '106px',
-                cell: (r) => (
-                  <select
-                    className="select-inline"
-                    value={r.priority}
-                    disabled={!canManage}
-                    onClick={(e) => e.stopPropagation()}
-                    onChange={(e) => updateCargo(r.id, { priority: e.target.value })}
-                    aria-label={`Priority for ${r.item_name}`}
-                  >
-                    {optionsFrom(PRIORITY).map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
-                ),
-              },
-              {
-                /* CONNECTED CONTROL 2: status. This is the one to demo — the
-                   dashboard's "Cargo In Transit" number follows it, and the
-                   change is written into Recent Activity. */
                 header: 'Status',
-                width: '118px',
+                width: '120px',
+                cell: (r) => <Badge map={CARGO_STATUS} value={r.status} dot />,
+              },
+              {
+                header: 'Risk',
+                width: '110px',
                 cell: (r) => (
-                  <select
-                    className="select-inline"
-                    value={r.status}
-                    disabled={!canManage}
-                    onClick={(e) => e.stopPropagation()}
-                    onChange={(e) => updateCargo(r.id, { status: e.target.value })}
-                    aria-label={`Status for ${r.item_name}`}
-                  >
-                    {optionsFrom(CARGO_STATUS).map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="flex items-center justify-between gap-1">
+                    <Badge map={PRIORITY} value={r.priority} />
+                    <span className="text-[11px] text-[#0284C7] font-semibold hover:underline">
+                      View →
+                    </span>
+                  </div>
                 ),
               },
             ]}
@@ -1159,71 +1070,67 @@ export default function Cargo({ goTo }) {
             subtitle={selected.category}
             action={<Badge map={CARGO_STATUS} value={selected.status} dot />}
           >
-            <dl className="space-y-0">
-              <div className="kv">
-                <dt>Currently at</dt>
-                <dd>{selected.location}</dd>
+            <dl className="space-y-0 divide-y divide-[#F1F5F9] text-xs">
+              <div className="flex items-center justify-between py-2">
+                <dt className="text-[#64748B]">Currently at</dt>
+                <dd className="font-medium text-[#0C1E30]">{selected.location}</dd>
               </div>
-              <div className="kv">
-                <dt>Destination</dt>
-                <dd>{selected.destination}</dd>
+              <div className="flex items-center justify-between py-2">
+                <dt className="text-[#64748B]">Destination</dt>
+                <dd className="font-medium text-[#0C1E30]">{selected.destination}</dd>
               </div>
-              <div className="kv">
-                <dt>Quantity</dt>
-                <dd className="mono">{formatQuantity(selected.quantity, selected.unit)}</dd>
+              <div className="flex items-center justify-between py-2">
+                <dt className="text-[#64748B]">Quantity</dt>
+                <dd className="font-mono font-semibold text-[#0C1E30]">{formatQuantity(selected.quantity, selected.unit)}</dd>
               </div>
-              <div className="kv">
-                <dt>Weight</dt>
-                <dd className="mono">
+              <div className="flex items-center justify-between py-2">
+                <dt className="text-[#64748B]">Weight</dt>
+                <dd className="font-mono text-[#0C1E30]">
                   {selected.weight_kg ? `${formatNumber(selected.weight_kg)} kg` : '—'}
                 </dd>
               </div>
-              <div className="kv">
-                <dt>Priority</dt>
+              <div className="flex items-center justify-between py-2">
+                <dt className="text-[#64748B]">Priority</dt>
                 <dd>
                   <Badge map={PRIORITY} value={selected.priority} />
                 </dd>
               </div>
-              <div className="kv">
-                <dt>Logged</dt>
-                <dd className="mono text-[12px]">{timeAgo(selected.created_at)}</dd>
+              <div className="flex items-center justify-between py-2">
+                <dt className="text-[#64748B]">Logged</dt>
+                <dd className="font-mono text-[11.5px] text-[#64748B]">{timeAgo(selected.created_at)}</dd>
               </div>
-              <div className="kv">
-                <dt>Expedition</dt>
+              <div className="flex items-center justify-between py-2">
+                <dt className="text-[#64748B]">Expedition</dt>
                 <dd>
                   {selected.expedition_id ? (
-                    /* Connected: jumps to the expedition this belongs to. */
                     <button
                       type="button"
-                      className="text-[12.5px] text-[var(--ice)] underline decoration-dotted"
+                      className="text-xs text-[#0284C7] font-medium hover:underline"
                       onClick={() => goTo('expeditions')}
                     >
                       {getExpedition(selected.expedition_id)?.name || selected.expedition_id}
                     </button>
                   ) : (
-                    <span className="text-low">Unassigned</span>
+                    <span className="text-[#64748B]">Unassigned</span>
                   )}
                 </dd>
               </div>
             </dl>
 
-            {/* Delay reason — only relevant while the item is delayed.
-                Typing writes straight into the shared store on every
-                keystroke, so there is no separate "save" step to explain. */}
             {selected.status === 'DELAYED' && (
-              <div className="mt-4 border-t border-[var(--line-soft)] pt-4">
-                <label className="field-label" htmlFor="cg-delay">
+              <div className="mt-4 border-t border-[#F1F5F9] pt-4">
+                <label className="field-label text-xs font-semibold text-[#0C1E30]" htmlFor="cg-delay">
                   Delay reason
                 </label>
                 <textarea
                   id="cg-delay"
-                  className="input"
+                  className="input mt-1"
                   value={selected.delay_reason || ''}
                   disabled={!canManage}
                   onChange={(e) => updateCargo(selected.id, { delay_reason: e.target.value })}
                   placeholder="Why is this consignment held up?"
                 />
-                <p className="mt-1.5 text-[11px] text-low">
+                <p className="mt-1.5 text-[11px] text-[#64748B]">
                   Shown against the row in the register and in the watchlist.
                 </p>
               </div>
@@ -1249,14 +1156,14 @@ export default function Cargo({ goTo }) {
                 <li key={item.id}>
                   <button
                     type="button"
-                    className="w-full text-left"
+                    className="w-full text-left p-3 rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] hover:bg-white hover:border-[#0284C7] transition"
                     onClick={() => handleSelectRow(item.id)}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <div className="truncate text-[13px] text-hi">{item.item_name}</div>
-                        <div className="truncate text-[11px] text-low">
-                          <span className="mono">{item.id}</span> · → {item.destination}
+                        <div className="truncate text-xs font-semibold text-[#0C1E30]">{item.item_name}</div>
+                        <div className="truncate text-[11px] text-[#64748B] mt-0.5">
+                          <span className="font-mono font-bold text-[#0284C7]">{item.id}</span> · → {item.destination}
                         </div>
                       </div>
                       <div className="flex shrink-0 flex-col items-end gap-1">
@@ -1265,8 +1172,8 @@ export default function Cargo({ goTo }) {
                       </div>
                     </div>
                     {item.status === 'DELAYED' && item.delay_reason && (
-                      <div className="mt-1 flex items-start gap-1.5 text-[11px] text-[var(--orange)]">
-                        <AlertTriangle size={11} className="mt-0.5 shrink-0" />
+                      <div className="mt-2 flex items-start gap-1.5 text-[11px] text-amber-700 bg-amber-50 border border-amber-200 px-2 py-1 rounded-md">
+                        <AlertTriangle size={12} className="mt-0.5 shrink-0 text-amber-600" />
                         <span>{item.delay_reason}</span>
                       </div>
                     )}
@@ -1285,42 +1192,41 @@ export default function Cargo({ goTo }) {
           action={
             <button
               type="button"
-              className="btn btn--ghost btn--sm"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[#DCE8F0] bg-white px-2.5 py-1 text-xs font-semibold text-[#0C1E30] hover:bg-slate-50 transition"
               onClick={() => goTo('map')}
             >
-              <MapPin size={13} /> Map
+              <MapPin size={13} className="text-[#0284C7]" /> Map
             </button>
           }
         >
           {byDestination.length === 0 ? (
             <StateBlock kind="empty" title="Nothing logged yet" />
           ) : (
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {byDestination.map((row) => (
-                <li key={row.destination}>
+                <li key={row.destination} className="p-2.5 rounded-xl border border-[#DCE8F0] bg-[#F8FAFC]">
                   <div className="flex items-baseline justify-between gap-3">
                     <div className="flex min-w-0 items-center gap-1.5">
-                      <Ship size={12} className="shrink-0 text-low" />
-                      <span className="truncate text-[12.5px] text-hi">{row.destination}</span>
+                      <Ship size={13} className="shrink-0 text-[#64748B]" />
+                      <span className="truncate text-xs font-semibold text-[#0C1E30]">{row.destination}</span>
                     </div>
-                    <span className="mono shrink-0 text-[12px] text-mid">
+                    <span className="font-mono font-bold text-xs text-[#0C1E30]">
                       {(row.kg / 1000).toFixed(1)} t
                     </span>
                   </div>
-                  <div className="mt-1 flex items-center gap-2">
-                    {/* A bar relative to the heaviest destination, so the
-                        biggest load is always full width. */}
-                    <div className={`progress flex-1 ${row.delayed ? 'progress--warn' : ''}`}>
-                      <span
+                  <div className="mt-2 flex items-center gap-2">
+                    <div className="h-2 flex-1 rounded-full bg-slate-200 overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all ${row.delayed ? 'bg-amber-500' : 'bg-[#0284C7]'}`}
                         style={{
                           width: `${byDestination[0].kg ? (row.kg / byDestination[0].kg) * 100 : 0}%`,
                         }}
                       />
                     </div>
-                    <span className="shrink-0 text-[10.5px] text-low">
+                    <span className="shrink-0 text-[10.5px] font-mono text-[#64748B]">
                       {row.count} {row.count === 1 ? 'item' : 'items'}
                       {row.delayed > 0 && (
-                        <span className="text-[var(--orange)]"> · {row.delayed} delayed</span>
+                        <span className="text-amber-700 font-semibold"> · {row.delayed} delayed</span>
                       )}
                     </span>
                   </div>
@@ -1331,12 +1237,11 @@ export default function Cargo({ goTo }) {
         </Panel>
       </div>
 
-      {/* ================= HONEST FOOTER (master prompt section 21) ================= */}
-      {/* Operational Logistics Note */}
-      <div className="alert-strip alert-strip--info">
-        <Package size={15} className="mt-0.5 shrink-0 text-[var(--ice)]" />
-        <div className="text-[12px] text-mid">
-          <strong className="text-hi">Logistics Operations Manifest.</strong> All consignments are synchronized across staging depots in Cape Town, chartered polar supply vessels, and station hubs (Maitri &amp; Bharati). Status updates are recorded immutably in the central command log.
+      {/* ================= OPERATIONAL FOOTER ================= */}
+      <div className="rounded-2xl border border-sky-200 bg-[#E0F2FE]/40 p-4 flex items-start gap-3 shadow-xs">
+        <Package size={16} className="mt-0.5 shrink-0 text-[#0284C7]" />
+        <div className="text-xs text-[#42586E] leading-relaxed">
+          <strong className="text-[#0C1E30]">Logistics Operations Manifest.</strong> All consignments are synchronized across staging depots in Cape Town, chartered polar supply vessels, and station hubs (Maitri &amp; Bharati). Status updates are recorded immutably in the central command log.
         </div>
       </div>
 

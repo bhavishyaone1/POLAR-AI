@@ -468,27 +468,27 @@ export default function Inventory({ goTo }) {
         }}
       />
 
-      {/* ================= PREDICTIVE RUNWAY & CONSUMPTION ================= */}
+      {/* ================= PREDICTIVE RUNWAY & RESOURCE DEPLETION HORIZON ================= */}
       <Panel
-        eyebrow="POLAR-AI Predictive Intelligence"
+        eyebrow="Resource Depletion Intelligence"
         title="Predictive Consumption & Resource Runway"
-        subtitle="Dynamic burn rate tracking, calculated depletion horizons, and unhedged resupply gaps"
+        subtitle="Answers: What is running low? What will run out? When?"
         action={
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3 py-1.5 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[#DCE8F0] bg-white px-3 py-1.5 text-xs font-semibold text-[#0C1E30] hover:bg-[#F0F8FB] transition shadow-xs"
               onClick={() => goTo('simulator')}
             >
-              <Zap size={13} className="text-[#1597D4]" />
+              <Zap size={13} className="text-[#0284C7]" />
               <span>What-If Sandbox</span>
             </button>
             <button
               type="button"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-[#DDEAF0] bg-white px-3 py-1.5 text-xs font-semibold text-[#12263A] hover:bg-[#F0F8FB] transition shadow-xs"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[#DCE8F0] bg-white px-3 py-1.5 text-xs font-semibold text-[#0C1E30] hover:bg-[#F0F8FB] transition shadow-xs"
               onClick={() => goTo('risks')}
             >
-              <ArrowRight size={13} className="text-[#1597D4]" />
+              <ArrowRight size={13} className="text-[#0284C7]" />
               <span>Risk Cascade</span>
             </button>
           </div>
@@ -504,12 +504,12 @@ export default function Inventory({ goTo }) {
                 className={`cursor-pointer rounded-2xl border p-5 flex flex-col justify-between transition bg-white shadow-xs hover:shadow-md hover:scale-[1.01] ${
                   isDeficit
                     ? 'border-rose-300 ring-1 ring-rose-200 hover:border-rose-400'
-                    : 'border-[#DDEAF0] hover:border-[#BFDDE7]'
+                    : 'border-[#DCE8F0] hover:border-[#0284C7]'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-[10.5px] font-mono font-semibold uppercase tracking-wider text-[#8495A3]">
+                    <span className="text-[10.5px] font-mono font-semibold uppercase tracking-wider text-[#64748B]">
                       {item.location?.split(' ')[0] || 'Station'} · {item.category}
                     </span>
                     <span
@@ -526,56 +526,65 @@ export default function Inventory({ goTo }) {
                     </span>
                   </div>
 
-                  <div className="text-[14px] font-bold text-[#12263A] truncate" title={item.item_name}>
+                  <div className="text-[14.5px] font-bold text-[#0C1E30] truncate" title={item.item_name}>
                     {item.item_name}
                   </div>
 
-                  <div className="mt-3.5 flex items-baseline justify-between">
+                  <div className="mt-3 flex items-baseline justify-between">
                     <div>
-                      <div className={`text-2xl font-mono font-bold leading-none ${isDeficit ? 'text-rose-600' : 'text-[#12263A]'}`}>
-                        {daysRemaining} <span className="text-xs font-normal text-[#526779]">days</span>
+                      <div className={`text-2xl font-mono font-bold leading-none ${isDeficit ? 'text-rose-600' : 'text-[#0C1E30]'}`}>
+                        {daysRemaining} <span className="text-xs font-normal text-[#42586E]">days runway</span>
                       </div>
-                      <div className="text-[11px] text-[#8495A3] mt-1">
-                        Stock: <span className="font-mono text-[#12263A]">{formatNumber(item.quantity)}</span> {item.unit}
+                      <div className="text-[11px] text-[#64748B] mt-1">
+                        Stock: <span className="font-mono text-[#0C1E30] font-semibold">{formatNumber(item.quantity)}</span> {item.unit}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-xs font-mono text-[#526779] flex items-center gap-1 justify-end font-semibold">
-                        <Flame size={13} className="text-[#E7A51A]" />
+                      <div className="text-xs font-mono text-[#42586E] flex items-center gap-1 justify-end font-semibold">
+                        <Flame size={13} className="text-amber-500" />
                         <span>{formatNumber(item.daily_burn_rate)}</span>
                       </div>
-                      <div className="text-[10.5px] text-[#8495A3]">{item.unit}/day burn</div>
+                      <div className="text-[10.5px] text-[#64748B]">{item.unit}/d burn</div>
                     </div>
                   </div>
 
-                  <div className="mt-3 h-2 w-full bg-[#EAF5F9] rounded-full overflow-hidden">
-                    <div
-                      className="h-full rounded-full transition-all"
-                      style={{
-                        width: `${Math.min(100, (daysRemaining / 30) * 100)}%`,
-                        backgroundColor: isDeficit ? '#E5484D' : daysRemaining <= 15 ? '#E7A51A' : '#1597D4',
-                      }}
-                    />
+                  {/* Visual Depletion Meter */}
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between text-[10.5px] font-mono text-[#64748B] mb-1">
+                      <span>Depletion horizon</span>
+                      <span className={isDeficit ? 'text-rose-600 font-bold' : 'text-[#0C1E30]'}>
+                        {Math.round(Math.min(100, (daysRemaining / 30) * 100))}% safe capacity
+                      </span>
+                    </div>
+                    <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden border border-[#DCE8F0]">
+                      <div
+                        className="h-full rounded-full transition-all"
+                        style={{
+                          width: `${Math.min(100, (daysRemaining / 30) * 100)}%`,
+                          backgroundColor: isDeficit ? '#E11D48' : daysRemaining <= 15 ? '#D97706' : '#0284C7',
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-[#EEF7FA] text-xs">
+                <div className="mt-4 pt-3 border-t border-[#F1F5F9] text-xs">
                   {isDeficit ? (
                     <div className="text-rose-700 font-medium flex items-start gap-1.5">
                       <AlertTriangle size={14} className="shrink-0 mt-0.5 text-rose-600" />
                       <span>
-                        Resupply gap: <strong className="font-mono text-rose-700">-{resupplyGapDays}d deficit</strong> before {linkedCargo?.id || 'resupply'} arrives (ETA {etaDays}d).
+                        Resupply gap: <strong className="font-mono text-rose-700">-{resupplyGapDays}d deficit</strong> before {linkedCargo?.id || 'resupply'} arrives (ETA Day {etaDays}).
                       </span>
                     </div>
                   ) : linkedCargo ? (
-                    <div className="text-[#526779] flex items-center justify-between">
-                      <span className="text-[#8495A3]">Resupply: <strong className="text-[#12263A] font-mono">{linkedCargo.id}</strong></span>
-                      <span className="font-mono font-semibold text-[#1597D4]">ETA {etaDays}d</span>
+                    <div className="text-[#42586E] flex items-center justify-between">
+                      <span className="text-[#64748B]">Inbound resupply: <strong className="text-[#0C1E30] font-mono">{linkedCargo.id}</strong></span>
+                      <span className="font-mono font-semibold text-[#0284C7]">ETA Day {etaDays}</span>
                     </div>
                   ) : (
-                    <div className="text-[#8495A3] flex items-center justify-between">
+                    <div className="text-[#64748B] flex items-center justify-between">
                       <span>Safety buffer</span>
-                      <span className="font-mono text-[#526779] font-medium">{item.safety_buffer_days || 3}d reserved</span>
+                      <span className="font-mono text-[#42586E] font-medium">{item.safety_buffer_days || 3}d reserved</span>
                     </div>
                   )}
                 </div>
@@ -867,8 +876,8 @@ export default function Inventory({ goTo }) {
               strong: true,
               cell: (r) => (
                 <div>
-                  <div>{r.item_name}</div>
-                  <div className="text-[11px] font-normal text-low">{r.category}</div>
+                  <div className="font-semibold text-[#0F172A]">{r.item_name}</div>
+                  <div className="text-[11px] font-normal text-[#64748B]">{r.category}</div>
                 </div>
               ),
             },
@@ -878,10 +887,10 @@ export default function Inventory({ goTo }) {
               header: 'Stored at',
               cell: (r) => (
                 <div style={{ maxWidth: 150 }}>
-                  <div className="truncate text-[12px]" title={r.location}>
+                  <div className="truncate text-[12px] font-medium text-[#334155]" title={r.location}>
                     {r.location}
                   </div>
-                  <div className="text-[10.5px] text-low">{timeAgo(r.updated_at)}</div>
+                  <div className="text-[10.5px] text-[#64748B]">{timeAgo(r.updated_at)}</div>
                 </div>
               ),
             },
@@ -893,8 +902,8 @@ export default function Inventory({ goTo }) {
                 return (
                   <div>
                     <div className="mono flex items-baseline justify-between gap-2 text-[12px]">
-                      <span className="text-hi">{formatNumber(r.quantity)}</span>
-                      <span className="text-[10.5px] text-low">
+                      <span className="font-semibold text-[#0F172A]">{formatNumber(r.quantity)}</span>
+                      <span className="text-[10.5px] text-[#64748B]">
                         min {formatNumber(r.minimum_quantity)} {r.unit}
                       </span>
                     </div>
@@ -915,30 +924,30 @@ export default function Inventory({ goTo }) {
               cell: (r) => {
                 const burn = Number(r.daily_burn_rate) || 0
                 if (burn <= 0) {
-                  return <span className="text-[11px] text-low">Durable holding</span>
+                  return <span className="text-[11px] text-[#64748B]">Durable holding</span>
                 }
                 const metrics = calculateResupplyMetrics(r, cargo)
                 const isDeficit = metrics.resupplyGapDays > 0
                 return (
                   <div>
                     <div className="flex items-center justify-between gap-1 text-[11.5px]">
-                      <span className="mono text-low font-medium">
+                      <span className="mono text-[#64748B] font-medium">
                         {formatNumber(burn)} {r.unit}/d
                       </span>
                       <span
                         className={`mono font-semibold ${
                           isDeficit
-                            ? 'text-[var(--red)]'
+                            ? 'text-rose-700'
                             : metrics.daysRemaining <= (Number(r.safety_buffer_days) || 3)
-                            ? 'text-[var(--orange)]'
-                            : 'text-[var(--green)]'
+                            ? 'text-amber-700'
+                            : 'text-emerald-700'
                         }`}
                       >
                         {metrics.daysRemaining}d runway
                       </span>
                     </div>
                     {isDeficit && (
-                      <div className="mt-0.5 text-[10px] font-semibold text-[var(--red)] flex items-center gap-1">
+                      <div className="mt-0.5 text-[10px] font-semibold text-rose-700 flex items-center gap-1">
                         <span>Shortfall: -{metrics.resupplyGapDays}d gap</span>
                       </div>
                     )}
@@ -1039,22 +1048,21 @@ export default function Inventory({ goTo }) {
           emptyMessage="No items with a minimum quantity set."
         />
 
-        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-low">
-          <span className="flex items-center gap-1.5">
-            <i className="legend-swatch" style={{ background: 'var(--green)' }} /> Available
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-[#64748B]">
+          <span className="flex items-center gap-1.5 font-medium">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" /> Available
           </span>
-          <span className="flex items-center gap-1.5">
-            <i className="legend-swatch" style={{ background: 'var(--orange)' }} /> At or below
-            minimum
+          <span className="flex items-center gap-1.5 font-medium">
+            <span className="h-2 w-2 rounded-full bg-amber-500" /> At or below minimum
           </span>
-          <span className="flex items-center gap-1.5">
-            <i className="legend-swatch" style={{ background: 'var(--red)' }} /> Out of stock
+          <span className="flex items-center gap-1.5 font-medium">
+            <span className="h-2 w-2 rounded-full bg-rose-500" /> Out of stock
           </span>
-          <span className="text-mid">
-            Bars stop at a full holding — the figures beside each bar are the real quantities.
+          <span className="text-[#64748B]">
+            Bars stop at a full holding — figures beside each bar are real quantities.
           </span>
           {noMinimumCount > 0 && (
-            <span className="text-[var(--amber)]">
+            <span className="text-amber-700 font-medium">
               {noMinimumCount} item{noMinimumCount === 1 ? '' : 's'} not charted — no minimum set.
             </span>
           )}
@@ -1078,17 +1086,17 @@ export default function Inventory({ goTo }) {
           ) : (
             <ul className="space-y-3">
               {restockList.map(({ item, shortfall }) => (
-                <li key={item.id} className="flex items-start justify-between gap-3">
+                <li key={item.id} className="flex items-start justify-between gap-3 rounded-lg border border-slate-100 bg-white p-2.5 shadow-2xs hover:border-sky-200 transition">
                   <div
                     className="min-w-0 cursor-pointer hover:opacity-80 transition"
                     onClick={() => handleSelectRow(item.id)}
                     title="View item telemetry"
                   >
-                    <div className="truncate text-[13px] text-hi">{item.item_name}</div>
-                    <div className="truncate text-[11px] text-low">
+                    <div className="truncate text-[13px] font-semibold text-[#0F172A]">{item.item_name}</div>
+                    <div className="truncate text-[11px] text-[#64748B]">
                       <span className="mono">{item.id}</span> · {item.location}
                     </div>
-                    <div className="mono mt-0.5 text-[11px] text-[var(--amber)]">
+                    <div className="mono mt-0.5 text-[11px] font-semibold text-amber-700">
                       {formatNumber(item.quantity)} / {formatNumber(item.minimum_quantity)}{' '}
                       {item.unit}
                       {shortfall > 0 && ` · short by ${formatNumber(shortfall)}`}
@@ -1099,7 +1107,7 @@ export default function Inventory({ goTo }) {
                     {canManage && Number(item.minimum_quantity) > 0 && (
                       <button
                         type="button"
-                        className="btn btn--ghost btn--sm"
+                        className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-[#0F172A] hover:bg-slate-50 transition"
                         onClick={() => restock(item)}
                         title={`Raise to ${formatNumber(Number(item.minimum_quantity) * 2)} ${item.unit}`}
                       >
@@ -1146,10 +1154,10 @@ export default function Inventory({ goTo }) {
       </div>
 
       {/* ================= OPERATIONAL LOGISTICS FOOTER ================= */}
-      <div className="alert-strip alert-strip--info">
-        <PackageCheck size={15} className="mt-0.5 shrink-0 text-[var(--accent)]" />
-        <div className="text-[12px] text-mid">
-          <strong className="text-hi">Station Logistics Directory.</strong> Consumable buffer thresholds, fuels, and critical spares calibrated to Antarctic wintering standards. Stock alerts recalculate dynamically across active field stations and remote shelters.
+      <div className="rounded-xl border border-sky-200 bg-sky-50/60 p-4 flex items-center gap-3 text-[#0F172A]">
+        <PackageCheck size={18} className="shrink-0 text-sky-600" />
+        <div className="text-[12px] text-[#475569] leading-relaxed">
+          <strong className="font-semibold text-[#0F172A]">Station Logistics Directory.</strong> Consumable buffer thresholds, fuels, and critical spares calibrated to Antarctic wintering standards. Stock alerts recalculate dynamically across active field stations and remote shelters.
         </div>
       </div>
 
@@ -1178,20 +1186,20 @@ function GroupList({ rows }) {
   return (
     <ul className="space-y-2.5">
       {rows.map((row) => (
-        <li key={row.key}>
+        <li key={row.key} className="rounded-lg border border-slate-100 bg-white p-2 shadow-2xs">
           <div className="flex items-baseline justify-between gap-3">
-            <span className="truncate text-[12.5px] text-hi">{row.key}</span>
-            <span className="mono shrink-0 text-[12px] text-mid">{row.count}</span>
+            <span className="truncate text-[12.5px] font-medium text-[#0F172A]">{row.key}</span>
+            <span className="mono shrink-0 text-[12px] font-semibold text-[#475569]">{row.count}</span>
           </div>
           <div className="mt-1 flex items-center gap-2">
             <div className={`progress flex-1 ${row.low ? 'progress--warn' : ''}`}>
               <span style={{ width: `${(row.count / biggest) * 100}%` }} />
             </div>
-            <span className="shrink-0 text-[10.5px] text-low">
+            <span className="shrink-0 text-[10.5px] text-[#64748B]">
               {row.low > 0 ? (
-                <span className="text-[var(--amber)]">{row.low} low</span>
+                <span className="font-semibold text-amber-700">{row.low} low</span>
               ) : (
-                'all stocked'
+                <span className="text-emerald-700 font-medium">all stocked</span>
               )}
             </span>
           </div>

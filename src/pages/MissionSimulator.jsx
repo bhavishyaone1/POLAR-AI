@@ -220,22 +220,35 @@ export default function MissionSimulator({ goTo }) {
                     Transfer 3,500 L from strategic bladder reserve 02 into main generator circuit and shed auxiliary lab heating. Extends runway to Day 17.
                   </p>
 
-                  <div className="pt-2 flex items-center gap-2">
-                    <button
-                      type="button"
-                      disabled={mitigationAuthorized}
-                      onClick={handleAuthorize}
-                      className="rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white px-4 py-2 text-xs font-semibold shadow-xs transition active:scale-95 disabled:opacity-50"
-                    >
-                      {mitigationAuthorized ? 'Mitigation Active' : 'Authorize Mitigation'}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setOptionsOpen(false)}
-                      className="rounded-lg border border-[#DCE8F0] bg-white px-3 py-2 text-xs font-medium text-[#64748B] hover:text-[#0C1E30] transition"
-                    >
-                      Close
-                    </button>
+                  <div className="pt-2 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        disabled={mitigationAuthorized}
+                        onClick={handleAuthorize}
+                        className="rounded-lg bg-[#0284C7] hover:bg-[#0369A1] text-white px-4 py-2 text-xs font-semibold shadow-xs transition active:scale-95 disabled:opacity-50"
+                      >
+                        {mitigationAuthorized ? 'Mitigation Active' : 'Authorize Mitigation'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setOptionsOpen(false)}
+                        className="rounded-lg border border-[#DCE8F0] bg-white px-3 py-2 text-xs font-medium text-[#64748B] hover:text-[#0C1E30] transition"
+                      >
+                        Close
+                      </button>
+                    </div>
+
+                    {mitigationAuthorized && (
+                      <button
+                        type="button"
+                        onClick={() => goTo('audit')}
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 hover:text-emerald-900 underline"
+                      >
+                        <span>View Cryptographic Audit Ledger</span>
+                        <ArrowRight size={12} />
+                      </button>
+                    )}
                   </div>
                 </div>
               )}

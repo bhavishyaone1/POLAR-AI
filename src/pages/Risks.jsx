@@ -86,195 +86,153 @@ export default function Risks({ goTo }) {
   return (
     <div className="max-w-5xl mx-auto pb-16">
       {/* ============================================================
-          DESKTOP / TABLET RISK VIEW (LOCKED & UNTOUCHED for >= 768px)
+          DESKTOP / TABLET RISK VIEW (>= 768px)
           ============================================================ */}
-      <div className="hidden md:block space-y-8">
-      {/* ============================================================
-          HEADLINE
-          ============================================================ */}
-      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-5">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl font-bold tracking-tight text-[var(--ink-hi)]">
-              Mission Risk
-            </h1>
-            <span className="rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-[11px] font-mono font-bold text-rose-700">
-              1 Active Risk
-            </span>
-          </div>
-          <p className="mt-1 text-xs text-[var(--ink-mid)]">
-            Continuous systemic vulnerability detection linking logistics delays to habitat life-support.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2.5 w-full sm:w-auto">
-          <button
-            type="button"
-            onClick={() => goTo('simulator')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-[var(--ice)] hover:bg-[#3F96B2] text-white font-semibold px-4 py-2 text-xs shadow-xs transition"
-          >
-            <Sliders size={13} />
-            <span>Launch What-If Sandbox</span>
-          </button>
-        </div>
-      </header>
-
-      {/* ============================================================
-          HERO: FUEL RESUPPLY RISK
-          HIGH · 12 days remaining · 17 day cargo ETA · Potential supply gap: 5 days
-          ============================================================ */}
-      <section className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-7 md:p-9 shadow-xs space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-6">
-          <div className="space-y-1">
+      <div className="hidden md:block space-y-7">
+        {/* Headline & Sandbox Launcher */}
+        <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DCE8F0] pb-4">
+          <div>
             <div className="flex items-center gap-2.5">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ink-low)]">
-                Vulnerability Reference: RSK-001
-              </span>
-              <span className="rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-[11px] font-bold text-rose-700">
-                HIGH
+              <h1 className="text-2xl font-bold tracking-tight text-[#0C1E30]">
+                Mission Risk
+              </h1>
+              <span className="rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-[11px] font-mono font-bold text-rose-700">
+                1 Active Risk
               </span>
             </div>
-            <h2 className="text-2xl font-bold text-[var(--ink-hi)]">
-              FUEL RESUPPLY RISK
-            </h2>
-            <p className="text-xs text-[var(--ink-mid)] max-w-xl">
-              Antarctic winter logistics gap detected between station consumption burn and vessel Novo Runway staging.
+            <p className="mt-1 text-xs text-[#42586E]">
+              Continuous systemic vulnerability detection linking logistics delays to habitat life-support.
             </p>
           </div>
 
-          <div className="rounded-xl bg-[var(--surface-base)] border border-[var(--line)] p-4 text-center sm:text-right shrink-0">
-            <span className="text-[10px] font-mono uppercase text-[var(--ink-low)] block">
-              Calculated Disparity
-            </span>
-            <div className="text-2xl font-extrabold font-mono text-rose-600 mt-0.5">
-              5.0 Days
+          <div className="flex items-center gap-2.5 w-full sm:w-auto">
+            <button
+              type="button"
+              onClick={() => goTo('simulator')}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white font-semibold px-4 py-2.5 text-xs shadow-xs transition active:scale-95"
+            >
+              <Sliders size={14} />
+              <span>Launch What-If Sandbox</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => goTo('copilot')}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#BAE6FD] bg-[#E0F2FE] hover:bg-[#BAE6FD] text-[#0284C7] font-semibold px-4 py-2.5 text-xs shadow-xs transition active:scale-95"
+            >
+              <Sparkles size={14} />
+              <span>Ask AI Copilot</span>
+            </button>
+          </div>
+        </header>
+
+        {/* Hero Card: Fuel Resupply Risk */}
+        <section className="rounded-2xl border border-[#DCE8F0] bg-white p-6 sm:p-8 shadow-xs space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#F1F5F9] pb-6">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2.5">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                  Vulnerability Reference: RSK-001
+                </span>
+                <span className="rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-[11px] font-bold text-rose-700">
+                  HIGH
+                </span>
+              </div>
+              <h2 className="text-2xl font-bold text-[#0C1E30] tracking-tight">
+                FUEL RESUPPLY RISK
+              </h2>
+              <p className="text-xs text-[#42586E] max-w-xl leading-relaxed">
+                Fast pack-ice in Prydz Bay delayed MV Vasiliy Golovnin departure; sub-zero ambient (-38°C) increased heating loop burn rate by +8%.
+              </p>
             </div>
-            <span className="text-[11px] text-[var(--ink-mid)] font-medium block">
-              Potential supply gap
-            </span>
-          </div>
-        </div>
 
-        {/* Telemetry Metrics Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-          <div className="rounded-xl border border-[var(--line)] bg-[var(--surface-base)] p-4 space-y-1">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--ink-low)] font-semibold block">
-              Station Runway
-            </span>
-            <div className="text-base font-bold font-mono text-rose-600">
-              12 days remaining
+            <div className="rounded-2xl bg-[#F8FAFC] border border-[#DCE8F0] p-4 text-center sm:text-right shrink-0">
+              <span className="text-[10px] font-mono uppercase text-[#64748B] block font-semibold">
+                Calculated Disparity
+              </span>
+              <div className="text-3xl font-extrabold font-mono text-rose-600 mt-0.5">
+                5.0 Days
+              </div>
+              <span className="text-xs text-[#42586E] font-medium block">
+                Potential supply gap
+              </span>
             </div>
-            <p className="text-[11px] text-[var(--ink-mid)]">Current stock: 14,200 Liters</p>
           </div>
 
-          <div className="rounded-xl border border-[var(--line)] bg-[var(--surface-base)] p-4 space-y-1">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--ink-low)] font-semibold block">
-              Scheduled Replenishment
-            </span>
-            <div className="text-base font-bold font-mono text-[var(--ink-hi)]">
-              17 day cargo ETA
+          {/* Telemetry Metrics Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-4 space-y-1">
+              <span className="text-[10.5px] font-mono uppercase tracking-wider text-[#64748B] font-semibold block">
+                Station Runway (WHAT / WHEN)
+              </span>
+              <div className="text-base font-bold font-mono text-rose-600">
+                12.0 days remaining
+              </div>
+              <p className="text-[11.5px] text-[#42586E]">Current reserve: 14,200 Litres</p>
             </div>
-            <p className="text-[11px] text-[var(--ink-mid)]">Consignment C-101 / C-104</p>
-          </div>
 
-          <div className="rounded-xl border border-[var(--line)] bg-[var(--surface-base)] p-4 space-y-1">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--ink-low)] font-semibold block">
-              Target Safety Threshold
-            </span>
-            <div className="text-base font-bold font-mono text-[var(--ink-hi)]">
-              14.0 days safe buffer
+            <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-4 space-y-1">
+              <span className="text-[10.5px] font-mono uppercase tracking-wider text-[#64748B] font-semibold block">
+                Scheduled Replenishment (WHEN)
+              </span>
+              <div className="text-base font-bold font-mono text-[#0C1E30]">
+                Day 17 cargo ETA
+              </div>
+              <p className="text-[11.5px] text-[#42586E]">Consignments C-101 &amp; C-104 (+3d slip)</p>
             </div>
-            <p className="text-[11px] text-amber-700 font-medium">Breached by -2.0 days</p>
-          </div>
-        </div>
-      </section>
 
-      {/* ============================================================
-          SCIENTIFIC DEPENDENCY SYSTEM DIAGRAM
-          FUEL → GENERATOR → POWER → HEATING → RESEARCH OPERATIONS
-          ============================================================ */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--ice)] block">
-              CAUSAL PROPAGATION DIAGRAM
+            <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-4 space-y-1">
+              <span className="text-[10.5px] font-mono uppercase tracking-wider text-[#64748B] font-semibold block">
+                Target Safety Buffer (WHY)
+              </span>
+              <div className="text-base font-bold font-mono text-[#0C1E30]">
+                14.0 days minimum buffer
+              </div>
+              <p className="text-[11.5px] text-amber-700 font-semibold">Breached by -2.0 days</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Scientific Dependency System Diagram (IMPACT) */}
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0284C7] block">
+                CAUSAL PROPAGATION DIAGRAM (IMPACT)
+              </span>
+              <h3 className="text-lg font-bold text-[#0C1E30] mt-0.5">
+                Operational Failure Cascade
+              </h3>
+            </div>
+            <span className="text-xs text-[#64748B] font-mono">
+              Scientific System Diagram · ISO 31000 Standard
             </span>
-            <h3 className="text-lg font-bold text-[var(--ink-hi)] mt-0.5">
-              Operational Failure Cascade
-            </h3>
-          </div>
-          <span className="text-xs text-[var(--ink-low)] font-mono">
-            Scientific System Diagram · ISO 31000 Standard
-          </span>
-        </div>
-
-        <div className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-7 md:p-9 shadow-xs space-y-4">
-          {/* Horizontal flow on desktop / vertical on small */}
-          <div className="hidden lg:grid grid-cols-5 gap-3 relative">
-            {chainNodes.map((node, idx) => {
-              const Icon = node.icon
-              const isLast = idx === chainNodes.length - 1
-
-              return (
-                <div key={node.id} className="relative flex flex-col justify-between">
-                  <div className="rounded-xl border border-[var(--line)] bg-[var(--surface-base)] p-4 space-y-3 h-full hover:border-[var(--ice)] transition">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] font-bold text-[var(--ink-low)]">
-                        {node.step}
-                      </span>
-                      <div className="h-7 w-7 rounded-lg bg-[var(--surface-ice)] text-[var(--ice)] flex items-center justify-center">
-                        <Icon size={14} />
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="text-sm font-bold tracking-tight text-[var(--ink-hi)]">
-                        {node.label}
-                      </div>
-                      <span
-                        className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded mt-1 inline-block ${
-                          node.statusType === 'critical'
-                            ? 'bg-rose-50 text-rose-700 border border-rose-200'
-                            : 'bg-amber-50 text-amber-700 border border-amber-200'
-                        }`}
-                      >
-                        {node.status}
-                      </span>
-                    </div>
-
-                    <p className="text-[11px] text-[var(--ink-mid)] leading-relaxed pt-1">
-                      {node.detail}
-                    </p>
-                  </div>
-
-                  {/* Connector Arrow for desktop */}
-                  {!isLast && (
-                    <div className="absolute -right-3.5 top-1/2 -translate-y-1/2 z-10 hidden lg:flex items-center justify-center text-[var(--ice)]">
-                      <ArrowRight size={14} strokeWidth={2.5} />
-                    </div>
-                  )}
-                </div>
-              )
-            })}
           </div>
 
-          {/* Vertical flow on tablet/mobile */}
-          <div className="lg:hidden space-y-3">
-            {chainNodes.map((node, idx) => {
-              const Icon = node.icon
-              const isLast = idx === chainNodes.length - 1
+          <div className="rounded-2xl border border-[#DCE8F0] bg-white p-6 sm:p-8 shadow-xs space-y-4">
+            {/* Horizontal flow on desktop */}
+            <div className="hidden lg:grid grid-cols-5 gap-3 relative">
+              {chainNodes.map((node, idx) => {
+                const Icon = node.icon
+                const isLast = idx === chainNodes.length - 1
 
-              return (
-                <div key={node.id} className="space-y-3">
-                  <div className="rounded-xl border border-[var(--line)] bg-[var(--surface-base)] p-4 flex items-start gap-3.5">
-                    <div className="h-8 w-8 rounded-lg bg-[var(--surface-ice)] text-[var(--ice)] flex items-center justify-center shrink-0 mt-0.5">
-                      <Icon size={16} />
-                    </div>
-                    <div className="flex-1 min-w-0">
+                return (
+                  <div key={node.id} className="relative flex flex-col justify-between">
+                    <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-4 space-y-3 h-full hover:border-[#0284C7] transition">
                       <div className="flex items-center justify-between">
-                        <div className="text-sm font-bold text-[var(--ink-hi)]">{node.label}</div>
+                        <span className="font-mono text-[10.5px] font-bold text-[#64748B]">
+                          {node.step}
+                        </span>
+                        <div className="h-7 w-7 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center">
+                          <Icon size={14} />
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="text-sm font-bold tracking-tight text-[#0C1E30]">
+                          {node.label}
+                        </div>
                         <span
-                          className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded ${
+                          className={`text-[9.5px] font-mono font-bold px-1.5 py-0.5 rounded mt-1 inline-block ${
                             node.statusType === 'critical'
                               ? 'bg-rose-50 text-rose-700 border border-rose-200'
                               : 'bg-amber-50 text-amber-700 border border-amber-200'
@@ -283,36 +241,80 @@ export default function Risks({ goTo }) {
                           {node.status}
                         </span>
                       </div>
-                      <p className="text-xs text-[var(--ink-mid)] mt-1">{node.detail}</p>
+
+                      <p className="text-[11.5px] text-[#42586E] leading-relaxed pt-1">
+                        {node.detail}
+                      </p>
                     </div>
+
+                    {/* Connector Arrow for desktop */}
+                    {!isLast && (
+                      <div className="absolute -right-3.5 top-1/2 -translate-y-1/2 z-10 hidden lg:flex items-center justify-center text-[#0284C7]">
+                        <ArrowRight size={14} strokeWidth={2.5} />
+                      </div>
+                    )}
                   </div>
+                )
+              })}
+            </div>
 
-                  {!isLast && (
-                    <div className="flex justify-center text-[var(--ice)]">
-                      <ArrowDown size={14} strokeWidth={2.5} />
+            {/* Vertical flow on tablet */}
+            <div className="lg:hidden space-y-3">
+              {chainNodes.map((node, idx) => {
+                const Icon = node.icon
+                const isLast = idx === chainNodes.length - 1
+
+                return (
+                  <div key={node.id} className="space-y-3">
+                    <div className="rounded-xl border border-[#DCE8F0] bg-[#F8FAFC] p-4 flex items-start gap-3.5">
+                      <div className="h-8 w-8 rounded-lg bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center shrink-0 mt-0.5">
+                        <Icon size={16} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <div className="text-sm font-bold text-[#0C1E30]">{node.label}</div>
+                          <span
+                            className={`text-[9.5px] font-mono font-bold px-1.5 py-0.5 rounded ${
+                              node.statusType === 'critical'
+                                ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                                : 'bg-amber-50 text-amber-700 border border-amber-200'
+                            }`}
+                          >
+                            {node.status}
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#42586E] mt-1">{node.detail}</p>
+                      </div>
                     </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
 
-      {/* Footer Navigation Strip */}
-      <footer className="rounded-xl border border-[var(--line)] bg-[var(--surface-base)] p-4 flex flex-wrap items-center justify-between gap-4 text-xs">
-        <span className="text-[var(--ink-mid)]">
-          Causal link confirmed: A logistics shipping delay directly impacts life support & science missions.
-        </span>
-        <button
-          type="button"
-          onClick={() => goTo('simulator')}
-          className="inline-flex items-center gap-1 font-bold text-[var(--ice)] hover:underline"
-        >
-          <span>Test In What-If Simulator</span>
-          <ArrowRight size={13} />
-        </button>
-      </footer>
+                    {!isLast && (
+                      <div className="flex justify-center text-[#0284C7]">
+                        <ArrowDown size={14} strokeWidth={2.5} />
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Footer Navigation Strip (WHAT NEXT) */}
+        <footer className="rounded-2xl border border-[#DCE8F0] bg-[#F8FAFC] p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4 text-xs">
+          <span className="text-[#42586E]">
+            Causal link confirmed: A logistics shipping delay directly impacts life support &amp; science missions.
+          </span>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => goTo('simulator')}
+              className="inline-flex items-center gap-1.5 font-bold text-[#0284C7] hover:underline"
+            >
+              <span>Test in What-If Simulator</span>
+              <ArrowRight size={13} />
+            </button>
+          </div>
+        </footer>
       </div>
 
       {/* ============================================================
