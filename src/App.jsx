@@ -22,7 +22,7 @@
  * THE LAYOUT: sidebar on the left, top bar across, page content below.
  */
 
-import { useState, useMemo, useCallback, useEffect } from 'react'
+import React, { useState, useMemo, useCallback, useEffect, lazy, Suspense } from 'react'
 import { CloudOff, Eye, X } from 'lucide-react'
 import Sidebar from './components/Sidebar'
 import TopBar from './components/TopBar'
@@ -34,27 +34,38 @@ import { useData } from './store/DataContext'
 import { playAcknowledgeChirp } from './services/audioAlert'
 import { saveMessage } from './services/emergencyStorage'
 
-import Login from './pages/Login'
-import LandingPage from './pages/LandingPage'
-import Dashboard from './pages/Dashboard'
-import Expeditions from './pages/Expeditions'
-import Personnel from './pages/Personnel'
-import Assets from './pages/Assets'
-import ImpactAnalysis from './pages/ImpactAnalysis'
-import MissionSimulator from './pages/MissionSimulator'
-import Risks from './pages/Risks'
-import Cargo from './pages/Cargo'
-import Inventory from './pages/Inventory'
-import MapView from './pages/MapView'
-import Weather from './pages/Weather'
-import Emergency from './pages/Emergency'
-import AiCopilot from './pages/AiCopilot'
-import Reports from './pages/Reports'
-import AuditLog from './pages/AuditLog'
-import ResearchSources from './pages/ResearchSources'
+const Login = lazy(() => import('./pages/Login'))
+const LandingPage = lazy(() => import('./pages/LandingPage'))
+const Dashboard = lazy(() => import('./pages/Dashboard'))
+const Expeditions = lazy(() => import('./pages/Expeditions'))
+const Personnel = lazy(() => import('./pages/Personnel'))
+const Assets = lazy(() => import('./pages/Assets'))
+const ImpactAnalysis = lazy(() => import('./pages/ImpactAnalysis'))
+const MissionSimulator = lazy(() => import('./pages/MissionSimulator'))
+const Risks = lazy(() => import('./pages/Risks'))
+const Cargo = lazy(() => import('./pages/Cargo'))
+const Inventory = lazy(() => import('./pages/Inventory'))
+const MapView = lazy(() => import('./pages/MapView'))
+const Weather = lazy(() => import('./pages/Weather'))
+const Emergency = lazy(() => import('./pages/Emergency'))
+const AiCopilot = lazy(() => import('./pages/AiCopilot'))
+const Reports = lazy(() => import('./pages/Reports'))
+const AuditLog = lazy(() => import('./pages/AuditLog'))
+const ResearchSources = lazy(() => import('./pages/ResearchSources'))
 import CommandPalette from './components/CommandPalette'
 import GuidedDemoTour from './components/GuidedDemoTour'
 import MobileBottomNav from './components/MobileBottomNav'
+
+function PageFallback() {
+  return (
+    <div className="flex min-h-[50vh] items-center justify-center p-8">
+      <div className="flex flex-col items-center gap-2 text-center">
+        <div className="h-7 w-7 animate-spin rounded-full border-2 border-[#DCE8F0] border-t-[#0284C7]" />
+        <span className="text-xs font-mono text-[#6E8294] tracking-wider">Loading station data...</span>
+      </div>
+    </div>
+  )
+}
 
 function getInitialView() {
   try {
@@ -220,7 +231,13 @@ export default function App() {
 
   /* THE GATE. Nobody signed in means the sign-in screen and nothing else —
      no sidebar, no top bar, no data pages mounted behind it. */
-  if (!user) return <Login />
+  if (!user) {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <Login />
+      </Suspense>
+    )
+  }
 
   /* Pick the page component for the current view. Every page receives
      goTo so it can link elsewhere in the console. */
@@ -386,7 +403,9 @@ export default function App() {
           {/* key={view} restarts the error boundary when you navigate, so
               one broken page does not stay broken forever. */}
           <ErrorBoundary key={view} onReset={() => goTo('dashboard')}>
-            <div className="fade-up">{renderPage()}</div>
+            <Suspense fallback={<PageFallback />}>
+              <div className="fade-up">{renderPage()}</div>
+            </Suspense>
           </ErrorBoundary>
         </main>
       </div>

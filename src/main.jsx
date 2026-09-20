@@ -14,6 +14,9 @@ import { DataProvider } from './store/DataContext'
 import { AuthProvider } from './store/AuthContext'
 import { ThemeProvider } from './store/ThemeContext'
 import './index.css'
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({ immediate: true })
 
 /* THREE PROVIDERS, AND THE ORDER MATTERS.
    <ThemeProvider> is outermost so the theme is available everywhere,
