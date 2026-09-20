@@ -183,5 +183,6 @@ export const NAV_GROUPS = ['Operations', 'Continuity Intelligence']
  * Finds one nav item by id with dashboard fallback.
  */
 export function findNavItem(id) {
-  return NAV_ITEMS.find((item) => item.id === id) || NAV_ITEMS[1]
+  return NAV_ITEMS.find((item) => item.id === id) || NAV_ITEMS[0]
 }
+
