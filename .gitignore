@@ -24,3 +24,16 @@ yarn-error.log*
 .idea/
 *.swp
 .claude/settings.local.json
+
+# Presentations, Pitch Decks & Evaluation Documents (Keep off GitHub)
+*.pptx
+*.ppt
+POLAR_AI_*.pdf
+POLAR_AI_*.pptx
+POLAR_AI_HIC_*
+*PITCH_DECK*
+*EXECUTIVE_DOCUMENTATION*
+assets/presentation/
+scripts/*pitch_deck*
+scripts/*hic*
+scripts/*update_deck*
